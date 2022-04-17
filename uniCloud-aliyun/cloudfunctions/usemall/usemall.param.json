@@ -3,9 +3,9 @@
 // 配置教程参考：https://uniapp.dcloud.net.cn/uniCloud/quickstart?id=runparam
 
 {
-	"action": "order/evaluate",
-	"data": {
-		"order_id": "123",
-		"state": 1
-	}
+  "action": "order/evaluate",
+  "data": {
+    "order_id": "123",
+    "state": 1
+  }
 }

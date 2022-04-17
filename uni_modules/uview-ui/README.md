@@ -6,17 +6,16 @@
 
 ## 说明
 
-uView UI，是[uni-app](https://uniapp.dcloud.io/)生态优秀的UI框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水
+uView UI，是[uni-app](https://uniapp.dcloud.io/)生态优秀的 UI 框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水
 
 ## 特性
 
-- 兼容安卓，iOS，微信小程序，H5，QQ小程序，百度小程序，支付宝小程序，头条小程序
+- 兼容安卓，iOS，微信小程序，H5，QQ 小程序，百度小程序，支付宝小程序，头条小程序
 - 60+精选组件，功能丰富，多端兼容，让您快速集成，开箱即用
-- 众多贴心的JS利器，让您飞镖在手，召之即来，百步穿杨
+- 众多贴心的 JS 利器，让您飞镖在手，召之即来，百步穿杨
 - 众多的常用页面和布局，让您专注逻辑，事半功倍
 - 详尽的文档支持，现代化的演示效果
 - 按需引入，精简打包体积
-
 
 ## 安装
 
@@ -27,14 +26,16 @@ npm i uview-ui
 
 ## 快速上手
 
-1. `main.js`引入uView库
+1. `main.js`引入 uView 库
+
 ```js
 // main.js
-import uView from 'uview-ui';
-Vue.use(uView);
+import uView from 'uview-ui'
+Vue.use(uView)
 ```
 
-2. `App.vue`引入基础样式(注意style标签需声明scss属性支持)
+2. `App.vue`引入基础样式(注意 style 标签需声明 scss 属性支持)
+
 ```css
 /* App.vue */
 <style lang="scss">
@@ -42,13 +43,14 @@ Vue.use(uView);
 </style>
 ```
 
-3. `uni.scss`引入全局scss变量文件
+3. `uni.scss`引入全局 scss 变量文件
+
 ```css
 /* uni.scss */
-@import "uview-ui/theme.scss";
+@import 'uview-ui/theme.scss';
 ```
 
-4. `pages.json`配置easycom规则(按需引入)
+4. `pages.json`配置 easycom 规则(按需引入)
 
 ```js
 // pages.json
@@ -67,18 +69,19 @@ Vue.use(uView);
 }
 ```
 
-请通过[快速上手](https://www.uviewui.com/components/quickstart.html)了解更详细的内容 
+请通过[快速上手](https://www.uviewui.com/components/quickstart.html)了解更详细的内容
 
 ## 使用方法
-配置easycom规则后，自动按需引入，无需`import`组件，直接引用即可。
+
+配置 easycom 规则后，自动按需引入，无需`import`组件，直接引用即可。
 
 ```html
 <template>
-	<u-button text="按钮"></u-button>
+  <u-button text="按钮"></u-button>
 </template>
 ```
 
-请通过[快速上手](https://www.uviewui.com/components/quickstart.html)了解更详细的内容 
+请通过[快速上手](https://www.uviewui.com/components/quickstart.html)了解更详细的内容
 
 ## 链接
 
@@ -89,16 +92,14 @@ Vue.use(uView);
 
 ## 预览
 
-您可以通过**微信**扫码，查看最佳的演示效果。
-<br>
-<br>
-<img src="https://uviewui.com/common/weixin_mini_qrcode.png" width="220" height="220" >
+您可以通过**微信**扫码，查看最佳的演示效果。 <br> <br> <img src="https://uviewui.com/common/weixin_mini_qrcode.png" width="220" height="220" >
 
-## 捐赠uView的研发
+## 捐赠 uView 的研发
 
-uView文档和源码全部开源免费，如果您认为uView帮到了您的开发工作，您可以捐赠uView的研发工作，捐赠无门槛，哪怕是一杯可乐也好(相信这比打赏主播更有意义)。
+uView 文档和源码全部开源免费，如果您认为 uView 帮到了您的开发工作，您可以捐赠 uView 的研发工作，捐赠无门槛，哪怕是一杯可乐也好(相信这比打赏主播更有意义)。
 
 <img src="https://uviewui.com/common/alipay.png" width="220" ><img style="margin-left: 100px;" src="https://uviewui.com/common/wechat.png" width="220" >
 
 ## 版权信息
-uView遵循[MIT](https://en.wikipedia.org/wiki/MIT_License)开源协议，意味着您无需支付任何费用，也无需授权，即可将uView应用到您的产品中。
+
+uView 遵循[MIT](https://en.wikipedia.org/wiki/MIT_License)开源协议，意味着您无需支付任何费用，也无需授权，即可将 uView 应用到您的产品中。

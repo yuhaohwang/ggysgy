@@ -6,15 +6,15 @@
   "keywords": [
     "uni-id-cf",
     "uni-id的云函数"
-],
+  ],
   "repository": "",
   "engines": {
     "HBuilderX": "^3.1.0"
   },
   "dcloudext": {
     "category": [
-        "uniCloud",
-        "云函数模板"
+      "uniCloud",
+      "云函数模板"
     ],
     "sale": {
       "regular": {
@@ -35,7 +35,11 @@
     "npmurl": ""
   },
   "uni_modules": {
-    "dependencies": ["uni-config-center","uni-captcha","uni-id"],
+    "dependencies": [
+      "uni-config-center",
+      "uni-captcha",
+      "uni-id"
+    ],
     "encrypt": [],
     "platforms": {
       "cloud": {
@@ -72,8 +76,8 @@
           "联盟": "u"
         },
         "Vue": {
-            "vue2": "y",
-            "vue3": "u"
+          "vue2": "y",
+          "vue3": "u"
         }
       }
     }
