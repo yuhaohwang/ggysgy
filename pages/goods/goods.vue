@@ -783,7 +783,7 @@
     left: 0;
     z-index: 95;
     height: 100rpx;
-    background: rgba(255, 255, 255, 95%);
+    background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 0 20rpx 0 #f0f0f0;
 
     .btn-area {

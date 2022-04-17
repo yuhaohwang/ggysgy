@@ -487,7 +487,7 @@
     bottom: 0;
     left: 0;
     z-index: 99;
-    background: rgba(51, 51, 51, 30%);
+    background: rgba(51, 51, 51, 0.3);
   }
 
   .box-container {

@@ -136,7 +136,7 @@
     position: absolute;
     width: 20rpx;
     height: 20rpx;
-    background: rgba(255, 106, 108, 50%) !important;
+    background: rgba(255, 106, 108, 0.5) !important;
     border-radius: 50%;
     content: " ";
     -webkit-transform: scale(1.6);

@@ -70,7 +70,7 @@
 
 <style lang="scss">
   .use-mask {
-    background-color: rgba(0, 0, 0, 60%);
+    background-color: rgba(0, 0, 0, 0.6);
     opacity: 0;
   }
 

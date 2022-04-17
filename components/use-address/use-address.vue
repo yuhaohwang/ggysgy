@@ -473,7 +473,7 @@
 
     /* #endif */
     height: 408rpx;
-    background-color: rgba(255, 255, 255, 100%);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   .picker-item {

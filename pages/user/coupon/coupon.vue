@@ -248,7 +248,7 @@
     .state-area {
       z-index: 10;
       height: 7vh;
-      box-shadow: 0 1px 5px rgba(0, 0, 0, 6%);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
     }
 
     .nav-item {

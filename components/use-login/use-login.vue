@@ -117,7 +117,7 @@
     bottom: 0;
     left: 0;
     z-index: 999;
-    background: rgba(51, 51, 51, 50%);
+    background: rgba(51, 51, 51, 0.5);
   }
 
   .use-login .box-container {

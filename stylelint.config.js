@@ -20,6 +20,7 @@ module.exports = {
         ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin', 'for'],
       },
     ],
+    'alpha-value-notation': 'number',
     'color-function-notation': 'legacy',
     'no-duplicate-selectors': null,
     'no-empty-source': null,

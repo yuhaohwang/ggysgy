@@ -315,7 +315,7 @@
       width: 70%;
       height: 70%;
       color: #fff !important;
-      background-color: rgba(51, 51, 51, 50%);
+      background-color: rgba(51, 51, 51, 0.5);
     }
 
     .item-right {
@@ -363,7 +363,7 @@
       padding: 0 40rpx;
       font-size: $font-base;
       background: $uni-color-primary;
-      box-shadow: 1px 2px 5px rgba(217, 60, 93, 72%);
+      box-shadow: 1px 2px 5px rgba(254, 170, 48, 0.72);
     }
   }
 
