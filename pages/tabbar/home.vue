@@ -176,7 +176,7 @@ export default {
 					sort: 1,
 					state: '启用',
 					type: '页面',
-					url: '/pages/user/coupon/coupon',
+					url: '/pages/report/report',
 					version: 1
 				},
 				{
