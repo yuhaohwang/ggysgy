@@ -16,22 +16,23 @@
   export default {
     props: {},
     data() {
-      return {}
+      return {};
     },
     methods: {
       to() {
         this.$emit('to', {
           type: 'to',
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
   .use-copyright {
     height: 180rpx;
   }
+
   .use-copyright {
     text {
       color: #c0c0c0;

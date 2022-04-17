@@ -84,10 +84,7 @@
         <view class="flex1">
           <view class="w-full dflex-wrap-w">
             <view class="margin-bottom-xs desc">
-              <text
-                >{{ order_data.order_consignee_addr }}
-                {{ order_data.order_consignee_addr_detail }}</text
-              >
+              <text>{{ order_data.order_consignee_addr }} {{ order_data.order_consignee_addr_detail }}</text>
             </view>
             <view>
               <text>{{ order_data.order_consignee }}</text>
@@ -100,12 +97,7 @@
 
     <!-- 订单商品明细 -->
     <view class="padding margin-lr margin-tb-sm bg-main border-radius">
-      <view
-        class="goods-area"
-        :class="{ 'margin-top': index > 0 }"
-        v-for="(item, index) in order_detail"
-        :key="index"
-      >
+      <view class="goods-area" :class="{ 'margin-top': index > 0 }" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
           <view class="img">
             <image :src="item.goods_img"></image>
@@ -146,10 +138,7 @@
     </view>
 
     <!-- 退款数据 -->
-    <view
-      class="order-area padding margin-lr margin-tb-sm bg-main border-radius"
-      v-if="order_data.order_refund_state"
-    >
+    <view class="order-area padding margin-lr margin-tb-sm bg-main border-radius" v-if="order_data.order_refund_state">
       <view class="item">
         <text>退款原因：</text>
         <text class="">{{ order_data.order_refund_reason }}</text>
@@ -189,7 +178,7 @@
         <text class="price">{{ order_data.order_actural_paid / 100 }}</text>
       </view>
     </view>
-    <view style="height: 100rpx"></view>
+    <view style="height: 100rpx;"></view>
 
     <!-- 底部操作区 -->
     <view class="oper-area dflex-b padding-right padding-left-sm">
@@ -211,43 +200,26 @@
       <view class="dflex-e">
         <view class="dflex" v-if="order_data.state == '待付款'">
           <button class="action-btn" @click="cancelOrder">取消订单</button>
-          <button
-            v-if="order_data.order_pay_state == '待付款'"
-            class="action-btn main-btn"
-            @click="payment"
+          <button v-if="order_data.order_pay_state == '待付款'" class="action-btn main-btn" @click="payment"
             >立即支付</button
           >
-          <button
-            v-if="order_data.order_pay_state == '待核实'"
-            class="action-btn main-btn"
-            @click="payment"
+          <button v-if="order_data.order_pay_state == '待核实'" class="action-btn main-btn" @click="payment"
             >待核实</button
           >
         </view>
         <view class="dflex" v-if="order_data.state == '待发货'">
-          <button
-            v-if="!order_data.order_refund_state"
-            class="action-btn border-radius-big bg-main"
-            @click="refund"
+          <button v-if="!order_data.order_refund_state" class="action-btn border-radius-big bg-main" @click="refund"
             >申请退款</button
           >
         </view>
         <button
-          v-if="
-            !order_data.order_refund_state &&
-            ['待收货', '待评价', '已完成'].includes(order_data.state)
-          "
+          v-if="!order_data.order_refund_state && ['待收货', '待评价', '已完成'].includes(order_data.state)"
           class="action-btn"
           @click="toexpress"
           >查看物流</button
         >
         <view class="dflex" v-if="order_data.state == '待收货'">
-          <button
-            v-if="!order_data.order_refund_state"
-            class="action-btn main-btn"
-            @click="toreceipt"
-            >确认收货</button
-          >
+          <button v-if="!order_data.order_refund_state" class="action-btn main-btn" @click="toreceipt">确认收货</button>
         </view>
         <view class="dflex" v-if="order_data.state == '待评价'">
           <button class="action-btn main-btn" @click="evaluate">我要评价</button>
@@ -277,76 +249,76 @@
         order_id: '',
         goods_price_tip: '产品总计',
         time_remaining: 0,
-      }
+      };
     },
     onUnload() {
-      uni.$emit('__event_order', 'refresh')
+      uni.$emit('__event_order', 'refresh');
     },
     onLoad(options) {
-      this.order_id = options.order_id
+      this.order_id = options.order_id;
 
-      this.loadData()
+      this.loadData();
     },
     onShow() {
-      this.loadData()
+      this.loadData();
     },
     methods: {
       tohome() {
-        this.$api.tohome()
+        this.$api.tohome();
       },
       async loadData() {
-        let _this = this
+        let _this = this;
         await this.$func.usemall
           .call('order/detail', {
             order_id: _this.order_id,
           })
           .then((res) => {
             if (res.code === 200) {
-              res.datas.order.create_time = this.$api.format(res.datas.order.create_time)
-              _this.order_data = res.datas.order
-              _this.order_detail = res.datas.order_detail
-              _this.addressData = res.datas.order_trip
+              res.datas.order.create_time = this.$api.format(res.datas.order.create_time);
+              _this.order_data = res.datas.order;
+              _this.order_detail = res.datas.order_detail;
+              _this.addressData = res.datas.order_trip;
               if (res.datas.order && res.datas.order.state === '待付款') {
-                _this.time_remaining = res.datas.time_remaining
+                _this.time_remaining = res.datas.time_remaining;
               }
 
               _this.order_detail.forEach((data) => {
                 if (data.goods_opt_id > 0) {
-                  let desc = ''
+                  let desc = '';
                   if (data.goods_opt_desc) {
-                    desc = ' (' + data.goods_opt_desc + ')'
+                    desc = ' (' + data.goods_opt_desc + ')';
                   }
-                  _this.goods_price_tip = data.goods_opt_name + desc
+                  _this.goods_price_tip = data.goods_opt_name + desc;
                 }
-              })
+              });
 
               // console.log(_this.order_detail);
               // console.log(_this.order_data.state);
             }
-          })
+          });
       },
       // 立即支付
       payment() {
         if (this.order_data.order_pay_state == '待核实') {
-          this.$api.msg('订单已支付待核实状态')
-          return
+          this.$api.msg('订单已支付待核实状态');
+          return;
         }
 
         this.$api.topay({
           order_id: this.order_data.order_id,
           money: this.order_data.order_actural_paid,
-        })
+        });
       },
       // 查看物流
       toexpress(item) {
         // this.$api.msg('查看物流开发中');
         uni.navigateTo({
           url: `/pages/user/order/order-express?order_id=${this.order_id}`,
-        })
+        });
       },
       // 已发货
       toreceipt() {
-        let _this = this
+        let _this = this;
 
         uni.showModal({
           title: '提示',
@@ -355,27 +327,27 @@
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
-              })
+              });
               _this.$func.usemall
                 .call('order/received', {
                   order_id: _this.order_id,
                   state: '待评价',
                 })
                 .then((res) => {
-                  _this.loadData('refresh')
-                })
+                  _this.loadData('refresh');
+                });
             } else if (res.cancel) {
-              console.log('用户点击取消')
+              console.log('用户点击取消');
             }
           },
           complete() {
-            uni.hideLoading()
+            uni.hideLoading();
           },
-        })
+        });
       },
       // 删除订单
       delorder() {
-        let _this = this
+        let _this = this;
 
         uni.showModal({
           title: '提示',
@@ -384,28 +356,28 @@
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
-              })
+              });
               _this.$func.usemall
                 .call('order/deleted', {
                   order_id: _this.order_id,
                 })
                 .then((res) => {
                   if (res.code === 200) {
-                    uni.navigateBack({})
+                    uni.navigateBack({});
                   }
-                })
+                });
             } else if (res.cancel) {
-              console.log('点击取消')
+              console.log('点击取消');
             }
           },
           complete() {
-            uni.hideLoading()
+            uni.hideLoading();
           },
-        })
+        });
       },
       // 取消订单
       cancelOrder() {
-        let _this = this
+        let _this = this;
 
         uni.showModal({
           title: '提示',
@@ -414,7 +386,7 @@
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
-              })
+              });
               _this.$func.usemall
                 .call('order/cancel', {
                   order_id: _this.order_id,
@@ -422,21 +394,21 @@
                 })
                 .then((res) => {
                   if (res.code === 200) {
-                    _this.loadData('refresh')
+                    _this.loadData('refresh');
                   }
-                })
+                });
             } else if (res.cancel) {
-              console.log('用户点击取消')
+              console.log('用户点击取消');
             }
           },
           complete() {
-            uni.hideLoading()
+            uni.hideLoading();
           },
-        })
+        });
       },
       // 点击复制
       copy() {
-        let _this = this
+        let _this = this;
 
         uni.setClipboardData({
           data: _this.order_id,
@@ -445,26 +417,26 @@
               success: function (res) {
                 uni.showToast({
                   title: '复制成功',
-                })
+                });
               },
-            })
+            });
           },
-        })
+        });
       },
       // 评价
       evaluate() {
         uni.navigateTo({
           url: `/pages/user/order/order-evaluate?id=${this.order_id}`,
-        })
+        });
       },
       // 申请退款
       refund() {
         uni.navigateTo({
           url: `/pages/user/order/order-refund?order_id=${this.order_id}`,
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -473,9 +445,9 @@
   }
 
   .order-detail .item text:first-child {
+    display: inline-block;
     width: 152rpx;
     text-align: right;
-    display: inline-block;
   }
 
   /* 状态区 */
@@ -504,11 +476,11 @@
       line-height: 66rpx;
 
       .copy {
-        margin-left: 20rpx;
         padding: 10rpx 40rpx;
+        margin-left: 20rpx;
+        font-size: 24rpx;
         background-color: #f1f1f1;
         border-radius: 40rpx;
-        font-size: 24rpx;
       }
     }
   }
@@ -526,19 +498,19 @@
 
   /* 操作区 */
   .oper-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
     width: 100%;
     height: 100rpx;
     background-color: #fff;
-    position: fixed;
-    z-index: 1;
-    bottom: 0;
-    left: 0;
     border-top: 1px solid #f0f0f0;
 
     .btn-area {
+      width: 96rpx;
       font-size: $font-sm;
       color: $font-color-base;
-      width: 96rpx;
 
       .iconfont {
         font-size: 40rpx;
@@ -550,27 +522,29 @@
     .action-btn {
       width: 156rpx;
       height: inherit;
-      line-height: inherit;
+      padding: 12rpx 0;
       margin: 0;
       margin-left: 20rpx;
-      padding: 12rpx 0;
       font-size: $font-sm + 2upx;
+      line-height: inherit;
       color: $font-color-dark;
       background: #fff;
-      border-radius: 100px;
+
       /* #ifdef MP-QQ || MP-ALIPAY */
       border: 1px solid;
+      border-radius: 100px;
+
       /* #endif */
 
-      &:after {
+      &::after {
         border-radius: 100px;
       }
 
       &.main-btn {
-        background: #fff9f9;
         color: $base-color;
+        background: #fff9f9;
 
-        &:after {
+        &::after {
           border-color: #f7bcc8;
         }
       }

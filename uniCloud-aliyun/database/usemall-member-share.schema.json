@@ -98,14 +98,5 @@
       "description": "访问数"
     }
   },
-  "required": [
-    "goods_id",
-    "goods_sku",
-    "member_id",
-    "integral",
-    "user_cnt",
-    "visit_cnt",
-    "is_delete",
-    "create_uid"
-  ]
+  "required": ["goods_id", "goods_sku", "member_id", "integral", "user_cnt", "visit_cnt", "is_delete", "create_uid"]
 }

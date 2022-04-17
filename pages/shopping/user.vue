@@ -7,19 +7,14 @@
             src="/static/images/user/default.png"
             mode="aspectFill"
             class="border-radius-c margin-right-sm"
-            style="width: 110rpx; height: 110rpx; border: 2px solid #fff"
+            style="width: 110rpx; height: 110rpx; border: 2px solid #fff;"
           ></image>
           <view class="">
             <view class="fwb ft-white fs-30"> 沙发上的猫 </view>
-            <view class="fs-xxs" style="opacity: 0.6"> 中国-广东-深圳 </view>
+            <view class="fs-xxs" style="opacity: 0.6;"> 中国-广东-深圳 </view>
           </view>
         </view>
-        <view
-          class="border-radius-lg fwbd bg-main ft-base padding-tb-16 padding-lr-xl"
-          @click="note"
-        >
-          写笔记
-        </view>
+        <view class="border-radius-lg fwbd bg-main ft-base padding-tb-16 padding-lr-xl" @click="note"> 写笔记 </view>
       </view>
       <view class="margin-top-xl">
         <view class="dflex">
@@ -39,7 +34,7 @@
       </view>
     </view>
 
-    <view class="bg-base w-full" style="height: 80rpx"></view>
+    <view class="bg-base w-full" style="height: 80rpx;"></view>
     <view class="w-full bg-drak data-area padding-lr-sm">
       <view class="dflex-c w-full padding-tb-lg fs">
         <view class="padding-lr" :class="{ active: pitch_id === 0 }" @click="pitch(0)"> 笔记 </view>
@@ -47,10 +42,7 @@
       </view>
       <view class="goodsContent border-radius">
         <view class="goodsLeftList">
-          <view
-            class="bg-main margin-bottom-sm border-radius"
-            style="height: 200rpx; background: #4645cf"
-          >
+          <view class="bg-main margin-bottom-sm border-radius" style="height: 200rpx; background: #4645cf;">
             <image
               src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/d462f254-a1a6-4225-992c-f0658f6d4e0d.jpg"
               mode="widthFix"
@@ -61,7 +53,7 @@
               <block v-for="(img, img_idx) in [1]" :key="img_idx">
                 <image
                   src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/5433329e-95c5-4973-aa87-86c4d1815771.jpg"
-                  style="max-height: 340rpx"
+                  style="max-height: 340rpx;"
                   class="flex1"
                   mode="heightFix"
                 ></image>
@@ -70,11 +62,11 @@
                 >阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view
               >
               <view class="dflex-b padding-lr-sm margin-tb-sm">
-                <view class="dflex" style="width: 60%">
+                <view class="dflex" style="width: 60%;">
                   <image
                     src="/static/images/user/default.png"
                     class="border-radius-c headimg"
-                    style="width: 50rpx; height: 50rpx"
+                    style="width: 50rpx; height: 50rpx;"
                   ></image>
                   <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
                 </view>
@@ -92,7 +84,7 @@
               <block v-for="(img, img_idx) in [1]" :key="img_idx">
                 <image
                   src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/010c807f-a45e-40f7-8e08-49aa3dca8b49.jpg"
-                  style="max-height: 340rpx"
+                  style="max-height: 340rpx;"
                   class="flex1"
                   mode="heightFix"
                 >
@@ -102,11 +94,11 @@
                 >小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包
               </view>
               <view class="dflex-b padding-lr-sm margin-tb-sm">
-                <view class="dflex" style="width: 60%">
+                <view class="dflex" style="width: 60%;">
                   <image
                     src="/static/images/user/default.png"
                     class="border-radius-c headimg"
-                    style="width: 50rpx; height: 50rpx"
+                    style="width: 50rpx; height: 50rpx;"
                   ></image>
                   <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
                 </view>
@@ -125,31 +117,28 @@
       <view class="padding-lr-xl stats-area">
         <view class="dflex-s dflex-flow-c padding-left-lg">
           <view class="dflex-c">
-            <view class="ft-white border-radius-c dflex-c circle" style="background: #feaa30">
+            <view class="ft-white border-radius-c dflex-c circle" style="background: #feaa30;">
               <text class="iconfont iconmingxi"></text>
             </view>
             <text class="margin-lr-sm ft-dark">当前发布笔记数</text>
             <text>27</text>
           </view>
           <view class="dflex-c margin-tb-sm">
-            <view class="ft-white border-radius-c dflex-c circle" style="background: #6f96f1">
+            <view class="ft-white border-radius-c dflex-c circle" style="background: #6f96f1;">
               <text class="iconfont iconaixin"></text>
             </view>
             <text class="margin-lr-sm ft-dark">当前获得点赞数</text>
             <text>305</text>
           </view>
           <view class="dflex-c">
-            <view class="ft-white border-radius-c dflex-c circle" style="background: #ffbc49">
+            <view class="ft-white border-radius-c dflex-c circle" style="background: #ffbc49;">
               <text class="iconfont iconshoucang-01"></text>
             </view>
             <text class="margin-lr-sm ft-dark">当前发布收藏数</text>
             <text>70</text>
           </view>
         </view>
-        <view
-          class="bg-base margin-top-xl tac w-full border-radius-lg padding-tb-sm"
-          @click.stop="popUp = false"
-        >
+        <view class="bg-base margin-top-xl tac w-full border-radius-lg padding-tb-sm" @click.stop="popUp = false">
           我知道了
         </view>
       </view>
@@ -166,42 +155,42 @@
       return {
         pitch_id: 0,
         popUp: false,
-      }
+      };
     },
     onPageScroll(e) {
-      this.$refs.usetop.change(e.scrollTop)
+      this.$refs.usetop.change(e.scrollTop);
     },
     methods: {
       //写笔记
       note() {
         uni.navigateTo({
           url: `/pages/shopping/note`,
-        })
+        });
       },
       // 选中
       pitch(id) {
-        this.pitch_id = id
+        this.pitch_id = id;
       },
       // 关注
       follow() {
         uni.navigateTo({
           url: `/pages/shopping/follow`,
-        })
+        });
       },
       // 粉丝
       fans() {
         uni.navigateTo({
           url: `/pages/shopping/fans`,
-        })
+        });
       },
       // 跳转详情页
       detail(options) {
         uni.navigateTo({
           url: `/pages/shopping/detail?id=${options._id}`,
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="less">

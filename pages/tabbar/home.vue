@@ -6,34 +6,21 @@
     <!-- 02. 轮播区 -->
     <view class="swiper-area pos-r" v-if="swiperDatas && swiperDatas.length > 0">
       <!-- 轮播组件 -->
-      <swiper
-        class="swiper w-full"
-        autoplay
-        indicator-dots
-        indicator-color="#f7f7f7"
-        indicator-active-color="#FEAA30"
-      >
+      <swiper class="swiper w-full" autoplay indicator-dots indicator-color="#f7f7f7" indicator-active-color="#FEAA30">
         <swiper-item
           class="swiper-item padding-sm wh-full box-sizing-b"
           v-for="(item, index) in swiperDatas"
           :key="index"
         >
           <view class="wh-full" @click.stop="topage(item)"
-            ><image
-              class="border-radius wh-full"
-              mode="aspectFill"
-              :lazy-load="true"
-              :src="item.img"
+            ><image class="border-radius wh-full" mode="aspectFill" :lazy-load="true" :src="item.img"
           /></view>
         </swiper-item>
       </swiper>
     </view>
 
     <!-- 03. 分类区1 -->
-    <view
-      class="category1-area dflex-c dflex-wrap-w"
-      v-if="category1Datas && category1Datas.length > 0"
-    >
+    <view class="category1-area dflex-c dflex-wrap-w" v-if="category1Datas && category1Datas.length > 0">
       <view
         class="category1-item dflex dflex-flow-c margin-bottom-sm"
         v-for="(item, index) in category1Datas"
@@ -47,10 +34,7 @@
     <view class="gap"></view>
 
     <!-- 03. 分类区2 -->
-    <view
-      class="category2-area dflex-c dflex-wrap-w"
-      v-if="category2Datas && category2Datas.length > 0"
-    >
+    <view class="category2-area dflex-c dflex-wrap-w" v-if="category2Datas && category2Datas.length > 0">
       <view
         class="category2-item dflex dflex-flow-c"
         v-for="(item, index) in category2Datas"
@@ -80,12 +64,7 @@
             :key="index"
             @click="togoods(item)"
           >
-            <image
-              class="border-radius-xs"
-              mode="aspectFill"
-              :lazy-load="true"
-              :src="item.img"
-            ></image>
+            <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
             <text class="title clamp padding-bottom-xs">{{ item.name }}</text>
             <text class="price">{{ item.price / 100 }}</text>
             <text class="m-price">{{ item.market_price / 100 }}</text>
@@ -108,7 +87,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
 
   export default {
     computed: {
@@ -311,40 +290,40 @@
 
         scrollTop: 0,
         navHeight: 0,
-      }
+      };
     },
     // 监听页面加载
     onLoad() {
       this.$api.get_env((res) => {
-        this.env = res
-        this.is_mp = this.env.is_mp
-        this.platform = this.env.platform
-        this.platform_icon = this.env.platform_icon
-        this.platform_name = this.env.platform_name
-      })
+        this.env = res;
+        this.is_mp = this.env.is_mp;
+        this.platform = this.env.platform;
+        this.platform_icon = this.env.platform_icon;
+        this.platform_name = this.env.platform_name;
+      });
     },
     onPageScroll(e) {
       // this.scrollTop = e.scrollTop
-      this.$refs.usetop.change(e.scrollTop)
+      this.$refs.usetop.change(e.scrollTop);
     },
     // 监听页面显示。页面每次出现在屏幕上都触发，包括从下级页面点返回露出当前页面
     onShow() {
-      this.loadData()
+      this.loadData();
     },
     // 监听用户下拉刷新
     onPullDownRefresh() {
       this.loadData(() => {
-        uni.stopPullDownRefresh()
-      })
+        uni.stopPullDownRefresh();
+      });
     },
     // 用户点击右上角分享
     // https://uniapp.dcloud.io/api/plugins/share?id=showsharemenu
     onShareAppMessage: function (ops) {
       let _this = this,
-        mid = 0
+        mid = 0;
 
       if (_this.member && _this.member._id) {
-        mid = _this.member._id
+        mid = _this.member._id;
       }
 
       return {
@@ -353,13 +332,13 @@
         // imageUrl: 'https://mall-os-api.use-cloud.com/files/upload/image/20200408/200408115587860242.jpg',
         success: function (res) {
           // 转发成功
-          console.log('转发成功', res)
+          console.log('转发成功', res);
         },
         fail: function (res) {
           // 转发失败
-          console.log('转发失败', res)
+          console.log('转发失败', res);
         },
-      }
+      };
     },
 
     methods: {
@@ -378,13 +357,13 @@
               // this.category1Datas = res.datas.category || [];
               // console.log(JSON.stringify(this.category1Datas));
               // 限时精选
-              this.goodsLimitDatas = res.datas.limited || []
+              this.goodsLimitDatas = res.datas.limited || [];
               // 热门推荐
-              this.goodsHotDatas = res.datas.hot || []
+              this.goodsHotDatas = res.datas.hot || [];
 
               if (typeof callback === 'function') {
                 // 数据加载完成回调函数
-                callback()
+                callback();
               }
 
               // #ifdef H5 || MP-360
@@ -398,32 +377,32 @@
               // }
               // #endif
             }
-          })
+          });
       },
       // 搜索回调函数
       search() {
-        console.log('home search')
+        console.log('home search');
       },
       // 跳转页面
       topage(item) {
-        console.log('分类点击', item.url)
+        console.log('分类点击', item.url);
         if (item && item.type == '网页') {
           uni.navigateTo({
             url: `/pages/content/web?url=${item.url}`,
-          })
+          });
         } else if (item && item.type == '页面') {
           uni.navigateTo({
             url: `${item.url}`,
-          })
+          });
         } else if (item && item.type == '标签') {
           uni.switchTab({
             url: `${item.url}`,
-          })
+          });
         } else {
           if (item.id)
             this.$api.togoods({
               id: item._id,
-            })
+            });
         }
       },
       // 限时精选 -> 商品详情
@@ -431,22 +410,22 @@
         // 跳转商品详情
         this.$api.togoods({
           id: item._id,
-        })
+        });
       },
       // 限时精选
       limit() {
         // 跳转商品列表 - 限时精选类目
         this.$api.togoodslist({
           limited: 1,
-        })
+        });
       },
     },
     mounted() {
       // #ifdef H5 || MP-360
-      this.navHeight = 50
+      this.navHeight = 50;
       // #endif
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -454,6 +433,7 @@
   .swiper-area {
     // padding: ;
     background-color: #feaa30;
+
     .swiper {
       height: 240rpx;
     }
@@ -461,12 +441,12 @@
 
   /* 分类区1 */
   .category1-area {
-    padding: 30rpx 0 0rpx 0;
+    padding: 30rpx 0 0rpx;
 
     .category1-item {
+      width: 30%;
       font-size: $font-sm + 2upx;
       color: $font-color-dark;
-      width: 30%;
     }
 
     image {
@@ -484,9 +464,9 @@
     }
 
     image {
-      padding-bottom: 10rpx;
       width: 230rpx;
       height: 130rpx;
+      padding-bottom: 10rpx;
     }
   }
 

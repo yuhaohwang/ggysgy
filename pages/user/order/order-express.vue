@@ -10,10 +10,7 @@
       </view>
     </view>
     <view v-if="expressData && expressData.data" class="padding-lr">
-      <view
-        class="product border-radius padding margin-bottom-sm bg-main"
-        style="padding-bottom: 15rpx"
-      >
+      <view class="product border-radius padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
         <view
           :class="{ active: index == 0, fwb: index == 0 }"
           class="dflex item pos-r"
@@ -41,37 +38,37 @@
         empty: false,
         order_id: '',
         expressData: {},
-      }
+      };
     },
     watch: {
       expressData(e) {
-        let empty = !(e && e.data)
+        let empty = !(e && e.data);
         if (this.empty !== empty) {
-          this.empty = empty
+          this.empty = empty;
         }
       },
     },
     onPageScroll(e) {
       //this.scrollTop = e.scrollTop;
-      this.$refs.usetop.change(e.scrollTop)
+      this.$refs.usetop.change(e.scrollTop);
     },
     onLoad(options) {
-      this.order_id = options.order_id
+      this.order_id = options.order_id;
 
       if (!this.order_id) {
-        this.$api.msg('订单号不存在')
+        this.$api.msg('订单号不存在');
       }
 
-      this.loadData()
+      this.loadData();
     },
     onShow() {},
     methods: {
       loadData() {
         this.$func.usemall.call('order/express', { order_id: this.order_id }).then((res) => {
           if (res.code == 200) {
-            this.expressData = res.datas
+            this.expressData = res.datas;
           }
-        })
+        });
       },
       // 点击复制
       copy() {
@@ -82,23 +79,23 @@
               success: function (res) {
                 uni.showToast({
                   title: '复制成功',
-                })
+                });
               },
-            })
+            });
           },
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style>
   .copy {
-    margin-left: 30rpx;
     padding: 10rpx 40rpx;
+    margin-left: 30rpx;
+    font-size: 24rpx;
     background-color: #f1f1f1;
     border-radius: 40rpx;
-    font-size: 24rpx;
   }
 
   .item {
@@ -106,27 +103,28 @@
   }
 
   .item:not(:last-child)::before {
-    content: ' ';
-    border-left: 1px solid #d3d3d3;
     position: absolute;
-    bottom: -14rpx;
     top: 14rpx;
+    bottom: -14rpx;
     left: 10rpx;
-    border-left-width: 1px;
+    border-left: 1px solid #d3d3d3;
+    border-left-color: rgb(211 211 211);
     border-left-style: solid;
-    border-left-color: rgb(211, 211, 211);
+    border-left-width: 1px;
+    content: " ";
   }
+
   .item.active::before {
     border-left: 1px solid #feaa30;
   }
 
   .circle {
+    position: absolute;
+    top: 14rpx;
     width: 20rpx;
     height: 20rpx;
-    position: absolute;
     background: #d3d3d3;
     border-radius: 50%;
-    top: 14rpx;
   }
 
   .circle.active {
@@ -135,13 +133,13 @@
   }
 
   .circle.active::after {
-    content: ' ';
-    background: rgba(255, 106, 108, 0.5) !important;
-    -webkit-transform: scale(1.6);
-    transform: scale(1.6);
+    position: absolute;
     width: 20rpx;
     height: 20rpx;
-    position: absolute;
+    background: rgba(255, 106, 108, 50%) !important;
     border-radius: 50%;
+    content: " ";
+    -webkit-transform: scale(1.6);
+    transform: scale(1.6);
   }
 </style>

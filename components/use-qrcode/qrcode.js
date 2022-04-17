@@ -1,5 +1,5 @@
-let QRCode = {}
-;(function () {
+let QRCode = {};
+(function () {
   /**
    * 获取单个字符的utf8编码
    * unicode BMP平面约65535个字符
@@ -8,20 +8,20 @@ let QRCode = {}
    */
   function unicodeFormat8(code) {
     // 1 byte
-    var c0, c1, c2
+    var c0, c1, c2;
     if (code < 128) {
-      return [code]
+      return [code];
       // 2 bytes
     } else if (code < 2048) {
-      c0 = 192 + (code >> 6)
-      c1 = 128 + (code & 63)
-      return [c0, c1]
+      c0 = 192 + (code >> 6);
+      c1 = 128 + (code & 63);
+      return [c0, c1];
       // 3 bytes
     } else {
-      c0 = 224 + (code >> 12)
-      c1 = 128 + ((code >> 6) & 63)
-      c2 = 128 + (code & 63)
-      return [c0, c1, c2]
+      c0 = 224 + (code >> 12);
+      c1 = 128 + ((code >> 6) & 63);
+      c2 = 128 + (code & 63);
+      return [c0, c1, c2];
     }
   }
   /**
@@ -30,15 +30,15 @@ let QRCode = {}
    * @return {array}
    */
   function getUTF8Bytes(string) {
-    var utf8codes = []
+    var utf8codes = [];
     for (var i = 0; i < string.length; i++) {
-      var code = string.charCodeAt(i)
-      var utf8 = unicodeFormat8(code)
+      var code = string.charCodeAt(i);
+      var utf8 = unicodeFormat8(code);
       for (var j = 0; j < utf8.length; j++) {
-        utf8codes.push(utf8[j])
+        utf8codes.push(utf8[j]);
       }
     }
-    return utf8codes
+    return utf8codes;
   }
   /**
    * 二维码算法实现
@@ -46,16 +46,16 @@ let QRCode = {}
    * @param {num} errorCorrectLevel 纠错等级
    */
   function QRCodeAlg(data, errorCorrectLevel) {
-    this.typeNumber = -1 //版本
-    this.errorCorrectLevel = errorCorrectLevel
-    this.modules = null //二维矩阵，存放最终结果
-    this.moduleCount = 0 //矩阵大小
-    this.dataCache = null //数据缓存
-    this.rsBlocks = null //版本数据信息
-    this.totalDataCount = -1 //可使用的数据量
-    this.data = data
-    this.utf8bytes = getUTF8Bytes(data)
-    this.make()
+    this.typeNumber = -1; //版本
+    this.errorCorrectLevel = errorCorrectLevel;
+    this.modules = null; //二维矩阵，存放最终结果
+    this.moduleCount = 0; //矩阵大小
+    this.dataCache = null; //数据缓存
+    this.rsBlocks = null; //版本数据信息
+    this.totalDataCount = -1; //可使用的数据量
+    this.data = data;
+    this.utf8bytes = getUTF8Bytes(data);
+    this.make();
   }
   QRCodeAlg.prototype = {
     constructor: QRCodeAlg,
@@ -64,15 +64,15 @@ let QRCode = {}
      * @return {num} 矩阵大小
      */
     getModuleCount: function () {
-      return this.moduleCount
+      return this.moduleCount;
     },
     /**
      * 编码
      */
     make: function () {
-      this.getRightType()
-      this.dataCache = this.createData()
-      this.createQrcode()
+      this.getRightType();
+      this.dataCache = this.createData();
+      this.createQrcode();
     },
     /**
      * 设置二位矩阵功能图形
@@ -80,21 +80,21 @@ let QRCode = {}
      * @param  {num} maskPattern 掩膜的版本
      */
     makeImpl: function (maskPattern) {
-      this.moduleCount = this.typeNumber * 4 + 17
-      this.modules = new Array(this.moduleCount)
+      this.moduleCount = this.typeNumber * 4 + 17;
+      this.modules = new Array(this.moduleCount);
       for (var row = 0; row < this.moduleCount; row++) {
-        this.modules[row] = new Array(this.moduleCount)
+        this.modules[row] = new Array(this.moduleCount);
       }
-      this.setupPositionProbePattern(0, 0)
-      this.setupPositionProbePattern(this.moduleCount - 7, 0)
-      this.setupPositionProbePattern(0, this.moduleCount - 7)
-      this.setupPositionAdjustPattern()
-      this.setupTimingPattern()
-      this.setupTypeInfo(true, maskPattern)
+      this.setupPositionProbePattern(0, 0);
+      this.setupPositionProbePattern(this.moduleCount - 7, 0);
+      this.setupPositionProbePattern(0, this.moduleCount - 7);
+      this.setupPositionAdjustPattern();
+      this.setupTimingPattern();
+      this.setupTypeInfo(true, maskPattern);
       if (this.typeNumber >= 7) {
-        this.setupTypeNumber(true)
+        this.setupTypeNumber(true);
       }
-      this.mapData(this.dataCache, maskPattern)
+      this.mapData(this.dataCache, maskPattern);
     },
     /**
      * 设置二维码的位置探测图形
@@ -103,17 +103,17 @@ let QRCode = {}
      */
     setupPositionProbePattern: function (row, col) {
       for (var r = -1; r <= 7; r++) {
-        if (row + r <= -1 || this.moduleCount <= row + r) continue
+        if (row + r <= -1 || this.moduleCount <= row + r) continue;
         for (var c = -1; c <= 7; c++) {
-          if (col + c <= -1 || this.moduleCount <= col + c) continue
+          if (col + c <= -1 || this.moduleCount <= col + c) continue;
           if (
             (0 <= r && r <= 6 && (c == 0 || c == 6)) ||
             (0 <= c && c <= 6 && (r == 0 || r == 6)) ||
             (2 <= r && r <= 4 && 2 <= c && c <= 4)
           ) {
-            this.modules[row + r][col + c] = true
+            this.modules[row + r][col + c] = true;
           } else {
-            this.modules[row + r][col + c] = false
+            this.modules[row + r][col + c] = false;
           }
         }
       }
@@ -123,22 +123,22 @@ let QRCode = {}
      * @return {[type]} [description]
      */
     createQrcode: function () {
-      var minLostPoint = 0
-      var pattern = 0
-      var bestModules = null
+      var minLostPoint = 0;
+      var pattern = 0;
+      var bestModules = null;
       for (var i = 0; i < 8; i++) {
-        this.makeImpl(i)
-        var lostPoint = QRUtil.getLostPoint(this)
+        this.makeImpl(i);
+        var lostPoint = QRUtil.getLostPoint(this);
         if (i == 0 || minLostPoint > lostPoint) {
-          minLostPoint = lostPoint
-          pattern = i
-          bestModules = this.modules
+          minLostPoint = lostPoint;
+          pattern = i;
+          bestModules = this.modules;
         }
       }
-      this.modules = bestModules
-      this.setupTypeInfo(false, pattern)
+      this.modules = bestModules;
+      this.setupTypeInfo(false, pattern);
       if (this.typeNumber >= 7) {
-        this.setupTypeNumber(false)
+        this.setupTypeNumber(false);
       }
     },
     /**
@@ -148,13 +148,13 @@ let QRCode = {}
     setupTimingPattern: function () {
       for (var r = 8; r < this.moduleCount - 8; r++) {
         if (this.modules[r][6] != null) {
-          continue
+          continue;
         }
-        this.modules[r][6] = r % 2 == 0
+        this.modules[r][6] = r % 2 == 0;
         if (this.modules[6][r] != null) {
-          continue
+          continue;
         }
-        this.modules[6][r] = r % 2 == 0
+        this.modules[6][r] = r % 2 == 0;
       }
     },
     /**
@@ -162,20 +162,20 @@ let QRCode = {}
      * @return {[type]} [description]
      */
     setupPositionAdjustPattern: function () {
-      var pos = QRUtil.getPatternPosition(this.typeNumber)
+      var pos = QRUtil.getPatternPosition(this.typeNumber);
       for (var i = 0; i < pos.length; i++) {
         for (var j = 0; j < pos.length; j++) {
-          var row = pos[i]
-          var col = pos[j]
+          var row = pos[i];
+          var col = pos[j];
           if (this.modules[row][col] != null) {
-            continue
+            continue;
           }
           for (var r = -2; r <= 2; r++) {
             for (var c = -2; c <= 2; c++) {
               if (r == -2 || r == 2 || c == -2 || c == 2 || (r == 0 && c == 0)) {
-                this.modules[row + r][col + c] = true
+                this.modules[row + r][col + c] = true;
               } else {
-                this.modules[row + r][col + c] = false
+                this.modules[row + r][col + c] = false;
               }
             }
           }
@@ -188,11 +188,11 @@ let QRCode = {}
      * @return {[type]}      [description]
      */
     setupTypeNumber: function (test) {
-      var bits = QRUtil.getBCHTypeNumber(this.typeNumber)
+      var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
       for (var i = 0; i < 18; i++) {
-        var mod = !test && ((bits >> i) & 1) == 1
-        this.modules[Math.floor(i / 3)][(i % 3) + this.moduleCount - 8 - 3] = mod
-        this.modules[(i % 3) + this.moduleCount - 8 - 3][Math.floor(i / 3)] = mod
+        var mod = !test && ((bits >> i) & 1) == 1;
+        this.modules[Math.floor(i / 3)][(i % 3) + this.moduleCount - 8 - 3] = mod;
+        this.modules[(i % 3) + this.moduleCount - 8 - 3][Math.floor(i / 3)] = mod;
       }
     },
     /**
@@ -202,62 +202,62 @@ let QRCode = {}
      * @return {}
      */
     setupTypeInfo: function (test, maskPattern) {
-      var data = (QRErrorCorrectLevel[this.errorCorrectLevel] << 3) | maskPattern
-      var bits = QRUtil.getBCHTypeInfo(data)
+      var data = (QRErrorCorrectLevel[this.errorCorrectLevel] << 3) | maskPattern;
+      var bits = QRUtil.getBCHTypeInfo(data);
       // vertical
       for (var i = 0; i < 15; i++) {
-        var mod = !test && ((bits >> i) & 1) == 1
+        var mod = !test && ((bits >> i) & 1) == 1;
         if (i < 6) {
-          this.modules[i][8] = mod
+          this.modules[i][8] = mod;
         } else if (i < 8) {
-          this.modules[i + 1][8] = mod
+          this.modules[i + 1][8] = mod;
         } else {
-          this.modules[this.moduleCount - 15 + i][8] = mod
+          this.modules[this.moduleCount - 15 + i][8] = mod;
         }
         // horizontal
-        var mod = !test && ((bits >> i) & 1) == 1
+        var mod = !test && ((bits >> i) & 1) == 1;
         if (i < 8) {
-          this.modules[8][this.moduleCount - i - 1] = mod
+          this.modules[8][this.moduleCount - i - 1] = mod;
         } else if (i < 9) {
-          this.modules[8][15 - i - 1 + 1] = mod
+          this.modules[8][15 - i - 1 + 1] = mod;
         } else {
-          this.modules[8][15 - i - 1] = mod
+          this.modules[8][15 - i - 1] = mod;
         }
       }
       // fixed module
-      this.modules[this.moduleCount - 8][8] = !test
+      this.modules[this.moduleCount - 8][8] = !test;
     },
     /**
      * 数据编码
      * @return {[type]} [description]
      */
     createData: function () {
-      var buffer = new QRBitBuffer()
-      var lengthBits = this.typeNumber > 9 ? 16 : 8
-      buffer.put(4, 4) //添加模式
-      buffer.put(this.utf8bytes.length, lengthBits)
+      var buffer = new QRBitBuffer();
+      var lengthBits = this.typeNumber > 9 ? 16 : 8;
+      buffer.put(4, 4); //添加模式
+      buffer.put(this.utf8bytes.length, lengthBits);
       for (var i = 0, l = this.utf8bytes.length; i < l; i++) {
-        buffer.put(this.utf8bytes[i], 8)
+        buffer.put(this.utf8bytes[i], 8);
       }
       if (buffer.length + 4 <= this.totalDataCount * 8) {
-        buffer.put(0, 4)
+        buffer.put(0, 4);
       }
       // padding
       while (buffer.length % 8 != 0) {
-        buffer.putBit(false)
+        buffer.putBit(false);
       }
       // padding
       while (true) {
         if (buffer.length >= this.totalDataCount * 8) {
-          break
+          break;
         }
-        buffer.put(QRCodeAlg.PAD0, 8)
+        buffer.put(QRCodeAlg.PAD0, 8);
         if (buffer.length >= this.totalDataCount * 8) {
-          break
+          break;
         }
-        buffer.put(QRCodeAlg.PAD1, 8)
+        buffer.put(QRCodeAlg.PAD1, 8);
       }
-      return this.createBytes(buffer)
+      return this.createBytes(buffer);
     },
     /**
      * 纠错码编码
@@ -265,57 +265,57 @@ let QRCode = {}
      * @return {[type]}
      */
     createBytes: function (buffer) {
-      var offset = 0
-      var maxDcCount = 0
-      var maxEcCount = 0
-      var length = this.rsBlock.length / 3
-      var rsBlocks = new Array()
+      var offset = 0;
+      var maxDcCount = 0;
+      var maxEcCount = 0;
+      var length = this.rsBlock.length / 3;
+      var rsBlocks = new Array();
       for (var i = 0; i < length; i++) {
-        var count = this.rsBlock[i * 3 + 0]
-        var totalCount = this.rsBlock[i * 3 + 1]
-        var dataCount = this.rsBlock[i * 3 + 2]
+        var count = this.rsBlock[i * 3 + 0];
+        var totalCount = this.rsBlock[i * 3 + 1];
+        var dataCount = this.rsBlock[i * 3 + 2];
         for (var j = 0; j < count; j++) {
-          rsBlocks.push([dataCount, totalCount])
+          rsBlocks.push([dataCount, totalCount]);
         }
       }
-      var dcdata = new Array(rsBlocks.length)
-      var ecdata = new Array(rsBlocks.length)
+      var dcdata = new Array(rsBlocks.length);
+      var ecdata = new Array(rsBlocks.length);
       for (var r = 0; r < rsBlocks.length; r++) {
-        var dcCount = rsBlocks[r][0]
-        var ecCount = rsBlocks[r][1] - dcCount
-        maxDcCount = Math.max(maxDcCount, dcCount)
-        maxEcCount = Math.max(maxEcCount, ecCount)
-        dcdata[r] = new Array(dcCount)
+        var dcCount = rsBlocks[r][0];
+        var ecCount = rsBlocks[r][1] - dcCount;
+        maxDcCount = Math.max(maxDcCount, dcCount);
+        maxEcCount = Math.max(maxEcCount, ecCount);
+        dcdata[r] = new Array(dcCount);
         for (var i = 0; i < dcdata[r].length; i++) {
-          dcdata[r][i] = 0xff & buffer.buffer[i + offset]
+          dcdata[r][i] = 0xff & buffer.buffer[i + offset];
         }
-        offset += dcCount
-        var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount)
-        var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1)
-        var modPoly = rawPoly.mod(rsPoly)
-        ecdata[r] = new Array(rsPoly.getLength() - 1)
+        offset += dcCount;
+        var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+        var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+        var modPoly = rawPoly.mod(rsPoly);
+        ecdata[r] = new Array(rsPoly.getLength() - 1);
         for (var i = 0; i < ecdata[r].length; i++) {
-          var modIndex = i + modPoly.getLength() - ecdata[r].length
-          ecdata[r][i] = modIndex >= 0 ? modPoly.get(modIndex) : 0
+          var modIndex = i + modPoly.getLength() - ecdata[r].length;
+          ecdata[r][i] = modIndex >= 0 ? modPoly.get(modIndex) : 0;
         }
       }
-      var data = new Array(this.totalDataCount)
-      var index = 0
+      var data = new Array(this.totalDataCount);
+      var index = 0;
       for (var i = 0; i < maxDcCount; i++) {
         for (var r = 0; r < rsBlocks.length; r++) {
           if (i < dcdata[r].length) {
-            data[index++] = dcdata[r][i]
+            data[index++] = dcdata[r][i];
           }
         }
       }
       for (var i = 0; i < maxEcCount; i++) {
         for (var r = 0; r < rsBlocks.length; r++) {
           if (i < ecdata[r].length) {
-            data[index++] = ecdata[r][i]
+            data[index++] = ecdata[r][i];
           }
         }
       }
-      return data
+      return data;
     },
     /**
      * 布置模块，构建最终信息
@@ -324,50 +324,50 @@ let QRCode = {}
      * @return {}
      */
     mapData: function (data, maskPattern) {
-      var inc = -1
-      var row = this.moduleCount - 1
-      var bitIndex = 7
-      var byteIndex = 0
+      var inc = -1;
+      var row = this.moduleCount - 1;
+      var bitIndex = 7;
+      var byteIndex = 0;
       for (var col = this.moduleCount - 1; col > 0; col -= 2) {
-        if (col == 6) col--
+        if (col == 6) col--;
         while (true) {
           for (var c = 0; c < 2; c++) {
             if (this.modules[row][col - c] == null) {
-              var dark = false
+              var dark = false;
               if (byteIndex < data.length) {
-                dark = ((data[byteIndex] >>> bitIndex) & 1) == 1
+                dark = ((data[byteIndex] >>> bitIndex) & 1) == 1;
               }
-              var mask = QRUtil.getMask(maskPattern, row, col - c)
+              var mask = QRUtil.getMask(maskPattern, row, col - c);
               if (mask) {
-                dark = !dark
+                dark = !dark;
               }
-              this.modules[row][col - c] = dark
-              bitIndex--
+              this.modules[row][col - c] = dark;
+              bitIndex--;
               if (bitIndex == -1) {
-                byteIndex++
-                bitIndex = 7
+                byteIndex++;
+                bitIndex = 7;
               }
             }
           }
-          row += inc
+          row += inc;
           if (row < 0 || this.moduleCount <= row) {
-            row -= inc
-            inc = -inc
-            break
+            row -= inc;
+            inc = -inc;
+            break;
           }
         }
       }
     },
-  }
+  };
   /**
    * 填充字段
    */
-  QRCodeAlg.PAD0 = 0xec
-  QRCodeAlg.PAD1 = 0x11
+  QRCodeAlg.PAD0 = 0xec;
+  QRCodeAlg.PAD1 = 0x11;
   //---------------------------------------------------------------------
   // 纠错等级对应的编码
   //---------------------------------------------------------------------
-  var QRErrorCorrectLevel = [1, 0, 3, 2]
+  var QRErrorCorrectLevel = [1, 0, 3, 2];
   //---------------------------------------------------------------------
   // 掩膜版本
   //---------------------------------------------------------------------
@@ -380,7 +380,7 @@ let QRCode = {}
     PATTERN101: 5,
     PATTERN110: 6,
     PATTERN111: 7,
-  }
+  };
   //---------------------------------------------------------------------
   // 工具类
   //---------------------------------------------------------------------
@@ -437,38 +437,38 @@ let QRCode = {}
         BCH编码格式信息
          */
     getBCHTypeInfo: function (data) {
-      var d = data << 10
+      var d = data << 10;
       while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
-        d ^= QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15))
+        d ^= QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15));
       }
-      return ((data << 10) | d) ^ QRUtil.G15_MASK
+      return ((data << 10) | d) ^ QRUtil.G15_MASK;
     },
     /*
         BCH编码版本信息
          */
     getBCHTypeNumber: function (data) {
-      var d = data << 12
+      var d = data << 12;
       while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
-        d ^= QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18))
+        d ^= QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18));
       }
-      return (data << 12) | d
+      return (data << 12) | d;
     },
     /*
         获取BCH位信息
          */
     getBCHDigit: function (data) {
-      var digit = 0
+      var digit = 0;
       while (data != 0) {
-        digit++
-        data >>>= 1
+        digit++;
+        data >>>= 1;
       }
-      return digit
+      return digit;
     },
     /*
         获取版本对应的矫正图形位置
          */
     getPatternPosition: function (typeNumber) {
-      return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1]
+      return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
     },
     /*
         掩膜算法
@@ -476,34 +476,34 @@ let QRCode = {}
     getMask: function (maskPattern, i, j) {
       switch (maskPattern) {
         case QRMaskPattern.PATTERN000:
-          return (i + j) % 2 == 0
+          return (i + j) % 2 == 0;
         case QRMaskPattern.PATTERN001:
-          return i % 2 == 0
+          return i % 2 == 0;
         case QRMaskPattern.PATTERN010:
-          return j % 3 == 0
+          return j % 3 == 0;
         case QRMaskPattern.PATTERN011:
-          return (i + j) % 3 == 0
+          return (i + j) % 3 == 0;
         case QRMaskPattern.PATTERN100:
-          return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 == 0
+          return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 == 0;
         case QRMaskPattern.PATTERN101:
-          return ((i * j) % 2) + ((i * j) % 3) == 0
+          return ((i * j) % 2) + ((i * j) % 3) == 0;
         case QRMaskPattern.PATTERN110:
-          return (((i * j) % 2) + ((i * j) % 3)) % 2 == 0
+          return (((i * j) % 2) + ((i * j) % 3)) % 2 == 0;
         case QRMaskPattern.PATTERN111:
-          return (((i * j) % 3) + ((i + j) % 2)) % 2 == 0
+          return (((i * j) % 3) + ((i + j) % 2)) % 2 == 0;
         default:
-          throw new Error('bad maskPattern:' + maskPattern)
+          throw new Error('bad maskPattern:' + maskPattern);
       }
     },
     /*
         获取RS的纠错多项式
          */
     getErrorCorrectPolynomial: function (errorCorrectLength) {
-      var a = new QRPolynomial([1], 0)
+      var a = new QRPolynomial([1], 0);
       for (var i = 0; i < errorCorrectLength; i++) {
-        a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0))
+        a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0));
       }
-      return a
+      return a;
     },
     /*
         获取评价
@@ -511,12 +511,12 @@ let QRCode = {}
     getLostPoint: function (qrCode) {
       var moduleCount = qrCode.getModuleCount(),
         lostPoint = 0,
-        darkCount = 0
+        darkCount = 0;
       for (var row = 0; row < moduleCount; row++) {
-        var sameCount = 0
-        var head = qrCode.modules[row][0]
+        var sameCount = 0;
+        var head = qrCode.modules[row][0];
         for (var col = 0; col < moduleCount; col++) {
-          var current = qrCode.modules[row][col]
+          var current = qrCode.modules[row][col];
           //level 3 评价
           if (col < moduleCount - 6) {
             if (
@@ -535,7 +535,7 @@ let QRCode = {}
                   qrCode.modules[row][col + 9] &&
                   qrCode.modules[row][col + 10]
                 ) {
-                  lostPoint += 40
+                  lostPoint += 40;
                 }
               } else if (col > 3) {
                 if (
@@ -544,43 +544,43 @@ let QRCode = {}
                   qrCode.modules[row][col - 3] &&
                   qrCode.modules[row][col - 4]
                 ) {
-                  lostPoint += 40
+                  lostPoint += 40;
                 }
               }
             }
           }
           //level 2 评价
           if (row < moduleCount - 1 && col < moduleCount - 1) {
-            var count = 0
-            if (current) count++
-            if (qrCode.modules[row + 1][col]) count++
-            if (qrCode.modules[row][col + 1]) count++
-            if (qrCode.modules[row + 1][col + 1]) count++
+            var count = 0;
+            if (current) count++;
+            if (qrCode.modules[row + 1][col]) count++;
+            if (qrCode.modules[row][col + 1]) count++;
+            if (qrCode.modules[row + 1][col + 1]) count++;
             if (count == 0 || count == 4) {
-              lostPoint += 3
+              lostPoint += 3;
             }
           }
           //level 1 评价
           if (head ^ current) {
-            sameCount++
+            sameCount++;
           } else {
-            head = current
+            head = current;
             if (sameCount >= 5) {
-              lostPoint += 3 + sameCount - 5
+              lostPoint += 3 + sameCount - 5;
             }
-            sameCount = 1
+            sameCount = 1;
           }
           //level 4 评价
           if (current) {
-            darkCount++
+            darkCount++;
           }
         }
       }
       for (var col = 0; col < moduleCount; col++) {
-        var sameCount = 0
-        var head = qrCode.modules[0][col]
+        var sameCount = 0;
+        var head = qrCode.modules[0][col];
         for (var row = 0; row < moduleCount; row++) {
-          var current = qrCode.modules[row][col]
+          var current = qrCode.modules[row][col];
           //level 3 评价
           if (row < moduleCount - 6) {
             if (
@@ -599,7 +599,7 @@ let QRCode = {}
                   qrCode.modules[row + 9][col] &&
                   qrCode.modules[row + 10][col]
                 ) {
-                  lostPoint += 40
+                  lostPoint += 40;
                 }
               } else if (row > 3) {
                 if (
@@ -608,29 +608,29 @@ let QRCode = {}
                   qrCode.modules[row - 3][col] &&
                   qrCode.modules[row - 4][col]
                 ) {
-                  lostPoint += 40
+                  lostPoint += 40;
                 }
               }
             }
           }
           //level 1 评价
           if (head ^ current) {
-            sameCount++
+            sameCount++;
           } else {
-            head = current
+            head = current;
             if (sameCount >= 5) {
-              lostPoint += 3 + sameCount - 5
+              lostPoint += 3 + sameCount - 5;
             }
-            sameCount = 1
+            sameCount = 1;
           }
         }
       }
       // LEVEL4
-      var ratio = Math.abs((100 * darkCount) / moduleCount / moduleCount - 50) / 5
-      lostPoint += ratio * 10
-      return lostPoint
+      var ratio = Math.abs((100 * darkCount) / moduleCount / moduleCount - 50) / 5;
+      lostPoint += ratio * 10;
+      return lostPoint;
     },
-  }
+  };
   //---------------------------------------------------------------------
   // QRMath使用的数学工具
   //---------------------------------------------------------------------
@@ -640,37 +640,34 @@ let QRCode = {}
          */
     glog: function (n) {
       if (n < 1) {
-        throw new Error('glog(' + n + ')')
+        throw new Error('glog(' + n + ')');
       }
-      return QRMath.LOG_TABLE[n]
+      return QRMath.LOG_TABLE[n];
     },
     /*
         将a^m转化为n
          */
     gexp: function (n) {
       while (n < 0) {
-        n += 255
+        n += 255;
       }
       while (n >= 256) {
-        n -= 255
+        n -= 255;
       }
-      return QRMath.EXP_TABLE[n]
+      return QRMath.EXP_TABLE[n];
     },
     EXP_TABLE: new Array(256),
     LOG_TABLE: new Array(256),
-  }
+  };
   for (var i = 0; i < 8; i++) {
-    QRMath.EXP_TABLE[i] = 1 << i
+    QRMath.EXP_TABLE[i] = 1 << i;
   }
   for (var i = 8; i < 256; i++) {
     QRMath.EXP_TABLE[i] =
-      QRMath.EXP_TABLE[i - 4] ^
-      QRMath.EXP_TABLE[i - 5] ^
-      QRMath.EXP_TABLE[i - 6] ^
-      QRMath.EXP_TABLE[i - 8]
+      QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
   }
   for (var i = 0; i < 255; i++) {
-    QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i
+    QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
   }
   //---------------------------------------------------------------------
   // QRPolynomial 多项式
@@ -682,23 +679,23 @@ let QRCode = {}
    */
   function QRPolynomial(num, shift) {
     if (num.length == undefined) {
-      throw new Error(num.length + '/' + shift)
+      throw new Error(num.length + '/' + shift);
     }
-    var offset = 0
+    var offset = 0;
     while (offset < num.length && num[offset] == 0) {
-      offset++
+      offset++;
     }
-    this.num = new Array(num.length - offset + shift)
+    this.num = new Array(num.length - offset + shift);
     for (var i = 0; i < num.length - offset; i++) {
-      this.num[i] = num[i + offset]
+      this.num[i] = num[i + offset];
     }
   }
   QRPolynomial.prototype = {
     get: function (index) {
-      return this.num[index]
+      return this.num[index];
     },
     getLength: function () {
-      return this.num.length
+      return this.num.length;
     },
     /**
      * 多项式乘法
@@ -706,13 +703,13 @@ let QRCode = {}
      * @return {[type]}   [description]
      */
     multiply: function (e) {
-      var num = new Array(this.getLength() + e.getLength() - 1)
+      var num = new Array(this.getLength() + e.getLength() - 1);
       for (var i = 0; i < this.getLength(); i++) {
         for (var j = 0; j < e.getLength(); j++) {
-          num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i)) + QRMath.glog(e.get(j)))
+          num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i)) + QRMath.glog(e.get(j)));
         }
       }
-      return new QRPolynomial(num, 0)
+      return new QRPolynomial(num, 0);
     },
     /**
      * 多项式模运算
@@ -721,27 +718,27 @@ let QRCode = {}
      */
     mod: function (e) {
       var tl = this.getLength(),
-        el = e.getLength()
+        el = e.getLength();
       if (tl - el < 0) {
-        return this
+        return this;
       }
-      var num = new Array(tl)
+      var num = new Array(tl);
       for (var i = 0; i < tl; i++) {
-        num[i] = this.get(i)
+        num[i] = this.get(i);
       }
       while (num.length >= el) {
-        var ratio = QRMath.glog(num[0]) - QRMath.glog(e.get(0))
+        var ratio = QRMath.glog(num[0]) - QRMath.glog(e.get(0));
 
         for (var i = 0; i < e.getLength(); i++) {
-          num[i] ^= QRMath.gexp(QRMath.glog(e.get(i)) + ratio)
+          num[i] ^= QRMath.gexp(QRMath.glog(e.get(i)) + ratio);
         }
         while (num[0] == 0) {
-          num.shift()
+          num.shift();
         }
       }
-      return new QRPolynomial(num, 0)
+      return new QRPolynomial(num, 0);
     },
-  }
+  };
 
   //---------------------------------------------------------------------
   // RS_BLOCK_TABLE
@@ -993,7 +990,7 @@ let QRCode = {}
     [18, 75, 47, 31, 76, 48],
     [34, 54, 24, 34, 55, 25],
     [20, 45, 15, 61, 46, 16],
-  ]
+  ];
 
   /**
    * 根据数据获取对应版本
@@ -1001,60 +998,58 @@ let QRCode = {}
    */
   QRCodeAlg.prototype.getRightType = function () {
     for (var typeNumber = 1; typeNumber < 41; typeNumber++) {
-      var rsBlock = RS_BLOCK_TABLE[(typeNumber - 1) * 4 + this.errorCorrectLevel]
+      var rsBlock = RS_BLOCK_TABLE[(typeNumber - 1) * 4 + this.errorCorrectLevel];
       if (rsBlock == undefined) {
-        throw new Error(
-          'bad rs block @ typeNumber:' + typeNumber + '/errorCorrectLevel:' + this.errorCorrectLevel
-        )
+        throw new Error('bad rs block @ typeNumber:' + typeNumber + '/errorCorrectLevel:' + this.errorCorrectLevel);
       }
-      var length = rsBlock.length / 3
-      var totalDataCount = 0
+      var length = rsBlock.length / 3;
+      var totalDataCount = 0;
       for (var i = 0; i < length; i++) {
-        var count = rsBlock[i * 3 + 0]
-        var dataCount = rsBlock[i * 3 + 2]
-        totalDataCount += dataCount * count
+        var count = rsBlock[i * 3 + 0];
+        var dataCount = rsBlock[i * 3 + 2];
+        totalDataCount += dataCount * count;
       }
-      var lengthBytes = typeNumber > 9 ? 2 : 1
+      var lengthBytes = typeNumber > 9 ? 2 : 1;
       if (this.utf8bytes.length + lengthBytes < totalDataCount || typeNumber == 40) {
-        this.typeNumber = typeNumber
-        this.rsBlock = rsBlock
-        this.totalDataCount = totalDataCount
-        break
+        this.typeNumber = typeNumber;
+        this.rsBlock = rsBlock;
+        this.totalDataCount = totalDataCount;
+        break;
       }
     }
-  }
+  };
 
   //---------------------------------------------------------------------
   // QRBitBuffer
   //---------------------------------------------------------------------
   function QRBitBuffer() {
-    this.buffer = new Array()
-    this.length = 0
+    this.buffer = new Array();
+    this.length = 0;
   }
   QRBitBuffer.prototype = {
     get: function (index) {
-      var bufIndex = Math.floor(index / 8)
-      return (this.buffer[bufIndex] >>> (7 - (index % 8))) & 1
+      var bufIndex = Math.floor(index / 8);
+      return (this.buffer[bufIndex] >>> (7 - (index % 8))) & 1;
     },
     put: function (num, length) {
       for (var i = 0; i < length; i++) {
-        this.putBit((num >>> (length - i - 1)) & 1)
+        this.putBit((num >>> (length - i - 1)) & 1);
       }
     },
     putBit: function (bit) {
-      var bufIndex = Math.floor(this.length / 8)
+      var bufIndex = Math.floor(this.length / 8);
       if (this.buffer.length <= bufIndex) {
-        this.buffer.push(0)
+        this.buffer.push(0);
       }
       if (bit) {
-        this.buffer[bufIndex] |= 0x80 >>> this.length % 8
+        this.buffer[bufIndex] |= 0x80 >>> this.length % 8;
       }
-      this.length++
+      this.length++;
     },
-  }
+  };
 
   // xzedit
-  let qrcodeAlgObjCache = []
+  let qrcodeAlgObjCache = [];
   /**
    * 二维码构造函数，主要用于绘制
    * @param  {参数列表} opt 传递参数
@@ -1076,36 +1071,36 @@ let QRCode = {}
       usingComponents: opt.usingComponents,
       showLoading: opt.showLoading,
       loadingText: opt.loadingText,
-    }
+    };
     if (typeof opt === 'string') {
       // 只编码ASCII字符串
       opt = {
         text: opt,
-      }
+      };
     }
     if (opt) {
       for (var i in opt) {
-        this.options[i] = opt[i]
+        this.options[i] = opt[i];
       }
     }
     //使用QRCodeAlg创建二维码结构
-    var qrCodeAlg = null
+    var qrCodeAlg = null;
     for (var i = 0, l = qrcodeAlgObjCache.length; i < l; i++) {
       if (
         qrcodeAlgObjCache[i].text == this.options.text &&
         qrcodeAlgObjCache[i].text.correctLevel == this.options.correctLevel
       ) {
-        qrCodeAlg = qrcodeAlgObjCache[i].obj
-        break
+        qrCodeAlg = qrcodeAlgObjCache[i].obj;
+        break;
       }
     }
     if (i == l) {
-      qrCodeAlg = new QRCodeAlg(this.options.text, this.options.correctLevel)
+      qrCodeAlg = new QRCodeAlg(this.options.text, this.options.correctLevel);
       qrcodeAlgObjCache.push({
         text: this.options.text,
         correctLevel: this.options.correctLevel,
         obj: qrCodeAlg,
-      })
+      });
     }
     /**
      * 计算矩阵点的前景色
@@ -1117,75 +1112,69 @@ let QRCode = {}
      * @return {String}
      */
     let getForeGround = function (config) {
-      var options = config.options
+      var options = config.options;
       if (
         options.pdground &&
         ((config.row > 1 && config.row < 5 && config.col > 1 && config.col < 5) ||
-          (config.row > config.count - 6 &&
-            config.row < config.count - 2 &&
-            config.col > 1 &&
-            config.col < 5) ||
-          (config.row > 1 &&
-            config.row < 5 &&
-            config.col > config.count - 6 &&
-            config.col < config.count - 2))
+          (config.row > config.count - 6 && config.row < config.count - 2 && config.col > 1 && config.col < 5) ||
+          (config.row > 1 && config.row < 5 && config.col > config.count - 6 && config.col < config.count - 2))
       ) {
-        return options.pdground
+        return options.pdground;
       }
-      return options.foreground
-    }
+      return options.foreground;
+    };
     // 创建canvas
     let createCanvas = function (options) {
       if (options.showLoading) {
         uni.showLoading({
           title: options.loadingText,
           mask: true,
-        })
+        });
       }
-      var ctx = uni.createCanvasContext(options.canvasId, options.context)
-      var count = qrCodeAlg.getModuleCount()
-      var ratioSize = options.size
-      var ratioImgSize = options.imageSize
+      var ctx = uni.createCanvasContext(options.canvasId, options.context);
+      var count = qrCodeAlg.getModuleCount();
+      var ratioSize = options.size;
+      var ratioImgSize = options.imageSize;
       //计算每个点的长宽
-      var tileW = (ratioSize / count).toPrecision(4)
-      var tileH = (ratioSize / count).toPrecision(4)
+      var tileW = (ratioSize / count).toPrecision(4);
+      var tileH = (ratioSize / count).toPrecision(4);
       //绘制
       for (var row = 0; row < count; row++) {
         for (var col = 0; col < count; col++) {
-          var w = Math.ceil((col + 1) * tileW) - Math.floor(col * tileW)
-          var h = Math.ceil((row + 1) * tileW) - Math.floor(row * tileW)
+          var w = Math.ceil((col + 1) * tileW) - Math.floor(col * tileW);
+          var h = Math.ceil((row + 1) * tileW) - Math.floor(row * tileW);
           var foreground = getForeGround({
             row: row,
             col: col,
             count: count,
             options: options,
-          })
-          ctx.setFillStyle(qrCodeAlg.modules[row][col] ? foreground : options.background)
-          ctx.fillRect(Math.round(col * tileW), Math.round(row * tileH), w, h)
+          });
+          ctx.setFillStyle(qrCodeAlg.modules[row][col] ? foreground : options.background);
+          ctx.fillRect(Math.round(col * tileW), Math.round(row * tileH), w, h);
         }
       }
       if (options.image) {
-        var x = Number(((ratioSize - ratioImgSize) / 2).toFixed(2))
-        var y = Number(((ratioSize - ratioImgSize) / 2).toFixed(2))
-        drawRoundedRect(ctx, x, y, ratioImgSize, ratioImgSize, 2, 6, true, true)
-        ctx.drawImage(options.image, x, y, ratioImgSize, ratioImgSize)
+        var x = Number(((ratioSize - ratioImgSize) / 2).toFixed(2));
+        var y = Number(((ratioSize - ratioImgSize) / 2).toFixed(2));
+        drawRoundedRect(ctx, x, y, ratioImgSize, ratioImgSize, 2, 6, true, true);
+        ctx.drawImage(options.image, x, y, ratioImgSize, ratioImgSize);
         // 画圆角矩形
         function drawRoundedRect(ctxi, x, y, width, height, r, lineWidth, fill, stroke) {
-          ctxi.setLineWidth(lineWidth)
-          ctxi.setFillStyle(options.background)
-          ctxi.setStrokeStyle(options.background)
-          ctxi.beginPath() // draw top and top right corner
-          ctxi.moveTo(x + r, y)
-          ctxi.arcTo(x + width, y, x + width, y + r, r) // draw right side and bottom right corner
-          ctxi.arcTo(x + width, y + height, x + width - r, y + height, r) // draw bottom and bottom left corner
-          ctxi.arcTo(x, y + height, x, y + height - r, r) // draw left and top left corner
-          ctxi.arcTo(x, y, x + r, y, r)
-          ctxi.closePath()
+          ctxi.setLineWidth(lineWidth);
+          ctxi.setFillStyle(options.background);
+          ctxi.setStrokeStyle(options.background);
+          ctxi.beginPath(); // draw top and top right corner
+          ctxi.moveTo(x + r, y);
+          ctxi.arcTo(x + width, y, x + width, y + r, r); // draw right side and bottom right corner
+          ctxi.arcTo(x + width, y + height, x + width - r, y + height, r); // draw bottom and bottom left corner
+          ctxi.arcTo(x, y + height, x, y + height - r, r); // draw left and top left corner
+          ctxi.arcTo(x, y, x + r, y, r);
+          ctxi.closePath();
           if (fill) {
-            ctxi.fill()
+            ctxi.fill();
           }
           if (stroke) {
-            ctxi.stroke()
+            ctxi.stroke();
           }
         }
       }
@@ -1204,56 +1193,56 @@ let QRCode = {}
                   quality: Number(1),
                   success: function (res) {
                     if (options.cbResult) {
-                      options.cbResult(res.tempFilePath)
+                      options.cbResult(res.tempFilePath);
                     }
                   },
                   fail: function (res) {
                     if (options.cbResult) {
-                      options.cbResult(res)
+                      options.cbResult(res);
                     }
                   },
                   complete: function () {
                     if (options.showLoading) {
-                      uni.hideLoading()
+                      uni.hideLoading();
                     }
                   },
                 },
                 options.context
-              )
-            }, options.text.length + 100)
-          })
+              );
+            }, options.text.length + 100);
+          });
         },
         options.usingComponents ? 0 : 150
-      )
-    }
-    createCanvas(this.options)
+      );
+    };
+    createCanvas(this.options);
     // 空判定
     let empty = function (v) {
       let tp = typeof v,
-        rt = false
+        rt = false;
       if (tp == 'number' && String(v) == '') {
-        rt = true
+        rt = true;
       } else if (tp == 'undefined') {
-        rt = true
+        rt = true;
       } else if (tp == 'object') {
-        if (JSON.stringify(v) == '{}' || JSON.stringify(v) == '[]' || v == null) rt = true
+        if (JSON.stringify(v) == '{}' || JSON.stringify(v) == '[]' || v == null) rt = true;
       } else if (tp == 'string') {
-        if (v == '' || v == 'undefined' || v == 'null' || v == '{}' || v == '[]') rt = true
+        if (v == '' || v == 'undefined' || v == 'null' || v == '{}' || v == '[]') rt = true;
       } else if (tp == 'function') {
-        rt = false
+        rt = false;
       }
-      return rt
-    }
-  }
+      return rt;
+    };
+  };
   QRCode.prototype.clear = function (fn) {
-    var ctx = uni.createCanvasContext(this.options.canvasId, this.options.context)
-    ctx.clearRect(0, 0, this.options.size, this.options.size)
+    var ctx = uni.createCanvasContext(this.options.canvasId, this.options.context);
+    ctx.clearRect(0, 0, this.options.size, this.options.size);
     ctx.draw(false, () => {
       if (fn) {
-        fn()
+        fn();
       }
-    })
-  }
-})()
+    });
+  };
+})();
 
-export default QRCode
+export default QRCode;

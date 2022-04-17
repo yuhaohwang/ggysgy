@@ -16,9 +16,7 @@
         />
       </view>
 
-      <view class="bg-base border-radius-big padding-tb-xs padding-lr margin-left" @click="search"
-        >搜索</view
-      >
+      <view class="bg-base border-radius-big padding-tb-xs padding-lr margin-left" @click="search">搜索</view>
     </view>
     <view class="gap"></view>
 
@@ -28,10 +26,7 @@
         <view class="dflex">
           <text>搜索历史</text>
         </view>
-        <view
-          class="iconfont iconfont iconlajitong-01 dflex-c ft-dark padding-sm"
-          @click="clear"
-        ></view>
+        <view class="iconfont iconfont iconlajitong-01 dflex-c ft-dark padding-sm" @click="clear"></view>
       </view>
       <view class="dflex dflex-wrap-w">
         <view
@@ -66,9 +61,9 @@
 </template>
 
 <script>
-  const _history = 'usemall-search-history'
-  const _hot = 'usemall-search-hot'
-  import { mapState } from 'vuex'
+  const _history = 'usemall-search-history';
+  const _hot = 'usemall-search-hot';
+  import { mapState } from 'vuex';
   export default {
     computed: {
       ...mapState(['islogin']),
@@ -82,14 +77,14 @@
         historyDatas: [],
         // 热门搜索
         hotDatas: [],
-      }
+      };
     },
     onShow() {
       // 初始化
-      this.keyword = ''
+      this.keyword = '';
 
       // 加载数据
-      this.loadData()
+      this.loadData();
     },
     methods: {
       loadData() {
@@ -99,16 +94,16 @@
             .tolist({ orderby: 'last_modify_time desc' })
             .then((res) => {
               if (res.code === 200) {
-                this.historyDatas = res.datas
+                this.historyDatas = res.datas;
               }
-            })
+            });
         }
 
         this.$db[_hot].tolist({ orderby: 'search_cnt desc' }).then((res) => {
           if (res.code === 200) {
-            this.hotDatas = res.datas
+            this.hotDatas = res.datas;
           }
-        })
+        });
       },
 
       // 搜索
@@ -117,23 +112,23 @@
           case 'history':
             this.$api.togoodslist({
               keyword: res.keyword,
-            })
-            break
+            });
+            break;
           case 'hot':
             this.$api.togoodslist({
               sid: res._id,
-            })
-            break
+            });
+            break;
           default:
             this.$api.togoodslist({
               keyword: this.keyword,
-            })
-            break
+            });
+            break;
         }
       },
       // 清空搜索历史
       clear() {
-        let _this = this
+        let _this = this;
 
         uni.showModal({
           title: '提示',
@@ -145,19 +140,19 @@
                 .remove()
                 .then((res) => {
                   if (res.code === 200) {
-                    _this.historyDatas = []
-                    return
+                    _this.historyDatas = [];
+                    return;
                   }
-                  _this.$api.msg(res.msg)
-                })
+                  _this.$api.msg(res.msg);
+                });
             } else if (res.cancel) {
-              console.log('用户点击取消')
+              console.log('用户点击取消');
             }
           },
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -166,8 +161,8 @@
 
     input {
       width: 560rpx;
-      padding-left: 60rpx;
       height: 64rpx;
+      padding-left: 60rpx;
       line-height: 64rpx;
       background-color: #f5f5f5;
     }
@@ -175,8 +170,8 @@
     .icon-search {
       top: 50%;
       left: 40rpx;
-      transform: translate(0, -50%);
       z-index: 1;
+      transform: translate(0, -50%);
 
       text {
         color: #c0c0c0;

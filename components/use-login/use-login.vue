@@ -7,11 +7,7 @@
         ><text>{{ title }}</text></view
       >
       <view class="dflex dflex-flow-c margin-top">
-        <image
-          class="image-sm"
-          mode="aspectFill"
-          src="../../static/images/user/default.png"
-        ></image>
+        <image class="image-sm" mode="aspectFill" src="../../static/images/user/default.png"></image>
         <text class="">微信授权</text>
       </view>
       <view class="btn-contaer margin-top-lg">
@@ -58,9 +54,9 @@
     computed: {
       __show: {
         get() {
-          console.log('is_show', this.show)
-          this.is_show = this.show
-          return this.show
+          console.log('is_show', this.show);
+          this.is_show = this.show;
+          return this.show;
         },
         set() {},
       },
@@ -68,45 +64,45 @@
     data() {
       return {
         is_show: this.show,
-      }
+      };
     },
     methods: {
       cancel() {
-        this.is_show = false
+        this.is_show = false;
         this.$emit('cancel', {
           type: 'cancel',
-        })
+        });
       },
       getUserInfo(wx_userinfo) {
-        this.is_show = false
-        let _this = this
+        this.is_show = false;
+        let _this = this;
         if (!wx_userinfo.detail.iv) {
           this.$emit('auth', {
             type: 'userinfo',
             result: 'cancel',
-          })
-          return false
+          });
+          return false;
         }
-        console.log('-------用户授权，并获取用户基本信息和加密数据------')
+        console.log('-------用户授权，并获取用户基本信息和加密数据------');
       },
       getPhoneNumber(wx_phonenumber) {
-        this.is_show = false
+        this.is_show = false;
         uni.showLoading({
           title: '加载中',
-        })
+        });
         if (!wx_phonenumber.detail.iv) {
           this.$emit('auth', {
             type: 'phonenumber',
             result: 'cancel',
-          })
-          return false
+          });
+          return false;
         }
 
-        console.log('-------用户授权，并获取用户基本信息和加密数据------')
-        console.log(wx_phonenumber.detail)
+        console.log('-------用户授权，并获取用户基本信息和加密数据------');
+        console.log(wx_phonenumber.detail);
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -117,24 +113,24 @@
   .use-login .l-mask {
     position: absolute;
     top: 0;
-    left: 0;
-    bottom: 0;
     right: 0;
-    background: rgba(51, 51, 51, 0.5);
+    bottom: 0;
+    left: 0;
     z-index: 999;
+    background: rgba(51, 51, 51, 50%);
   }
 
   .use-login .box-container {
     position: absolute;
-    width: 80vw;
-    background: #fff;
-    left: 50%;
-    transform: translate(-50%, -50%);
     top: 50%;
+    left: 50%;
     z-index: 999;
-    border-radius: 20rpx;
-    text-align: center;
+    width: 80vw;
     padding: 30rpx;
+    text-align: center;
+    background: #fff;
+    border-radius: 20rpx;
+    transform: translate(-50%, -50%);
 
     .title {
       margin-top: 30rpx;
@@ -147,20 +143,20 @@
     }
 
     button {
-      background: #eee;
-      color: #333;
       width: 50%;
-      border-radius: 50rpx;
-      border: 1px solid #eee;
-      font-size: 30rpx;
       padding: 16rpx 0;
+      font-size: 30rpx;
       line-height: inherit;
+      color: #333;
+      background: #eee;
+      border: 1px solid #eee;
+      border-radius: 50rpx;
 
       &:last-child {
         margin-left: 10px;
+        color: #fff;
         background: $base-color;
         border: 1px solid $base-color;
-        color: #fff;
       }
     }
   }

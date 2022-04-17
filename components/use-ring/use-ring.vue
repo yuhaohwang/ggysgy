@@ -37,39 +37,39 @@
         circleLeftCss: '',
         circleRightCss: '',
         type: 'right',
-      }
+      };
     },
     methods: {
       draw(val) {
         if (val !== 0) {
-          val = val || this.value
+          val = val || this.value;
         }
 
-        const percent = val / this.max
+        const percent = val / this.max;
 
         if (percent <= 0.5) {
-          this.circleRightCss = `transform: rotate(${percent * 360}deg)`
-          this.type = 'right'
+          this.circleRightCss = `transform: rotate(${percent * 360}deg)`;
+          this.type = 'right';
         } else {
-          this.circleRightCss = `transform: rotate(180deg); transition: opacity 0s step-end 1s, transform 1s linear; opacity: 0`
-          this.circleLeftCss = `transition: transform ${
-            (percent - 0.5) / 0.5
-          }s linear 1s; transform: rotate(${percent * 360 - 180}deg)`
-          this.type = 'left'
+          this.circleRightCss = `transform: rotate(180deg); transition: opacity 0s step-end 1s, transform 1s linear; opacity: 0`;
+          this.circleLeftCss = `transition: transform ${(percent - 0.5) / 0.5}s linear 1s; transform: rotate(${
+            percent * 360 - 180
+          }deg)`;
+          this.type = 'left';
         }
       },
       leftSuccess() {
         if (this.type == 'left') {
-          this.$emit('success')
+          this.$emit('success');
         }
       },
       rightSuccess() {
         if (this.type == 'right') {
-          this.$emit('success')
+          this.$emit('success');
         }
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -77,43 +77,42 @@
     .circle-ring {
       width: 200rpx;
       height: 200rpx;
-
       -webkit-mask: radial-gradient(transparent 86rpx, #fff 88rpx);
       overflow: hidden;
       border-radius: 50%;
 
       view {
+        position: absolute;
         width: 50%;
         height: 100%;
-        position: absolute;
       }
     }
 
     .circle-left {
-      background: #fff;
-      transform-origin: 100% 50%;
       left: 0;
       z-index: 0;
+      background: #fff;
+      transform-origin: 100% 50%;
     }
 
     .circle-right {
+      right: 0;
+      z-index: 2;
       background: #fff;
       transition: transform 1s linear;
       transform-origin: 0% 50%;
-      right: 0;
-      z-index: 2;
     }
 
     .circle-bottom-left {
-      background: #ffbc49;
       left: 0;
       z-index: -1;
+      background: #ffbc49;
     }
 
     .circle-bottom-right {
-      background: #ffbc49;
       right: 0;
       z-index: 1;
+      background: #ffbc49;
     }
   }
 </style>

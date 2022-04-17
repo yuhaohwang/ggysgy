@@ -1,13 +1,6 @@
 <template>
-  <view
-    class="use-empty-container tac"
-    :class="eStyle == 'round' ? 'padding-sm' : ''"
-    :style="{ height: height }"
-  >
-    <view
-      class="use-empty h-full dflex-c dflex-flow-c"
-      :class="eStyle == 'round' ? 'round border-radius bg-main' : ''"
-    >
+  <view class="use-empty-container tac" :class="eStyle == 'round' ? 'padding-sm' : ''" :style="{ height: height }">
+    <view class="use-empty h-full dflex-c dflex-flow-c" :class="eStyle == 'round' ? 'round border-radius bg-main' : ''">
       <image v-if="imgurl" :src="imgurl"></image>
       <view v-if="tip" class="title padding-sm">{{ tip }}</view>
       <button class="no-border use-btn" @click="to">{{ btnTip }}</button>
@@ -50,13 +43,13 @@
     computed: {
       dtype: {
         get() {
-          console.log('get dtype', arguments)
-          let imgobj = this.imgs.find((x) => x.type == this.eType)
-          this.imgurl = imgobj ? imgobj.url : this.imgurl_dft
-          return this.eType
+          console.log('get dtype', arguments);
+          let imgobj = this.imgs.find((x) => x.type == this.eType);
+          this.imgurl = imgobj ? imgobj.url : this.imgurl_dft;
+          return this.eType;
         },
         set(val) {
-          console.log('set dtype', arguments)
+          console.log('set dtype', arguments);
         },
       },
     },
@@ -69,23 +62,23 @@
           { type: 'search', url: '/static/images/empty/search.jpg' },
           { type: 'other', url: '/static/images/empty/empty.jpg' },
         ],
-      }
+      };
     },
     methods: {
       to() {
         this.$emit('goto', {
           type: 'goto',
-        })
+        });
 
         if (this.auto) {
           // 跳转指定页
           uni.switchTab({
             url: this.btnGoto,
-          })
+          });
         }
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -98,6 +91,7 @@
           width: 220rpx;
         }
       }
+
       image {
         width: 160rpx;
         height: 160rpx;
@@ -108,8 +102,8 @@
       }
 
       .use-btn {
-        font-size: $font-base + 2upx;
         display: inline-block;
+        font-size: $font-base + 2upx;
       }
     }
   }

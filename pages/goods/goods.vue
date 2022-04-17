@@ -5,12 +5,7 @@
       <swiper class="h-full pos-r" indicator-dots circular="true" duration="400">
         <swiper-item v-for="(item, index) in swiperDatas" :key="index">
           <view class="wh-full"
-            ><image
-              :src="item.url"
-              class="wh-full loaded"
-              lazy-load="true"
-              mode="aspectFill"
-            ></image
+            ><image :src="item.url" class="wh-full loaded" lazy-load="true" mode="aspectFill"></image
           ></view>
         </swiper-item>
       </swiper>
@@ -21,9 +16,7 @@
       <view class="price-box dflex-b">
         <view>
           <text class="price fwb fs-big">{{ goods.price / 100 || '' }}</text>
-          <text class="m-price" v-if="goods.market_price > 0">{{
-            goods.market_price / 100 || ''
-          }}</text>
+          <text class="m-price" v-if="goods.market_price > 0">{{ goods.market_price / 100 || '' }}</text>
         </view>
         <view class="dflex fs-sm ft-dark">
           <!-- #ifdef MP-WEIXIN || H5 -->
@@ -59,11 +52,7 @@
         <view class="tac w-full padding-sm">分享</view>
         <view class="padding-lr margin-bottom-xl dflex-b pos-r">
           <!-- #ifdef MP-WEIXIN -->
-          <button
-            class="dflex-c dflex-flow-c no-border btn"
-            style="color: #07c160"
-            open-type="share"
-          >
+          <button class="dflex-c dflex-flow-c no-border btn" style="color: #07c160;" open-type="share">
             <view class="iconfont iconweixin padding-lr-sm border-radius-c fs-xxxl"></view>
             <view class="dflex-c fs-sm ft-dark">微信好友</view>
           </button>
@@ -100,13 +89,10 @@
     </view>
     <use-popup mode="bottom" bgclass=" " v-model="posterShow" @close="">
       <view class="padding border-radius margin">
-        <view
-          v-if="!posterUrl"
-          class="tac bg-main padding border-radius pos-a pos-l-c"
-          style="bottom: 45vh"
+        <view v-if="!posterUrl" class="tac bg-main padding border-radius pos-a pos-l-c" style="bottom: 45vh;"
           >海报生成中，请稍等</view
         >
-        <view class="w-full" style="height: 70vh"
+        <view class="w-full" style="height: 70vh;"
           ><image :src="posterUrl" class="wh-full" mode="aspectFit"></image
         ></view>
 
@@ -124,10 +110,7 @@
     </use-popup>
 
     <!-- 03. 规格区 -->
-    <view
-      v-if="skuDatas.length > 0"
-      class="sku-area bg-main padding-lr padding-top padding-bottom-xs pos-r"
-    >
+    <view v-if="skuDatas.length > 0" class="sku-area bg-main padding-lr padding-top padding-bottom-xs pos-r">
       <view class="con dflex dflex-wrap-w">
         <view
           class="margin-right-sm margin-bottom-sm dflex bg-drak border-radius-lg padding-tb-16 padding-lr"
@@ -155,11 +138,7 @@
       <!-- 优惠券区 -->
       <scroll-view>
         <view class="coupon-area padding bg-drak">
-          <view
-            class="coupon-item bg-main pos-r fs-xs"
-            v-for="(item, index) in couponDatas"
-            :key="index"
-          >
+          <view class="coupon-item bg-main pos-r fs-xs" v-for="(item, index) in couponDatas" :key="index">
             <view class="content pos-r padding dflex-b">
               <view class="">
                 <view class="margin-bottom-xs fs">{{ item.name }}</view>
@@ -167,9 +146,7 @@
               </view>
               <view class="tar">
                 <view class="margin-bottom-xs price">{{ item.price }}</view>
-                <view v-if="item.order_amount > 0" class="ft-dark"
-                  >满{{ item.order_amount }}可用</view
-                >
+                <view v-if="item.order_amount > 0" class="ft-dark">满{{ item.order_amount }}可用</view>
                 <view v-else class="ft-dark">不限</view>
               </view>
 
@@ -178,9 +155,7 @@
             </view>
             <view class="dflex-b">
               <text class="ft-dark padding-lr">{{ item.type }}</text>
-              <text class="ft-base padding-tb-sm padding-lr" @click="couponReceive(item.id)"
-                >立即领取</text
-              >
+              <text class="ft-base padding-tb-sm padding-lr" @click="couponReceive(item.id)">立即领取</text>
             </view>
           </view>
         </view>
@@ -190,29 +165,19 @@
     <!-- 04.02 服务标签 -->
     <view class="bg-main padding-lr padding-top padding-bottom-xs pos-r" @click="tagShow = true">
       <view class="dflex dflex-wrap-w">
-        <view
-          v-for="(item, index) in tagDatas"
-          :key="index"
-          class="margin-right-sm margin-bottom-sm dflex"
-        >
+        <view v-for="(item, index) in tagDatas" :key="index" class="margin-right-sm margin-bottom-sm dflex">
           <view class="iconfont iconyiwancheng- fwb fs-xs ft-base margin-right-xs"></view>
           <text class="fs-xs">{{ item.name }}</text>
         </view>
       </view>
-      <view class="icon-detail pos-a"
-        ><view class="iconfont iconxiangqing ft-dark fs-sm"></view
-      ></view>
+      <view class="icon-detail pos-a"><view class="iconfont iconxiangqing ft-dark fs-sm"></view></view>
     </view>
     <view class="gap"></view>
     <!-- 04.02 服务标签弹出层 -->
     <use-popup mode="bottom" v-model="tagShow">
       <view class="tac w-full padding-sm">服务说明</view>
       <view class="padding-lr padding-bottom-sm">
-        <view
-          v-for="(item, index) in tagDatas"
-          :key="index"
-          class="margin-right-sm margin-bottom-sm dflex dflex-s"
-        >
+        <view v-for="(item, index) in tagDatas" :key="index" class="margin-right-sm margin-bottom-sm dflex dflex-s">
           <view class="iconfont iconyiwancheng- fwb fs ft-base margin-right-xs"></view>
           <view>
             <view class="fs-sm">{{ item.name }}</view>
@@ -232,11 +197,7 @@
         @goto="toevaluate"
       ></use-list-title>
       <view class="padding-lr bg-main">
-        <view
-          class="eva-box dflex-s padding-bottom-lg"
-          v-for="(item, index) in evaluateDatas"
-          :key="index"
-        >
+        <view class="eva-box dflex-s padding-bottom-lg" v-for="(item, index) in evaluateDatas" :key="index">
           <image class="portrait border-radius-c" :src="item.member_headimg"></image>
           <view class="right-area flex1 padding-left-sm">
             <view class="dflex-b ft-dark">
@@ -246,9 +207,7 @@
               </view>
               <text class="time fs-xs">{{ $api.format(item.create_time, 'yyyy-MM-dd') }}</text>
             </view>
-            <view class="fs-sm ft-main padding-top-xs padding-bottom-sm">{{
-              item.review_content
-            }}</view>
+            <view class="fs-sm ft-main padding-top-xs padding-bottom-sm">{{ item.review_content }}</view>
             <view class="dflex dflex-wrap-w">
               <image
                 class=""
@@ -297,18 +256,10 @@
         <text>收藏</text>
       </view>
       <view class="flex1 btn-container dflex-b border-radius-big">
-        <view
-          class="tac padding-tb-sm flex1 bg-warn"
-          v-if="goods.stock_num > 0"
-          @click="tocart(goods)"
+        <view class="tac padding-tb-sm flex1 bg-warn" v-if="goods.stock_num > 0" @click="tocart(goods)"
           >加入购物车</view
         >
-        <view
-          class="tac padding-tb-sm flex1 bg-base"
-          v-if="goods.stock_num > 0"
-          @click="tobuy(goods)"
-          >立即购买</view
-        >
+        <view class="tac padding-tb-sm flex1 bg-base" v-if="goods.stock_num > 0" @click="tobuy(goods)">立即购买</view>
         <view class="tac padding-tb-sm flex1 bg-disabled" v-else>已售磐</view>
       </view>
     </view>
@@ -326,13 +277,13 @@
 
 <script>
   // #ifdef MP-ALIPAY
-  import aliParse from 'mini-html-parser2'
+  import aliParse from 'mini-html-parser2';
   // #endif
 
-  import lPainter from '@/uni_modules/lime-painter/components/lime-painter/'
-  import uposter from '@/common/poster.js'
+  import lPainter from '@/uni_modules/lime-painter/components/lime-painter/';
+  import uposter from '@/common/poster.js';
 
-  import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
 
   export default {
     components: { lPainter },
@@ -375,20 +326,20 @@
         favorite: false,
 
         scrollTop: 0,
-      }
+      };
     },
     watch: {
       sku(e) {
-        this.goods.price = e.price
-        this.goods.market_price = e.market_price
-        this.goods.stock_num = e.num
+        this.goods.price = e.price;
+        this.goods.market_price = e.market_price;
+        this.goods.stock_num = e.num;
       },
     },
     onShareAppMessage: function (ops) {
-      let _this = this
-      let mid = 0
+      let _this = this;
+      let mid = 0;
       if (_this.member && _this.member._id) {
-        mid = _this.member._id
+        mid = _this.member._id;
       }
 
       return {
@@ -396,45 +347,43 @@
         path: `/pages/goods/goods?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
         success: function (res) {
           // 转发成功
-          console.log('转发成功', res)
+          console.log('转发成功', res);
         },
         fail: function (res) {
           // 转发失败
-          console.log('转发失败', res)
+          console.log('转发失败', res);
         },
-      }
+      };
     },
     onPageScroll(e) {
       //this.scrollTop = e.scrollTop;
-      this.$refs.usetop.change(e.scrollTop)
+      this.$refs.usetop.change(e.scrollTop);
     },
     onLoad(options) {
-      console.log('onload opts', options)
+      console.log('onload opts', options);
 
       if (options) {
-        this.mid = options.mid || ''
+        this.mid = options.mid || '';
         if (options.id) {
-          this.id = options.id
+          this.id = options.id;
         } else if (options.q) {
-          let query =
-            decodeURIComponent(options.q) ||
-            decodeURIComponent(uni.getStorageInfoSync('__scene_query_q'))
-          this.resolveQueryq(query)
+          let query = decodeURIComponent(options.q) || decodeURIComponent(uni.getStorageInfoSync('__scene_query_q'));
+          this.resolveQueryq(query);
         }
       }
 
       if (!this.id) {
-        this.$api.msg('商品ID无效')
-        return
+        this.$api.msg('商品ID无效');
+        return;
       }
     },
     onShow(options) {
       if (!this.id) {
-        const query = decodeURIComponent(uni.getStorageInfoSync('__scene_query_q'))
-        this.resolveQueryq(query)
+        const query = decodeURIComponent(uni.getStorageInfoSync('__scene_query_q'));
+        this.resolveQueryq(query);
       }
 
-      this.loadData()
+      this.loadData();
     },
 
     methods: {
@@ -447,34 +396,34 @@
           .then((res) => {
             if (res.code === 200) {
               // 商品评价
-              this.evaluateDatas = res.datas.evaluate
-              if (res.datas.evaluate_cnt) this.evaluateTitle = `评价(${res.datas.evaluate_cnt})`
+              this.evaluateDatas = res.datas.evaluate;
+              if (res.datas.evaluate_cnt) this.evaluateTitle = `评价(${res.datas.evaluate_cnt})`;
 
               if (typeof res.datas.goods.imgs === 'string') {
-                this.swiperDatas = res.datas.goods.imgs.split(',').filter((x) => x)
+                this.swiperDatas = res.datas.goods.imgs.split(',').filter((x) => x);
               } else {
-                this.swiperDatas = res.datas.goods.imgs
+                this.swiperDatas = res.datas.goods.imgs;
               }
-              this.goods = res.datas.goods
+              this.goods = res.datas.goods;
               // 商品详情
-              let __goods_detail = res.datas.goods_detail
+              let __goods_detail = res.datas.goods_detail;
               // #ifndef MP-ALIPAY
-              this.html_nodes = __goods_detail.desc_mobile
+              this.html_nodes = __goods_detail.desc_mobile;
               // #endif
 
               // #ifdef MP-ALIPAY
-              this.html_nodes = []
+              this.html_nodes = [];
               aliParse(__goods_detail.desc_mobile.replace(/"><*/gi, '"/><'), (err, nodes) => {
                 if (!err) {
-                  this.html_nodes = nodes
+                  this.html_nodes = nodes;
                 }
-              })
+              });
               // #endif
 
               // 商品SKU
-              let __goods_skus = res.datas.goods_skus
+              let __goods_skus = res.datas.goods_skus;
               if (__goods_skus.length > 0) {
-                let __skuDatas = []
+                let __skuDatas = [];
                 __goods_skus.forEach((sku, index) => {
                   // 	{ id: 1, name: '45寸（大规格）', price: 788, market_price: 999, num: 0, selected: !0 },
                   __skuDatas.push({
@@ -485,48 +434,48 @@
                     market_price: sku.market_price || this.goods.market_price,
                     num: sku.stock_num,
                     selected: index == 0,
-                  })
-                })
-                this.skuDatas = __skuDatas
+                  });
+                });
+                this.skuDatas = __skuDatas;
               }
 
               // SKU
               if (this.skuDatas.length > 0) {
-                this.sku = this.skuDatas[0]
+                this.sku = this.skuDatas[0];
               }
 
               // 服务标签
               if (typeof this.goods.tags === 'string') {
-                this.goods.tags = this.goods.tags.split(',').filter((x) => x)
+                this.goods.tags = this.goods.tags.split(',').filter((x) => x);
               }
 
-              let __tagDatas = []
+              let __tagDatas = [];
 
               this.goods.tags.forEach((data, index) => {
                 __tagDatas.push({
                   name: data,
                   selected: index == 0,
-                })
-              })
+                });
+              });
 
-              this.tagDatas = __tagDatas
+              this.tagDatas = __tagDatas;
 
               // 收藏状态
-              this.favorite = this.goods.collected === 1
-              return
+              this.favorite = this.goods.collected === 1;
+              return;
             }
-            this.$api.msg(res.msg)
-          })
+            this.$api.msg(res.msg);
+          });
       },
       // 处理 query q 数据
       resolveQueryq(query) {
-        const arr = query.split('/').slice(-1)[0].split('_')
-        if (arr.length == 2) this.mid = arr[1]
-        this.id = arr[0]
+        const arr = query.split('/').slice(-1)[0].split('_');
+        if (arr.length == 2) this.mid = arr[1];
+        this.id = arr[0];
       },
       // 图片预览
       preview(imgs, cur) {
-        if (!imgs) return
+        if (!imgs) return;
 
         uni.previewImage({
           urls: imgs,
@@ -534,74 +483,74 @@
           longPressActions: {
             itemList: ['发送给朋友', '保存图片', '收藏'],
             success: function (data) {
-              console.log(res)
+              console.log(res);
             },
             fail: function (err) {
-              console.log(err)
+              console.log(err);
             },
           },
-        })
+        });
       },
 
       // 打开分享
       shareOpen() {
-        if (!this.loginCheck()) return
+        if (!this.loginCheck()) return;
 
-        this.shareShow = true
+        this.shareShow = true;
       },
       // 创建海报
       createPoster() {
         if (this.posterUrl) {
-          this.posterShow = true
-          return
+          this.posterShow = true;
+          return;
         }
         uni.showLoading({
           title: '生成海报中',
-        })
+        });
 
         // #ifdef MP
         // 此处的二维码内容，需自己在小程序端配置普通二维码规则
-        this.posterQRcode = `https://usemall.use-cloud.com/wxmp-product/${this.goods._id}_${this.member._id}`
+        this.posterQRcode = `https://usemall.use-cloud.com/wxmp-product/${this.goods._id}_${this.member._id}`;
         // #endif
 
         // #ifdef H5
         // 如果为 h5，二维码内容需配置为线上版本产品详情路径
-        this.posterQRcode = `https://usemall-h5.use-cloud.com/#/pages/goods/goods?id=${this.goods._id}&mid=${this.member._id}`
+        this.posterQRcode = `https://usemall-h5.use-cloud.com/#/pages/goods/goods?id=${this.goods._id}&mid=${this.member._id}`;
         // #endif
       },
       // 海报二维码生成成功
       posterQRcodeResult(res) {
         // 获取产品海报数据
-        this.posterData = uposter.getGoodsData(this.member, this.goods, res)
+        this.posterData = uposter.getGoodsData(this.member, this.goods, res);
         // console.log('this.posterData', this.posterData);
 
-        this.posterShow = true
+        this.posterShow = true;
       },
       // 海报生成完成
       posterSuccess(res) {
-        this.posterUrl = res
+        this.posterUrl = res;
 
-        uni.hideLoading()
+        uni.hideLoading();
       },
       // 保存海报
       posterSave() {
         if (this.posterUrl) {
           uni.showLoading({
             title: '保存中',
-          })
+          });
 
           uni.saveImageToPhotosAlbum({
             filePath: this.posterUrl,
             success: function () {
-              uni.hideLoading()
+              uni.hideLoading();
 
               uni.showToast({
                 title: '海报保存成功',
                 icon: 'success',
                 duration: 2000,
-              })
+              });
             },
-          })
+          });
         }
       },
 
@@ -609,46 +558,46 @@
       selectSKU(res) {
         this.skuDatas.forEach((item) => {
           if (res.sku == item.sku) {
-            this.$set(item, 'selected', true)
+            this.$set(item, 'selected', true);
           } else {
-            this.$set(item, 'selected', false)
+            this.$set(item, 'selected', false);
           }
-        })
+        });
 
-        this.sku = res
+        this.sku = res;
       },
 
       // 评论
       toevaluate() {
         uni.navigateTo({
           url: `/pages/goods/goods-evaluate?id=${this.id}`,
-        })
+        });
       },
       // 首页
       tohome() {
-        this.$api.tohome()
+        this.$api.tohome();
       },
       // 收藏
       tofavorite() {
-        if (!this.loginCheck()) return
+        if (!this.loginCheck()) return;
 
-        this.favorite = !this.favorite
+        this.favorite = !this.favorite;
         let _data = {
           goods_id: this.id,
           state: !this.favorite ? '已取消' : '已收藏',
-        }
+        };
         this.$func.usemall.call('member/collect', _data).then((res) => {
           if (res.datas) {
-            !this.favorite ? this.$api.msg('取消成功') : this.$api.msg('收藏成功')
-            return
+            !this.favorite ? this.$api.msg('取消成功') : this.$api.msg('收藏成功');
+            return;
           }
 
-          this.$api.msg(res.msg)
-        })
+          this.$api.msg(res.msg);
+        });
       },
       // 加入购物车
       tocart(params) {
-        if (!this.loginCheck()) return
+        if (!this.loginCheck()) return;
 
         this.$func.usemall
           .call('goods/addcart', {
@@ -658,47 +607,47 @@
           })
           .then((res) => {
             if (res.code === 200) {
-              this.$api.msg(res.datas.msg)
-              return
+              this.$api.msg(res.datas.msg);
+              return;
             }
 
-            this.$api.msg(res.msg)
-          })
+            this.$api.msg(res.msg);
+          });
       },
       // 立即购买
       tobuy(item) {
-        let _this = this
-        if (!this.loginCheck()) return
+        let _this = this;
+        if (!this.loginCheck()) return;
 
         uni.navigateTo({
           url: `/pages/order/create?goods_id=${this.id}&sku_id=${this.sku.id || ''}`,
-        })
+        });
       },
       // 检测是否已登录
       loginCheck() {
         if (!this.islogin) {
-          let _this = this
+          let _this = this;
           uni.showModal({
             title: '授权登录',
             success: function (res) {
               if (res.confirm) {
-                _this.$api.tologin()
+                _this.$api.tologin();
               }
             },
-          })
-          return false
+          });
+          return false;
         }
 
-        return true
+        return true;
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
   page {
-    background: $page-color-base;
     padding-bottom: 120rpx;
+    background: $page-color-base;
   }
 
   contact-button {
@@ -715,9 +664,9 @@
 
   /* 01. 轮播区 */
   .swiper-area {
-    height: 720rpx;
     top: 0;
     z-index: -1;
+    height: 720rpx;
   }
 
   /* #ifndef MP */
@@ -725,12 +674,14 @@
     margin-top: calc(44px + env(safe-area-inset-top));
     margin-top: 44px;
   }
+
   /* #endif */
 
   /* #ifdef APP-PLUS */
   .swiper-area {
     margin-top: 0;
   }
+
   /* #endif */
 
   /* 02. 商品数据区 */
@@ -743,9 +694,9 @@
     }
 
     .title {
-      color: $font-color-dark;
       height: 46rpx;
       line-height: 46rpx;
+      color: $font-color-dark;
     }
   }
 
@@ -758,14 +709,14 @@
 
   /* 03. 规格区 */
   .sku-area .active {
-    background: $base-color;
     color: #fff !important;
+    background: $base-color;
   }
 
   /* 04. 服务区 */
   .icon-detail {
-    right: 30rpx;
     top: 24rpx;
+    right: 30rpx;
   }
 
   /* 05. 评价 */
@@ -778,10 +729,10 @@
 
     .right-area {
       image {
+        width: 30%;
+        height: 200rpx;
         margin-right: 10rpx;
         margin-bottom: 10rpx;
-        height: 200rpx;
-        width: 30%;
       }
     }
   }
@@ -789,26 +740,26 @@
   /* 06. 详情区 */
   .detail-area {
     .d-header {
+      position: relative;
       font-size: $font-base + 2upx;
       color: $font-color-dark;
-      position: relative;
 
       text {
-        padding: 0 20rpx;
-        background: #fff;
         position: relative;
         z-index: 1;
+        padding: 0 20rpx;
+        background: #fff;
       }
 
-      &:after {
+      &::after {
         position: absolute;
-        left: 50%;
         top: 50%;
-        transform: translateX(-50%);
+        left: 50%;
         width: 300rpx;
         height: 0;
-        content: '';
         border-bottom: 1px solid #ccc;
+        content: "";
+        transform: translateX(-50%);
       }
     }
 
@@ -828,17 +779,17 @@
 
   /* 07. 操作区 */
   .oper-area {
-    left: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 0 20rpx 0 #f0f0f0;
-    height: 100rpx;
+    left: 0;
     z-index: 95;
+    height: 100rpx;
+    background: rgba(255, 255, 255, 95%);
+    box-shadow: 0 0 20rpx 0 #f0f0f0;
 
     .btn-area {
+      width: 96rpx;
       font-size: $font-sm;
       color: $font-color-base;
-      width: 96rpx;
 
       .iconfont {
         font-size: 40rpx;
@@ -860,14 +811,14 @@
       }
 
       .content {
-        &:after {
+        &::after {
           position: absolute;
-          left: 0;
           bottom: 0;
-          content: '';
+          left: 0;
           width: 100%;
           height: 0;
           border-bottom: 1px dashed #f3f3f3;
+          content: "";
           transform: scaleY(50%);
         }
       }

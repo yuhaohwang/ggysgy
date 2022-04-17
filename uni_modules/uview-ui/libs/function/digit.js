@@ -1,4 +1,4 @@
-let _boundaryCheckingState = true // 是否进行越界检查的全局开关
+let _boundaryCheckingState = true; // 是否进行越界检查的全局开关
 
 /**
  * 把错误的数据转正
@@ -6,7 +6,7 @@ let _boundaryCheckingState = true // 是否进行越界检查的全局开关
  * @example strip(0.09999999999999998)=0.1
  */
 function strip(num, precision = 15) {
-  return +parseFloat(Number(num).toPrecision(precision))
+  return +parseFloat(Number(num).toPrecision(precision));
 }
 
 /**
@@ -16,9 +16,9 @@ function strip(num, precision = 15) {
  */
 function digitLength(num) {
   // Get digit length of e
-  const eSplit = num.toString().split(/[eE]/)
-  const len = (eSplit[0].split('.')[1] || '').length - +(eSplit[1] || 0)
-  return len > 0 ? len : 0
+  const eSplit = num.toString().split(/[eE]/);
+  const len = (eSplit[0].split('.')[1] || '').length - +(eSplit[1] || 0);
+  return len > 0 ? len : 0;
 }
 
 /**
@@ -28,10 +28,10 @@ function digitLength(num) {
  */
 function float2Fixed(num) {
   if (num.toString().indexOf('e') === -1) {
-    return Number(num.toString().replace('.', ''))
+    return Number(num.toString().replace('.', ''));
   }
-  const dLen = digitLength(num)
-  return dLen > 0 ? strip(Number(num) * Math.pow(10, dLen)) : Number(num)
+  const dLen = digitLength(num);
+  return dLen > 0 ? strip(Number(num) * Math.pow(10, dLen)) : Number(num);
 }
 
 /**
@@ -42,7 +42,7 @@ function float2Fixed(num) {
 function checkBoundary(num) {
   if (_boundaryCheckingState) {
     if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
-      console.warn(`${num} 超出了精度限制，结果可能不正确`)
+      console.warn(`${num} 超出了精度限制，结果可能不正确`);
     }
   }
 }
@@ -54,14 +54,14 @@ function checkBoundary(num) {
  * @private
  */
 function iteratorOperation(arr, operation) {
-  const [num1, num2, ...others] = arr
-  let res = operation(num1, num2)
+  const [num1, num2, ...others] = arr;
+  let res = operation(num1, num2);
 
   others.forEach((num) => {
-    res = operation(res, num)
-  })
+    res = operation(res, num);
+  });
 
-  return res
+  return res;
 }
 
 /**
@@ -70,18 +70,18 @@ function iteratorOperation(arr, operation) {
  */
 export function times(...nums) {
   if (nums.length > 2) {
-    return iteratorOperation(nums, times)
+    return iteratorOperation(nums, times);
   }
 
-  const [num1, num2] = nums
-  const num1Changed = float2Fixed(num1)
-  const num2Changed = float2Fixed(num2)
-  const baseNum = digitLength(num1) + digitLength(num2)
-  const leftValue = num1Changed * num2Changed
+  const [num1, num2] = nums;
+  const num1Changed = float2Fixed(num1);
+  const num2Changed = float2Fixed(num2);
+  const baseNum = digitLength(num1) + digitLength(num2);
+  const leftValue = num1Changed * num2Changed;
 
-  checkBoundary(leftValue)
+  checkBoundary(leftValue);
 
-  return leftValue / Math.pow(10, baseNum)
+  return leftValue / Math.pow(10, baseNum);
 }
 
 /**
@@ -90,14 +90,14 @@ export function times(...nums) {
  */
 export function plus(...nums) {
   if (nums.length > 2) {
-    return iteratorOperation(nums, plus)
+    return iteratorOperation(nums, plus);
   }
 
-  const [num1, num2] = nums
+  const [num1, num2] = nums;
   // 取最大的小数位
-  const baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)))
+  const baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)));
   // 把小数都转为整数然后再计算
-  return (times(num1, baseNum) + times(num2, baseNum)) / baseNum
+  return (times(num1, baseNum) + times(num2, baseNum)) / baseNum;
 }
 
 /**
@@ -106,12 +106,12 @@ export function plus(...nums) {
  */
 export function minus(...nums) {
   if (nums.length > 2) {
-    return iteratorOperation(nums, minus)
+    return iteratorOperation(nums, minus);
   }
 
-  const [num1, num2] = nums
-  const baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)))
-  return (times(num1, baseNum) - times(num2, baseNum)) / baseNum
+  const [num1, num2] = nums;
+  const baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)));
+  return (times(num1, baseNum) - times(num2, baseNum)) / baseNum;
 }
 
 /**
@@ -120,19 +120,16 @@ export function minus(...nums) {
  */
 export function divide(...nums) {
   if (nums.length > 2) {
-    return iteratorOperation(nums, divide)
+    return iteratorOperation(nums, divide);
   }
 
-  const [num1, num2] = nums
-  const num1Changed = float2Fixed(num1)
-  const num2Changed = float2Fixed(num2)
-  checkBoundary(num1Changed)
-  checkBoundary(num2Changed)
+  const [num1, num2] = nums;
+  const num1Changed = float2Fixed(num1);
+  const num2Changed = float2Fixed(num2);
+  checkBoundary(num1Changed);
+  checkBoundary(num2Changed);
   // 重要，这里必须用strip进行修正
-  return times(
-    num1Changed / num2Changed,
-    strip(Math.pow(10, digitLength(num2) - digitLength(num1)))
-  )
+  return times(num1Changed / num2Changed, strip(Math.pow(10, digitLength(num2) - digitLength(num1))));
 }
 
 /**
@@ -140,13 +137,13 @@ export function divide(...nums) {
  * @export
  */
 export function round(num, ratio) {
-  const base = Math.pow(10, ratio)
-  let result = divide(Math.round(Math.abs(times(num, base))), base)
+  const base = Math.pow(10, ratio);
+  let result = divide(Math.round(Math.abs(times(num, base))), base);
   if (num < 0 && result !== 0) {
-    result = times(result, -1)
+    result = times(result, -1);
   }
   // 位数不足则补0
-  return result
+  return result;
 }
 
 /**
@@ -155,8 +152,9 @@ export function round(num, ratio) {
  * @export
  */
 export function enableBoundaryChecking(flag = true) {
-  _boundaryCheckingState = flag
+  _boundaryCheckingState = flag;
 }
+
 
 export default {
   times,
@@ -165,4 +163,5 @@ export default {
   divide,
   round,
   enableBoundaryChecking,
-}
+};
+

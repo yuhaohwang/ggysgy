@@ -1,18 +1,9 @@
 <template>
   <view class="use-numbox pos-a dflex-c border-radius-big" :class="direction">
     <view class="use-numbox-minus pos-r tac h-full" @tap.stop="_calcValue('subtract')">
-      <text
-        class="iconfont iconjian fs-sm"
-        :class="minDisabled ? 'use-numbox-disabled' : ''"
-      ></text>
+      <text class="iconfont iconjian fs-sm" :class="minDisabled ? 'use-numbox-disabled' : ''"></text>
     </view>
-    <input
-      class="use-numbox-value pos-r tac"
-      type="number"
-      :disabled="disabled"
-      :value="inputValue"
-      @blur="_onBlur"
-    />
+    <input class="use-numbox-value pos-r tac" type="number" :disabled="disabled" :value="inputValue" @blur="_onBlur" />
     <view class="use-numbox-plus pos-r tac h-full" @tap.stop="_calcValue('add')">
       <text class="iconfont iconjia fs-sm" :class="maxDisabled ? 'use-numbox-disabled' : ''"></text>
     </view>
@@ -63,11 +54,11 @@
         inputValue: this.value,
         minDisabled: false,
         maxDisabled: false,
-      }
+      };
     },
     created() {
-      this.maxDisabled = this.isMax
-      this.minDisabled = this.isMin
+      this.maxDisabled = this.isMax;
+      this.minDisabled = this.isMin;
     },
     computed: {},
     watch: {
@@ -75,70 +66,70 @@
         const data = {
           number: number,
           index: this.index,
-        }
-        this.$emit('eventChange', data)
+        };
+        this.$emit('eventChange', data);
       },
     },
     methods: {
       _calcValue(type) {
-        const scale = this._getDecimalScale()
-        let value = this.inputValue * scale
-        let newValue = 0
-        let step = this.step * scale
+        const scale = this._getDecimalScale();
+        let value = this.inputValue * scale;
+        let newValue = 0;
+        let step = this.step * scale;
 
         if (type === 'subtract') {
-          newValue = value - step
+          newValue = value - step;
           if (newValue <= this.min) {
-            this.minDisabled = true
+            this.minDisabled = true;
           }
           if (newValue < this.min) {
-            newValue = this.min
+            newValue = this.min;
           }
           if (newValue < this.max && this.maxDisabled === true) {
-            this.maxDisabled = false
+            this.maxDisabled = false;
           }
         } else if (type === 'add') {
-          newValue = value + step
+          newValue = value + step;
           if (newValue >= this.max) {
-            this.maxDisabled = true
+            this.maxDisabled = true;
           }
           if (newValue > this.max) {
-            newValue = this.max
+            newValue = this.max;
           }
           if (newValue > this.min && this.minDisabled === true) {
-            this.minDisabled = false
+            this.minDisabled = false;
           }
         }
         if (newValue === value) {
-          return
+          return;
         }
-        this.inputValue = newValue / scale
+        this.inputValue = newValue / scale;
       },
       _getDecimalScale() {
-        let scale = 1
+        let scale = 1;
         // 浮点型
         if (~~this.step !== this.step) {
-          scale = Math.pow(10, (this.step + '').split('.')[1].length)
+          scale = Math.pow(10, (this.step + '').split('.')[1].length);
         }
-        return scale
+        return scale;
       },
       _onBlur(event) {
-        let value = event.detail.value
+        let value = event.detail.value;
         if (!value) {
-          this.inputValue = 0
-          return
+          this.inputValue = 0;
+          return;
         }
-        value = +value
+        value = +value;
         if (value > this.max) {
-          value = this.max
+          value = this.max;
         } else if (value < this.min) {
-          value = this.min
+          value = this.min;
         }
 
-        this.inputValue = value
+        this.inputValue = value;
       },
     },
-  }
+  };
 </script>
 <style>
   .use-numbox {
@@ -147,30 +138,30 @@
   }
 
   .use-numbox.left {
-    left: 30rpx;
     bottom: 0;
+    left: 30rpx;
   }
+
   .use-numbox.right {
     right: 0;
     bottom: 0;
   }
 
-  .use-numbox-minus,
-  .use-numbox-plus {
+  .use-numbox-minus, .use-numbox-plus {
+    padding: 12rpx 20rpx;
     margin: 0;
     background-color: #f5f5f5;
-    padding: 12rpx 20rpx;
   }
-  .use-numbox-minus .iconfont,
-  .use-numbox-plus .iconfont {
-    color: #555;
+
+  .use-numbox-minus .iconfont, .use-numbox-plus .iconfont {
     font-weight: 700;
+    color: #555;
   }
 
   .use-numbox-minus {
     border-right: none;
-    border-top-left-radius: 6upx;
     border-bottom-left-radius: 6upx;
+    border-top-left-radius: 6upx;
   }
 
   .use-numbox-plus {
@@ -180,10 +171,10 @@
   }
 
   .use-numbox-value {
-    background-color: #f5f5f5;
     width: 66rpx;
     height: 50rpx;
     padding: 0;
+    background-color: #f5f5f5;
   }
 
   .use-numbox-disabled.iconfont {

@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-const uidPay = require('uni-pay')
-const { Controller } = require('uni-cloud-router')
+const uidPay = require('uni-pay');
+const { Controller } = require('uni-cloud-router');
 
 module.exports = class WeixinController extends Controller {
   // 微信支付回调
@@ -10,9 +10,9 @@ module.exports = class WeixinController extends Controller {
       appId: 'your appId',
       mchId: 'your mchId',
       key: 'you parterner key',
-    })
+    });
 
-    let res = await uniPayIns.verifyPaymentNotify(this.ctx.event)
+    let res = await uniPayIns.verifyPaymentNotify(this.ctx.event);
 
     // 根据商户订单号,判断支付金额是否一致
     // 根据商户订单号
@@ -31,7 +31,7 @@ module.exports = class WeixinController extends Controller {
           'content-type': 'text/xml;charset=utf-8',
         },
         body: `<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>`,
-      }
+      };
     }
 
     return {
@@ -40,6 +40,6 @@ module.exports = class WeixinController extends Controller {
         'content-type': 'text/xml;charset=utf-8',
       },
       body: `<xml><return_code><![CDATA[FAILD]]></return_code><return_msg><![CDATA[异常回调]]></return_msg></xml>`,
-    }
+    };
   }
-}
+};

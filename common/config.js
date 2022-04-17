@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 let config = {
   debug: !0,
@@ -27,6 +27,6 @@ let config = {
     __member: '__member',
     __access_token: 'USE_ACCESS_TOKEN',
   },
-}
+};
 
-export default config
+export default config;

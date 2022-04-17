@@ -9,7 +9,7 @@
       <view class="dflex">
         <view
           v-if="iconfont && iconfont != ' '"
-          class="iconfont __left margin-right-sm"
+          class="iconfont _left margin-right-sm"
           :class="iconfont"
           :style="{ color: color }"
         ></view>
@@ -64,17 +64,17 @@
       },
     },
     data() {
-      return {}
+      return {};
     },
     methods: {
       goto() {
-        console.log('goto')
+        console.log('goto');
         this.$emit('goto', {
           type: 'goto',
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -82,8 +82,9 @@
     height: 100rpx;
     line-height: 100rpx;
   }
+
   .use-list-title {
-    .__left {
+    ._left {
       font-size: $font-lg + 8upx;
     }
 

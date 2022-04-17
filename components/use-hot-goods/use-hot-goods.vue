@@ -20,9 +20,7 @@
         class="item border-radius-sm padding-bottom-sm"
         @click="to_detail(item)"
       >
-        <view class="image-wrapper"
-          ><image mode="aspectFill" :lazy-load="true" :src="item.img"></image
-        ></view>
+        <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
         <text class="title clamp padding-sm">{{ item.name }}</text>
         <view class="padding-left-sm">
           <text class="price">{{ item.price / 100 }}</text>
@@ -59,16 +57,16 @@
     data() {
       return {
         hotDatas: [],
-      }
+      };
     },
     watch: {
       datas() {
-        this.hotDatas = this.datas
+        this.hotDatas = this.datas;
       },
     },
     created() {
       if (this.autoload === 'auto') {
-        this.loadData()
+        this.loadData();
       }
     },
     methods: {
@@ -79,24 +77,24 @@
           .then((res) => {
             // console.log('usemall-goods',res);
             if (res.code === 200) {
-              this.hotDatas = res.datas || []
+              this.hotDatas = res.datas || [];
             }
-          })
+          });
       },
       goto() {
-        console.log('goto')
+        console.log('goto');
         this.$emit('goto', {
           type: 'goto',
-        })
+        });
       },
       hot() {
-        this.$api.togoodslist({ hot: 1 })
+        this.$api.togoodslist({ hot: 1 });
       },
       to_detail(options) {
-        this.$api.togoods({ id: options._id })
+        this.$api.togoods({ id: options._id });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -109,13 +107,14 @@
 
     .item {
       width: 46vw;
-      overflow: hidden;
       margin-top: 2vw;
+      overflow: hidden;
       background: #fff;
 
       &:nth-child(2n) {
         margin-left: 1vw;
       }
+
       &:nth-child(2n + 1) {
         margin-right: 1vw;
       }

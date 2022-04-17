@@ -16,23 +16,17 @@
       class="use-address-content use-address--fixed"
       :class="[type, ani + '-content', animation ? 'content-ani' : '']"
     >
-      <view class="use-address__header">
-        <view class="use-address__header-btn-box" @click="pickerCancel">
-          <text
-            class="use-address__header-text"
-            :style="{ color: cancelColor, fontSize: btnFontSize }"
-            >取消</text
-          >
+      <view class="use-address-header">
+        <view class="use-address-header-btn-box" @click="pickerCancel">
+          <text class="use-address-header-text" :style="{ color: cancelColor, fontSize: btnFontSize }">取消</text>
         </view>
-        <view class="use-address__header-btn-box" @click="pickerConfirm">
-          <text
-            class="use-address__header-text"
-            :style="{ color: confirmColor || themeColor, fontSize: btnFontSize }"
+        <view class="use-address-header-btn-box" @click="pickerConfirm">
+          <text class="use-address-header-text" :style="{ color: confirmColor || themeColor, fontSize: btnFontSize }"
             >确定</text
           >
         </view>
       </view>
-      <view class="use-address__box">
+      <view class="use-address-box">
         <picker-view
           indicator-style="height: 70rpx;"
           class="use-address-view"
@@ -126,9 +120,9 @@
    * @example  <use-address ref="simpleAddress" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm" themeColor='#007AFF'></use-address>
    */
 
-  import provinceData from './city-data/province.js'
-  import cityData from './city-data/city.js'
-  import areaData from './city-data/area.js'
+  import provinceData from './city-data/province.js';
+  import cityData from './city-data/city.js';
+  import areaData from './city-data/area.js';
   export default {
     name: 'simpleAddress',
     props: {
@@ -188,7 +182,7 @@
       pickerValueDefault: {
         type: Array,
         default() {
-          return [0, 0, 0]
+          return [0, 0, 0];
         },
       },
     },
@@ -200,63 +194,62 @@
         provinceDataList: [],
         cityDataList: [],
         areaDataList: [],
-      }
+      };
     },
     watch: {
       show(newValue) {
         if (newValue) {
-          this.open()
+          this.open();
         } else {
-          this.close()
+          this.close();
         }
       },
       pickerValueDefault() {
-        this.init()
+        this.init();
       },
     },
     created() {
-      this.init()
+      this.init();
     },
     methods: {
       init() {
-        this.handPickValueDefault() // 对 pickerValueDefault 做兼容处理
-        this.provinceDataList = provinceData
-        this.cityDataList = cityData[this.pickerValueDefault[0]]
-        this.areaDataList = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]]
-        this.pickerValue = this.pickerValueDefault
+        this.handPickValueDefault(); // 对 pickerValueDefault 做兼容处理
+        this.provinceDataList = provinceData;
+        this.cityDataList = cityData[this.pickerValueDefault[0]];
+        this.areaDataList = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]];
+        this.pickerValue = this.pickerValueDefault;
       },
       handPickValueDefault() {
         if (this.pickerValueDefault !== [0, 0, 0]) {
           if (this.pickerValueDefault[0] > provinceData.length - 1) {
-            this.pickerValueDefault[0] = provinceData.length - 1
+            this.pickerValueDefault[0] = provinceData.length - 1;
           }
           if (this.pickerValueDefault[1] > cityData[this.pickerValueDefault[0]].length - 1) {
-            this.pickerValueDefault[1] = cityData[this.pickerValueDefault[0]].length - 1
+            this.pickerValueDefault[1] = cityData[this.pickerValueDefault[0]].length - 1;
           }
           if (
             this.pickerValueDefault[2] >
             areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1
           ) {
-            this.pickerValueDefault[2] =
-              areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1
+            this.pickerValueDefault[2] = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1;
           }
         }
       },
       pickerChange(e) {
-        let changePickerValue = e.detail.value
+        let changePickerValue = e.detail.value;
         if (this.pickerValue[0] !== changePickerValue[0]) {
           // 第一级发生滚动
-          this.cityDataList = cityData[changePickerValue[0]]
-          this.areaDataList = areaData[changePickerValue[0]][0]
-          changePickerValue[1] = 0
-          changePickerValue[2] = 0
+          this.cityDataList = cityData[changePickerValue[0]];
+          this.areaDataList = areaData[changePickerValue[0]][0];
+          changePickerValue[1] = 0;
+          changePickerValue[2] = 0;
         } else if (this.pickerValue[1] !== changePickerValue[1]) {
           // 第二级滚动
-          this.areaDataList = areaData[changePickerValue[0]][changePickerValue[1]]
-          changePickerValue[2] = 0
+          this.areaDataList = areaData[changePickerValue[0]][changePickerValue[1]];
+          changePickerValue[2] = 0;
         }
-        this.pickerValue = changePickerValue
-        this._$emit('onChange')
+        this.pickerValue = changePickerValue;
+        this._$emit('onChange');
       },
       _$emit(emitName) {
         let pickObj = {
@@ -266,8 +259,8 @@
           areaCode: this._getAreaCode(),
           provinceCode: this._getProvinceCode(),
           labelArr: this._getLabel().split('-'),
-        }
-        this.$emit(emitName, pickObj)
+        };
+        this.$emit(emitName, pickObj);
       },
       _getLabel() {
         let pcikerLabel =
@@ -275,26 +268,24 @@
           '-' +
           this.cityDataList[this.pickerValue[1]].label +
           '-' +
-          this.areaDataList[this.pickerValue[2]].label
-        return pcikerLabel
+          this.areaDataList[this.pickerValue[2]].label;
+        return pcikerLabel;
       },
       _getCityCode() {
-        return this.cityDataList[this.pickerValue[1]].value
+        return this.cityDataList[this.pickerValue[1]].value;
       },
       _getProvinceCode() {
-        return this.provinceDataList[this.pickerValue[0]].value
+        return this.provinceDataList[this.pickerValue[0]].value;
       },
       _getAreaCode() {
-        return this.areaDataList[this.pickerValue[2]].value
+        return this.areaDataList[this.pickerValue[2]].value;
       },
       queryIndex(params = [], type = 'value') {
         // params = [ 11 ,1101,110101 ];
         // 1.获取省份的index
-        let provinceIndex = provinceData.findIndex((res) => res[type] == params[0])
-        let cityIndex = cityData[provinceIndex].findIndex((res) => res[type] == params[1])
-        let areaIndex = areaData[provinceIndex][cityIndex].findIndex(
-          (res) => res[type] == params[2]
-        )
+        let provinceIndex = provinceData.findIndex((res) => res[type] == params[0]);
+        let cityIndex = cityData[provinceIndex].findIndex((res) => res[type] == params[1]);
+        let areaIndex = areaData[provinceIndex][cityIndex].findIndex((res) => res[type] == params[2]);
         return {
           index: [provinceIndex, cityIndex, areaIndex],
           data: {
@@ -302,68 +293,70 @@
             city: cityData[provinceIndex][cityIndex],
             area: areaData[provinceIndex][cityIndex][areaIndex],
           },
-        }
+        };
       },
       clear() {},
       hideMask() {
-        this._$emit('onCancel')
-        this.close()
+        this._$emit('onCancel');
+        this.close();
       },
       pickerCancel() {
-        this._$emit('onCancel')
-        this.close()
+        this._$emit('onCancel');
+        this.close();
       },
       pickerConfirm() {
-        this._$emit('onConfirm')
-        this.close()
+        this._$emit('onConfirm');
+        this.close();
       },
       open() {
-        this.showPopup = true
+        this.showPopup = true;
         this.$nextTick(() => {
           setTimeout(() => {
-            this.ani = 'simple-' + this.type
-          }, 100)
-        })
+            this.ani = 'simple-' + this.type;
+          }, 100);
+        });
       },
       close(type) {
-        if (!this.maskClick && type) return
-        this.ani = ''
+        if (!this.maskClick && type) return;
+        this.ani = '';
         this.$nextTick(() => {
           setTimeout(() => {
-            this.showPopup = false
-          }, 300)
-        })
+            this.showPopup = false;
+          }, 300);
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   .use-address {
     /* #ifndef APP-NVUE */
     display: flex;
+
     /* #endif */
     flex-direction: column;
   }
 
   .use-address-mask {
     position: fixed;
-    bottom: 0;
     top: 0;
-    left: 0;
     right: 0;
+    bottom: 0;
+    left: 0;
 
-    transition-property: opacity;
-    transition-duration: 0.3s;
-    opacity: 0;
     /* #ifndef APP-NVUE */
     z-index: 99;
+    opacity: 0;
+    transition-duration: 0.3s;
+    transition-property: opacity;
+
     /* #endif */
   }
 
   .mask-ani {
-    transition-property: opacity;
     transition-duration: 0.2s;
+    transition-property: opacity;
   }
 
   .simple-bottom-mask {
@@ -376,31 +369,33 @@
 
   .use-address--fixed {
     position: fixed;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
-    transition-property: transform;
-    transition-duration: 0.3s;
-    transform: translateY(460rpx);
+
     /* #ifndef APP-NVUE */
     z-index: 99;
+    transform: translateY(460rpx);
+    transition-duration: 0.3s;
+    transition-property: transform;
+
     /* #endif */
   }
 
   .use-address-content {
-    background-color: #ffffff;
+    background-color: #fff;
   }
 
   .simple-content-bottom {
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
     transform: translateY(500rpx);
   }
 
   .content-ani {
-    transition-property: transform, opacity;
     transition-duration: 0.2s;
+    transition-property: transform, opacity;
   }
 
   .simple-bottom-content {
@@ -408,14 +403,16 @@
   }
 
   .simple-center-content {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1);
   }
 
-  .use-address__header {
+  .use-address-header {
     position: relative;
+
     /* #ifndef APP-NVUE */
     display: flex;
+
     /* #endif */
     flex-direction: row;
     flex-wrap: nowrap;
@@ -428,6 +425,7 @@
   .use-address--fixed-top {
     /* #ifndef APP-NVUE */
     display: flex;
+
     /* #endif */
     flex-direction: row;
     justify-content: space-between;
@@ -436,9 +434,10 @@
     border-top-width: 1rpx;
   }
 
-  .use-address__header-btn-box {
+  .use-address-header-btn-box {
     /* #ifndef APP-NVUE */
     display: flex;
+
     /* #endif */
     flex-direction: row;
     align-items: center;
@@ -446,16 +445,16 @@
     height: 70rpx;
   }
 
-  .use-address__header-text {
-    text-align: center;
-    font-size: $uni-font-size-base;
-    color: #1aad19;
-    line-height: 70rpx;
-    padding-left: 40rpx;
+  .use-address-header-text {
     padding-right: 40rpx;
+    padding-left: 40rpx;
+    font-size: $uni-font-size-base;
+    line-height: 70rpx;
+    color: #1aad19;
+    text-align: center;
   }
 
-  .use-address__box {
+  .use-address-box {
     position: relative;
   }
 
@@ -463,20 +462,24 @@
     position: relative;
     bottom: 0;
     left: 0;
+
     /* #ifndef APP-NVUE */
     width: 100%;
+
     /* #endif */
+
     /* #ifdef APP-NVUE */
     width: 750rpx;
+
     /* #endif */
     height: 408rpx;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 100%);
   }
 
   .picker-item {
-    text-align: center;
-    line-height: 70rpx;
-    text-overflow: ellipsis;
     font-size: 28rpx;
+    line-height: 70rpx;
+    text-align: center;
+    text-overflow: ellipsis;
   }
 </style>

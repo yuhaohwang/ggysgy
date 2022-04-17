@@ -37,38 +37,38 @@
     },
     watch: {
       scrollTop(nv, ov) {
-        this.s_top = nv
-        this.change()
+        this.s_top = nv;
+        this.change();
       },
     },
     data() {
       return {
         s_top: 0,
         visible: false,
-      }
+      };
     },
     methods: {
       totop: function () {
         uni.pageScrollTo({
           scrollTop: 0,
           duration: this.duration,
-        })
+        });
 
         this.$emit('to', {
           type: 'to',
           scrollTop: this.s_top,
-        })
+        });
       },
       change(scrollTop) {
-        this.s_top = scrollTop
+        this.s_top = scrollTop;
         if (this.s_top > this.top) {
-          if (!this.visible) this.visible = true
+          if (!this.visible) this.visible = true;
         } else {
-          if (this.visible) this.visible = false
+          if (this.visible) this.visible = false;
         }
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">

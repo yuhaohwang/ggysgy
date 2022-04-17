@@ -8,8 +8,8 @@
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/statusBar.js
  */
 export default {
-  // statusBar
-  statusBar: {
-    bgColor: 'transparent',
-  },
+    // statusBar
+    statusBar: {
+        bgColor: 'transparent'
+    }
 }

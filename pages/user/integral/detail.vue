@@ -1,10 +1,6 @@
 <template>
   <view class="padding">
-    <view
-      class="padding item border-radius dflex-b margin-bottom"
-      v-for="(item, idx) in datas"
-      :key="idx"
-    >
+    <view class="padding item border-radius dflex-b margin-bottom" v-for="(item, idx) in datas" :key="idx">
       <view class="fs fwb">{{ item.time }}</view>
       <view class="tar">
         <view class="fwb"
@@ -21,10 +17,10 @@
     data() {
       return {
         datas: [],
-      }
+      };
     },
     onShow() {
-      this.loadData()
+      this.loadData();
     },
     methods: {
       loadData() {
@@ -39,14 +35,14 @@
           { time: '2021.06.17 12:00', integral: 10, symbol: '+', type: '签到' },
           { time: '2021.06.18 12:00', integral: 10, symbol: '-', type: '消费' },
           { time: '2021.06.18 12:00', integral: 10, symbol: '+', type: '注册' },
-        ]
+        ];
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
   .item {
-    box-shadow: 0px 0px 17px 3px #f0f0f0;
+    box-shadow: 0 0 17px 3px #f0f0f0;
   }
 </style>

@@ -8,15 +8,15 @@
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/formItem.js
  */
 export default {
-  // formItem 组件
-  formItem: {
-    label: '',
-    prop: '',
-    borderBottom: '',
-    labelWidth: '',
-    rightIcon: '',
-    leftIcon: '',
-    required: false,
-    leftIconStyle: '',
-  },
+    // formItem 组件
+    formItem: {
+        label: '',
+        prop: '',
+        borderBottom: '',
+        labelWidth: '',
+        rightIcon: '',
+        leftIcon: '',
+        required: false,
+        leftIconStyle: '',
+    }
 }

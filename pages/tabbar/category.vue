@@ -52,20 +52,9 @@
           <!-- 空白页 -->
           <use-empty v-if="empty" e-style="round" tip="无商品数据"></use-empty>
 
-          <view
-            v-else
-            class="padding-lr"
-            v-for="(item, index) in goodsDatas"
-            :key="index"
-            @click="togoods(item)"
-          >
-            <view
-              class="goods border-radius-sm padding margin-bottom-sm bg-main"
-              style="padding-bottom: 15rpx"
-            >
-              <view class="goods-left"
-                ><image mode="aspectFill" :lazy-load="true" :src="item.img"></image
-              ></view>
+          <view v-else class="padding-lr" v-for="(item, index) in goodsDatas" :key="index" @click="togoods(item)">
+            <view class="goods border-radius-sm padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
+              <view class="goods-left"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
               <view class="margin-left-sm pos-r">
                 <text class="clamp-2">{{ item.name }} {{ item.name_pw }}</text>
                 <view class="pos-a price-box w-full">
@@ -79,12 +68,7 @@
           <!-- 上拉加载更多 -->
           <use-loadmore v-if="!empty && hasmore" :type="loadmoreType"></use-loadmore>
           <!-- 置顶 -->
-          <use-totop
-            ref="usetop"
-            bottom="150"
-            :style="{ marginBottom: navHeight + 'px' }"
-            @to="totop"
-          ></use-totop>
+          <use-totop ref="usetop" bottom="150" :style="{ marginBottom: navHeight + 'px' }" @to="totop"></use-totop>
         </view>
       </scroll-view>
     </view>
@@ -98,8 +82,8 @@
 </template>
 
 <script>
-  const _goods = 'usemall-goods'
-  const _goodscategory = 'usemall-goods-category'
+  const _goods = 'usemall-goods';
+  const _goodscategory = 'usemall-goods-category';
   export default {
     data() {
       return {
@@ -135,130 +119,130 @@
         top: 0,
         scrollTop: 0,
         navHeight: 0,
-      }
+      };
     },
     watch: {
       goodsDatas(e) {
         // 监听数据，呈现空白页
-        let empty = e.length === 0
+        let empty = e.length === 0;
         if (this.empty !== empty) {
-          this.empty = empty
+          this.empty = empty;
         }
       },
     },
     onPageScroll(e) {
       //this.scrollTop = e.scrollTop;
-      this.$refs.usetop.change(e.scrollTop)
+      this.$refs.usetop.change(e.scrollTop);
     },
     onLoad() {
       // #ifdef MP-ALIPAY
-      this.scrollHeight = this.$env.windowHeight - this.$env.sis.titleBarHeight + 'px'
+      this.scrollHeight = this.$env.windowHeight - this.$env.sis.titleBarHeight + 'px';
       // #endif
 
       // 获取存储的模式
-      this.mode = uni.getStorageSync('category.mode') || 1
+      this.mode = uni.getStorageSync('category.mode') || 1;
 
       this.loadData(() => {
         if (this.mode == 2) {
           // 加载商品数据
-          this.loadGoodsDatas()
+          this.loadGoodsDatas();
         }
-      })
+      });
     },
     // 下拉刷新
     onPullDownRefresh() {
       this.loadData(() => {
-        uni.stopPullDownRefresh()
-      })
+        uni.stopPullDownRefresh();
+      });
     },
     methods: {
       async loadData(callback) {
         this.$db[_goodscategory].tolist().then((res) => {
           if (res.code === 200) {
-            this.fdatas = []
-            this.sdatas = []
+            this.fdatas = [];
+            this.sdatas = [];
 
             res.datas.forEach((item) => {
               if (!item.pid) {
                 // pid为父级id, 不存在 pid || pid=0 为一级分类
-                this.fdatas.push(item)
+                this.fdatas.push(item);
               } else {
                 // 二级分类
-                this.sdatas.push(item)
+                this.sdatas.push(item);
               }
-            })
+            });
 
             if (this.fdatas.length > 0) {
-              this.cid = this.fdatas[0]._id
+              this.cid = this.fdatas[0]._id;
             }
 
             if (typeof callback === 'function') {
               // 数据加载完成回调函数
-              callback()
+              callback();
             }
           }
-        })
+        });
       },
       // 加载商品数据
       loadGoodsDatas() {
         if (this.mode != 2) {
-          return
+          return;
         }
         // 根据当前 cid 加载商品数据列表
-        this.reqdata.cid = this.cid
+        this.reqdata.cid = this.cid;
         this.$db[_goods]
           .where(`'${this.reqdata.cid}' in cids`)
           .tolist(this.reqdata)
           .then((res) => {
             if (res.code === 200) {
-              this.goodsDatas = res.datas
+              this.goodsDatas = res.datas;
               if (this.goodsDatas.length >= this.reqdata.rows) {
-                if (this.reqdata.page == 1) this.hasmore = !0
+                if (this.reqdata.page == 1) this.hasmore = !0;
               }
-              this.empty = this.goodsDatas.length === 0
+              this.empty = this.goodsDatas.length === 0;
             }
-          })
+          });
       },
       totop(e) {
-        this.top = e.scrollTop
+        this.top = e.scrollTop;
         this.$nextTick(function () {
-          this.top = 0
-        })
+          this.top = 0;
+        });
       },
       // 一级分类
       fSelect(item) {
-        this.cid = item._id
-        this.loadGoodsDatas()
+        this.cid = item._id;
+        this.loadGoodsDatas();
       },
       // 切换模式 1分类模式 2商品模式
       changeMode() {
-        this.mode = this.mode == 1 ? 2 : 1
+        this.mode = this.mode == 1 ? 2 : 1;
         uni.setStorage({
           key: 'category.mode',
           data: this.mode,
-        })
+        });
 
-        this.loadGoodsDatas()
+        this.loadGoodsDatas();
       },
       // 跳转商品详情
       togoods(item) {
         this.$api.togoods({
           id: item._id,
-        })
+        });
       },
       // 跳转商品列表
       togoodslist(item) {
         this.$api.togoodslist({
           cid: item._id,
-        })
+        });
       },
     },
     mounted() {
       // #ifdef H5 || MP-360
-      this.navHeight = 50
+      this.navHeight = 50;
       // #endif
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -275,33 +259,33 @@
       background-color: $page-color-base;
 
       .item {
+        position: relative;
         height: 100rpx;
         color: $font-color-base;
-        position: relative;
 
         &.active {
           color: $uni-color-primary;
           background: #fff;
 
-          &:before {
-            content: '';
+          &::before {
             position: absolute;
-            left: 0;
             top: 50%;
-            transform: translateY(-50%);
-            height: 36rpx;
+            left: 0;
             width: 8rpx;
+            height: 36rpx;
             background-color: $uni-color-primary;
+            content: "";
             opacity: 0.8;
+            transform: translateY(-50%);
           }
         }
       }
     }
 
     .right {
-      flex: 1;
-      overflow: hidden;
       display: block;
+      overflow: hidden;
+      flex: 1;
 
       .item {
         flex-shrink: 0;

@@ -216,15 +216,5 @@
       "description": "访问数"
     }
   },
-  "required": [
-    "name",
-    "cid",
-    "price",
-    "stock_num",
-    "sort",
-    "state",
-    "version",
-    "is_delete",
-    "create_uid"
-  ]
+  "required": ["name", "cid", "price", "stock_num", "sort", "state", "version", "is_delete", "create_uid"]
 }

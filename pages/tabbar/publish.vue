@@ -32,12 +32,7 @@
         ></u-upload>
       </u-form-item>
       <u-form-item required label="作品分类" prop="publish.classify" borderBottom ref="item1">
-        <u-radio-group
-          class="radio-row-center"
-          v-model="classifyRadioValue"
-          placement="row"
-          @change="groupChange"
-        >
+        <u-radio-group class="radio-row-center" v-model="classifyRadioValue" placement="row" @change="groupChange">
           <u-radio
             :customStyle="{ margin: '25rpx' }"
             v-for="(item, index) in classifyRadioList"
@@ -49,12 +44,7 @@
         </u-radio-group>
       </u-form-item>
       <u-form-item required label="品类" prop="publish.subclassify" borderBottom ref="item1">
-        <u-radio-group
-          class="radio-row-center"
-          v-model="subclassifyRadioValue"
-          placement="row"
-          @change="groupChange"
-        >
+        <u-radio-group class="radio-row-center" v-model="subclassifyRadioValue" placement="row" @change="groupChange">
           <u-radio
             :customStyle="{ margin: '25rpx' }"
             v-for="(item, index) in subclassifyRadioList"
@@ -66,12 +56,7 @@
         </u-radio-group>
       </u-form-item>
       <u-form-item required label="授予权限" prop="publish.authType" borderBottom ref="item1">
-        <u-radio-group
-          class="radio-row-center"
-          v-model="authTypeValue"
-          placement="row"
-          @change="groupChange"
-        >
+        <u-radio-group class="radio-row-center" v-model="authTypeValue" placement="row" @change="groupChange">
           <u-radio
             :customStyle="{ margin: '25rpx' }"
             v-for="(item, index) in authTypeList"
@@ -189,28 +174,27 @@
         classifyRadioValue: '',
         subclassifyRadioValue: '',
         authTypeValue: '',
-      }
+      };
     },
     methods: {
       groupChange(n) {
-        console.log('groupChange', n)
+        console.log('groupChange', n);
       },
       radioChange(n) {
-        console.log('radioChange', n)
+        console.log('radioChange', n);
       },
     },
     onLoad() {},
     mounted() {
       // #ifdef H5 || MP-360
-      this.navHeight = 50
+      this.navHeight = 50;
       // #endif
     },
-  }
+  };
 </script>
 
 <style lang="scss">
-  .u-radio-group--row,
-  .radio-row-center {
+  .u-radio-group-row, .radio-row-center {
     display: flex;
     flex-direction: row;
     justify-content: center;

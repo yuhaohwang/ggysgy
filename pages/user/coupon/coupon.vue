@@ -5,12 +5,13 @@
         <view
           v-for="(item, index) in navList"
           :key="index"
-          :class="{ active: tabCurrentIndex === index }"
+          :class="{
+            active: tabCurrentIndex === index,
+          }"
           class="nav-item dflex-c pos-r fs padding-lr-lg h-full"
           @click="tabClick(index)"
         >
-          {{ item.state }}
-          <text v-if="item.cnt > 0">({{ item.cnt }})</text>
+          {{ item.state }} <text v-if="item.cnt > 0">({{ item.cnt }})</text>
         </view>
       </view>
     </view>
@@ -33,15 +34,14 @@
             btn-tip="去领券"
             height="93vh"
           ></use-empty>
-          <view
-            class="padding-lr"
-            @click="use(item)"
-            v-for="(item, index) in tabItem.datas"
-            :key="index"
-          >
+          <view class="padding-lr" @click="use(item)" v-for="(item, index) in tabItem.datas" :key="index">
             <view
-              class="coupon_box border-radius margin-top-sm bg-main"
-              :class="[{ disabled: tabItem.state != '已领取' }]"
+              class="coupon-box border-radius margin-top-sm bg-main"
+              :class="[
+                {
+                  disabled: tabItem.state != '已领取',
+                },
+              ]"
             >
               <view class="dflex-b">
                 <view class="left pos-a h-full dflex-c dflex-flow-c">
@@ -51,23 +51,15 @@
                   <view v-if="item.type == '折扣'">
                     <text class="discount fs-big">{{ item.price }}</text>
                   </view>
-                  <view class="fs-sm" v-if="item.order_amount > 0"
-                    >满{{ item.order_amount }}元使用</view
-                  >
+                  <view class="fs-sm" v-if="item.order_amount > 0">满{{ item.order_amount }}元使用</view>
                   <view class="fs-sm" v-else>全场通用</view>
                 </view>
                 <view class="right padding left_t flex1">
                   <view class="dflex-b padding-bottom-xs">
                     <view class="fwb fs">{{ item.name }}</view>
                   </view>
-                  <view
-                    v-if="tabItem.state == '已使用'"
-                    class="ft-dark iconfont iconyishiyong"
-                  ></view>
-                  <view
-                    v-if="tabItem.state == '已过期'"
-                    class="ft-dark iconfont iconyiguoqi"
-                  ></view>
+                  <view v-if="tabItem.state == '已使用'" class="ft-dark iconfont iconyishiyong"></view>
+                  <view v-if="tabItem.state == '已过期'" class="ft-dark iconfont iconyiguoqi"></view>
                   <view class="dflex-b ft-dark fs-xs padding-bottom border-line">
                     <view class="">有效期至 {{ item.end_time }}</view>
                   </view>
@@ -89,7 +81,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
   export default {
     data() {
       return {
@@ -123,124 +115,123 @@
           rows: 10,
         },
         scrollLeft: 0,
-      }
+      };
     },
     watch: {
       tabCurrentIndex(nv, ov) {
-        this.loadData('tab_change', 1)
+        this.loadData('tab_change', 1);
       },
     },
     onLoad(options) {
-      this.loadData()
+      this.loadData();
     },
     // 下拉刷新
     onPullDownRefresh() {
-      this.loadData('refresh')
+      this.loadData('refresh');
     },
     // 上拉加载更多
     onReachBottom() {
-      this.loadData()
+      this.loadData();
     },
     methods: {
       // 加载数据
       loadData(source = 'add', loading) {
         // 获取当前 nav
-        let cur_nav = this.navList[this.tabCurrentIndex]
+        let cur_nav = this.navList[this.tabCurrentIndex];
 
         if (cur_nav.loadingType === 'loading') {
           //防止重复加载
-          return
+          return;
         }
 
-        this.reqdata.state = cur_nav.state
+        this.reqdata.state = cur_nav.state;
         if (loading == 1 || source == 'refresh') {
-          this.reqdata.page = 1
+          this.reqdata.page = 1;
         }
         if (source.type) {
-          source.type = source.type.toLowerCase()
+          source.type = source.type.toLowerCase();
         }
         if (source === 'add' || source.type == 'scrolltolower') {
           if (cur_nav.loadingType == 'nomore') {
-            return
+            return;
           }
-          cur_nav.loadingType = 'loading'
+          cur_nav.loadingType = 'loading';
         } else {
-          cur_nav.loadingType = 'more'
+          cur_nav.loadingType = 'more';
         }
 
         this.$func.usemall.call('member/coupon', this.reqdata).then((res) => {
-          cur_nav.loaded = true
+          cur_nav.loaded = true;
 
           if (res.code === 200) {
             if (loading == 1 || source == 'refresh') {
-              cur_nav.datas = []
+              cur_nav.datas = [];
             }
 
             if (this.reqdata.page == 1) {
-              let _nav = {}
+              let _nav = {};
               for (let _state in res.datas.dynamic) {
-                _nav = this.navList.find((x) => x.state == _state)
+                _nav = this.navList.find((x) => x.state == _state);
                 if (_nav && _nav.state) {
-                  _nav.cnt = res.datas.dynamic[_state]
+                  _nav.cnt = res.datas.dynamic[_state];
                 }
               }
             }
 
             if (res.datas.length > 0) {
-              let __datas = []
+              let __datas = [];
               res.datas.forEach((row) => {
-                row.end_time = row.end_time.substring(0, 10).replace(/-/g, '.')
-                __datas.push(row)
-              })
+                row.end_time = row.end_time.substring(0, 10).replace(/-/g, '.');
+                __datas.push(row);
+              });
 
-              cur_nav.datas = [...cur_nav.datas, ...__datas]
+              cur_nav.datas = [...cur_nav.datas, ...__datas];
 
               if (res.datas.length >= this.reqdata.rows) {
                 if (this.reqdata.page == 1) {
-                  cur_nav.hasmore = true
+                  cur_nav.hasmore = true;
                 }
-                this.reqdata.page++
-                cur_nav.loadingType = 'more'
+                this.reqdata.page++;
+                cur_nav.loadingType = 'more';
               } else {
-                cur_nav.loadingType = 'nomore'
+                cur_nav.loadingType = 'nomore';
               }
             } else {
-              cur_nav.loadingType = 'nomore'
+              cur_nav.loadingType = 'nomore';
             }
           }
 
           if (loading == 1) {
-            uni.hideLoading()
+            uni.hideLoading();
           } else if (source == 'refresh') {
-            uni.stopPullDownRefresh()
+            uni.stopPullDownRefresh();
           }
 
-          this.navData = cur_nav
-        })
+          this.navData = cur_nav;
+        });
       },
 
       // swiper 切换
       changeTab(e) {
-        this.tabCurrentIndex = e.target.current
+        this.tabCurrentIndex = e.target.current;
       },
       // 顶部tab点击
       tabClick(index) {
-        this.tabCurrentIndex = index
+        this.tabCurrentIndex = index;
       },
       // 去使用
       use(options) {
         if (options.state == '已领取')
           this.$api.togoodslist({
             coupon_id: options.coupon_id,
-          })
+          });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
-  page,
-  .container {
+  page, .container {
     min-height: 100%;
     background: $page-color-base;
   }
@@ -255,24 +246,24 @@
     white-space: nowrap;
 
     .state-area {
-      height: 7vh;
-      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.06);
       z-index: 10;
+      height: 7vh;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 6%);
     }
 
     .nav-item {
       flex: 1;
 
       &.active {
-        &:after {
-          content: '';
+        &::after {
           position: absolute;
-          left: 50%;
-          transform: translate(-50%);
           bottom: 0;
+          left: 50%;
           width: 44px;
           height: 0;
           border-bottom: 2px solid $base-color;
+          content: "";
+          transform: translate(-50%);
         }
       }
     }
@@ -290,15 +281,17 @@
     height: 93vh;
   }
 
-  .coupon_box {
+  .coupon-box {
     position: relative;
+
     &:last-child {
       margin-bottom: 20rpx;
     }
+
     .left {
-      background-color: $base-color;
-      color: #fff;
       width: 30%;
+      color: #fff;
+      background-color: $base-color;
 
       .price {
         color: #fff !important;
@@ -314,9 +307,9 @@
     }
 
     .discount::after {
-      content: '折';
-      font-size: 24rpx;
       margin-left: 6rpx;
+      font-size: 24rpx;
+      content: "折";
     }
 
     .border-line {
@@ -326,8 +319,8 @@
 
   .disabled {
     .left {
-      background-color: #d9d9d9;
       color: #b2b2b2 !important;
+      background-color: #d9d9d9;
 
       .price {
         color: #b2b2b2 !important;

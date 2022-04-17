@@ -4,10 +4,7 @@
     <use-empty v-if="empty" e-style="round" tip="无收藏数据"></use-empty>
 
     <view v-else class="padding-lr" v-for="(item, index) in datas" :key="index">
-      <view
-        class="product border-radius-sm padding margin-bottom-sm bg-main"
-        style="padding-bottom: 15rpx"
-      >
+      <view class="product border-radius-sm padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
         <view class="left" @click="togoods(item)">
           <image :src="item.img" mode="aspectFill"></image>
         </view>
@@ -16,19 +13,12 @@
           <view class="pos-a dflex-b price-box w-full">
             <text class="price padding-tb-sm" @click="togoods(item)">{{ item.price / 100 }}</text>
             <view class="dflex-c ft-dark">
-              <button
-                class="btn no-border padding-0 fs-sm ft-dark"
-                open-type="share"
-                :id="item.goods_id"
-              >
+              <button class="btn no-border padding-0 fs-sm ft-dark" open-type="share" :id="item.goods_id">
                 <view class="dflex-c fs-xs padding-tb-sm">
                   <text class="iconfont iconfenxiang margin-left-xs"></text>
                 </view>
               </button>
-              <view
-                @tap.stop="deleteCollect(item._id)"
-                class="dflex-c margin-left-sm padding-tb-sm"
-              >
+              <view @tap.stop="deleteCollect(item._id)" class="dflex-c margin-left-sm padding-tb-sm">
                 <text class="iconfont iconlajitong-01 margin-left-xs"></text>
               </view>
             </view>
@@ -49,8 +39,8 @@
 </template>
 
 <script>
-  const _collect = 'usemall-member-collect'
-  import { mapState } from 'vuex'
+  const _collect = 'usemall-member-collect';
+  import { mapState } from 'vuex';
   export default {
     computed: {
       ...mapState(['islogin', 'member']),
@@ -68,27 +58,27 @@
           page: 1,
         },
         scrollTop: 0,
-      }
+      };
     },
     watch: {
       datas(e) {
-        let empty = e.length === 0
+        let empty = e.length === 0;
         if (this.empty !== empty) {
-          this.empty = empty
+          this.empty = empty;
         }
       },
     },
     onShareAppMessage: function (ops) {
-      let _this = this
-      let mid = 0
+      let _this = this;
+      let mid = 0;
       if (_this.member && _this.member._id) {
-        mid = _this.member._id
+        mid = _this.member._id;
       }
 
-      let goods = _this.datas.find((x) => x.goods_id == ops.target.id)
-      let share_img = ''
+      let goods = _this.datas.find((x) => x.goods_id == ops.target.id);
+      let share_img = '';
       if (goods && goods.id > 0) {
-        share_img = goods.share_img
+        share_img = goods.share_img;
       }
 
       return {
@@ -100,21 +90,21 @@
         desc: '用云电商',
         success: function (res) {
           // 转发成功
-          console.log(res)
-          console.log('转发成功', JSON.stringify(res))
+          console.log(res);
+          console.log('转发成功', JSON.stringify(res));
         },
         fail: function (res) {
           // 转发失败
-          console.log('转发失败', JSON.stringify(res))
+          console.log('转发失败', JSON.stringify(res));
         },
-      }
+      };
     },
     onPageScroll(e) {
       //this.scrollTop = e.scrollTop;
-      this.$refs.usetop.change(e.scrollTop)
+      this.$refs.usetop.change(e.scrollTop);
     },
     onShow() {
-      this.loadData()
+      this.loadData();
     },
     methods: {
       loadData() {
@@ -128,20 +118,20 @@
           .get()
           .then((res) => {
             if (res && res.result && res.result.code === 0) {
-              let _historyDatas = []
+              let _historyDatas = [];
               res.result.data.forEach((x) => {
-                _historyDatas.push(x)
-              })
-              this.datas = _historyDatas
+                _historyDatas.push(x);
+              });
+              this.datas = _historyDatas;
               if (this.datas.length === 0) {
-                this.empty = true
+                this.empty = true;
               }
             }
-          })
+          });
       },
       // 删除收藏
       deleteCollect(id) {
-        let _this = this
+        let _this = this;
         uni.showModal({
           title: '提示',
           content: '删除收藏',
@@ -152,18 +142,18 @@
                 .remove(id)
                 .then((res) => {
                   if (res.code === 200) {
-                    _this.loadData()
+                    _this.loadData();
                   }
-                })
+                });
             } else if (res.cancel) {
-              console.log('用户点击取消')
+              console.log('用户点击取消');
             }
           },
-        })
+        });
       },
       // 清空收藏
       clear() {
-        let _this = this
+        let _this = this;
         uni.showModal({
           title: '提示',
           content: '清空收藏',
@@ -174,24 +164,24 @@
                 .remove()
                 .then((res) => {
                   if (res.code === 200) {
-                    _this.datas = []
-                    return
+                    _this.datas = [];
+                    return;
                   }
-                  _this.$api.msg(res.msg)
-                })
+                  _this.$api.msg(res.msg);
+                });
             } else if (res.cancel) {
-              console.log('用户点击取消')
+              console.log('用户点击取消');
             }
           },
-        })
+        });
       },
       togoods(item) {
         this.$api.togoods({
           id: item.goods_id,
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">

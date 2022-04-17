@@ -77,12 +77,12 @@
     </view>
 
     <!-- 用云版权 -->
-    <use-copyright class="pos-f w-full" style="bottom: -30rpx"></use-copyright>
+    <use-copyright class="pos-f w-full" style="bottom: -30rpx;"></use-copyright>
   </view>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
 
   export default {
     data() {
@@ -99,7 +99,7 @@
         is_send: false,
         code_time: 30,
         timer: 0,
-      }
+      };
     },
     computed: {
       ...mapState(['member']),
@@ -108,47 +108,47 @@
     // 页面加载获取 wx.login code
     onShow() {
       // #ifdef MP-WEIXIN
-      let lopts = uni.getLaunchOptionsSync()
-      console.log(lopts)
+      let lopts = uni.getLaunchOptionsSync();
+      console.log(lopts);
       // #endif
     },
     onLoad() {
       this.$api.get_env((res) => {
-        this.env = res
-        console.log(this.env)
-        this.is_mp = this.env.is_mp
-        this.platform = this.env.platform
-        this.platform_icon = this.env.platform_icon
-        this.platform_name = this.env.platform_name
-      })
+        this.env = res;
+        console.log(this.env);
+        this.is_mp = this.env.is_mp;
+        this.platform = this.env.platform;
+        this.platform_icon = this.env.platform_icon;
+        this.platform_name = this.env.platform_name;
+      });
     },
     methods: {
       inputChange(e) {
-        const key = e.currentTarget.dataset.key
-        this[key] = e.detail.value
+        const key = e.currentTarget.dataset.key;
+        this[key] = e.detail.value;
       },
 
       // 发送验证码
       sendCode() {
-        let _this = this
+        let _this = this;
 
         if (!this.mobile) {
-          this.$api.msg('请输入手机号')
-          return
+          this.$api.msg('请输入手机号');
+          return;
         }
         if (!/(^1[3|4|5|7|8|9][0-9]{9}$)/.test(this.mobile)) {
-          this.$api.msg('请输入正确的手机号码')
-          return
+          this.$api.msg('请输入正确的手机号码');
+          return;
         }
 
-        if (this.is_send) return
+        if (this.is_send) return;
 
         uni.showLoading({
           title: '发送中',
-        })
+        });
 
-        this.code_time = 30
-        this.is_send = true
+        this.code_time = 30;
+        this.is_send = true;
 
         this.$func.usemall
           .call('member/sendSmsCode', {
@@ -157,53 +157,53 @@
             platform: _this.env.platform,
           })
           .then((res) => {
-            uni.hideLoading()
+            uni.hideLoading();
 
             if (res.code == 200) {
               this.$api.alert('验证码已发送', () => {
                 this.timer = setInterval(() => {
-                  --this.code_time
+                  --this.code_time;
 
                   if (this.code_time <= 0) {
-                    clearInterval(this.timer)
-                    this.is_send = false
-                    this.code_time = 30
-                    return
+                    clearInterval(this.timer);
+                    this.is_send = false;
+                    this.code_time = 30;
+                    return;
                   }
-                }, 1000)
-              })
+                }, 1000);
+              });
 
-              return
+              return;
             }
 
-            this.$api.msg(res.msg)
-          })
+            this.$api.msg(res.msg);
+          });
       },
       submit() {
-        let _this = this
-        if (this.is_submit) return
+        let _this = this;
+        if (this.is_submit) return;
 
         if (!this.mobile) {
-          this.$api.msg('请输入手机号')
-          return
+          this.$api.msg('请输入手机号');
+          return;
         }
         if (!/(^1[3|4|5|7|8|9][0-9]{9}$)/.test(this.mobile)) {
-          this.$api.msg('请输入正确的手机号码')
-          return
+          this.$api.msg('请输入正确的手机号码');
+          return;
         }
 
         if (!this.password) {
-          this.$api.msg('请输入新密码')
-          return
+          this.$api.msg('请输入新密码');
+          return;
         }
         if (this.$api.trim(this.password).length < 4) {
-          this.$api.msg('密码长度不能小于4位')
-          return
+          this.$api.msg('密码长度不能小于4位');
+          return;
         }
 
         if (!this.code) {
-          this.$api.msg('请输入验证码')
-          return
+          this.$api.msg('请输入验证码');
+          return;
         }
 
         const data = {
@@ -211,37 +211,37 @@
           password: _this.password,
           code: _this.code,
           platform: _this.env.platform,
-        }
-        console.log(data)
+        };
+        console.log(data);
 
-        _this.is_submit = true
+        _this.is_submit = true;
 
         this.$func.usemall.call('member/forgotPassword', data).then((res) => {
-          _this.is_submit = false
+          _this.is_submit = false;
           if (res.code == 200) {
             _this.$api.alert('密码已修改', () => {
               if (_this.$api.pages().length > 1) {
                 uni.setStorage({
                   key: '__mobile',
                   data: _this.mobile,
-                })
+                });
                 // 跳转登录
-                uni.navigateBack()
-                return
+                uni.navigateBack();
+                return;
               }
               // 登录页
-              _this.$api.tologin()
-              return
-            })
+              _this.$api.tologin();
+              return;
+            });
 
-            return
+            return;
           }
 
-          _this.$api.msg(res.msg)
-        })
+          _this.$api.msg(res.msg);
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -250,9 +250,9 @@
   }
 
   .container {
-    padding-top: 5vh;
     width: 100vw;
     min-height: 100vh;
+    padding-top: 5vh;
     overflow: hidden;
   }
 

@@ -765,15 +765,7 @@
         "delete": false,
         "count": true
       },
-      "required": [
-        "app_id",
-        "app_secret",
-        "app_name",
-        "state",
-        "version",
-        "is_delete",
-        "create_uid"
-      ],
+      "required": ["app_id", "app_secret", "app_name", "state", "version", "is_delete", "create_uid"],
       "properties": {
         "_id": {
           "description": "存储文档 ID，系统自动生成"
@@ -2722,17 +2714,7 @@
         "delete": false,
         "count": true
       },
-      "required": [
-        "name",
-        "cid",
-        "price",
-        "stock_num",
-        "sort",
-        "state",
-        "version",
-        "is_delete",
-        "create_uid"
-      ],
+      "required": ["name", "cid", "price", "stock_num", "sort", "state", "version", "is_delete", "create_uid"],
       "properties": {
         "_id": {
           "description": "存储文档 ID，系统自动生成"

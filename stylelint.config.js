@@ -1,7 +1,12 @@
 module.exports = {
   root: true,
-  plugins: ['stylelint-order'],
-  extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
+  plugins: ['stylelint-order', 'stylelint-scss'],
+  extends: [
+    'stylelint-config-standard',
+    'stylelint-config-prettier',
+    'stylelint-config-standard-scss',
+    'stylelint-config-recommended-vue/scss',
+  ],
   rules: {
     'selector-pseudo-class-no-unknown': [
       true,
@@ -15,14 +20,26 @@ module.exports = {
         ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin', 'for'],
       },
     ],
+    'color-function-notation': 'legacy',
     'no-duplicate-selectors': null,
     'no-empty-source': null,
     'unicode-bom': 'never',
     'no-descending-specificity': null,
     'font-family-no-missing-generic-family-keyword': null,
+    'value-no-vendor-prefix': null,
+    'property-no-vendor-prefix': null,
     'declaration-colon-space-after': 'always-single-line',
     'declaration-colon-space-before': 'never',
     'declaration-block-trailing-semicolon': 'always',
+    'declaration-block-single-line-max-declarations': 1,
+    'selector-max-id': 0,
+    'selector-max-universal': 0,
+    'selector-no-vendor-prefix': null,
+    'selector-type-no-unknown': null,
+    'selector-list-comma-newline-after': 'never-multi-line',
+    'selector-list-comma-newline-before': 'always-multi-line',
+    'selector-list-comma-space-after': 'always',
+    'selector-list-comma-space-before': 'never',
     'rule-empty-line-before': [
       'always',
       {
@@ -203,4 +220,4 @@ module.exports = {
       'speak',
     ],
   },
-}
+};

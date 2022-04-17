@@ -5,12 +5,7 @@
 
     <!-- 02. 报道 -->
 
-    <view
-      class="report-img"
-      v-for="(item, index) in reportDatas"
-      :key="index"
-      @click="topage(item)"
-    >
+    <view class="report-img" v-for="(item, index) in reportDatas" :key="index" @click="topage(item)">
       <view class="container"><image class="image" :src="item.img" mode="aspectFill"></image></view>
       <view class="padding-xs title">{{ item.title }}</view>
       <view class="padding-xs tip">查看完整报道</view>
@@ -66,26 +61,26 @@
           sord: 'asc',
         },
         scrollTop: 0,
-      }
+      };
     },
 
     onPageScroll(e) {
       // 兼容iOS端下拉时顶部漂移
       if (e.scrollTop >= 0) {
-        this.headerPosition = 'fixed'
+        this.headerPosition = 'fixed';
       } else {
-        this.headerPosition = 'absolute'
+        this.headerPosition = 'absolute';
       }
       // this.scrollTop = e.scrollTop
-      this.$refs.usetop.change(e.scrollTop)
+      this.$refs.usetop.change(e.scrollTop);
     },
     //下拉刷新
     onPullDownRefresh() {
-      this.loadData('refresh')
+      this.loadData('refresh');
     },
     //加载更多
     onReachBottom() {
-      this.loadData()
+      this.loadData();
     },
     onReady: function (res) {},
     onLoad(options) {},
@@ -94,92 +89,92 @@
       async loadData(type = 'add', loading) {
         if (this.loadmoreType === 'loading') {
           // 防止重复加载
-          return
+          return;
         }
 
         if (loading == 1 || type == 'refresh') {
           // 从首页开始加载
-          this.reqdata.page = 1
+          this.reqdata.page = 1;
         }
 
         // 没有更多直接返回
         if (type === 'add') {
           if (this.loadmoreType === 'nomore') {
-            return
+            return;
           }
           // 加载中
-          this.loadmoreType = 'loading'
+          this.loadmoreType = 'loading';
         } else {
           // 更多
-          this.loadmoreType = 'more'
+          this.loadmoreType = 'more';
         }
         this.$func.usemall.call('goods/list', this.reqdata).then((res) => {
           if (res.code === 200) {
             if (res.datas && res.datas.goods.length > 0) {
               if (loading == 1 || type == 'refresh') {
-                this.goodsDatas = []
+                this.goodsDatas = [];
               }
-              let _datas = []
+              let _datas = [];
               res.datas.goods.forEach((row) => {
                 if (row.state === '销售中') {
-                  _datas.push(row)
+                  _datas.push(row);
                 }
-              })
+              });
               // res.datas.goods.forEach((row) => {
               // 	if(res.res.datas.goods.state === '销售中')
               // });
-              this.goodsDatas = [...this.goodsDatas, ..._datas]
+              this.goodsDatas = [...this.goodsDatas, ..._datas];
 
               if (res.datas.goods.length >= this.reqdata.rows) {
-                this.reqdata.page++
-                this.loadmoreType = 'more'
+                this.reqdata.page++;
+                this.loadmoreType = 'more';
               } else {
-                this.loadmoreType = 'nomore'
+                this.loadmoreType = 'nomore';
               }
             } else {
-              this.loadmoreType = 'nomore'
+              this.loadmoreType = 'nomore';
             }
           }
 
           if (this.goodsDatas.length === 0) {
-            this.empty = true
+            this.empty = true;
           }
 
           if (loading == 1) {
-            uni.hideLoading()
+            uni.hideLoading();
           } else if (type == 'refresh') {
-            uni.stopPullDownRefresh()
+            uni.stopPullDownRefresh();
           }
-        })
+        });
       },
       // 搜索回调函数
       search() {
-        console.log('home search')
+        console.log('home search');
       },
       // 跳转页面
       topage(item) {
-        console.log('分类点击', item.url)
+        console.log('分类点击', item.url);
         if (item && item.type == '网页') {
           uni.navigateTo({
             url: `/pages/content/web?url=${item.url}`,
-          })
+          });
         } else if (item && item.type == '页面') {
           uni.navigateTo({
             url: `${item.url}`,
-          })
+          });
         } else if (item && item.type == '标签') {
           uni.switchTab({
             url: `${item.url}`,
-          })
+          });
         } else {
           if (item.id)
             this.$api.togoods({
               id: item._id,
-            })
+            });
         }
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -187,16 +182,19 @@
     .container {
       width: 750rpx;
       height: 420rpx;
+
       .image {
         width: 100%;
         height: 100%;
       }
     }
+
     .title {
-      color: #ffffff;
       padding-left: 30rpx;
+      color: #fff;
       background-color: #fc7575;
     }
+
     .tip {
       text-align: center;
     }
