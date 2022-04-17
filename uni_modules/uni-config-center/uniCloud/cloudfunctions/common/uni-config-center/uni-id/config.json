@@ -15,8 +15,8 @@
 		"tokenExpiresIn": 2592000,
 		"oauth": {
 			"weixin": {
-				"appid": "weixin appid",
-				"appsecret": "weixin appsecret"
+				"appid": "wx3c069ba1261272e8",
+				"appsecret": "f0b9830d49e183c4f4c09486865ec1a9"
 			}
 		}
 	},
@@ -24,8 +24,8 @@
 		"tokenExpiresIn": 259200,
 		"oauth": {
 			"weixin": {
-				"appid": "微信小程序appid",
-				"appsecret": "微信小程序appsecret"
+				"appid": "wx3c069ba1261272e8",
+				"appsecret": "f0b9830d49e183c4f4c09486865ec1a9"
 			}
 		},
 		"pay": {
