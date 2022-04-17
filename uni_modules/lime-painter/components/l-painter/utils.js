@@ -1,7 +1,7 @@
 const networkReg = /^(http|\/\/)/;
 export const isBase64 = (path) => /^data:image\/(\w+);base64/.test(path);
 export function sleep(delay) {
-	return new Promise(resolve => setTimeout(resolve, delay)) 
+	return new Promise(resolve => setTimeout(resolve, delay))
 }
 const isDev = ['devtools'].includes(uni.getSystemInfoSync().platform)
 // 缓存图片
@@ -35,7 +35,7 @@ export function toPx(value, baseSize, isDecimal = false) {
 		} else if (unit === '%') {
 			res = value * toPx(baseSize) / 100;
 		} else if (unit === 'em') {
-			res =value * toPx(baseSize || 14);
+			res = value * toPx(baseSize || 14);
 		}
 		return isDecimal ? res.toFixed(2) * 1 : Math.round(res);
 	}
@@ -44,26 +44,26 @@ export function toPx(value, baseSize, isDecimal = false) {
 
 // 计算版本
 export function compareVersion(v1, v2) {
-  v1 = v1.split('.')
-  v2 = v2.split('.')
-  const len = Math.max(v1.length, v2.length)
-  while (v1.length < len) {
-    v1.push('0')
-  }
-  while (v2.length < len) {
-    v2.push('0')
-  }
-  for (let i = 0; i < len; i++) {
-    const num1 = parseInt(v1[i], 10)
-    const num2 = parseInt(v2[i], 10)
+	v1 = v1.split('.')
+	v2 = v2.split('.')
+	const len = Math.max(v1.length, v2.length)
+	while (v1.length < len) {
+		v1.push('0')
+	}
+	while (v2.length < len) {
+		v2.push('0')
+	}
+	for (let i = 0; i < len; i++) {
+		const num1 = parseInt(v1[i], 10)
+		const num2 = parseInt(v2[i], 10)
 
-    if (num1 > num2) {
-      return 1
-    } else if (num1 < num2) {
-      return -1
-    }
-  }
-  return 0
+		if (num1 > num2) {
+			return 1
+		} else if (num1 < num2) {
+			return -1
+		}
+	}
+	return 0
 }
 // #ifdef MP
 export const prefix = () => {
@@ -95,59 +95,59 @@ const base64ToArrayBuffer = (data) => {
 	 * Base64Binary.decodeArrayBuffer(base64_string); 
 	 */
 	const Base64Binary = {
-	  _keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-	  /* will return a  Uint8Array type */
-	  decodeArrayBuffer(input) {
-	    const bytes = (input.length/4) * 3;
-	    const ab = new ArrayBuffer(bytes);
-	    this.decode(input, ab);
-	    return ab;
-	  },
-	  removePaddingChars(input) {
-	    const lkey = this._keyStr.indexOf(input.charAt(input.length - 1));
-	    if(lkey == 64){
-	      return input.substring(0,input.length - 1);
-	    }
-	    return input;
-	  },
-	  decode(input, arrayBuffer) {
-	    //get last chars to see if are valid
-	    input = this.removePaddingChars(input);
-	    input = this.removePaddingChars(input);
-	 
-	    const bytes = parseInt((input.length / 4) * 3, 10);
-	    
-	    let uarray;
-	    let chr1, chr2, chr3;
-	    let enc1, enc2, enc3, enc4;
-	    let i = 0;
-	    let j = 0;
-	    
-	    if (arrayBuffer)
-	      uarray = new Uint8Array(arrayBuffer);
-	    else
-	      uarray = new Uint8Array(bytes);
-	    
-	    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-	    
-	    for (i=0; i<bytes; i+=3) {  
-	      //get the 3 octects in 4 ascii chars
-	      enc1 = this._keyStr.indexOf(input.charAt(j++));
-	      enc2 = this._keyStr.indexOf(input.charAt(j++));
-	      enc3 = this._keyStr.indexOf(input.charAt(j++));
-	      enc4 = this._keyStr.indexOf(input.charAt(j++));
-	  
-	      chr1 = (enc1 << 2) | (enc2 >> 4);
-	      chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-	      chr3 = ((enc3 & 3) << 6) | enc4;
-	  
-	      uarray[i] = chr1;      
-	      if (enc3 != 64) uarray[i+1] = chr2;
-	      if (enc4 != 64) uarray[i+2] = chr3;
-	    }
-	    return uarray;  
-	  }
-	 }
+		_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+		/* will return a  Uint8Array type */
+		decodeArrayBuffer(input) {
+			const bytes = (input.length / 4) * 3;
+			const ab = new ArrayBuffer(bytes);
+			this.decode(input, ab);
+			return ab;
+		},
+		removePaddingChars(input) {
+			const lkey = this._keyStr.indexOf(input.charAt(input.length - 1));
+			if (lkey == 64) {
+				return input.substring(0, input.length - 1);
+			}
+			return input;
+		},
+		decode(input, arrayBuffer) {
+			//get last chars to see if are valid
+			input = this.removePaddingChars(input);
+			input = this.removePaddingChars(input);
+
+			const bytes = parseInt((input.length / 4) * 3, 10);
+
+			let uarray;
+			let chr1, chr2, chr3;
+			let enc1, enc2, enc3, enc4;
+			let i = 0;
+			let j = 0;
+
+			if (arrayBuffer)
+				uarray = new Uint8Array(arrayBuffer);
+			else
+				uarray = new Uint8Array(bytes);
+
+			input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+			for (i = 0; i < bytes; i += 3) {
+				//get the 3 octects in 4 ascii chars
+				enc1 = this._keyStr.indexOf(input.charAt(j++));
+				enc2 = this._keyStr.indexOf(input.charAt(j++));
+				enc3 = this._keyStr.indexOf(input.charAt(j++));
+				enc4 = this._keyStr.indexOf(input.charAt(j++));
+
+				chr1 = (enc1 << 2) | (enc2 >> 4);
+				chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+				chr3 = ((enc3 & 3) << 6) | enc4;
+
+				uarray[i] = chr1;
+				if (enc3 != 64) uarray[i + 1] = chr2;
+				if (enc4 != 64) uarray[i + 2] = chr3;
+			}
+			return uarray;
+		}
+	}
 	return Base64Binary.decodeArrayBuffer(data)
 	// #endif
 	// #ifdef MP-WEIXIN || APP-PLUS
@@ -162,13 +162,12 @@ const base64ToArrayBuffer = (data) => {
  */
 export function base64ToPath(base64) {
 	const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64) || [];
-	
+
 	return new Promise((resolve, reject) => {
 		// #ifdef MP
 		const fs = uni.getFileSystemManager()
 		//自定义文件名
 		if (!format) {
-			console.error('ERROR_BASE64SRC_PARSE')
 			reject(new Error('ERROR_BASE64SRC_PARSE'))
 		}
 		const time = new Date().getTime();
@@ -185,27 +184,28 @@ export function base64ToPath(base64) {
 				resolve(filePath)
 			},
 			fail(err) {
-				console.error('获取base64图片失败', JSON.stringify(err))
 				reject(err)
 			}
 		})
 		// #endif
-		
+
 		// #ifdef H5
 		// mime类型
-		let mimeString = base64.split(',')[0].split(':')[1].split(';')[0]; 
+		let mimeString = base64.split(',')[0].split(':')[1].split(';')[0];
 		//base64 解码
-		let byteString = atob(base64.split(',')[1]); 
+		let byteString = atob(base64.split(',')[1]);
 		//创建缓冲数组
 		let arrayBuffer = new ArrayBuffer(byteString.length);
 		//创建视图
-		let intArray = new Uint8Array(arrayBuffer); 
+		let intArray = new Uint8Array(arrayBuffer);
 		for (let i = 0; i < byteString.length; i++) {
 			intArray[i] = byteString.charCodeAt(i);
 		}
-		resolve(URL.createObjectURL(new Blob([intArray], { type: mimeString })))
+		resolve(URL.createObjectURL(new Blob([intArray], {
+			type: mimeString
+		})))
 		// #endif
-		
+
 		// #ifdef APP-PLUS
 		const bitmap = new plus.nativeObj.Bitmap('bitmap' + Date.now())
 		bitmap.loadBase64Data(base64, () => {
@@ -214,19 +214,17 @@ export function base64ToPath(base64) {
 			}
 			const time = new Date().getTime();
 			const filePath = `_doc/uniapp_temp/${time}.${format}`
-			bitmap.save(filePath, {}, 
+			bitmap.save(filePath, {},
 				() => {
 					bitmap.clear()
 					resolve(filePath)
-				}, 
+				},
 				(error) => {
 					bitmap.clear()
-					console.error(`${JSON.stringify(error)}`)
 					reject(error)
 				})
 		}, (error) => {
 			bitmap.clear()
-			console.error(`${JSON.stringify(error)}`)
 			reject(error)
 		})
 		// #endif
@@ -238,12 +236,12 @@ export function base64ToPath(base64) {
  * @param {Object} string
  */
 export function pathToBase64(path) {
-	if(/^data:/.test(path)) return path
+	if (/^data:/.test(path)) return path
 	return new Promise((resolve, reject) => {
 		// #ifdef H5
-		const _canvas = ()=> {
+		const _canvas = () => {
 			let image = new Image();
-			image.setAttribute("crossOrigin",'Anonymous');
+			image.setAttribute("crossOrigin", 'Anonymous');
 			image.onload = function() {
 				let canvas = document.createElement('canvas');
 				// 获取图片原始宽高
@@ -257,119 +255,89 @@ export function pathToBase64(path) {
 			}
 			image.src = path
 			image.onerror = (error) => {
-				console.error(`urlToBase64 error: ${path}`, JSON.stringify(error))
-			    reject(new Error('urlToBase64 error'));
+				reject(error);
 			};
 		}
 		const _fileReader = (blob) => {
 			const fileReader = new FileReader();
 			fileReader.onload = (e) => {
-			    resolve(e.target.result);
+				resolve(e.target.result);
 			};
 			fileReader.readAsDataURL(blob);
 			fileReader.onerror = (error) => {
-				console.error('blobToBase64 error:', JSON.stringify(error))
-			    reject(new Error('blobToBase64 error'));
+				reject(error);
 			};
 		}
 		const isFileReader = typeof FileReader === 'function'
-		if(networkReg.test(path) && isFileReader ) {
+		if (networkReg.test(path) && isFileReader) {
 			window.URL = window.URL || window.webkitURL;
 			const xhr = new XMLHttpRequest();
 			xhr.open("get", path, true);
 			xhr.timeout = 2000;
 			xhr.responseType = "blob";
 			xhr.onload = function() {
-				if(this.status == 200) {
+				if (this.status == 200) {
 					_fileReader(this.response)
 				} else {
 					_canvas()
 				}
 			}
 			xhr.onreadystatechange = function() {
-				if(this.status === 0) {
-					console.error('图片跨域了，得后端处理咯')
+				if (this.status === 0) {
+					reject(new Error('图片跨域'))
 				}
 			}
 			xhr.send();
-		} else if(/^blob/.test(path) && isFileReader){
+		} else if (/^blob/.test(path) && isFileReader) {
 			_fileReader(path)
 		} else {
 			_canvas()
 		}
 		// #endif
-		
+
 		// #ifdef MP
-		if(uni.canIUse('getFileSystemManager')) {
+		if (uni.canIUse('getFileSystemManager')) {
 			uni.getFileSystemManager().readFile({
-			    filePath: path,
-			    encoding: 'base64',
-			    success: (res) => {
-			        resolve('data:image/png;base64,' + res.data)
-			    },
-			    fail: (error) => {
-					console.error('urlToBase64 error:', JSON.stringify(error))
-			        reject(error)
-			    }
+				filePath: path,
+				encoding: 'base64',
+				success: (res) => {
+					resolve('data:image/png;base64,' + res.data)
+				},
+				fail: (error) => {
+					reject(error)
+				}
 			})
 		}
 		// #endif
-		
+
 		// #ifdef APP-PLUS
 		plus.io.resolveLocalFileSystemURL(getLocalFilePath(path), (entry) => {
-		    entry.file((file) => {
-		        const fileReader = new plus.io.FileReader()
-		        fileReader.onload = (data) => { resolve(data.target.result)}
-		        fileReader.onerror = (error) => {
-					console.error('pathToBase64 error:', JSON.stringify(error))
-		            reject(error)
-		        }
-		        fileReader.readAsDataURL(file)
-		    }, (error) => {
-				console.error('pathToBase64 error:', JSON.stringify(error))
-		        reject(error)
-		    })
-		}, (error) => {
-			console.error('pathToBase64 error:', JSON.stringify(error))
-		    reject(error)
-		})
+			entry.file((file) => {
+				const fileReader = new plus.io.FileReader()
+				fileReader.onload = (data) => {
+					resolve(data.target.result)
+				}
+				fileReader.onerror = (error) => {
+					reject(error)
+				}
+				fileReader.readAsDataURL(file)
+			}, reject)
+		}, reject)
 		// #endif
 	})
 }
 
-// #ifdef APP-PLUS
-const getLocalFilePath = (path)=> {
-    if (path.indexOf('_www') === 0 || path.indexOf('_doc') === 0 || path.indexOf('_documents') === 0 || path.indexOf('_downloads') === 0) {
-        return path
-    }
-    if (path.indexOf('file://') === 0) {
-        return path
-    }
-    if (path.indexOf('/storage/emulated/0/') === 0) {
-        return path
-    }
-    if (path.indexOf('/') === 0) {
-        const localFilePath = plus.io.convertAbsoluteFileSystem(path)
-        if (localFilePath !== path) {
-            return localFilePath
-        } else {
-            path = path.substr(1)
-        }
-    }
-    return '_www/' + path
-}
-// #endif
 
 
-export function getImageInfo(img, isH5PathToBase64 = false) {
+export function getImageInfo(img) {
 	return new Promise(async (resolve, reject) => {
-		if(cache[img] && cache[img].errMsg) {
+		if (cache[img] && cache[img].errMsg) {
 			resolve(cache[img])
 		} else {
 			uni.getImageInfo({
 				src: img,
 				success: (image) => {
-					if(isDev) {
+					if (isDev) {
 						resolve(image)
 					} else {
 						cache[img] = image
@@ -377,10 +345,131 @@ export function getImageInfo(img, isH5PathToBase64 = false) {
 					}
 				},
 				fail(err) {
-					resolve({path: img})
-					console.error(`getImageInfo:fail ${img} failed ${JSON.stringify(err)}`);
+					reject({err, path: img})
 				}
 			})
 		}
 	})
 }
+
+export function downloadFile(url) {
+	if (!url) return Promise.reject({
+		err: 'no url'
+	})
+	return new Promise((resolve, reject) => {
+		if(cache[url]) {
+			return reject()
+		} 
+		cache[url] = 1
+		uni.downloadFile({
+			url,
+			success(res) {
+				resolve(res)
+			},
+			fail(err) {
+				reject(err)
+			}
+		})
+	})
+}
+
+// #ifdef APP-PLUS
+const getLocalFilePath = (path) => {
+	if (path.indexOf('_www') === 0 || path.indexOf('_doc') === 0 || path.indexOf('_documents') === 0 || path
+		.indexOf('_downloads') === 0) {
+		return path
+	}
+	if (path.indexOf('file://') === 0) {
+		return path
+	}
+	if (path.indexOf('/storage/emulated/0/') === 0) {
+		return path
+	}
+	if (path.indexOf('/') === 0) {
+		const localFilePath = plus.io.convertAbsoluteFileSystem(path)
+		if (localFilePath !== path) {
+			return localFilePath
+		} else {
+			path = path.substr(1)
+		}
+	}
+	return '_www/' + path
+}
+const getFile = (url) => {
+	return new Promise((resolve, rejcet) => {
+		plus.io.resolveLocalFileSystemURL(url, resolve, (err) => {
+			resolve(false)
+		})
+	})
+}
+const createFile = ({
+	fs,
+	url,
+	target,
+	name
+}) => {
+	return new Promise((resolve, reject) => {
+		plus.io.resolveLocalFileSystemURL(url, res1 => {
+			fs.root.getDirectory(target, {
+				create: true
+			}, fileEntry => {
+				const success = () => {
+					res1.remove()
+					resolve()
+				}
+				getFile(target+name).then(res => {
+					if(res) {
+						res.remove((res2) => {
+							res1.moveTo(fileEntry, name, success, reject)
+						})
+					}
+					res1.moveTo(fileEntry, name, success, reject)
+				})
+			})
+		}, reject)
+	})
+}
+export function useNvue(target, version, timeout) {
+	return new Promise((resolve, reject) => {
+		plus.io.requestFileSystem(plus.io.PRIVATE_DOC, async (fs) => {
+			try {
+				cache['lime-painter'] = 0
+				let names = ['uni.webview.1.5.2.js', 'painter.js', 'index.html']
+				let urls = ['https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/',
+					'https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/'
+				]
+				const oldVersion = plus.storage.getItem('lime-painter')
+				const isFile = await getFile(`${target}${names[1]}`)
+				if(isFile && oldVersion && compareVersion(oldVersion, version) >= 0) {
+					resolve()
+				} else {
+					for (var i = 0; i < names.length; i++) {
+						const name = names[i]
+							const file = await downloadFile(urls[i >= 1 ? 1 : 0] + name)
+							await createFile({
+								fs,
+								url: file.tempFilePath,
+								target,
+								name
+							})
+					}
+					plus.storage.setItem('lime-painter', version)
+					cache['lime-painter'] = version
+					resolve()
+				}
+			} catch (e) {
+				let index = parseInt(timeout / 20)
+				while (!cache['lime-painter'] && index) {
+					await sleep(20)
+					index--
+				}
+				if (cache['lime-painter']) {
+					resolve()
+				} else {
+					reject(e)
+				}
+			}
+		}, reject)
+	})
+}
+// #endif

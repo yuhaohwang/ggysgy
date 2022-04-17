@@ -8,9 +8,10 @@
 		<!-- #endif -->
 		<!-- #ifdef APP-NVUE -->
 		<web-view 
+			v-if="hybrid || isInitFile"
 			:style="size" 
 			ref="webview" 
-			src="_www/uni_modules/lime-painter/static/index.html"
+			:src="hybrid ? '/hybird/html/lime-painter/index.html' :'_doc/uni_modules/lime-painter/index.html'"
 			class="lime-painter__canvas"
 			@pagefinish="onPageFinish"
 			@error="onError"
@@ -28,11 +29,12 @@
 import {parent} from '../common/relation'
 //  #ifndef APP-NVUE
 import { toPx, compareVersion, sleep, base64ToPath, pathToBase64, isBase64 } from './utils';
-import {Painter} from '../../static/painter'
+import Painter from './painter'
 //  #endif
 //  #ifdef APP-NVUE
-import { toPx, sleep, base64ToPath, pathToBase64, getImageInfo, isBase64 } from './utils';
+import { toPx, sleep, base64ToPath, pathToBase64, getImageInfo, isBase64, useNvue } from './utils';
 const dom = weex.requireModule('dom') 
+import {version} from '../../package.json'
 //  #endif
 export default {
 	name: 'lime-painter',
@@ -54,10 +56,6 @@ export default {
 		pixelRatio: Number,
 		customStyle: String,
 		isCanvasToTempFilePath: Boolean,
-		isCache: {
-			type: Boolean,
-			default:true
-		},
 		sleep: {
 			type: Number,
 			default: 1000 / 30
@@ -76,6 +74,13 @@ export default {
 			default: '2d'
 		},
 		// #endif
+		// #ifdef APP-NVUE
+		hybrid: Boolean,
+		timeout: {
+			type: Number,
+			default: 2000
+		}
+		// #endif
 	},
 	data() {
 		return {
@@ -91,13 +96,14 @@ export default {
 			inited: false,
 			progress: 0,
 			// #ifdef APP-NVUE
-			tempFilePath: []
+			tempFilePath: [],
+			isInitFile: false
 			// #endif
 		};
 	},
 	computed: {
 		canvasId() {
-			return `l-painter${this._uid}`
+			return `l-painter${this._uid||parseInt(Math.random()*100)}`
 		},
 		size() {
 			if(this.boardWidth && this.boardHeight) {
@@ -148,9 +154,17 @@ export default {
 		// #ifdef MP-TOUTIAO
 		this.use2dCanvas = this.type === '2d' && compareVersion(SDKVersion, '1.78.0') >= 0;
 		// #endif
-		// #ifdef MP-TOUTIAO
-		this.use2dCanvas = this.type === '2d' && compareVersion(SDKVersion, '2.8.0') >= 0;
+		// #ifdef MP-ALIPAY
+		this.use2dCanvas = this.type === '2d' && compareVersion(SDKVersion, '2.7.0') >= 0;
 		// #endif
+	},
+	// #endif
+	// #ifdef APP-NVUE 
+	created() {
+		if(this.hybrid) return
+		useNvue('_doc/uni_modules/lime-painter/', version, this.timeout).then(res => {
+			this.isInitFile = true
+		})
 	},
 	// #endif
 	async mounted() {
@@ -168,7 +182,7 @@ export default {
 	methods: {
 		async watchRender(val, old) {
 			this.progress = 0
-			if (!val.views.length || JSON.stringify(val) === '{}' || !val || JSON.stringify(val) == JSON.stringify(old)) return;
+			if (!val || !val.views || !val.views.length || JSON.stringify(val) === '{}' || JSON.stringify(val) == JSON.stringify(old)) return;
 			clearTimeout(this.rendertimer)
 			this.rendertimer = setTimeout(() => {
 				this.render(val);
@@ -199,6 +213,13 @@ export default {
 					await this.getParentWeith()
 				}
 			}
+		},
+		canvasToTempFilePathSync(args) {
+			this.$watch('progress', (v) => {
+				if(v == 1) {
+					this.canvasToTempFilePath(args)
+				}
+			},{immediate: true})
 		},
 		// #ifdef APP-NVUE
 		onPageFinish() {
@@ -235,15 +256,17 @@ export default {
 							this.setFilePath(this.tempFilePath.join(''), true)
 						}
 					} else {
-						this.$emit('fail')
+						this.$emit('fail', 'canvas no data')
 					}
 					return
 				}
 				this.$emit(res.event, JSON.parse(res.data));
 			} else if (res.file) {
 				this.file = res.data;
+			} else if(/ms$/.test(res[0])){
+				console.info(res[0])
 			} else {
-				console.error(res);
+				this.$emit('fail', res)
 			}
 		},
 		getWebViewInited() {
@@ -280,26 +303,29 @@ export default {
 			})
 		},
 		async render(args) {
-			await this.getSize(args)
-			const newNode = await this.calcImage(args);
-			await this.getWebViewInited()
-			const webview = this.$refs.webview;
-			webview.evalJS(`source(${JSON.stringify(newNode)})`) 
-			await this.getWebViewDone()
-			await sleep(this.afterDelay)
-			if(this.isCanvasToTempFilePath) {
-				const params = {fileType: this.fileType, quality: this.quality}
-				webview.evalJS(`save(${JSON.stringify(params)})`) 
+			try{
+				await this.getSize(args)
+				const newNode = await this.calcImage(args);
+				await this.getWebViewInited()
+				const webview = this.$refs.webview;
+				webview.evalJS(`source(${JSON.stringify(newNode)})`) 
+				await this.getWebViewDone()
+				await sleep(this.afterDelay)
+				if(this.isCanvasToTempFilePath) {
+					const params = {fileType: this.fileType, quality: this.quality}
+					webview.evalJS(`save(${JSON.stringify(params)})`) 
+				}
+				return Promise.resolve() 
+			}catch(e){
+				this.$emit('fail', e)
 			}
-			return Promise.resolve() 
 		},
 		async calcImage(args) {
 			let node = JSON.parse(JSON.stringify(args))
 			const url = node.url || node.src
 			if(node.type === "image" && url && !isBase64(url)) {
 				const {path, type} = await getImageInfo(url)
-				const src = await pathToBase64(path)
-				node.src = src.replace(/^data:application[\w\/]+;base64/,'data:image/'+type+';base64')
+				node.src = path
 			} else if(node.views && node.views.length) {
 				for (let i = 0; i < node.views.length; i++) {
 					node.views[i] = await this.calcImage(node.views[i])
@@ -308,6 +334,9 @@ export default {
 			return node
 		},
 		async canvasToTempFilePath(args = {}){
+			if(!this.inited) {
+				return this.$emit('fail', 'no init')
+			}
 			this.tempFilePath = []
 			if(args.fileType == 'jpg') {args.fileType = 'jpeg'}
 			this.$refs.webview.evalJS(`save(${JSON.stringify(args)})`) 
@@ -344,10 +373,10 @@ export default {
 		},
 		
 		// #ifndef APP-NVUE
-		async render(args = {}, single = false) {
+		async render(args = {}) {
 			await this.getSize(args)
 			const ctx = await this.getContext();
-			let { use2dCanvas, boardWidth, boardHeight, canvas, afterDelay, isCache } = this;
+			let { use2dCanvas, boardWidth, boardHeight, canvas, afterDelay} = this;
 			if (use2dCanvas && !canvas) {
 				return Promise.reject(new Error('render: fail canvas has not been created'));
 			}
@@ -364,27 +393,32 @@ export default {
 					width: boardWidth, 
 					height: boardHeight, 
 					pixelRatio: this.dpr, 
-					isCache, 
-					fixed: `${this.width?'width':''}${this.height?'height':''}`
+					fixed: `${this.width?'width':''}${this.height?'height':''}`,
+					listen: {
+						onProgress: (v)  => {
+							this.progress = v
+							this.$emit('progress', v)
+						},
+						onEffectFail: (err) => {
+							this.$emit('faill', err)
+						}
+					}
 				}, this)
 			} 
-			this.painter.listen('progressChange', (v) => {
-				this.$emit('progress', v)
-			})
 			const {width, height} = await this.painter.source(args)
 			this.boundary.height = this.canvasHeight = height 
 			this.boundary.width = this.canvasWidth =  width
 			await sleep(this.sleep);
 			await this.painter.render()
 			await new Promise(resolve => this.$nextTick(resolve));
-			if (!use2dCanvas && !single) {
+			if (!use2dCanvas) {
 				await this.canvasDraw();
 			}
 			if (afterDelay && use2dCanvas) {
 				await sleep(afterDelay);
 			}
 			this.$emit('done');
-			if (this.isCanvasToTempFilePath && !single) {
+			if (this.isCanvasToTempFilePath) {
 				this.canvasToTempFilePath()
 					.then(async res => {
 						this.$emit('success', res.tempFilePath)
@@ -394,17 +428,6 @@ export default {
 					});
 			}
 			return Promise.resolve({ ctx, draw: this.painter, node: this.node });
-		},
-		async custom(cb) {
-			const { ctx, draw } = await this.render({}, true);
-			ctx.save();
-			await cb(ctx, draw);
-			ctx.restore();
-			return Promise.resolve(true);
-		},
-		async single(args = {}) {
-			const res = await this.render(args, true);
-			return Promise.resolve(res);
 		},
 		canvasDraw(flag = false) {
 			return new Promise((resolve, reject) => this.ctx.draw(flag, () => setTimeout(() => resolve(), this.afterDelay)));
@@ -480,8 +503,12 @@ export default {
 				height = destHeight;
 				// #endif
 				const success = async (res) => {
-					const tempFilePath = await this.setFilePath(res.tempFilePath)
-					resolve(Object.assign(res, {tempFilePath}))
+					try{
+						const tempFilePath = await this.setFilePath(res.tempFilePath)
+						resolve(Object.assign(res, {tempFilePath}))
+					}catch(e){
+						this.$emit('fail', e)
+					}
 				} 
 				const copyArgs = Object.assign({
 					x,

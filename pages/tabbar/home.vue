@@ -159,7 +159,7 @@ export default {
 					sort: 3,
 					state: '启用',
 					type: '页面',
-					url: '/pages/goods/goods-list?cid=60812def3ef4cf0001e352a4',
+					url: '/pages/report/report',
 					version: 1
 				}
 			],
