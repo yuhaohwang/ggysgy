@@ -209,17 +209,15 @@
 				"enablePullDownRefresh": true
 			}
 
+		}, {
+			"path": "pages/report/report",
+			"style": {
+				"navigationBarTitleText": "向党汇报",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	    ,{
-            "path" : "pages/report/report",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "艺设公益",
