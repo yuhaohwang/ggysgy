@@ -27,8 +27,12 @@
 
       <!-- 03. 分类区1 -->
       <view class="x-c-c x-5 padding-xs bg-main" v-if="categoryDatas && categoryDatas.length > 0">
-        <view class="y-c-c padding-xs category-item" v-for="(item, index) in categoryDatas" :key="index"
-          @click="to(item.url)">
+        <view
+          class="y-c-c padding-xs category-item"
+          v-for="(item, index) in categoryDatas"
+          :key="index"
+          @click="to(item.url)"
+        >
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
           <view>{{ item.name }}</view>
         </view>
@@ -59,8 +63,14 @@
     <view class="container-area padding-lr-sm padding-bottom-sm">
       <!-- 我的订单 -->
       <view class="border-radius margin-top-sm bg-main">
-        <use-list-title title="我的订单" iconfont="icondingdan" color="#feaa30" fwt="600" tip="查看全部订单"
-          @goto="toOrder('/pages/user/order/order', '全部')"></use-list-title>
+        <use-list-title
+          title="我的订单"
+          iconfont="icondingdan"
+          color="#feaa30"
+          fwt="600"
+          tip="查看全部订单"
+          @goto="toOrder('/pages/user/order/order', '全部')"
+        ></use-list-title>
 
         <view class="order-area padding-bottom-sm padding-lr dflex-c">
           <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '待付款')">
@@ -113,8 +123,14 @@
 
       <view class="border-radius margin-top-sm bg-main">
         <!-- 我的足迹 -->
-        <use-list-title title="我的足迹" iconfont="iconzuji" color="#ffab6c" fwt="600" :tip="stats.browsing"
-          @goto="to('/pages/user/browsing/browsing')"></use-list-title>
+        <use-list-title
+          title="我的足迹"
+          iconfont="iconzuji"
+          color="#ffab6c"
+          fwt="600"
+          :tip="stats.browsing"
+          @goto="to('/pages/user/browsing/browsing')"
+        ></use-list-title>
         <scroll-view scroll-x class="browsing-area padding-lr">
           <view class="dflex">
             <view v-for="(item, index) in historyDatas" :key="index">
@@ -124,22 +140,51 @@
           </view>
         </scroll-view>
 
-        <use-list-title title="我的收藏" iconfont="iconshoucang-" color="#feaa30" fwt="600" :tip="stats.collect"
-          @goto="to('/pages/user/collect/collect')"></use-list-title>
-        <use-list-title title="收货人" iconfont="icondizhi-" color="#5a9ded" fwt="600"
-          @goto="to('/pages/user/address/address')"></use-list-title>
-        <use-list-title title="设置" iconfont="iconshezhi-" color="#58bc8a" fwt="600"
-          @goto="to('/pages/user/setting/setting')"></use-list-title>
+        <use-list-title
+          title="我的收藏"
+          iconfont="iconshoucang-"
+          color="#feaa30"
+          fwt="600"
+          :tip="stats.collect"
+          @goto="to('/pages/user/collect/collect')"
+        ></use-list-title>
+        <use-list-title
+          title="收货人"
+          iconfont="icondizhi-"
+          color="#5a9ded"
+          fwt="600"
+          @goto="to('/pages/user/address/address')"
+        ></use-list-title>
+        <use-list-title
+          title="设置"
+          iconfont="iconshezhi-"
+          color="#58bc8a"
+          fwt="600"
+          @goto="to('/pages/user/setting/setting')"
+        ></use-list-title>
       </view>
 
-      <view v-if="islogin" class="border-radius margin-top-sm padding-sm dflex-c bg-main log-out-btn"
-        @click="openActionSheet"><text class="cell-tit">退出登录</text></view>
-      <view v-else class="border-radius margin-top-sm padding-sm dflex-c bg-main log-out-btn"
-        @click="to('/pages/login/login')"><text class="cell-tit">去登录</text></view>
+      <view
+        v-if="islogin"
+        class="border-radius margin-top-sm padding-sm dflex-c bg-main log-out-btn"
+        @click="openActionSheet"
+        ><text class="cell-tit">退出登录</text></view
+      >
+      <view
+        v-else
+        class="border-radius margin-top-sm padding-sm dflex-c bg-main log-out-btn"
+        @click="to('/pages/login/login')"
+        ><text class="cell-tit">去登录</text></view
+      >
 
       <!-- 操作菜单 -->
-      <use-action-sheet v-model="actionSheetShow" :list="actionSheetList" :tips="actionSheetTips"
-        @click="actionSheetClick" @close="actionSheetClose"></use-action-sheet>
+      <use-action-sheet
+        v-model="actionSheetShow"
+        :list="actionSheetList"
+        :tips="actionSheetTips"
+        @click="actionSheetClick"
+        @close="actionSheetClose"
+      ></use-action-sheet>
     </view>
 
     <!-- 艺设公益版权 -->
@@ -147,10 +192,7 @@
   </view>
 </template>
 <script>
-  import {
-    mapState,
-    mapMutations
-  } from 'vuex';
+  import { mapState, mapMutations } from 'vuex';
   const _history = 'usemall-goods-history';
   export default {
     computed: {
@@ -159,7 +201,8 @@
     data() {
       return {
         // 金刚区分类
-        categoryDatas: [{
+        categoryDatas: [
+          {
             _id: '6083a669ff01b00001bb591e',
             cid: 0,
             create_time: 1619240553775,
@@ -283,7 +326,8 @@
         this.actionSheetShow = true;
 
         this.$api.timerout(() => {
-          this.actionSheetList = [{
+          this.actionSheetList = [
+            {
               text: '退出登录',
               color: '#333',
             },
@@ -328,8 +372,7 @@
                 nickname: res.userInfo.nickName,
                 gender: res.userInfo.gender,
                 avatar: res.userInfo.avatarUrl,
-                comment: [res.userInfo.country, res.userInfo.province, res.userInfo.city].filter((x) => x).join(
-                  '-'),
+                comment: [res.userInfo.country, res.userInfo.province, res.userInfo.city].filter((x) => x).join('-'),
               })
               .then((res) => {
                 _this.isreq = false;
@@ -404,10 +447,10 @@
     }
   }
 
-
   /* 分类区1 */
   .category-item {
     margin: auto;
+
     // padding: 6rpx;
     font-size: $font-sm + 2upx;
     color: $font-color-dark;
@@ -416,7 +459,6 @@
       width: 60%;
     }
   }
-
 
   .vip-card-area {
     color: #f7d680;
@@ -436,7 +478,8 @@
   }
 
   .order-area {
-    .item {}
+    .item {
+    }
 
     .iconfont {
       position: relative;
@@ -448,8 +491,7 @@
     }
   }
 
-  .stats-area .item,
-  .order-area .item {
+  .stats-area .item, .order-area .item {
     position: relative;
     font-size: $font-sm;
     color: $font-color-base;

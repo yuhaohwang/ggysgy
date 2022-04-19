@@ -10,7 +10,8 @@ let uposter = {
     alignItems: 'center',
     alignContent: 'center',
     flexWrap: 'nowrap',
-    views: [{
+    views: [
+      {
         type: 'view',
         css: {
           position: 'fixed',
@@ -169,11 +170,11 @@ let uposter = {
         //     }
         //   }
         // ]
-      }
-    ]
+      },
+    ],
   },
   // 产品海报数据
-  getGoodsData: function(member, goods, qrcode) {
+  getGoodsData: function (member, goods, qrcode) {
     // 会员头像
     this.goods.views[1].src = member.member_headimg ? member.member_headimg : '/static/images/logo.png';
     // 会员名称

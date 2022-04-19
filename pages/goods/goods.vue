@@ -68,19 +68,30 @@
 
     <!-- 海报二维码 -->
     <view class="qrcode tac padding-tb pos-f pos-tl-c">
-      <use-qrcode :onval="true" :val="posterQRcode" :show="false" loading-text="生成海报中" qrsize="200"
-        @result="posterQRcodeResult"></use-qrcode>
+      <use-qrcode
+        :onval="true"
+        :val="posterQRcode"
+        :show="false"
+        loading-text="生成海报中"
+        qrsize="200"
+        @result="posterQRcodeResult"
+      ></use-qrcode>
     </view>
 
     <!-- 海报 -->
     <view v-if="posterShow && !posterUrl" class="poster pos-f pos-tl-c padding">
-      <l-painter custom-style="position: fixed;z-index: -1;top: -200vh;left: -100vw;" :board="posterData"
-        isCanvasToTempFilePath @success="posterSuccess" />
+      <l-painter
+        custom-style="position: fixed;z-index: -1;top: -200vh;left: -100vw;"
+        :board="posterData"
+        isCanvasToTempFilePath
+        @success="posterSuccess"
+      />
     </view>
 
     <use-popup mode="bottom" bgclass=" " v-model="posterShow" @close="">
       <view class="padding border-radius margin">
-        <view v-if="!posterUrl" class="tac bg-main padding border-radius pos-a pos-l-c" style="bottom: 45vh;">海报生成中，请稍等
+        <view v-if="!posterUrl" class="tac bg-main padding border-radius pos-a pos-l-c" style="bottom: 45vh;"
+          >海报生成中，请稍等
         </view>
 
         <view class="w-full" style="height: 70vh;">
@@ -103,8 +114,13 @@
     <!-- 03. 规格区 -->
     <view v-if="skuDatas.length > 0" class="sku-area bg-main padding-lr padding-top padding-bottom-xs pos-r">
       <view class="con dflex dflex-wrap-w">
-        <view class="margin-right-sm margin-bottom-sm dflex bg-drak border-radius-lg padding-tb-16 padding-lr"
-          :class="{ active: item.selected }" v-for="(item, index) in skuDatas" :key="index" @click="selectSKU(item)">
+        <view
+          class="margin-right-sm margin-bottom-sm dflex bg-drak border-radius-lg padding-tb-16 padding-lr"
+          :class="{ active: item.selected }"
+          v-for="(item, index) in skuDatas"
+          :key="index"
+          @click="selectSKU(item)"
+        >
           <text class="fs-xs">{{ item.name }}</text>
         </view>
       </view>
@@ -187,8 +203,15 @@
             </view>
             <view class="fs-sm ft-main padding-top-xs padding-bottom-sm">{{ item.review_content }}</view>
             <view class="dflex dflex-wrap-w">
-              <image class="" mode="widthFix" v-for="(img, i) in item.review_imgs" :lazy-load="true" :key="i" :src="img"
-                @click="preview(item.review_imgs, img)"></image>
+              <image
+                class=""
+                mode="widthFix"
+                v-for="(img, i) in item.review_imgs"
+                :lazy-load="true"
+                :key="i"
+                :src="img"
+                @click="preview(item.review_imgs, img)"
+              ></image>
             </view>
             <view class="">
               <text class="fs-xs ft-dark">{{ item.goods_type || '套餐1' }}</text>
@@ -227,7 +250,9 @@
         <text>收藏</text>
       </view>
       <view class="flex1 btn-container dflex-b border-radius-big">
-        <view class="tac padding-tb-sm flex1 bg-warn" v-if="goods.stock_num > 0" @click="tocart(goods)">加入购物车</view>
+        <view class="tac padding-tb-sm flex1 bg-warn" v-if="goods.stock_num > 0" @click="tocart(goods)"
+          >加入购物车</view
+        >
         <view class="tac padding-tb-sm flex1 bg-base" v-if="goods.stock_num > 0" @click="tobuy(goods)">立即购买</view>
         <view class="tac padding-tb-sm flex1 bg-disabled" v-else>已售磐</view>
       </view>
@@ -242,7 +267,6 @@
     <!-- 置顶 -->
     <use-totop ref="usetop" bottom="120"></use-totop>
   </view>
-
 </template>
 
 <script>
@@ -252,9 +276,7 @@
 
   import uposter from '@/common/poster.js';
 
-  import {
-    mapState
-  } from 'vuex';
+  import { mapState } from 'vuex';
 
   export default {
     computed: {
@@ -305,7 +327,7 @@
         this.goods.stock_num = e.num;
       },
     },
-    onShareAppMessage: function(ops) {
+    onShareAppMessage: function (ops) {
       let _this = this;
       let mid = 0;
       if (_this.member && _this.member._id) {
@@ -315,11 +337,11 @@
       return {
         title: _this.goods.share_title,
         path: `/pages/goods/goods?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
-        success: function(res) {
+        success: function (res) {
           // 转发成功
           console.log('转发成功', res);
         },
-        fail: function(res) {
+        fail: function (res) {
           // 转发失败
           console.log('转发失败', res);
         },
@@ -452,10 +474,10 @@
           current: cur,
           longPressActions: {
             itemList: ['发送给朋友', '保存图片', '收藏'],
-            success: function(data) {
+            success: function (data) {
               console.log(res);
             },
-            fail: function(err) {
+            fail: function (err) {
               console.log(err);
             },
           },
@@ -485,15 +507,14 @@
 
         // #ifdef H5
         // 如果为 h5，二维码内容需配置为线上版本产品详情路径
-        this.posterQRcode =
-          `https://usemall-h5.use-cloud.com/#/pages/goods/goods?id=${this.goods._id}&mid=${this.member._id}`;
+        this.posterQRcode = `https://usemall-h5.use-cloud.com/#/pages/goods/goods?id=${this.goods._id}&mid=${this.member._id}`;
         // #endif
       },
       // 海报二维码生成成功
       posterQRcodeResult(res) {
         // 获取产品海报数据
         this.posterData = uposter.getGoodsData(this.member, this.goods, res);
-        console.log(JSON.stringify(this.posterData))
+        console.log(JSON.stringify(this.posterData));
         this.posterShow = true;
       },
       // 海报生成完成
@@ -510,7 +531,7 @@
 
           uni.saveImageToPhotosAlbum({
             filePath: this.posterUrl,
-            success: function() {
+            success: function () {
               uni.hideLoading();
 
               uni.showToast({
@@ -598,7 +619,7 @@
           let _this = this;
           uni.showModal({
             title: '授权登录',
-            success: function(res) {
+            success: function (res) {
               if (res.confirm) {
                 _this.$api.tologin();
               }

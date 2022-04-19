@@ -152,8 +152,8 @@ view[class*="-round-area"] {
 }
 
 .center {
-  margin-left: auto;
   margin-right: auto;
+  margin-left: auto;
 }
 
 /* 字体对齐方式 */
@@ -170,24 +170,22 @@ view[class*="-round-area"] {
 }
 
 /* flex 布局 */
-$flex1:(
+$flex1: (
   s: flex-start,
   e: flex-end,
   c: center,
   a: space-around,
-  b: space-between
+  b: space-between,
 );
-
-$flex2:(
+$flex2: (
   s: flex-start,
   e: flex-end,
   c: center,
   st: stretch,
 );
-
-$wrap:(
+$wrap: (
   w: wrap,
-  nw: nowrap
+  nw: nowrap,
 );
 
 @each $key1, $value1 in $flex1 {
@@ -199,13 +197,14 @@ $wrap:(
       justify-content: $value1;
       align-items: $value2;
       align-content: $value2;
+
       /* 等比分列，2-6列 */
       @for $i from 2 through 12 {
-      	&.x-#{$i} {
-      		& > view {
-      			width: (100% / $i);
-      		}
-      	}
+        &.x-#{$i} {
+          & > view {
+            width: (100% / $i);
+          }
+        }
       }
     }
     .y-#{$key1}-#{$key2} {
@@ -215,13 +214,14 @@ $wrap:(
       justify-content: $value1;
       align-items: $value2;
       align-content: $value2;
+
       /* 等比分行，2-6行 */
       @for $i from 2 through 12 {
-      	&.y-#{$i} {
-      		& > view {
-      			height: (100% / $i);
-      		}
-      	}
+        &.y-#{$i} {
+          & > view {
+            height: (100% / $i);
+          }
+        }
       }
     }
   }
@@ -237,13 +237,14 @@ $wrap:(
         justify-content: $value1;
         align-items: $value2;
         align-content: $value2;
+
         /* 等比分列，2-6列 */
         @for $i from 2 through 12 {
-        	&.x-#{$i} {
-        		& > view {
-        			width: (100% / $i);
-        		}
-        	}
+          &.x-#{$i} {
+            & > view {
+              width: (100% / $i);
+            }
+          }
         }
       }
       .y-#{$key1}-#{$key2}-#{$key3} {
@@ -253,13 +254,14 @@ $wrap:(
         justify-content: $value1;
         align-items: $value2;
         align-content: $value2;
+
         /* 等比分行，2-6行 */
         @for $i from 2 through 12 {
-        	&.y-#{$i} {
-        		& > view {
-        			height: (100% / $i);
-        		}
-        	}
+          &.y-#{$i} {
+            & > view {
+              height: (100% / $i);
+            }
+          }
         }
       }
     }

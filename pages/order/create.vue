@@ -2,7 +2,13 @@
   <view>
     <!-- 收货人 -->
     <view class="gap"></view>
-    <use-list-title v-if="!(addrData && addrData._id)" color="#333" title="选择收货人" iconfont="icondizhi-" @goto="toaddr">
+    <use-list-title
+      v-if="!(addrData && addrData._id)"
+      color="#333"
+      title="选择收货人"
+      iconfont="icondizhi-"
+      @goto="toaddr"
+    >
     </use-list-title>
     <view v-else class="padding dflex-b bg-main" @click="toaddr">
       <view class="dflex">
@@ -27,8 +33,10 @@
       <view class="goods-item" :class="{ 'margin-top': index > 0 }" v-for="(item, index) in goodsDatas" :key="index">
         <view class="pos-r">
           <image mode="aspectFill" :src="item.goods.img"></image>
-          <view v-if="item.goods.stock_num < 10 || item.goods.stock_num < item.goods.goods_num"
-            class="disabled dflex-c dflex-flow-c pos-a pos-tl-c border-radius-c">
+          <view
+            v-if="item.goods.stock_num < 10 || item.goods.stock_num < item.goods.goods_num"
+            class="disabled dflex-c dflex-flow-c pos-a pos-tl-c border-radius-c"
+          >
             <text>库存不足</text>
             <text class="margin-left-xs fs-xs" v-if="item.goods.stock_num > 0">剩余 {{ item.goods.stock_num }}</text>
           </view>
@@ -43,10 +51,17 @@
             <view class="price flex1">{{ item.goods.price / 100 || '' }}</view>
 
             <!-- + - 数量 -->
-            <use-number-box v-if="!(cart_ids && cart_ids.length > 0)" :min="1" :max="item.goods.stock_num"
+            <use-number-box
+              v-if="!(cart_ids && cart_ids.length > 0)"
+              :min="1"
+              :max="item.goods.stock_num"
               :value="item.goods.goods_num > item.goods.stock_num ? item.goods.stock_num : item.goods.goods_num"
-              :is-max="item.goods.goods_num >= item.goods.stock_num" :is-min="item.goods.goods_num === 1" :index="index"
-              direction="right" @eventChange="numberChange"></use-number-box>
+              :is-max="item.goods.goods_num >= item.goods.stock_num"
+              :is-min="item.goods.goods_num === 1"
+              :index="index"
+              direction="right"
+              @eventChange="numberChange"
+            ></use-number-box>
           </view>
         </view>
       </view>
@@ -80,8 +95,9 @@
             <text class="ft-base padding-tb-sm padding-lr" @click="couponUse(item)">立即使用</text>
           </view>
         </view>
-        <view v-if="!couponDatas || couponDatas.length <= 0" class="coupon-none"><text
-            class="coupon-none-tip">开发中!!!!!</text></view>
+        <view v-if="!couponDatas || couponDatas.length <= 0" class="coupon-none"
+          ><text class="coupon-none-tip">开发中!!!!!</text></view
+        >
       </view>
     </use-popup>
 
@@ -104,8 +120,13 @@
 
       <view class="dflex-b padding-lr padding-tb-sm">
         <view class="margin-right-xl">备注</view>
-        <input class="flex1 padding-sm" type="text" v-model="order_desc" placeholder="请填写买家备注"
-          placeholder-class="placeholder" />
+        <input
+          class="flex1 padding-sm"
+          type="text"
+          v-model="order_desc"
+          placeholder="请填写买家备注"
+          placeholder-class="placeholder"
+        />
       </view>
     </view>
     <view class="gap"></view>
@@ -116,8 +137,9 @@
         <text class="fs-sm">实付款</text>
         <text class="price margin-left-sm fs-xl">{{ total_money }}</text>
       </view>
-      <view class="submit dflex-c bg-base fs animated-all" :class="is_submit === 1 ? 'bg-disabled' : ''"
-        @click="submit">提交订单</view>
+      <view class="submit dflex-c bg-base fs animated-all" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="submit"
+        >提交订单</view
+      >
     </view>
   </view>
 </template>

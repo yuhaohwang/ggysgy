@@ -7,30 +7,21 @@
           <view class="wh-full">
             <image
               src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/5433329e-95c5-4973-aa87-86c4d1815771.jpg"
-              class="wh-full loaded"
-              lazy-load="true"
-              mode="aspectFill"
-            ></image>
+              class="wh-full loaded" lazy-load="true" mode="aspectFill"></image>
           </view>
         </swiper-item>
         <swiper-item>
           <view class="wh-full">
             <image
               src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/010c807f-a45e-40f7-8e08-49aa3dca8b49.jpg"
-              class="wh-full loaded"
-              lazy-load="true"
-              mode="aspectFill"
-            ></image>
+              class="wh-full loaded" lazy-load="true" mode="aspectFill"></image>
           </view>
         </swiper-item>
       </swiper>
     </view>
 
-    <view
-      class="pos-f dflex-c border-radius-c"
-      style="top: 30rpx; right: 30rpx; width: 80rpx; height: 80rpx; background: #333; opacity: 0.6;"
-      @click="toShare"
-    >
+    <view class="pos-f dflex-c border-radius-c"
+      style="top: 30rpx; right: 30rpx; width: 80rpx; height: 80rpx; background: #333; opacity: 0.6;" @click="toShare">
       <view class="iconfont iconfenxiang ft-white fs-xl"></view>
     </view>
 
@@ -38,11 +29,8 @@
     <view class="goods-area bg-main padding">
       <view class="dflex-b margin-tb-sm">
         <view class="dflex">
-          <image
-            src="/static/images/user/default.png"
-            class="headimg border-radius-c"
-            style="width: 70rpx; height: 70rpx;"
-          ></image>
+          <image src="/static/images/user/default.png" class="headimg border-radius-c"
+            style="width: 70rpx; height: 70rpx;"></image>
           <view class="margin-left-xs fs-xxs">Usecloud</view>
         </view>
         <view class="bg-drak border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
@@ -52,9 +40,7 @@
         </view>
       </view>
 
-      <text class="title fwb clamp-2 fs margin-bottom-xs"
-        >阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</text
-      >
+      <text class="title fwb clamp-2 fs margin-bottom-xs">阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</text>
       <view class="">
         一套 js 解决前端、后端、数据库的全栈开发 serverless 模式（小程序、h5、app、vue + element-ui + uniCloud
         版管理后台）前后端开源 QQ群 1020565856
@@ -77,8 +63,7 @@
         </view>
       </view>
       <view class="btn-container border-radius-big">
-        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx;" @click="toBuy(goods)"
-          >购买同款
+        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx;" @click="toBuy(goods)">购买同款
         </view>
       </view>
     </view>
@@ -88,7 +73,9 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import {
+    mapState
+  } from 'vuex';
   export default {
     computed: {
       ...mapState(['islogin', 'member']),
@@ -99,7 +86,7 @@
         follow: true,
       };
     },
-    onShareAppMessage: function (ops) {
+    onShareAppMessage: function(ops) {
       let _this = this;
       let mid = 0;
       if (_this.member && _this.member._id) {
@@ -109,11 +96,11 @@
       return {
         title: '艺设公益 · 传播艺术之美',
         path: `/pages/shopping/detail?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
-        success: function (res) {
+        success: function(res) {
           // 转发成功
           console.log('转发成功', res);
         },
-        fail: function (res) {
+        fail: function(res) {
           // 转发失败
           console.log('转发失败', res);
         },
@@ -162,6 +149,7 @@
   /* 02. 商品数据区 */
   .goods-area {
     margin-top: 66vh;
+    height: 100vh;
 
     .price-box {
       display: flex;

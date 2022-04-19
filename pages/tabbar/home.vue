@@ -1,6 +1,5 @@
 <template>
   <view class="box-sizing-b bg-drak">
-
     <!-- 01. 头部组件 -->
     <view class="x-c-c bg-main">
       <view class="search">
@@ -13,8 +12,11 @@
     <view class="swiper-area pos-r" v-if="swiperDatas && swiperDatas.length > 0">
       <!-- 轮播组件 -->
       <swiper class="swiper w-full" autoplay indicator-dots indicator-color="#f7f7f7" indicator-active-color="#FEAA30">
-        <swiper-item class="swiper-item padding-sm wh-full box-sizing-b" v-for="(item, index) in swiperDatas"
-          :key="index">
+        <swiper-item
+          class="swiper-item padding-sm wh-full box-sizing-b"
+          v-for="(item, index) in swiperDatas"
+          :key="index"
+        >
           <view class="wh-full" @click.stop="topage(item)">
             <image class="border-radius wh-full" mode="scaleToFill" :lazy-load="true" :src="item.img" />
           </view>
@@ -24,8 +26,12 @@
 
     <!-- 03. 分类区1 -->
     <view class="x-c-c x-5 padding-xs bg-main" v-if="category1Datas && category1Datas.length > 0">
-      <view class="y-c-c padding-xs category-item" v-for="(item, index) in category1Datas" :key="index"
-        @click="topage(item)">
+      <view
+        class="y-c-c padding-xs category-item"
+        v-for="(item, index) in category1Datas"
+        :key="index"
+        @click="topage(item)"
+      >
         <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
         <view>{{ item.name }}</view>
       </view>
@@ -33,8 +39,12 @@
 
     <!-- 03. 分类区2 -->
     <view class="x-c-c-w x-3 padding-xs margin-tb-xs bg-main" v-if="category2Datas && category2Datas.length > 0">
-      <view class="y-c-c padding-xs category-item" v-for="(item, index) in category2Datas" :key="index"
-        @click="topage(item)">
+      <view
+        class="y-c-c padding-xs category-item"
+        v-for="(item, index) in category2Datas"
+        :key="index"
+        @click="topage(item)"
+      >
         <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
       </view>
     </view>
@@ -45,8 +55,12 @@
     <view class="limit-area bg-main">
       <scroll-view class="padding-lr" scroll-x>
         <view class="dflex padding-bottom">
-          <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index"
-            @click="togoods(item)">
+          <view
+            class="item margin-right-sm"
+            v-for="(item, index) in goodsLimitDatas"
+            :key="index"
+            @click="togoods(item)"
+          >
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
             <text class="title clamp padding-bottom-xs">{{ item.name }}</text>
             <text class="price">{{ item.price / 100 }}</text>
@@ -70,9 +84,7 @@
 </template>
 
 <script>
-  import {
-    mapState
-  } from 'vuex';
+  import { mapState } from 'vuex';
 
   export default {
     computed: {
@@ -89,11 +101,12 @@
         // 分类入口
         categoryAll: {
           type: '页面',
-          url: `/pages/category/category`
+          url: `/pages/category/category`,
         },
 
         // 轮播区
-        swiperDatas: [{
+        swiperDatas: [
+          {
             _id: '6081038ce01ac80001db768d',
             create_time: 1619067788539,
             create_uid: '607e63e021576100016eded3',
@@ -134,7 +147,8 @@
           },
         ],
         // 金刚区分类
-        category1Datas: [{
+        category1Datas: [
+          {
             _id: '6083a669ff01b00001bb591e',
             cid: 0,
             create_time: 1619240553775,
@@ -180,7 +194,8 @@
             version: 1,
           },
         ],
-        category2Datas: [{
+        category2Datas: [
+          {
             _id: '6083a669ff01b00001bb591e',
             cid: 0,
             create_time: 1619240553775,
@@ -306,7 +321,7 @@
     },
     // 用户点击右上角分享
     // https://uniapp.dcloud.io/api/plugins/share?id=showsharemenu
-    onShareAppMessage: function(ops) {
+    onShareAppMessage: function (ops) {
       let _this = this,
         mid = 0;
 
@@ -318,11 +333,11 @@
         title: '艺设公益',
         path: `/pages/tabbar/home?mid=${mid}`,
         // imageUrl: 'https://mall-os-api.use-cloud.com/files/upload/image/20200408/200408115587860242.jpg',
-        success: function(res) {
+        success: function (res) {
           // 转发成功
           console.log('转发成功', res);
         },
-        fail: function(res) {
+        fail: function (res) {
           // 转发失败
           console.log('转发失败', res);
         },
@@ -434,6 +449,7 @@
   /* 分类区2 */
   .category-item {
     margin: auto;
+
     // padding: 6rpx;
     font-size: $font-sm + 2upx;
     color: $font-color-dark;

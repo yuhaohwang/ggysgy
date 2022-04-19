@@ -1,8 +1,13 @@
 <template>
   <view class="margin-sm">
     <view class="dflex-b">
-      <image src="/static/images/user/default.png" class="border-radius-lg headimg" style="width: 66rpx; height: 66rpx;"
-        mode="" @click="user"></image>
+      <image
+        src="/static/images/user/default.png"
+        class="border-radius-lg headimg"
+        style="width: 66rpx; height: 66rpx;"
+        mode=""
+        @click="user"
+      ></image>
       <view class="flex1 margin-left-sm">
         <view class="bg-main border-radius-lg dflex" style="height: 76rpx; line-height: 76rpx;">
           <input type="text" placeholder="输入关键词" class="w-full padding-lr" />
@@ -13,9 +18,15 @@
     <view class="margin-top">
       <scroll-view scroll-x class="ws-np">
         <view class="dflex padding-bottom-sm">
-          <block v-for="(item, index) in ['全部', '关注', '推荐', '服饰', '箱包', '鞋子', '手机', '家电', '饰品']" :key="index">
-            <view class="pos-r padding-tb-sm margin-right-xs padding-lr diblock line-height-1 tac"
-              :class="{ active: title_id === index }" @click="pitch(index)">
+          <block
+            v-for="(item, index) in ['全部', '关注', '推荐', '服饰', '箱包', '鞋子', '手机', '家电', '饰品']"
+            :key="index"
+          >
+            <view
+              class="pos-r padding-tb-sm margin-right-xs padding-lr diblock line-height-1 tac"
+              :class="{ active: title_id === index }"
+              @click="pitch(index)"
+            >
               {{ item }}
               <view class="badge" v-if="item == '关注'">2</view>
             </view>
@@ -28,20 +39,29 @@
         <view class="bg-main margin-bottom-sm border-radius" style="height: 200rpx; background: #4645cf;">
           <image
             src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/d462f254-a1a6-4225-992c-f0658f6d4e0d.jpg"
-            mode="widthFix"></image>
+            mode="widthFix"
+          ></image>
         </view>
         <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
           <view class="bg-main margin-bottom-sm border-radius" @click="dongt(item.id)">
             <block v-for="(img, img_idx) in [1]" :key="img_idx">
               <image
                 src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/5433329e-95c5-4973-aa87-86c4d1815771.jpg"
-                style="max-height: 340rpx;" class="flex1" mode="heightFix"></image>
+                style="max-height: 340rpx;"
+                class="flex1"
+                mode="heightFix"
+              ></image>
             </block>
-            <view class="padding-lr-sm margin-top-sm clamp-2">阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view>
+            <view class="padding-lr-sm margin-top-sm clamp-2"
+              >阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view
+            >
             <view class="dflex-b padding-lr-sm margin-tb-sm">
               <view class="dflex" style="width: 60%;">
-                <image src="/static/images/user/default.png" class="border-radius-c headimg"
-                  style="width: 50rpx; height: 50rpx;"></image>
+                <image
+                  src="/static/images/user/default.png"
+                  class="border-radius-c headimg"
+                  style="width: 50rpx; height: 50rpx;"
+                ></image>
                 <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
               </view>
               <view class="dflex">
@@ -58,15 +78,22 @@
             <block v-for="(img, img_idx) in [1]" :key="img_idx">
               <image
                 src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/010c807f-a45e-40f7-8e08-49aa3dca8b49.jpg"
-                style="max-height: 340rpx;" class="flex1" mode="heightFix">
+                style="max-height: 340rpx;"
+                class="flex1"
+                mode="heightFix"
+              >
               </image>
             </block>
-            <view class="padding-lr-sm margin-top-sm clamp-2">小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包
+            <view class="padding-lr-sm margin-top-sm clamp-2"
+              >小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包
             </view>
             <view class="dflex-b padding-lr-sm margin-tb-sm">
               <view class="dflex" style="width: 60%;">
-                <image src="/static/images/user/default.png" class="border-radius-c headimg"
-                  style="width: 50rpx; height: 50rpx;"></image>
+                <image
+                  src="/static/images/user/default.png"
+                  class="border-radius-c headimg"
+                  style="width: 50rpx; height: 50rpx;"
+                ></image>
                 <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
               </view>
               <view class="dflex">

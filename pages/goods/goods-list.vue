@@ -1,25 +1,42 @@
 <template>
   <view :class="!empty ? 'padding-top-big' : ''">
     <!-- 空白页 -->
-    <use-empty v-if="empty" e-style="round" e-type="search" tip="搜索数据为空" btn-tip="重新搜索" height="70vh" :auto="false"
-      @goto="tosearch"></use-empty>
+    <use-empty
+      v-if="empty"
+      e-style="round"
+      e-type="search"
+      tip="搜索数据为空"
+      btn-tip="重新搜索"
+      height="70vh"
+      :auto="false"
+      @goto="tosearch"
+    ></use-empty>
 
     <!-- 列表区 -->
     <view v-else>
       <!-- 筛选区 -->
       <view class="navbar pos-f w-full dflex bg-main" :style="{ position: headerPosition }">
-        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 0 }"
-          @click="navbarClick(0)">综合排序</view>
-        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 1 }"
-          @click="navbarClick(1)">销量优先</view>
-        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 2 }"
-          @click="navbarClick(2)">
+        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 0 }" @click="navbarClick(0)"
+          >综合排序</view
+        >
+        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 1 }" @click="navbarClick(1)"
+          >销量优先</view
+        >
+        <view
+          class="nav-item dflex-c flex1 pos-r h-full"
+          :class="{ active: filterIndex === 2 }"
+          @click="navbarClick(2)"
+        >
           <text>价格</text>
           <view class="">
-            <view class="iconfont iconjiantou02 ft-dark dflex-c"
-              :class="{ active: priceOrder === 1 && filterIndex === 2 }"></view>
-            <view class="iconfont iconjiantou ft-dark dflex-c"
-              :class="{ active: priceOrder === 2 && filterIndex === 2 }"></view>
+            <view
+              class="iconfont iconjiantou02 ft-dark dflex-c"
+              :class="{ active: priceOrder === 1 && filterIndex === 2 }"
+            ></view>
+            <view
+              class="iconfont iconjiantou ft-dark dflex-c"
+              :class="{ active: priceOrder === 2 && filterIndex === 2 }"
+            ></view>
           </view>
         </view>
       </view>
@@ -27,8 +44,12 @@
       <!-- 商品列表区 -->
       <view class="goods-list">
         <view class="list dflex-b dflex dflex-wrap-w w-full">
-          <view class="item bg-main border-radius-sm padding-bottom-sm" v-for="(item, index) in goodsDatas" :key="index"
-            @click="togoods(item)">
+          <view
+            class="item bg-main border-radius-sm padding-bottom-sm"
+            v-for="(item, index) in goodsDatas"
+            :key="index"
+            @click="togoods(item)"
+          >
             <view class="image-wrapper">
               <image mode="aspectFill" :lazy-load="true" :src="item.img"></image>
             </view>

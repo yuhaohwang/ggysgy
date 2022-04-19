@@ -152,8 +152,8 @@ view[class*="-round-area"] {
 }
 
 .center {
-  margin-left: auto;
   margin-right: auto;
+  margin-left: auto;
 }
 
 /* 字体对齐方式 */
@@ -170,24 +170,22 @@ view[class*="-round-area"] {
 }
 
 /* flex 布局 */
-$flex1:(
+$flex1: (
   s: flex-start,
   e: flex-end,
   c: center,
   a: space-around,
-  b: space-between
+  b: space-between,
 );
-
-$flex2:(
+$flex2: (
   s: flex-start,
   e: flex-end,
   c: center,
   st: stretch,
 );
-
-$wrap:(
+$wrap: (
   w: wrap,
-  nw: nowrap
+  nw: nowrap,
 );
 
 @each $key1, $value1 in $flex1 {

@@ -1,5 +1,6 @@
 {
-  "pages": [{
+  "pages": [
+    {
       "path": "pages/tabbar/home",
       "style": {
         "navigationBarTitleText": "艺设公益",
@@ -251,34 +252,36 @@
         "navigationBarTitleText": "向党汇报",
         "enablePullDownRefresh": false
       }
-    }, {
+    },
+    {
       "path": "pages/wmcd/wmcd",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
-    }, {
+    },
+    {
       "path": "pages/wfbd/wfbd",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
-    }, {
+    },
+    {
       "path": "pages/wmdd/wmdd",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
-    }, {
+    },
+    {
       "path": "pages/category/category",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    }, {
+    },
+    {
       "path": "pages/goods/test",
       "style": {
         "navigationBarTitleText": "",
@@ -306,7 +309,8 @@
     "selectedColor": "#FEAA30",
     "borderStyle": "white",
     "backgroundColor": "#ffffff",
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/tabbar/home",
         "iconPath": "static/images/tabbar/home.png",
         "selectedIconPath": "static/images/tabbar/home-active.png",
@@ -340,10 +344,12 @@
   },
   "condition": {
     "current": 0,
-    "list": [{
-      "name": "",
-      "path": "",
-      "query": ""
-    }]
+    "list": [
+      {
+        "name": "",
+        "path": "",
+        "query": ""
+      }
+    ]
   }
 }

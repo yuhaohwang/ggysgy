@@ -9,18 +9,35 @@
       <!-- 左侧一级分类 -->
       <view class="h-full left">
         <scroll-view scroll-y class="h-full">
-          <view v-for="item in fdatas" :key="item._id" class="item dflex-c" :class="{ active: item._id === cid }"
-            @click="fSelect(item)">{{ item.name }}</view>
+          <view
+            v-for="item in fdatas"
+            :key="item._id"
+            class="item dflex-c"
+            :class="{ active: item._id === cid }"
+            @click="fSelect(item)"
+            >{{ item.name }}</view
+          >
         </scroll-view>
       </view>
 
       <!-- 右侧 1二级分类 2商品列表 -->
-      <scroll-view class="h-full right bg-main" scroll-with-animation scroll-y :scroll-top="top"
-        :style="{ height: scrollHeight }" @scroll="onScroll">
+      <scroll-view
+        class="h-full right bg-main"
+        scroll-with-animation
+        scroll-y
+        :scroll-top="top"
+        :style="{ height: scrollHeight }"
+        @scroll="onScroll"
+      >
         <!-- 右侧二级分类 -->
         <view class="dflex-s dflex-wrap-w" v-if="mode == 1">
-          <view class="item padding-bottom-sm dflex dflex-flow-c" v-if="item.pid == cid" v-for="item in sdatas"
-            :key="item._id" @click="togoodslist(item)">
+          <view
+            class="item padding-bottom-sm dflex dflex-flow-c"
+            v-if="item.pid == cid"
+            v-for="item in sdatas"
+            :key="item._id"
+            @click="togoodslist(item)"
+          >
             <image :lazy-load="true" :src="item.img"></image>
             <text class="tac clamp margin-top-sm">{{ item.name }}</text>
           </view>
@@ -186,7 +203,7 @@
       },
       totop(e) {
         this.top = e.scrollTop;
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.top = 0;
         });
       },
