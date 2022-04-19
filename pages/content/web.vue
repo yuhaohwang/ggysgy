@@ -18,7 +18,7 @@
       this.weburl = res.url;
 
       uni.setNavigationBarTitle({
-        title: '用云 ' + (res.title || ''),
+        title: '艺设 ' + (res.title || ''),
       });
     },
   };

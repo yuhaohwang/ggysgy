@@ -31,7 +31,7 @@ module.exports = class MemberController extends Controller {
       let citys = [user.country, user.province, user.city];
       let nickname = user.nickName;
       if (res.username.length == 11) {
-        nickname = '用云-' + res.username.substr(7, 4);
+        nickname = '艺设-' + res.username.substr(7, 4);
       }
 
       let member = {

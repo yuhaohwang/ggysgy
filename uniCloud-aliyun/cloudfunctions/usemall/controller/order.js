@@ -874,7 +874,7 @@ module.exports = class OrderController extends Controller {
 
             // 获取下单数据
             wxpayOrderInfo = await uniWxpayIns.getOrderInfo({
-              body: '用云电商',
+              body: '艺设公益',
               outTradeNo: order.order_id,
               totalFee: order.order_actural_paid,
               tradeType: pay_trade_type,
@@ -894,7 +894,7 @@ module.exports = class OrderController extends Controller {
 
             wxpayOrderInfo = await uniWxpayIns.getOrderInfo({
               openid: openid,
-              body: '用云电商',
+              body: '艺设公益',
               outTradeNo: order.order_id,
               totalFee: order.order_actural_paid,
               notifyUrl: uidObj.config['mp-weixin']['notify-url'],
@@ -928,7 +928,7 @@ module.exports = class OrderController extends Controller {
         // 获取支付参数，注意支付宝返回的是 trade_no 字符串
         let alipayOrderInfo = await uniAlipayIns.getOrderInfo({
           openid: openid,
-          subject: '用云电商',
+          subject: '艺设公益',
           outTradeNo: order.order_id,
           totalFee: order.order_actural_paid,
           notifyUrl: uidObj.config['mp-alipay']['notify-url'],

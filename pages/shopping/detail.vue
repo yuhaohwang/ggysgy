@@ -107,7 +107,7 @@
       }
 
       return {
-        title: '用云 · 让开发更简单',
+        title: '艺设公益 · 传播艺术之美',
         path: `/pages/shopping/detail?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
         success: function (res) {
           // 转发成功

@@ -65,7 +65,7 @@
       </view>
     </view>
 
-    <!-- 用云版权 -->
+    <!-- 艺设公益版权 -->
     <use-copyright></use-copyright>
   </view>
 </template>

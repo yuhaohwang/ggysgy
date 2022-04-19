@@ -18,7 +18,7 @@
       <view class="x-b-c">
 
         <view class="x-c-c">
-          <u--image src="../../static/images/home-category2/xyzp.png" width='50rpx' height='50rpx' mode="scaleToFill"
+          <u--image src="../../static/images/user/default.png" width='50rpx' height='50rpx' mode="scaleToFill"
             shape="circle">
           </u--image>
           <view class="padding-left-xs">标题</view>
@@ -29,7 +29,7 @@
 
       <view class="x-c-c">
 
-        <u--image src="../../static/images/home-category2/xyzp.png" width='150rpx' height='200rpx' mode="scaleToFill"
+        <u--image src="../../static/images/user/default.png" width='150rpx' height='200rpx' mode="scaleToFill"
           radius="10">
         </u--image>
 

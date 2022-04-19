@@ -1,8 +1,8 @@
 <template>
-  <view class="box-sizing-b w-full">
+  <view class="box-sizing-b bg-drak">
 
     <!-- 01. 头部组件 -->
-    <view class="x-c-c">
+    <view class="x-c-c bg-main">
       <view class="search">
         <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
       </view>
@@ -16,35 +16,33 @@
         <swiper-item class="swiper-item padding-sm wh-full box-sizing-b" v-for="(item, index) in swiperDatas"
           :key="index">
           <view class="wh-full" @click.stop="topage(item)">
-            <image class="border-radius wh-full" mode="aspectFill" :lazy-load="true" :src="item.img" />
+            <image class="border-radius wh-full" mode="scaleToFill" :lazy-load="true" :src="item.img" />
           </view>
         </swiper-item>
       </swiper>
     </view>
 
     <!-- 03. 分类区1 -->
-    <view class="category1-area dflex-c dflex-wrap-w" v-if="category1Datas && category1Datas.length > 0">
-      <view class="category1-item dflex dflex-flow-c margin-bottom-sm" v-for="(item, index) in category1Datas"
-        :key="index" @click="topage(item)">
-        <image class="margin-bottom-xs" :lazy-load="true" :src="item.img"></image>
-        <text class="tac clamp">{{ item.name }}</text>
+    <view class="x-c-c x-5 padding-xs bg-main" v-if="category1Datas && category1Datas.length > 0">
+      <view class="y-c-c padding-xs category-item" v-for="(item, index) in category1Datas" :key="index"
+        @click="topage(item)">
+        <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
+        <view>{{ item.name }}</view>
       </view>
     </view>
-    <view class="gap"></view>
 
     <!-- 03. 分类区2 -->
-    <view class="category2-area dflex-c dflex-wrap-w" v-if="category2Datas && category2Datas.length > 0">
-      <view class="category2-item dflex dflex-flow-c" v-for="(item, index) in category2Datas" :key="index"
+    <view class="x-c-c-w x-3 padding-xs margin-tb-xs bg-main" v-if="category2Datas && category2Datas.length > 0">
+      <view class="y-c-c padding-xs category-item" v-for="(item, index) in category2Datas" :key="index"
         @click="topage(item)">
-        <image :lazy-load="true" :src="item.img"></image>
+        <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
       </view>
     </view>
-    <view class="gap"></view>
 
     <!-- 04. 限时精选 -->
     <use-list-title title="限时拍卖" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit">
     </use-list-title>
-    <view class="limit-area">
+    <view class="limit-area bg-main">
       <scroll-view class="padding-lr" scroll-x>
         <view class="dflex padding-bottom">
           <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index"
@@ -317,7 +315,7 @@
       }
 
       return {
-        title: '用云电商',
+        title: '艺设公益',
         path: `/pages/tabbar/home?mid=${mid}`,
         // imageUrl: 'https://mall-os-api.use-cloud.com/files/upload/image/20200408/200408115587860242.jpg',
         success: function(res) {
@@ -433,34 +431,15 @@
     }
   }
 
-  /* 分类区1 */
-  .category1-area {
-    padding: 30rpx 0 0rpx;
-
-    .category1-item {
-      width: 30%;
-      font-size: $font-sm + 2upx;
-      color: $font-color-dark;
-    }
-
-    image {
-      width: 96rpx;
-      height: 96rpx;
-    }
-  }
-
   /* 分类区2 */
-  .category2-area {
-    padding: 10rpx 10rpx 0;
-
-    .category2-item {
-      width: 33.3%;
-    }
+  .category-item {
+    margin: auto;
+    // padding: 6rpx;
+    font-size: $font-sm + 2upx;
+    color: $font-color-dark;
 
     image {
-      width: 230rpx;
-      height: 130rpx;
-      padding-bottom: 10rpx;
+      width: 100%;
     }
   }
 

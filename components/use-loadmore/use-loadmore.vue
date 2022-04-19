@@ -21,7 +21,7 @@
         default() {
           return {
             more: '上拉显示更多',
-            loading: '用云 · 让开发更简单',
+            loading: '艺设公益 · 传播艺术之美',
             nomore: '已经到底了',
           };
         },

@@ -199,6 +199,14 @@ $wrap:(
       justify-content: $value1;
       align-items: $value2;
       align-content: $value2;
+      /* 等比分列，2-6列 */
+      @for $i from 2 through 12 {
+      	&.x-#{$i} {
+      		& > view {
+      			width: (100% / $i);
+      		}
+      	}
+      }
     }
     .y-#{$key1}-#{$key2} {
       display: flex;
@@ -207,6 +215,14 @@ $wrap:(
       justify-content: $value1;
       align-items: $value2;
       align-content: $value2;
+      /* 等比分行，2-6行 */
+      @for $i from 2 through 12 {
+      	&.y-#{$i} {
+      		& > view {
+      			height: (100% / $i);
+      		}
+      	}
+      }
     }
   }
 }
@@ -221,6 +237,14 @@ $wrap:(
         justify-content: $value1;
         align-items: $value2;
         align-content: $value2;
+        /* 等比分列，2-6列 */
+        @for $i from 2 through 12 {
+        	&.x-#{$i} {
+        		& > view {
+        			width: (100% / $i);
+        		}
+        	}
+        }
       }
       .y-#{$key1}-#{$key2}-#{$key3} {
         display: flex;
@@ -229,6 +253,14 @@ $wrap:(
         justify-content: $value1;
         align-items: $value2;
         align-content: $value2;
+        /* 等比分行，2-6行 */
+        @for $i from 2 through 12 {
+        	&.y-#{$i} {
+        		& > view {
+        			height: (100% / $i);
+        		}
+        	}
+        }
       }
     }
   }

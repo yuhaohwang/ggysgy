@@ -1,6 +1,6 @@
 {
   "id": "Usecloud-usemall-109",
-  "name": "用云电商 uniCloud v1.0.9 版前后端开源",
+  "name": "艺设公益 uniCloud v1.0.9 版前后端开源",
   "version": "1.0.9.211112",
   "description": "完整商用级项目，一套js解决前端后端、数据库的全栈开发serverless模式（小程序、h5、android、iOS、vue+element-ui+uniCloud版管理后台）永久开源。欢迎加QQ群。",
   "keywords": [
@@ -10,7 +10,7 @@
     "会员分销",
     "客服IM"
   ],
-  "displayName": "用云电商 uniCloud 版前后端开源",
+  "displayName": "艺设公益 uniCloud 版前后端开源",
   "repository": "https://gitee.com/usecloud/usemall",
   "dcloudext": {
     "category": [

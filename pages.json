@@ -1,6 +1,5 @@
 {
-  "pages": [
-    {
+  "pages": [{
       "path": "pages/tabbar/home",
       "style": {
         "navigationBarTitleText": "艺设公益",
@@ -8,9 +7,9 @@
       }
     },
     {
-      "path": "pages/tabbar/category",
+      "path": "pages/tabbar/shopping",
       "style": {
-        "navigationBarTitleText": "分类",
+        "navigationBarTitleText": "圈子",
         "enablePullDownRefresh": true
       }
     },
@@ -185,13 +184,13 @@
     {
       "path": "pages/content/web",
       "style": {
-        "navigationBarTitleText": "用云"
+        "navigationBarTitleText": "艺设"
       }
     },
     {
       "path": "pages/content/rich-text",
       "style": {
-        "navigationBarTitleText": "用云"
+        "navigationBarTitleText": "艺设"
       }
     },
     {
@@ -252,44 +251,41 @@
         "navigationBarTitleText": "向党汇报",
         "enablePullDownRefresh": false
       }
+    }, {
+      "path": "pages/wmcd/wmcd",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/wfbd/wfbd",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/wmdd/wmdd",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/category/category",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/goods/test",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
     }
-      ,{
-            "path" : "pages/wmcd/wmcd",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/wfbd/wfbd",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/wmdd/wmdd",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/category/category",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "艺设公益",
@@ -310,18 +306,17 @@
     "selectedColor": "#FEAA30",
     "borderStyle": "white",
     "backgroundColor": "#ffffff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/tabbar/home",
         "iconPath": "static/images/tabbar/home.png",
         "selectedIconPath": "static/images/tabbar/home-active.png",
         "text": "首页"
       },
       {
-        "pagePath": "pages/tabbar/category",
+        "pagePath": "pages/tabbar/shopping",
         "iconPath": "static/images/tabbar/category.png",
         "selectedIconPath": "static/images/tabbar/category-active.png",
-        "text": "分类"
+        "text": "圈子"
       },
       {
         "pagePath": "pages/tabbar/publish",
@@ -345,12 +340,10 @@
   },
   "condition": {
     "current": 0,
-    "list": [
-      {
-        "name": "",
-        "path": "",
-        "query": ""
-      }
-    ]
+    "list": [{
+      "name": "",
+      "path": "",
+      "query": ""
+    }]
   }
 }

@@ -3,13 +3,8 @@
     <!-- #ifdef MP-ALIPAY -->
     <!-- 订单状态区 -->
     <view class="pos-f w-full state-area dflex navbar-area bg-main">
-      <view
-        class="nav-item dflex-c pos-r fs h-full"
-        :class="{ active: tabCurrentIndex === index }"
-        v-for="(item, index) in navList"
-        :key="index"
-        @click="tabClick(index)"
-      >
+      <view class="nav-item dflex-c pos-r fs h-full" :class="{ active: tabCurrentIndex === index }"
+        v-for="(item, index) in navList" :key="index" @click="tabClick(index)">
         {{ item.state }}
       </view>
     </view>
@@ -17,30 +12,17 @@
     <!-- 订单轮播区 -->
     <view class="order-area w-full" style="margin-top: 7vh;">
       <!-- 空白页 -->
-      <use-empty
-        v-if="navData.orderList.length === 0 && navData.loaded"
-        e-style="round"
-        e-type="cart"
-        tip="订单数据为空"
-        height="93vh"
-      ></use-empty>
+      <use-empty v-if="navData.orderList.length === 0 && navData.loaded" e-style="round" e-type="cart" tip="订单数据为空"
+        height="93vh"></use-empty>
       <!-- 订单列表区 -->
-      <view
-        class="padding-lr margin-bottom-sm"
-        :class="index === 0 ? 'padding-top-sm' : ''"
-        v-for="(item, index) in navData.orderList"
-        :key="index"
-      >
+      <view class="padding-lr margin-bottom-sm" :class="index === 0 ? 'padding-top-sm' : ''"
+        v-for="(item, index) in navData.orderList" :key="index">
         <!-- 订单项 -->
         <view class="order-item padding bg-main border-radius">
           <view @click="todetail(item.order)">
             <!-- 订单商品明细 -->
-            <view
-              class="goods-area"
-              :class="{ 'margin-top': goodsIndex > 0 }"
-              v-for="(goodsItem, goodsIndex) in item.order_detail"
-              :key="goodsIndex"
-            >
+            <view class="goods-area" :class="{ 'margin-top': goodsIndex > 0 }"
+              v-for="(goodsItem, goodsIndex) in item.order_detail" :key="goodsIndex">
               <image :src="goodsItem.goods_img" mode="aspectFill"></image>
               <view class="right flex1">
                 <text class="clamp-2">{{ goodsItem.goods_name }} {{ goodsItem.goods_name_pw }}</text>
@@ -75,45 +57,23 @@
               <view class="dflex" v-if="item.order.state == '待付款'">
                 <button class="action-btn border-radius-big bg-main" @click="cancelOrder(item)">取消订单</button>
 
-                <button
-                  v-if="item.order.order_pay_state == '待付款'"
-                  class="action-btn border-radius-big bg-main main-btn"
-                  @click="payment(item.order)"
-                  >立即支付</button
-                >
-                <button
-                  v-if="item.order.order_pay_state == '待核实'"
-                  class="action-btn border-radius-big bg-main main-btn"
-                  @click="payment(item.order)"
-                  >待核实</button
-                >
+                <button v-if="item.order.order_pay_state == '待付款'" class="action-btn border-radius-big bg-main main-btn"
+                  @click="payment(item.order)">立即支付</button>
+                <button v-if="item.order.order_pay_state == '待核实'" class="action-btn border-radius-big bg-main main-btn"
+                  @click="payment(item.order)">待核实</button>
               </view>
               <view class="dflex" v-if="item.order.state == '待发货'">
-                <button
-                  v-if="!item.order.order_refund_state"
-                  class="action-btn border-radius-big bg-main"
-                  @click="torefund(item)"
-                  >申请退款</button
-                >
+                <button v-if="!item.order.order_refund_state" class="action-btn border-radius-big bg-main"
+                  @click="torefund(item)">申请退款</button>
               </view>
-              <button
-                v-if="!item.order.order_refund_state && ['待收货', '待评价', '已完成'].includes(item.order.state)"
-                class="action-btn border-radius-big bg-main"
-                @click="toexpress(item)"
-                >查看物流</button
-              >
+              <button v-if="!item.order.order_refund_state && ['待收货', '待评价', '已完成'].includes(item.order.state)"
+                class="action-btn border-radius-big bg-main" @click="toexpress(item)">查看物流</button>
               <view class="dflex" v-if="item.order.state == '待收货'">
-                <button
-                  v-if="!item.order.order_refund_state"
-                  class="action-btn border-radius-big bg-main main-btn"
-                  @click="toreceipt(item)"
-                  >确认收货</button
-                >
+                <button v-if="!item.order.order_refund_state" class="action-btn border-radius-big bg-main main-btn"
+                  @click="toreceipt(item)">确认收货</button>
               </view>
               <view class="dflex" v-if="item.order.state == '待评价'">
-                <button class="action-btn border-radius-big bg-main main-btn" @click="toevaluate(item)"
-                  >我要评价</button
-                >
+                <button class="action-btn border-radius-big bg-main main-btn" @click="toevaluate(item)">我要评价</button>
               </view>
               <view class="dflex" v-if="['已取消', '已完成'].includes(item.order.state)">
                 <button class="action-btn border-radius-big bg-main main-btn" @click="delOrder(item)">删除订单</button>
@@ -124,10 +84,8 @@
       </view>
 
       <!-- 上拉加载更多 -->
-      <use-loadmore
-        v-if="navData.orderList.length > 0 && navData.loaded && navData.hasmore"
-        :type="navData.loadingType"
-      ></use-loadmore>
+      <use-loadmore v-if="navData.orderList.length > 0 && navData.loaded && navData.hasmore"
+        :type="navData.loadingType"></use-loadmore>
     </view>
     <!-- #endif -->
 
@@ -135,13 +93,8 @@
     <!-- 订单状态区 -->
     <!-- <scroll-view scroll-x="true" class="navbar-area bg-main" :scroll-left="scrollLeft"> -->
     <view class="state-area dflex navbar-area bg-main">
-      <view
-        class="nav-item dflex-c pos-r fs h-full"
-        :class="{ active: tabCurrentIndex === index }"
-        v-for="(item, index) in navList"
-        :key="index"
-        @click="tabClick(index)"
-      >
+      <view class="nav-item dflex-c pos-r fs h-full" :class="{ active: tabCurrentIndex === index }"
+        v-for="(item, index) in navList" :key="index" @click="tabClick(index)">
         {{ item.state }}
       </view>
     </view>
@@ -154,30 +107,17 @@
         <!-- 滚动区 -->
         <scroll-view class="h-full" scroll-y @scrolltolower="loadData">
           <!-- 空白页 -->
-          <use-empty
-            v-if="tabItem.orderList.length === 0 && tabItem.loaded"
-            e-style="round"
-            e-type="cart"
-            tip="订单数据为空"
-            height="93vh"
-          ></use-empty>
+          <use-empty v-if="tabItem.orderList.length === 0 && tabItem.loaded" e-style="round" e-type="cart" tip="订单数据为空"
+            height="93vh"></use-empty>
           <!-- 订单列表区 -->
-          <view
-            class="padding-lr margin-bottom-sm"
-            :class="index === 0 ? 'padding-top-sm' : ''"
-            v-for="(item, index) in tabItem.orderList"
-            :key="index"
-          >
+          <view class="padding-lr margin-bottom-sm" :class="index === 0 ? 'padding-top-sm' : ''"
+            v-for="(item, index) in tabItem.orderList" :key="index">
             <!-- 订单项 -->
             <view class="order-item padding bg-main border-radius">
               <view @click="todetail(item.order)">
                 <!-- 订单商品明细 -->
-                <view
-                  class="goods-area"
-                  :class="{ 'margin-top': goodsIndex > 0 }"
-                  v-for="(goodsItem, goodsIndex) in item.order_detail"
-                  :key="goodsIndex"
-                >
+                <view class="goods-area" :class="{ 'margin-top': goodsIndex > 0 }"
+                  v-for="(goodsItem, goodsIndex) in item.order_detail" :key="goodsIndex">
                   <image :src="goodsItem.goods_img" mode="aspectFill"></image>
                   <view class="right flex1">
                     <text class="clamp-2">{{ goodsItem.goods_name }} {{ goodsItem.goods_name_pw }}</text>
@@ -214,50 +154,27 @@
                   <view class="dflex" v-if="item.order.state == '待付款'">
                     <button class="action-btn border-radius-big bg-main" @click="cancelOrder(item)">取消订单</button>
 
-                    <button
-                      v-if="item.order.order_pay_state == '待付款'"
-                      class="action-btn border-radius-big bg-main main-btn"
-                      @click="payment(item.order)"
-                      >立即支付</button
-                    >
-                    <button
-                      v-if="item.order.order_pay_state == '待核实'"
-                      class="action-btn border-radius-big bg-main main-btn"
-                      @click="payment(item.order)"
-                      >待核实</button
-                    >
+                    <button v-if="item.order.order_pay_state == '待付款'"
+                      class="action-btn border-radius-big bg-main main-btn" @click="payment(item.order)">立即支付</button>
+                    <button v-if="item.order.order_pay_state == '待核实'"
+                      class="action-btn border-radius-big bg-main main-btn" @click="payment(item.order)">待核实</button>
                   </view>
                   <view class="dflex" v-if="item.order.state == '待发货'">
-                    <button
-                      v-if="!item.order.order_refund_state"
-                      class="action-btn border-radius-big bg-main"
-                      @click="torefund(item)"
-                      >申请退款</button
-                    >
+                    <button v-if="!item.order.order_refund_state" class="action-btn border-radius-big bg-main"
+                      @click="torefund(item)">申请退款</button>
                   </view>
-                  <button
-                    v-if="!item.order.order_refund_state && ['待收货', '待评价', '已完成'].includes(item.order.state)"
-                    class="action-btn border-radius-big bg-main"
-                    @click="toexpress(item)"
-                    >查看物流</button
-                  >
+                  <button v-if="!item.order.order_refund_state && ['待收货', '待评价', '已完成'].includes(item.order.state)"
+                    class="action-btn border-radius-big bg-main" @click="toexpress(item)">查看物流</button>
                   <view class="dflex" v-if="item.order.state == '待收货'">
-                    <button
-                      v-if="!item.order.order_refund_state"
-                      class="action-btn border-radius-big bg-main main-btn"
-                      @click="toreceipt(item)"
-                      >确认收货</button
-                    >
+                    <button v-if="!item.order.order_refund_state" class="action-btn border-radius-big bg-main main-btn"
+                      @click="toreceipt(item)">确认收货</button>
                   </view>
                   <view class="dflex" v-if="item.order.state == '待评价'">
-                    <button class="action-btn border-radius-big bg-main main-btn" @click="toevaluate(item)"
-                      >我要评价</button
-                    >
+                    <button class="action-btn border-radius-big bg-main main-btn"
+                      @click="toevaluate(item)">我要评价</button>
                   </view>
                   <view class="dflex" v-if="['已取消', '已完成'].includes(item.order.state)">
-                    <button class="action-btn border-radius-big bg-main main-btn" @click="delOrder(item)"
-                      >删除订单</button
-                    >
+                    <button class="action-btn border-radius-big bg-main main-btn" @click="delOrder(item)">删除订单</button>
                   </view>
                 </view>
               </view>
@@ -265,10 +182,8 @@
           </view>
 
           <!-- 上拉加载更多 -->
-          <use-loadmore
-            v-if="tabItem.orderList.length > 0 && tabItem.loaded && tabItem.hasmore"
-            :type="tabItem.loadingType"
-          ></use-loadmore>
+          <use-loadmore v-if="tabItem.orderList.length > 0 && tabItem.loaded && tabItem.hasmore"
+            :type="tabItem.loadingType"></use-loadmore>
         </scroll-view>
       </swiper-item>
     </swiper>
@@ -278,15 +193,16 @@
 
 <script>
   const _order = 'usemall-order';
-  import { mapState } from 'vuex';
+  import {
+    mapState
+  } from 'vuex';
 
   export default {
     data() {
       return {
         tabCurrentIndex: 0,
         navData: {},
-        navList: [
-          {
+        navList: [{
             id: 0,
             state: '全部',
             loadingType: 'more',
@@ -335,7 +251,7 @@
       if (!this.islogin) {
         uni.showModal({
           title: '授权登录',
-          success: function (res) {
+          success: function(res) {
             if (res.confirm) {
               _this.$api.tologin();
             } else if (res.cancel) {
@@ -493,7 +409,7 @@
         uni.showModal({
           title: '提示',
           content: '删除订单',
-          success: function (res) {
+          success: function(res) {
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
@@ -523,7 +439,7 @@
         uni.showModal({
           title: '提示',
           content: '取消订单',
-          success: function (res) {
+          success: function(res) {
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
@@ -561,7 +477,7 @@
         uni.showModal({
           title: '提示',
           content: '确认收货',
-          success: function (res) {
+          success: function(res) {
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
@@ -600,7 +516,8 @@
 </script>
 
 <style lang="scss">
-  page, .container {
+  page,
+  .container {
     min-height: 100%;
     background: $page-color-base;
   }
@@ -614,7 +531,7 @@
     top: 0;
     z-index: 10;
     height: 7vh;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.06);
   }
 
   .nav-item {
@@ -640,11 +557,11 @@
   }
 
   /* 订单区 */
-  .order-area {
-  }
+  .order-area {}
 
   /* 订单项 */
   .order-item {
+
     /* 订单商品明细区 */
     .goods-area {
       display: flex;
