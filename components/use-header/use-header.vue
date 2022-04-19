@@ -1,6 +1,6 @@
 <template>
   <view>
-    <view class="use-header dflex padding-lr w-full bg-main" :class="fixed ? 'fixed' : ''">
+    <view class="use-header dflex w-full bg-main" :class="fixed ? 'fixed' : ''">
       <!-- 头部组件 -->
       <view class="use-search dflex-b border-radius-lg padding-lr w-full" @click="search">
         <text>{{ searchTip }}</text>

@@ -1,32 +1,31 @@
 <template>
   <view class="box-sizing-b w-full">
+
     <!-- 01. 头部组件 -->
-    <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
+    <view class="x-c-c">
+      <view class="search">
+        <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
+      </view>
+      <view class="padding-lr-sm" @click="topage(categoryAll)">分类</view>
+    </view>
 
     <!-- 02. 轮播区 -->
     <view class="swiper-area pos-r" v-if="swiperDatas && swiperDatas.length > 0">
       <!-- 轮播组件 -->
       <swiper class="swiper w-full" autoplay indicator-dots indicator-color="#f7f7f7" indicator-active-color="#FEAA30">
-        <swiper-item
-          class="swiper-item padding-sm wh-full box-sizing-b"
-          v-for="(item, index) in swiperDatas"
-          :key="index"
-        >
-          <view class="wh-full" @click.stop="topage(item)"
-            ><image class="border-radius wh-full" mode="aspectFill" :lazy-load="true" :src="item.img"
-          /></view>
+        <swiper-item class="swiper-item padding-sm wh-full box-sizing-b" v-for="(item, index) in swiperDatas"
+          :key="index">
+          <view class="wh-full" @click.stop="topage(item)">
+            <image class="border-radius wh-full" mode="aspectFill" :lazy-load="true" :src="item.img" />
+          </view>
         </swiper-item>
       </swiper>
     </view>
 
     <!-- 03. 分类区1 -->
     <view class="category1-area dflex-c dflex-wrap-w" v-if="category1Datas && category1Datas.length > 0">
-      <view
-        class="category1-item dflex dflex-flow-c margin-bottom-sm"
-        v-for="(item, index) in category1Datas"
-        :key="index"
-        @click="topage(item)"
-      >
+      <view class="category1-item dflex dflex-flow-c margin-bottom-sm" v-for="(item, index) in category1Datas"
+        :key="index" @click="topage(item)">
         <image class="margin-bottom-xs" :lazy-load="true" :src="item.img"></image>
         <text class="tac clamp">{{ item.name }}</text>
       </view>
@@ -35,35 +34,21 @@
 
     <!-- 03. 分类区2 -->
     <view class="category2-area dflex-c dflex-wrap-w" v-if="category2Datas && category2Datas.length > 0">
-      <view
-        class="category2-item dflex dflex-flow-c"
-        v-for="(item, index) in category2Datas"
-        :key="index"
-        @click="topage(item)"
-      >
+      <view class="category2-item dflex dflex-flow-c" v-for="(item, index) in category2Datas" :key="index"
+        @click="topage(item)">
         <image :lazy-load="true" :src="item.img"></image>
       </view>
     </view>
     <view class="gap"></view>
 
     <!-- 04. 限时精选 -->
-    <use-list-title
-      title="限时拍卖"
-      size="32"
-      fwt="600"
-      color="#333"
-      iconfont="icondaishouhuo-"
-      @goto="limit"
-    ></use-list-title>
+    <use-list-title title="限时拍卖" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit">
+    </use-list-title>
     <view class="limit-area">
       <scroll-view class="padding-lr" scroll-x>
         <view class="dflex padding-bottom">
-          <view
-            class="item margin-right-sm"
-            v-for="(item, index) in goodsLimitDatas"
-            :key="index"
-            @click="togoods(item)"
-          >
+          <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index"
+            @click="togoods(item)">
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
             <text class="title clamp padding-bottom-xs">{{ item.name }}</text>
             <text class="price">{{ item.price / 100 }}</text>
@@ -87,7 +72,9 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import {
+    mapState
+  } from 'vuex';
 
   export default {
     computed: {
@@ -101,9 +88,14 @@
         searchAuto: !0,
         searchTip: '请输入搜索关键字',
 
+        // 分类入口
+        categoryAll: {
+          type: '页面',
+          url: `/pages/category/category`
+        },
+
         // 轮播区
-        swiperDatas: [
-          {
+        swiperDatas: [{
             _id: '6081038ce01ac80001db768d',
             create_time: 1619067788539,
             create_uid: '607e63e021576100016eded3',
@@ -144,8 +136,7 @@
           },
         ],
         // 金刚区分类
-        category1Datas: [
-          {
+        category1Datas: [{
             _id: '6083a669ff01b00001bb591e',
             cid: 0,
             create_time: 1619240553775,
@@ -156,8 +147,8 @@
             remark: '',
             sort: 1,
             state: '启用',
-            type: '标签',
-            url: '/pages/tabbar/category',
+            type: '页面',
+            url: '/pages/category/category',
             version: 1,
           },
           {
@@ -191,8 +182,7 @@
             version: 1,
           },
         ],
-        category2Datas: [
-          {
+        category2Datas: [{
             _id: '6083a669ff01b00001bb591e',
             cid: 0,
             create_time: 1619240553775,
@@ -318,7 +308,7 @@
     },
     // 用户点击右上角分享
     // https://uniapp.dcloud.io/api/plugins/share?id=showsharemenu
-    onShareAppMessage: function (ops) {
+    onShareAppMessage: function(ops) {
       let _this = this,
         mid = 0;
 
@@ -330,11 +320,11 @@
         title: '用云电商',
         path: `/pages/tabbar/home?mid=${mid}`,
         // imageUrl: 'https://mall-os-api.use-cloud.com/files/upload/image/20200408/200408115587860242.jpg',
-        success: function (res) {
+        success: function(res) {
           // 转发成功
           console.log('转发成功', res);
         },
-        fail: function (res) {
+        fail: function(res) {
           // 转发失败
           console.log('转发失败', res);
         },
@@ -429,6 +419,10 @@
 </script>
 
 <style lang="scss">
+  .search {
+    width: 600rpx;
+  }
+
   /* 轮播图区 */
   .swiper-area {
     // padding: ;
