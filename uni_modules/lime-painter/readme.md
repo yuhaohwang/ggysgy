@@ -12,8 +12,7 @@
 | √   | √          | √            | 未测       | √          | √         | √   |
 
 ## 安装
-
-在市场导入[海报画板](https://ext.dcloud.net.cn/plugin?id=2389)uni_modules 版本的即可，无需`import`
+在市场导入[海报画板](https://ext.dcloud.net.cn/plugin?id=2389)uni_modules版本的即可，无需`import`
 
 ## 代码演示
 
@@ -48,7 +47,7 @@
 - 所有类型的 schema 都具有`css`字段，css 的样式属性 key 值使用驼峰命名如：`lineHeight`
 
 ```html
-<l-painter :board="poster" />
+<l-painter :board="poster"/>
 ```
 
 ```js
@@ -169,7 +168,9 @@ data() {
 ```html
 <l-painter>
   <l-painter-view css="background: #e0e2db; padding: 30rpx; color: #222a29">
-    <l-painter-text text="登鹳雀楼\n白日依山尽，黄河入海流\n欲穷千里目，更上一层楼" />
+    <l-painter-text
+      text="登鹳雀楼\n白日依山尽，黄河入海流\n欲穷千里目，更上一层楼"
+    />
     <l-painter-text
       text="登鹳雀楼\n白日依山尽，黄河入海流\n欲穷千里目，更上一层楼"
       css="text-align:center; padding-top: 20rpx; text-decoration: line-through "
@@ -301,7 +302,10 @@ data() {
 
 ```html
 <l-painter>
-  <l-painter-qrcode text="limeui.qcoon.cn" css="width: 200rpx; height: 200rpx" />
+  <l-painter-qrcode
+    text="limeui.qcoon.cn"
+    css="width: 200rpx; height: 200rpx"
+  />
 </l-painter>
 ```
 
@@ -330,12 +334,12 @@ data() {
 ```js
 this.$refs.painter.canvasToTempFilePathSync({
   // 在nvue里是jpeg
-  fileType: 'jpg',
+  fileType: "jpg",
   quality: 1,
   success: (res) => {
-    console.log(res.tempFilePath)
+    console.log(res.tempFilePath);
   },
-})
+});
 ```
 
 ### 主动调用方式
@@ -348,15 +352,15 @@ this.$refs.painter.canvasToTempFilePathSync({
 
 ```js
 // 渲染
-this.$refs.painter.render(jsonSchema)
+this.$refs.painter.render(jsonSchema);
 // 生成图片
 this.$refs.painter.canvasToTempFilePathSync({
-  fileType: 'jpg',
+  fileType: "jpg",
   quality: 1,
   success: (res) => {
-    console.log(res.tempFilePath)
+    console.log(res.tempFilePath);
   },
-})
+});
 ```
 
 ### 海报示例
@@ -380,12 +384,17 @@ this.$refs.painter.canvasToTempFilePathSync({
     src="https://cdn.jsdelivr.net/gh/liangei/image@latest/avatar-1.jpeg"
     css="margin-left: 40rpx; margin-top: 40rpx; width: 84rpx;  height: 84rpx; border-radius: 50%;"
   />
-  <l-painter-view css="margin-top: 40rpx; padding-left: 20rpx; display: inline-block">
+  <l-painter-view
+    css="margin-top: 40rpx; padding-left: 20rpx; display: inline-block"
+  >
     <l-painter-text
       text="隔壁老王"
       css="display: block; padding-bottom: 10rpx; color: #fff; font-size: 32rpx; fontWeight: bold"
     />
-    <l-painter-text text="为您挑选了一个好物" css="color: rgba(255,255,255,.7); font-size: 24rpx" />
+    <l-painter-text
+      text="为您挑选了一个好物"
+      css="color: rgba(255,255,255,.7); font-size: 24rpx"
+    />
   </l-painter-view>
   <l-painter-view
     css="margin-left: 40rpx; margin-top: 30rpx; padding: 32rpx; box-sizing: border-box; background: #fff; border-radius: 16rpx; width: 670rpx; box-shadow: 0 20rpx 58rpx rgba(0,0,0,.15)"
@@ -398,7 +407,10 @@ this.$refs.painter.canvasToTempFilePathSync({
       css="margin-top: 32rpx; color: #FF0000; font-weight: bold; font-size: 28rpx; line-height: 1em;"
     >
       <l-painter-text text="￥" css="vertical-align: bottom" />
-      <l-painter-text text="39" css="vertical-align: bottom; font-size: 58rpx" />
+      <l-painter-text
+        text="39"
+        css="vertical-align: bottom; font-size: 58rpx"
+      />
       <l-painter-text text=".39" css="vertical-align: bottom" />
       <l-painter-text
         text="￥59.99"
@@ -411,8 +423,14 @@ this.$refs.painter.canvasToTempFilePathSync({
         text="30天最低价"
         css="margin-left: 16rpx; background: #fff4d9; text-decoration: line-through;"
       />
-      <l-painter-text text="满减优惠" css="margin-left: 16rpx; background: #fff4d9" />
-      <l-painter-text text="超高好评" css="margin-left: 16rpx; background: #fff4d9" />
+      <l-painter-text
+        text="满减优惠"
+        css="margin-left: 16rpx; background: #fff4d9"
+      />
+      <l-painter-text
+        text="超高好评"
+        css="margin-left: 16rpx; background: #fff4d9"
+      />
     </l-painter-view>
     <l-painter-view css="margin-top: 30rpx">
       <l-painter-text
@@ -641,15 +659,12 @@ data() {
 ```
 
 ### Nvue
-
-- 插件在 nvue 下是使用 webview 实现渲染绘制的，但 uni 的 webviwe 无法读取插件目录下的文件，只能读取根目录下的 hybrid/html 或 static 文件夹的文件。所以在尝试了很多种方式后，决定默认改由插件主动下载的方式写入到 app 内。如果你不想由插件主动下载写入，可以自行下载。
-- 1、默认为插件主动下载写入 APP 的\_doc 目录，无须任何设置。
+- 插件在nvue下是使用webview实现渲染绘制的，但uni的webviwe无法读取插件目录下的文件，只能读取根目录下的hybrid/html或static文件夹的文件。所以在尝试了很多种方式后，决定默认改由插件主动下载的方式写入到app内。如果你不想由插件主动下载写入，可以自行下载。
+- 1、默认为插件主动下载写入APP的_doc目录，无须任何设置。
 - 2、若不希望插件主动下载，可自主下载[uni.webview.1.5.2.js'](https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js')、[painter.js](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/painter.js)、[index.html](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/index.html)，到根目录的`/hybird/html/lime-painter/`再给插件设置`hybrid`属性。
-
 ```html
-<l-painter hybrid />
+<l-painter hybrid/>
 ```
-
 ### 原生小程序
 
 - 插件里的`painter.js`支持在原生小程序中使用
@@ -662,46 +677,46 @@ data() {
 ```
 
 ```js
-import { Painter } from './painter'
+import { Painter } from "./painter";
 page({
   data: {
     poster: {
       css: {
-        width: '750rpx',
+        width: "750rpx",
       },
       views: [
         {
-          type: 'view',
+          type: "view",
           css: {
-            background: '#d2d4c8',
-            paddingTop: '100rpx',
+            background: "#d2d4c8",
+            paddingTop: "100rpx",
           },
           views: [
             {
-              type: 'view',
+              type: "view",
               css: {
-                background: '#5f7470',
-                width: '33.33%',
-                height: '100rpx',
-                display: 'inline-block',
+                background: "#5f7470",
+                width: "33.33%",
+                height: "100rpx",
+                display: "inline-block",
               },
             },
             {
-              type: 'view',
+              type: "view",
               css: {
-                background: '#889696',
-                width: '33.33%',
-                height: '100rpx',
-                display: 'inline-block',
+                background: "#889696",
+                width: "33.33%",
+                height: "100rpx",
+                display: "inline-block",
               },
             },
             {
-              type: 'view',
+              type: "view",
               css: {
-                background: '#b8bdb5',
-                width: '33.33%',
-                height: '100rpx',
-                display: 'inline-block',
+                background: "#b8bdb5",
+                width: "33.33%",
+                height: "100rpx",
+                display: "inline-block",
               },
             },
           ],
@@ -710,13 +725,13 @@ page({
     },
   },
   async onLoad() {
-    const res = await this.getCentext()
-    const painter = new Painter(res)
+    const res = await this.getCentext();
+    const painter = new Painter(res);
     // 返回计算布局后的整个内容尺寸
-    const { width, height } = await painter.source(this.data.poster)
+    const { width, height } = await painter.source(this.data.poster);
     // 得到计算后的尺寸后 可给canvas尺寸赋值，达到动态响应效果
     // 渲染
-    await painter.render()
+    await painter.render();
   },
   // 获取canvas 2d
   // 非2d也可以使用这里只是举个例子
@@ -726,18 +741,18 @@ page({
         .select(`#painter`)
         .node()
         .exec((res) => {
-          let { node: canvas } = res[0]
+          let { node: canvas } = res[0];
           resolve({
             canvas,
-            context: canvas.getContext('2d'),
+            context: canvas.getContext("2d"),
             width: canvas.width,
             height: canvas.height,
             pixelRatio: 2,
-          })
-        })
-    })
+          });
+        });
+    });
   },
-})
+});
 ```
 
 ### 旧版(1.6.x)更新
@@ -751,48 +766,48 @@ page({
 
 ### Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| board | JSON 方式的海报元素对象集 | <em>object</em> | - |
-| css | 海报最外层的样式，可以理解为`body` | <em>object</em> | 参数请向下看 |
-| custom-style | canvas 自定义样式 | <em>string</em> |  |
-| is-canvas-to-temp-filePath | 是否生成图片，在`@success`事件接收图片地址 | <em>boolean</em> | `false` |
-| after-delay | 生成图片错乱，可延时生成图片 | <em>number</em> | `100` |
-| type | canvas 类型，对微信头条支付宝小程序可有效,可选值：`2d`，`''` | <em>string</em> | `2d` |
-| file-type | 生成图片的后缀类型, 可选值：`png`、`jpg` | <em>string</em> | `png` |
-| path-type | 生成图片路径类型，可选值`url`、`base64` | <em>string</em> | `-` |
-| pixel-ratio | 生成图片的像素密度，默认为对应手机的像素密度，`nvue`无效 | <em>number</em> | `-` |
-| width | **废弃** 画板的宽度，一般只用于通过内部方法时加上 | <em>number</em> | `` |
-| height | **废弃** 画板的高度 ，同上 | <em>number</em> | `` |
+| 参数                       | 说明                                                         | 类型             | 默认值       |
+| -------------------------- | ------------------------------------------------------------ | ---------------- | ------------ |
+| board                      | JSON 方式的海报元素对象集                                    | <em>object</em>  | -            |
+| css                        | 海报最外层的样式，可以理解为`body`                           | <em>object</em>  | 参数请向下看 |
+| custom-style               | canvas 自定义样式                                            | <em>string</em>  |              |
+| is-canvas-to-temp-filePath | 是否生成图片，在`@success`事件接收图片地址                   | <em>boolean</em> | `false`      |
+| after-delay                | 生成图片错乱，可延时生成图片                                 | <em>number</em>  | `100`        |
+| type                       | canvas 类型，对微信头条支付宝小程序可有效,可选值：`2d`，`''` | <em>string</em>  | `2d`         |
+| file-type                  | 生成图片的后缀类型, 可选值：`png`、`jpg`                     | <em>string</em>  | `png`        |
+| path-type                  | 生成图片路径类型，可选值`url`、`base64`                      | <em>string</em>  | `-`          |
+| pixel-ratio                | 生成图片的像素密度，默认为对应手机的像素密度，`nvue`无效     | <em>number</em>  | `-`          |
+| width                      | **废弃** 画板的宽度，一般只用于通过内部方法时加上            | <em>number</em>  | ``           |
+| height                     | **废弃** 画板的高度 ，同上                                   | <em>number</em>  | ``           |
 
 ### css
 
-| 属性名 | 支持的值或类型 | 默认值 |
-| --- | --- | --- |
-| (min\max)width | 支持`%`、`rpx`、`px` | - |
-| height | 同上 | - |
-| color | `string` | - |
-| position | 定位，可选值：`absolute`、`fixed` | - |
-| ↳ left、top、right、bottom | 配合`position`才生效，支持`%`、`rpx`、`px` | - |
-| margin | 可简写或各方向分别写，如：`margin-top`，支持`auto`、`rpx`、`px` | - |
-| padding | 可简写或各方向分别写，支持`rpx`、`px` | - |
-| border | 可简写或各个值分开写：`border-width`、`border-style` 、`border-color`，简写请按顺序写 | - |
-| line-clamp | `number`，超过行数显示省略号 | - |
-| background(color) | 支持渐变，但必须写百分比！如:`linear-gradient(,#ff971b 0%, #ff5000 100%)`、`radial-gradient(#0ff 15%, #f0f 60%)`,目前 radial-gradient 渐变的圆心为元素中点，半径为最长边，不支持设置 | - |
-| vertical-align | 文字垂直对齐，可选值：`bottom`、`top`、`middle` | `middle` |
-| line-height | 文字行高，支持`rpx`、`px`、`em` | `1.4em` |
-| font-weight | 文字粗细，可选值：`normal`、`bold` | `normal` |
-| font-size | 文字大小，`string`，支持`rpx`、`px` | `14px` |
-| text-decoration | 文本修饰，可选值：`underline` 、`line-through`、`overline` | - |
-| text-align | 文本水平对齐，可选值：`right` 、`center` | `left` |
-| display | 框类型，可选值：`block`、`inline-block`、`none`，当为`none`时是不渲染该段 | - |
-| border-radius | 圆角边框，支持`%`、`rpx`、`px` | - |
-| box-sizing | 可选值：`border-box` | - |
-| box-shadow | 投影 | - |
-| background-image | view 元素背景：`url(src)` | - |
-| background-repeat | 设置是否及如何重复背景纹理，可选值：`repeat`、`repeat-x`、`repeat-y`、`no-repeat` | `repeat` |
-| [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit/) | 图片元素适应容器方式,类似于`mode`,可选值：`cover`、 `contain`、 `fill`、 `none` | - |
-| [object-position](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position) | 图片的对齐方式，配合`object-fit`使用 | - |
+| 属性名                                                                              | 支持的值或类型                                                                                                                                                                       | 默认值   |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| (min\max)width                                                                      | 支持`%`、`rpx`、`px`                                                                                                                                                                 | -        |
+| height                                                                              | 同上                                                                                                                                                                                 | -        |
+| color                                                                               | `string`                                                                                                                                                                             | -        |
+| position                                                                            | 定位，可选值：`absolute`、`fixed`                                                                                                                                                    | -        |
+| ↳ left、top、right、bottom                                                          | 配合`position`才生效，支持`%`、`rpx`、`px`                                                                                                                                           | -        |
+| margin                                                                              | 可简写或各方向分别写，如：`margin-top`，支持`auto`、`rpx`、`px`                                                                                                                      | -        |
+| padding                                                                             | 可简写或各方向分别写，支持`rpx`、`px`                                                                                                                                                | -        |
+| border                                                                              | 可简写或各个值分开写：`border-width`、`border-style` 、`border-color`，简写请按顺序写                                                                                                | -        |
+| line-clamp                                                                          | `number`，超过行数显示省略号                                                                                                                                                         | -        |
+| background(color)                                                                   | 支持渐变，但必须写百分比！如:`linear-gradient(,#ff971b 0%, #ff5000 100%)`、`radial-gradient(#0ff 15%, #f0f 60%)`,目前 radial-gradient 渐变的圆心为元素中点，半径为最长边，不支持设置 | -        |
+| vertical-align                                                                      | 文字垂直对齐，可选值：`bottom`、`top`、`middle`                                                                                                                                      | `middle` |
+| line-height                                                                         | 文字行高，支持`rpx`、`px`、`em`                                                                                                                                                      | `1.4em`  |
+| font-weight                                                                         | 文字粗细，可选值：`normal`、`bold`                                                                                                                                                   | `normal` |
+| font-size                                                                           | 文字大小，`string`，支持`rpx`、`px`                                                                                                                                                  | `14px`   |
+| text-decoration                                                                     | 文本修饰，可选值：`underline` 、`line-through`、`overline`                                                                                                                           | -        |
+| text-align                                                                          | 文本水平对齐，可选值：`right` 、`center`                                                                                                                                             | `left`   |
+| display                                                                             | 框类型，可选值：`block`、`inline-block`、`none`，当为`none`时是不渲染该段                                                                                                            | -        |
+| border-radius                                                                       | 圆角边框，支持`%`、`rpx`、`px`                                                                                                                                                       | -        |
+| box-sizing                                                                          | 可选值：`border-box`                                                                                                                                                                 | -        |
+| box-shadow                                                                          | 投影                                                                                                                                                                                 | -        |
+| background-image                                                                    | view 元素背景：`url(src)`                                                                                                                                                            | -        |
+| background-repeat                                                                   | 设置是否及如何重复背景纹理，可选值：`repeat`、`repeat-x`、`repeat-y`、`no-repeat`                                                                                                    | `repeat` |
+| [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit/)          | 图片元素适应容器方式,类似于`mode`,可选值：`cover`、 `contain`、 `fill`、 `none`                                                                                                      | -        |
+| [object-position](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position) | 图片的对齐方式，配合`object-fit`使用                                                                                                                                                 | -        |
 
 ### 图片填充模式 object-fit
 
@@ -813,12 +828,12 @@ page({
 | progress | 绘制进度                                                         | number |
 
 ### 内部函数 Ref
+| 事件名   | 说明                                                             | 返回值 |
+| -------- | ---------------------------------------------------------------- | ------ |
+| render(object)   |  渲染器，传入JSON 绘制海报 | promise   |
+| [canvasToTempFilePath](https://uniapp.dcloud.io/api/canvas/canvasToTempFilePath.html#canvastotempfilepath)(object)   | 把当前画布指定区域的内容导出生成指定大小的图片，并返回文件临时路径。    |   |
+| canvasToTempFilePathSync(object)    | 同步接口，同上                                                         |        |
 
-| 事件名 | 说明 | 返回值 |
-| --- | --- | --- |
-| render(object) | 渲染器，传入 JSON 绘制海报 | promise |
-| [canvasToTempFilePath](https://uniapp.dcloud.io/api/canvas/canvasToTempFilePath.html#canvastotempfilepath)(object) | 把当前画布指定区域的内容导出生成指定大小的图片，并返回文件临时路径。 |  |
-| canvasToTempFilePathSync(object) | 同步接口，同上 |  |
 
 ## 常见问题
 
@@ -829,10 +844,10 @@ page({
 - 5、h5 保存图片不需要调接口，提示用户长按图片保存。
 - 6、画板不能隐藏，包括`v-if`，`v-show`、`display:none`、`opacity:0`，另外也不要把画板放在弹窗里。
 - 7、微信小程序 canvas 2d **不支持真机调试**，请使用真机预览方式。
-- 8、微信小程序打开调试时可以生但并闭无法生成时，这种情况一般是没有在公众号配置 download 域名
-- 9、HBX 3.4.5 之前的版本不支持 vue3
-- 10、在微信开发工具上 canvas 层级最高无法 zindex，并不影响真机
-- 11、请不要导入非 uni_modules 插件
+- 8、微信小程序打开调试时可以生但并闭无法生成时，这种情况一般是没有在公众号配置download域名
+- 9、HBX 3.4.5之前的版本不支持vue3
+- 10、在微信开发工具上 canvas 层级最高无法zindex，并不影响真机
+- 11、请不要导入非uni_modules插件
 - 华为手机 APP 上无法生成图片，请使用 HBX2.9.11++（已过时，忽略这条）
 - IOS APP 请勿使用 HBX2.9.3.20201014 的版本！这个版本无法生成图片。（已过时，忽略这条）
 - 苹果微信 7.0.20 存在闪退和图片无法 onload 为微信 bug（已过时，忽略这条）
@@ -841,4 +856,4 @@ page({
 
 如果你觉得本插件，解决了你的问题，赠人玫瑰，手留余香。
 
-![输入图片说明](https://cdn.jsdelivr.net/gh/liangei/image@latest/222521_bb543f96_518581.jpeg '微信图片编辑_20201122220352.jpg')
+![输入图片说明](https://cdn.jsdelivr.net/gh/liangei/image@latest/222521_bb543f96_518581.jpeg "微信图片编辑_20201122220352.jpg")

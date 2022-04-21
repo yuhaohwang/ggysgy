@@ -1,6 +1,6 @@
 <template>
-  <view class="margin-sm">
-    <view class="dflex-b">
+  <view class="">
+    <view class="x-b-c padding-xs">
       <image
         src="/static/images/user/default.png"
         class="border-radius-lg headimg"
@@ -8,6 +8,7 @@
         mode=""
         @click="user"
       ></image>
+
       <view class="flex1 margin-left-sm">
         <view class="bg-main border-radius-lg dflex" style="height: 76rpx; line-height: 76rpx;">
           <input type="text" placeholder="输入关键词" class="w-full padding-lr" />
@@ -15,48 +16,43 @@
         </view>
       </view>
     </view>
-    <view class="margin-top">
-      <scroll-view scroll-x class="ws-np">
-        <view class="dflex padding-bottom-sm">
-          <block
-            v-for="(item, index) in ['全部', '关注', '推荐', '服饰', '箱包', '鞋子', '手机', '家电', '饰品']"
-            :key="index"
-          >
-            <view
-              class="pos-r padding-tb-sm margin-right-xs padding-lr diblock line-height-1 tac"
-              :class="{ active: title_id === index }"
-              @click="pitch(index)"
-            >
-              {{ item }}
-              <view class="badge" v-if="item == '关注'">2</view>
-            </view>
-          </block>
-        </view>
-      </scroll-view>
-    </view>
-    <view class="goodsContent border-radius">
-      <view class="goodsLeftList">
-        <view class="bg-main margin-bottom-sm border-radius" style="height: 200rpx; background: #4645cf;">
-          <image
-            src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/d462f254-a1a6-4225-992c-f0658f6d4e0d.jpg"
-            mode="widthFix"
-          ></image>
-        </view>
-        <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
-          <view class="bg-main margin-bottom-sm border-radius" @click="dongt(item.id)">
-            <block v-for="(img, img_idx) in [1]" :key="img_idx">
-              <image
-                src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/5433329e-95c5-4973-aa87-86c4d1815771.jpg"
-                style="max-height: 340rpx;"
-                class="flex1"
-                mode="heightFix"
-              ></image>
-            </block>
+
+    <u-tabs
+      :list="list4"
+      lineWidth="20"
+      lineHeight="7"
+      :scrollable="true"
+      :lineColor="`url(${lineBg}) 100% 100%`"
+      :activeStyle="{
+        color: '#303133',
+        fontWeight: 'bold',
+        transform: 'scale(1.05)',
+        fontSize: '28rpx',
+      }"
+      :inactiveStyle="{
+        color: '#606266',
+        transform: 'scale(1)',
+        fontSize: '28rpx',
+      }"
+      itemStyle="height: 70rpx; white-space: nowrap; padding: auto;"
+    >
+    </u-tabs>
+
+    <view class="x-c-s x-2 padding-xs border-radius">
+      <view class="y-s-c">
+        <view class="padding-xs w-full">
+          <view class="bg-main border-radius">
+            <image
+              src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/5433329e-95c5-4973-aa87-86c4d1815771.jpg"
+              style="width: 100%; max-height: 150rpx;"
+              mode="aspectFit"
+            ></image>
             <view class="padding-lr-sm margin-top-sm clamp-2"
               >阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view
             >
-            <view class="dflex-b padding-lr-sm margin-tb-sm">
-              <view class="dflex" style="width: 60%;">
+
+            <view class="x-b-c padding-lr-sm margin-tb-sm">
+              <view class="x-c-c">
                 <image
                   src="/static/images/user/default.png"
                   class="border-radius-c headimg"
@@ -64,36 +60,94 @@
                 ></image>
                 <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
               </view>
-              <view class="dflex">
+              <view class="x-c-c">
                 <view class="iconfont iconaixin"></view>
                 <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
               </view>
             </view>
           </view>
+        </view>
+
+        <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
+          <view class="padding-xs" @click="dongt(item.id)">
+            <view class="bg-main border-radius">
+              <image
+                src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/5433329e-95c5-4973-aa87-86c4d1815771.jpg"
+                style="width: 100%; max-height: 350rpx;"
+                mode="aspectFit"
+              ></image>
+
+              <view class="padding-lr-sm margin-top-sm clamp-2"
+                >阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view
+              >
+
+              <view class="x-b-c padding-lr-sm margin-tb-sm">
+                <view class="x-c-c">
+                  <image
+                    src="/static/images/user/default.png"
+                    class="border-radius-c headimg"
+                    style="width: 50rpx; height: 50rpx;"
+                  ></image>
+                  <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                </view>
+                <view class="x-c-c">
+                  <view class="iconfont iconaixin"></view>
+                  <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                </view>
+              </view>
+            </view>
+          </view>
         </block>
       </view>
-      <view class="goodsRightList">
+
+      <view class="y-s-c">
+        <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
+          <view class="padding-xs w-full" @click="dongt(item.id)">
+            <view class="bg-main border-radius">
+              <image
+                src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/5433329e-95c5-4973-aa87-86c4d1815771.jpg"
+                style="width: 100%; max-height: 350rpx;"
+                mode="aspectFit"
+              ></image>
+
+              <view class="padding-lr-sm margin-top-sm clamp-2"
+                >阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view
+              >
+
+              <view class="x-b-c padding-lr-sm margin-tb-sm">
+                <view class="x-c-c">
+                  <image
+                    src="/static/images/user/default.png"
+                    class="border-radius-c headimg"
+                    style="width: 50rpx; height: 50rpx;"
+                  ></image>
+                  <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                </view>
+                <view class="x-c-c">
+                  <view class="iconfont iconaixin"></view>
+                  <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+    <!-- <view class="goodsRightList">
         <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
           <view class="bg-main margin-bottom-sm border-radius" @click="dongt(item.id)">
             <block v-for="(img, img_idx) in [1]" :key="img_idx">
               <image
                 src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/010c807f-a45e-40f7-8e08-49aa3dca8b49.jpg"
-                style="max-height: 340rpx;"
-                class="flex1"
-                mode="heightFix"
-              >
+                style="max-height: 340rpx" class="flex1" mode="heightFix">
               </image>
             </block>
-            <view class="padding-lr-sm margin-top-sm clamp-2"
-              >小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包
+            <view class="padding-lr-sm margin-top-sm clamp-2">小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包
             </view>
             <view class="dflex-b padding-lr-sm margin-tb-sm">
-              <view class="dflex" style="width: 60%;">
-                <image
-                  src="/static/images/user/default.png"
-                  class="border-radius-c headimg"
-                  style="width: 50rpx; height: 50rpx;"
-                ></image>
+              <view class="dflex" style="width: 60%">
+                <image src="/static/images/user/default.png" class="border-radius-c headimg"
+                  style="width: 50rpx; height: 50rpx"></image>
                 <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
               </view>
               <view class="dflex">
@@ -103,8 +157,7 @@
             </view>
           </view>
         </block>
-      </view>
-    </view>
+      </view> -->
 
     <!-- 置顶 -->
     <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop>
@@ -115,6 +168,35 @@
   export default {
     data() {
       return {
+        list4: [
+          {
+            name: '全部',
+          },
+          {
+            name: '关注',
+          },
+          {
+            name: '推荐',
+          },
+          {
+            name: '服饰',
+          },
+          {
+            name: '箱包',
+          },
+          {
+            name: '手机',
+          },
+          {
+            name: '家电',
+          },
+          {
+            name: '饰品',
+          },
+        ],
+        lineBg:
+          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAOCAYAAABdC15GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHgBzZNRTsJAEIb/WTW+lpiY+FZPIDew3ABP4GJ8hxsI9zBpOYHeQDwBPQI+mRiRvpLojtPdYhCorQqF/6GdbGd2vvwzBXZcNAt4oj1ANeUoAT5iqkUjbEFLHNmhD1YPEvpZ3ghkGlVDCkc94/BmHMq998I5ONiY1ZBfpKAyuOtgAc5yOEDmYEWNh32BHF91sGHZHmwW4azciN9aQwnz3SJEgOmte+R2tdLprTYoa50mvuomlLpD4Y3oQZnov6D2RzCqI93bWOHaEmAGqQUyRBlZR1WfarcD/EJ2z8DtzDGvsMCwpm8XOCfDUsVOCYhiqRxI/CTQo4UOvjzO7Pow18vfywneuUHHUUxLn55lLw5JFpZ8bEUcY8oXdOLWiHLTxvoGpLqoUmy6dBT15o/ox3znpoycAmxUsiJTbs1cmxeVKp+0zmFIS7bGWiVghC7Vwse8jFKAX9eljh4ggKLLv7uaQvG9/F59Oo2SouxPu7OTCxN/s8wAAAAASUVORK5CYII=',
+
         title_id: 0,
 
         scrollTop: 0,

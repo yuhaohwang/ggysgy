@@ -2,7 +2,7 @@
   <view>
     <!-- #ifndef MP-TOUTIAO -->
     <!-- 版权 -->
-    <view class="use-copyright dflex-c padding-lr w-full" @click="to">
+    <view class="x-c-c padding use-copyright" @click="to">
       <view class="iconfont iconxiangqing animated rotate margin-right-sm ft-base"></view>
       <view class="ft-dark">艺设</view>
       <text class="margin-lr-xs">·</text>
@@ -29,10 +29,6 @@
 </script>
 
 <style lang="scss">
-  .use-copyright {
-    height: 180rpx;
-  }
-
   .use-copyright {
     text {
       color: #c0c0c0;

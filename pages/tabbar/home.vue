@@ -1,11 +1,11 @@
 <template>
   <view class="box-sizing-b bg-drak">
     <!-- 01. 头部组件 -->
-    <view class="x-c-c bg-main">
-      <view class="search">
+    <view class="x-c-c bg-main padding-lr-xs">
+      <view class="search flex1">
         <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
       </view>
-      <view class="padding-lr-sm" @click="topage(categoryAll)">分类</view>
+      <view class="padding-xs" @click="topage(categoryAll)">分类</view>
     </view>
 
     <!-- 02. 轮播区 -->
@@ -25,7 +25,7 @@
     </view>
 
     <!-- 03. 分类区1 -->
-    <view class="x-c-c x-5 padding-xs bg-main" v-if="category1Datas && category1Datas.length > 0">
+    <view class="x-a-c x-5 padding-xs bg-main" v-if="category1Datas && category1Datas.length > 0">
       <view
         class="y-c-c padding-xs category-item"
         v-for="(item, index) in category1Datas"
@@ -50,7 +50,7 @@
     </view>
 
     <!-- 04. 限时精选 -->
-    <use-list-title title="限时拍卖" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit">
+    <use-list-title title="限时出售" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit">
     </use-list-title>
     <view class="limit-area bg-main">
       <scroll-view class="padding-lr" scroll-x>
@@ -432,10 +432,6 @@
 </script>
 
 <style lang="scss">
-  .search {
-    width: 600rpx;
-  }
-
   /* 轮播图区 */
   .swiper-area {
     // padding: ;
@@ -446,11 +442,8 @@
     }
   }
 
-  /* 分类区2 */
+  /* 分类区 */
   .category-item {
-    margin: auto;
-
-    // padding: 6rpx;
     font-size: $font-sm + 2upx;
     color: $font-color-dark;
 

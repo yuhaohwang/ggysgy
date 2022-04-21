@@ -1,12 +1,18 @@
 <template>
   <view class="w-full">
     <!-- 01. 头部组件 -->
-    <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
+    <view class="x-c-c bg-main padding-lr-xs">
+      <view class="search flex1">
+        <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
+      </view>
+      <view class="padding-xs" @click="topage(categoryAll)">分类</view>
+    </view>
 
     <!-- 02. 报道 -->
-
     <view class="report-img" v-for="(item, index) in reportDatas" :key="index" @click="topage(item)">
-      <view class="container"><image class="image" :src="item.img" mode="aspectFill"></image></view>
+      <view class="container">
+        <image class="image" :src="item.img" mode="aspectFill"></image>
+      </view>
       <view class="padding-xs title">{{ item.title }}</view>
       <view class="padding-xs tip">查看完整报道</view>
     </view>
@@ -23,6 +29,16 @@
   export default {
     data() {
       return {
+        // 头部参数
+        searchAuto: !0,
+        searchTip: '请输入搜索关键字',
+
+        // 分类入口
+        categoryAll: {
+          type: '页面',
+          url: `/pages/category/category`,
+        },
+
         reportDatas: [
           {
             _id: '608104b52e88ef00018a8773',

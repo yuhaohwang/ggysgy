@@ -280,13 +280,6 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
-      "path": "pages/goods/test",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
-      }
     }
   ],
   "globalStyle": {

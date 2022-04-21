@@ -6,12 +6,12 @@
     <view v-else class="padding-lr" v-for="(item, index) in datas" :key="index" @click="togoods(item)">
       <view class="product border-radius-sm padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
         <view class="left">
-          <image :src="item.img" mode="aspectFill"></image>
+          <image :src="item.img[0]" mode="aspectFill"></image>
         </view>
         <view class="margin-left-sm pos-r w-full">
-          <text class="clamp-2">{{ item.name }} {{ item.name_pw }}</text>
+          <text class="clamp-2">{{ item.name[0] }} {{ item.name_pw[0] }}</text>
           <view class="pos-a dflex-b price-box w-full">
-            <text class="price">{{ item.price / 100 }}</text>
+            <text class="price">{{ item.price[0] / 100 }}</text>
             <view class="dflex-c ft-dark">
               <view class="dflex-c fs-xs">
                 <text class="margin-xs">浏览</text>
@@ -140,7 +140,7 @@
       },
       togoods(item) {
         this.$api.togoods({
-          id: item.goods_id,
+          id: item.goods_id[0],
         });
       },
     },

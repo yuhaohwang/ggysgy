@@ -64,9 +64,10 @@
   "mp-weixin": {
     "appid": "wx3c069ba1261272e8",
     "setting": {
-      "urlCheck": false,
+      "urlCheck": true,
       "minified": true,
-      "es6": false
+      "es6": true,
+      "postcss": true
     },
     "usingComponents": true,
     "uniStatistics": {
@@ -114,7 +115,8 @@
       "maps": {}
     },
     "devServer": {
-      "https": false
+      "https": false,
+      "port": 8084
     }
   },
   "mp-qq": {

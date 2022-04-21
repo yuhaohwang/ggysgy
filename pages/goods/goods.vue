@@ -79,14 +79,14 @@
     </view>
 
     <!-- 海报 -->
-    <view v-if="posterShow && !posterUrl" class="poster pos-f pos-tl-c padding">
-      <l-painter
-        custom-style="position: fixed;z-index: -1;top: -200vh;left: -100vw;"
-        :board="posterData"
-        isCanvasToTempFilePath
-        @success="posterSuccess"
-      />
-    </view>
+    <l-painter
+      custom-style="position: fixed; left: -100vw;"
+      :board="posterData"
+      isCanvasToTempFilePath
+      @success="posterSuccess"
+      @fail="fail = $event"
+      @progress="log = $event"
+    />
 
     <use-popup mode="bottom" bgclass=" " v-model="posterShow" @close="">
       <view class="padding border-radius margin">
@@ -128,12 +128,12 @@
     <view v-if="skuDatas.length > 0" class="gap"></view>
 
     <!-- 04.01 优惠券 -->
-    <use-list-title title="优惠" tip="领取优惠券" color="#feaa30" iconfont="iconyouhui" @goto="couponShow = true">
-    </use-list-title>
+    <!--    <use-list-title title="优惠" tip="领取优惠券" color="#feaa30" iconfont="iconyouhui" @goto="couponShow = true">
+    </use-list-title> -->
     <!-- 04.01 优惠券弹出层 -->
-    <use-popup mode="bottom" v-model="couponShow" @open="couponOpen">
-      <!-- 优惠券区 -->
-      <scroll-view>
+    <!-- <use-popup mode="bottom" v-model="couponShow" @open="couponOpen"> -->
+    <!-- 优惠券区 -->
+    <!--      <scroll-view>
         <view class="coupon-area padding bg-drak">
           <view class="coupon-item bg-main pos-r fs-xs" v-for="(item, index) in couponDatas" :key="index">
             <view class="content pos-r padding dflex-b">
@@ -157,7 +157,7 @@
           </view>
         </view>
       </scroll-view>
-    </use-popup>
+    </use-popup> -->
 
     <!-- 04.02 服务标签 -->
     <view class="bg-main padding-lr padding-top padding-bottom-xs pos-r" @click="tagShow = true">
@@ -284,6 +284,8 @@
     },
     data() {
       return {
+        fail: '',
+        log: '',
         // 商品ID
         id: 0,
         // 分享ID
@@ -302,7 +304,6 @@
         posterUrl: '',
         posterShow: false,
         posterData: {},
-
         //优惠券
         couponShow: false,
         couponDatas: [],
@@ -494,6 +495,7 @@
       createPoster() {
         if (this.posterUrl) {
           this.posterShow = true;
+          console.log(JSON.stringify(this.posterUrl));
           return;
         }
         uni.showLoading({
@@ -514,7 +516,7 @@
       posterQRcodeResult(res) {
         // 获取产品海报数据
         this.posterData = uposter.getGoodsData(this.member, this.goods, res);
-        console.log(JSON.stringify(this.posterData));
+        // 渲染
         this.posterShow = true;
       },
       // 海报生成完成

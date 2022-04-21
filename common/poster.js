@@ -4,12 +4,6 @@ let uposter = {
     width: '750rpx',
     height: '1114rpx',
     background: '#feaa30',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    alignContent: 'center',
-    flexWrap: 'nowrap',
     views: [
       {
         type: 'view',
@@ -27,8 +21,7 @@ let uposter = {
       // 1. 会员头像
       {
         type: 'image',
-        src: 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLj1JIHX0icWAu4Jw920k6ZIAqNd9ZfHLalqWsweMLphLrcwRJCYr0hcyeY6Y5Kyaqibl6icTAykDWRA/132',
-        mode: 'widthFix',
+        src: '',
         css: {
           position: 'fixed',
           left: '50rpx',
@@ -67,8 +60,7 @@ let uposter = {
       // 4. 产品图
       {
         type: 'image',
-        src: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/11bd19fa-6a70-49fd-9e71-72950828f6a8.jpg',
-        mode: 'widthFix',
+        src: '',
         css: {
           position: 'fixed',
           left: '72rpx',
@@ -124,7 +116,6 @@ let uposter = {
       {
         type: 'image',
         src: '',
-        mode: 'widthFix',
         css: {
           position: 'fixed',
           left: '545rpx',
@@ -137,39 +128,9 @@ let uposter = {
       {
         type: 'view',
         css: {
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          alignContent: 'center',
-          flexWrap: 'nowrap',
           height: '20rpx',
           marginBottom: '25rpx',
         },
-        // views: [{
-        //     type: 'view',
-        //     css: {
-        //       border: '1px solid #fff',
-        //       width: '70rpx',
-        //     },
-        //   },
-        //   {
-        //     type: 'text',
-        //     text: '艺设公益 · 传播艺术的美',
-        //     css: {
-        //       color: '#fff',
-        //       fontSize: '24rpx',
-        //       padding: '0 10rpx',
-        //     },
-        //   },
-        //   {
-        //     type: 'view',
-        //     css: {
-        //       border: '1px solid #fff',
-        //       width: '70rpx',
-        //     }
-        //   }
-        // ]
       },
     ],
   },
@@ -184,7 +145,7 @@ let uposter = {
     // 产品价格
     this.goods.views[6].text = '' + goods.price / 100;
     // 产品名称
-    this.goods.views[7].text = goods.name + ' ' + goods.name_pw;
+    this.goods.views[7].text = goods.name;
     // 二维码
     this.goods.views[8].src = qrcode;
     return this.goods;

@@ -1,13 +1,13 @@
 <template>
-  <view class="margin-sm padding-lr-sm">
+  <view class="padding-lr">
     <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
     <u--form labelPosition="top" labelWidth="auto" :model="model" :rules="rules" ref="form1">
-      <u-form-item required label="作品名称" prop="publish.name" borderBottom ref="item1"
-        ><u--input v-model="model.publish.name" border="none"></u--input
-      ></u-form-item>
-      <u-form-item label="作品简介" prop="publish.desc" borderBottom ref="item1"
-        ><u--input v-model="model.publish.desc" border="none"></u--input
-      ></u-form-item>
+      <u-form-item required label="作品名称" prop="publish.name" borderBottom ref="item1">
+        <u--input v-model="model.publish.name" border="none"></u--input>
+      </u-form-item>
+      <u-form-item label="作品简介" prop="publish.desc" borderBottom ref="item1">
+        <u--input v-model="model.publish.desc" border="none"></u--input>
+      </u-form-item>
       <u-form-item label="图片上传" prop="publish.image" borderBottom ref="item1">
         <u-upload
           :fileList="imgList"
@@ -32,9 +32,9 @@
         ></u-upload>
       </u-form-item>
       <u-form-item required label="作品分类" prop="publish.classify" borderBottom ref="item1">
-        <u-radio-group class="radio-row-center" v-model="classifyRadioValue" placement="row" @change="groupChange">
+        <u-radio-group class="x-s-c-w x-3" v-model="classifyRadioValue" placement="row" @change="groupChange">
           <u-radio
-            :customStyle="{ margin: '25rpx' }"
+            class="padding-xs"
             v-for="(item, index) in classifyRadioList"
             :key="index"
             :label="item.name"
@@ -44,9 +44,9 @@
         </u-radio-group>
       </u-form-item>
       <u-form-item required label="品类" prop="publish.subclassify" borderBottom ref="item1">
-        <u-radio-group class="radio-row-center" v-model="subclassifyRadioValue" placement="row" @change="groupChange">
+        <u-radio-group class="x-s-c-w x-4" v-model="subclassifyRadioValue" placement="row" @change="groupChange">
           <u-radio
-            :customStyle="{ margin: '25rpx' }"
+            class="padding-xs"
             v-for="(item, index) in subclassifyRadioList"
             :key="index"
             :label="item.name"
@@ -56,9 +56,9 @@
         </u-radio-group>
       </u-form-item>
       <u-form-item required label="授予权限" prop="publish.authType" borderBottom ref="item1">
-        <u-radio-group class="radio-row-center" v-model="authTypeValue" placement="row" @change="groupChange">
+        <u-radio-group class="x-s-c-w" v-model="authTypeValue" placement="row" @change="groupChange">
           <u-radio
-            :customStyle="{ margin: '25rpx' }"
+            class="padding-xs"
             v-for="(item, index) in authTypeList"
             :key="index"
             :label="item.name"
@@ -67,9 +67,9 @@
           ></u-radio>
         </u-radio-group>
       </u-form-item>
-      <u-form-item required label="价格" prop="publish.price" borderBottom ref="item1"
-        ><u--input v-model="model.publish.price" border="none" type="digit"></u--input
-      ></u-form-item>
+      <u-form-item required label="价格" prop="publish.price" borderBottom ref="item1">
+        <u--input v-model="model.publish.price" border="none" type="digit"></u--input>
+      </u-form-item>
     </u--form>
   </view>
 </template>

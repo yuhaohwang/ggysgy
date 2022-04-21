@@ -1,11 +1,14 @@
 <template>
-  <view class="wh-full">
-    <!-- 头部组件 -->
-    <use-header :fixed="headerFixed" :placeholder="headerPlaceholder" :search-tip="searchTip" :search-auto="searchAuto">
-    </use-header>
+  <view class="box-sizing-b bg-drak">
+    <!-- 01. 头部组件 -->
+    <view class="x-c-c bg-main padding-lr-xs">
+      <view class="search flex1">
+        <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
+      </view>
+    </view>
 
     <!-- 分类 -->
-    <view class="category dflex-s h-full padding-top-big">
+    <view class="category x-c-s h-full">
       <!-- 左侧一级分类 -->
       <view class="h-full left">
         <scroll-view scroll-y class="h-full">
@@ -62,6 +65,8 @@
               </view>
             </view>
           </view>
+
+          <view class="x-c-c-w x-2"></view>
 
           <!-- 上拉加载更多 -->
           <use-loadmore v-if="!empty && hasmore" :type="loadmoreType"></use-loadmore>
