@@ -1,5 +1,5 @@
 <template>
-  <view class="box-sizing-b bg-drak">
+  <view class="box-sizing-b">
     <!-- 01. 头部组件 -->
     <view class="x-c-c bg-main padding-lr-xs">
       <view class="search flex1">
@@ -25,7 +25,7 @@
 
       <!-- 右侧 1二级分类 2商品列表 -->
       <scroll-view
-        class="h-full right bg-main"
+        class="h-full right"
         scroll-with-animation
         scroll-y
         :scroll-top="top"
@@ -33,7 +33,7 @@
         @scroll="onScroll"
       >
         <!-- 右侧二级分类 -->
-        <view class="dflex-s dflex-wrap-w" v-if="mode == 1">
+        <view class="dflex-s dflex-wrap-w bg-main" v-if="mode == 1">
           <view
             class="item padding-bottom-sm dflex dflex-flow-c"
             v-if="item.pid == cid"
@@ -47,26 +47,41 @@
         </view>
 
         <!-- 右侧分类对应商品列表 -->
-        <view v-if="mode == 2">
+        <view v-if="mode == 2" class="">
           <!-- 空白页 -->
           <use-empty v-if="empty" e-style="round" tip="无商品数据"></use-empty>
 
-          <view v-else class="padding-lr" v-for="(item, index) in goodsDatas" :key="index" @click="togoods(item)">
-            <view class="goods border-radius-sm padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
-              <view class="goods-left">
-                <image mode="aspectFill" :lazy-load="true" :src="item.img"></image>
-              </view>
-              <view class="margin-left-sm pos-r">
-                <text class="clamp-2">{{ item.name }} {{ item.name_pw }}</text>
-                <view class="pos-a price-box w-full">
-                  <text class="price">{{ item.price / 100 }}</text>
-                  <text class="m-price">{{ item.market_price / 100 }}</text>
+          <view v-else class="x-s-s-w x-2 padding-lr-xs">
+            <view class="y-s-c padding-xs" v-for="(item, index) in goodsDatas" :key="index" @click="togoods(item)">
+              <view class="w-full border-radius bg-main">
+                <view class="border-radius" style="height: 300rpx;">
+                  <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%;"></image>
+                </view>
+                <view class="x-b-c padding-lr-xs">
+                  <view class="fs-xs clamp">{{ item.name }}</view> <view class="fs-xs">￥{{ item.price / 100 }}</view>
+                </view>
+                <view class="x-b-c padding-lr-xs fs-xs">
+                  <view class=""> <!-- <image src="" mode=""></image> --> </view> <view class="">陈宇轩</view>
+                  <view class="">广州美术学院</view>
                 </view>
               </view>
             </view>
           </view>
-
-          <view class="x-c-c-w x-2"></view>
+          <!--            
+            <view class="" style="padding-bottom: 15rpx;">
+              
+              
+              <view class=""> <image mode="aspectFill" :lazy-load="true" :src="item.img"></image> </view>
+              <view class="">
+                <text class="">{{ item.name }} {{ item.name_pw }}</text>
+                <view class="">
+                  <text class="price">{{ item.price / 100 }}</text>
+                  <text class="m-price">{{ item.market_price / 100 }}</text>
+                </view>
+              </view>
+              
+              
+            </view> -->
 
           <!-- 上拉加载更多 -->
           <use-loadmore v-if="!empty && hasmore" :type="loadmoreType"></use-loadmore>
@@ -143,7 +158,7 @@
       // #endif
 
       // 获取存储的模式
-      this.mode = uni.getStorageSync('category.mode') || 1;
+      this.mode = uni.getStorageSync('category.mode') || 2;
 
       this.loadData(() => {
         if (this.mode == 2) {

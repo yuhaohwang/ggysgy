@@ -1,5 +1,5 @@
 <template>
-  <view class="bg-drak" :class="[empty ? '' : 'padding-tb']">
+  <view class="bg-dark" :class="[empty ? '' : 'padding-tb']">
     <!-- 空白页 -->
     <use-empty v-if="empty" e-style="round" tip="无物流数据"></use-empty>
 

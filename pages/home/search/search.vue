@@ -30,7 +30,7 @@
       </view>
       <view class="dflex dflex-wrap-w">
         <view
-          class="item margin-right-sm margin-bottom-sm dflex bg-drak border-radius-lg padding-tb-xs padding-lr"
+          class="item margin-right-sm margin-bottom-sm dflex bg-dark border-radius-lg padding-tb-xs padding-lr"
           v-for="(item, index) in historyDatas"
           :key="index"
           @click="search('history', item)"
@@ -48,7 +48,7 @@
       </view>
       <view class="dflex dflex-wrap-w">
         <view
-          class="item margin-right-sm margin-bottom-sm dflex bg-drak border-radius-lg padding-tb-xs padding-lr"
+          class="item margin-right-sm margin-bottom-sm dflex bg-dark border-radius-lg padding-tb-xs padding-lr"
           v-for="(item, index) in hotDatas"
           :key="index"
           @click="search('hot', item)"

@@ -1,5 +1,5 @@
 <template>
-  <view class="container bg-drak" :class="{ 'margin-bottom-big': !empty }">
+  <view class="container bg-dark" :class="{ 'margin-bottom-big': !empty }">
     <!-- 00. 未授权登录 -->
     <use-empty
       v-if="!islogin"

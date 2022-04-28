@@ -74,7 +74,7 @@
     <!-- 优惠券弹出层 -->
     <use-popup mode="bottom" v-model="couponShow" @open="couponOpen">
       <!-- 优惠券区 -->
-      <view class="coupon-area padding bg-drak">
+      <view class="coupon-area padding bg-dark">
         <view class="coupon-item bg-main pos-r fs-xs" v-for="(item, index) in couponDatas" :key="index">
           <view class="content pos-r padding dflex-b">
             <view class="">

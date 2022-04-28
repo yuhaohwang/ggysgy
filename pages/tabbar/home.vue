@@ -1,5 +1,5 @@
 <template>
-  <view class="box-sizing-b bg-drak">
+  <view class="box-sizing-b bg-dark">
     <!-- 01. 头部组件 -->
     <view class="x-c-c bg-main padding-lr-xs">
       <view class="search flex1">
@@ -32,16 +32,15 @@
         :key="index"
         @click="topage(item)"
       >
-        <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
-        <view>{{ item.name }}</view>
+        <image :lazy-load="true" :src="item.img" mode="widthFix"></image> <view>{{ item.name }}</view>
       </view>
     </view>
 
     <!-- 03. 分类区2 -->
-    <view class="x-c-c-w x-3 padding-xs margin-tb-xs bg-main" v-if="category2Datas && category2Datas.length > 0">
+    <view class="x-c-c-w x-3 padding-xs margin-tb-xs bg-main" v-if="categoryDatas && categoryDatas.length > 0">
       <view
         class="y-c-c padding-xs category-item"
-        v-for="(item, index) in category2Datas"
+        v-for="(item, index) in categoryDatas"
         :key="index"
         @click="topage(item)"
       >
@@ -63,8 +62,7 @@
           >
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
             <text class="title clamp padding-bottom-xs">{{ item.name }}</text>
-            <text class="price">{{ item.price / 100 }}</text>
-            <text class="m-price">{{ item.market_price / 100 }}</text>
+            <text class="price">{{ item.price / 100 }}</text> <text class="m-price">{{ item.market_price / 100 }}</text>
           </view>
         </view>
       </scroll-view>
@@ -105,7 +103,8 @@
         },
 
         // 轮播区
-        swiperDatas: [
+        swiperDatas: [],
+        swiperDatas1: [
           {
             _id: '6081038ce01ac80001db768d',
             create_time: 1619067788539,
@@ -194,7 +193,7 @@
             version: 1,
           },
         ],
-        category2Datas: [
+        categoryDatas: [
           {
             _id: '6083a669ff01b00001bb591e',
             cid: 0,
@@ -202,12 +201,12 @@
             create_uid: '607e63e021576100016eded3',
             img: '../../static/images/home-category2/xyzp.png',
             is_delete: 0,
-            name: '向党汇报',
+            name: '学员作品',
             remark: '',
             sort: 1,
             state: '启用',
             type: '页面',
-            url: '/pages/report/report',
+            url: '/pages/goods/goods-list',
             version: 1,
           },
           {
@@ -237,7 +236,7 @@
             sort: 3,
             state: '启用',
             type: '页面',
-            url: '/pages/goods/goods-list?cid=60812def3ef4cf0001e352a4',
+            url: '/pages/goods/goods-list',
             version: 1,
           },
           {
@@ -267,7 +266,7 @@
             sort: 5,
             state: '启用',
             type: '页面',
-            url: '/pages/goods/goods-list?cid=60ace07724957900014e7f4e',
+            url: '/pages/video/video',
             version: 1,
           },
           {
@@ -282,7 +281,7 @@
             sort: 6,
             state: '启用',
             type: '页面',
-            url: '/pages/goods/goods-list?cid=60812f29f61a74000134eee2',
+            url: '/pages/goods/goods-list?hot=1',
             version: 1,
           },
         ],
@@ -354,10 +353,10 @@
           .then((res) => {
             if (res.code === 200) {
               // 轮播图
-              // this.swiperDatas = res.datas.carousel || [];
+              this.swiperDatas = res.datas.carousel || [];
               // console.log(JSON.stringify(this.swiperDatas));
               // 分类导航
-              // this.category1Datas = res.datas.category || [];
+              this.categoryDatas = res.datas.category || [];
               // console.log(JSON.stringify(this.category1Datas));
               // 限时精选
               this.goodsLimitDatas = res.datas.limited || [];

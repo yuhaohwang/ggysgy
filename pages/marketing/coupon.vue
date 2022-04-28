@@ -1,5 +1,5 @@
 <template>
-  <view class="bg-drak padding-bottom">
+  <view class="bg-dark padding-bottom">
     <!-- 空白页 -->
     <use-empty v-if="empty" e-style="round" tip="无优惠券"></use-empty>
 

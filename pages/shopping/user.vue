@@ -35,7 +35,7 @@
     </view>
 
     <view class="bg-base w-full" style="height: 80rpx;"></view>
-    <view class="w-full bg-drak data-area padding-lr-sm">
+    <view class="w-full bg-dark data-area padding-lr-sm">
       <view class="dflex-c w-full padding-tb-lg fs">
         <view class="padding-lr" :class="{ active: pitch_id === 0 }" @click="pitch(0)"> 笔记 </view>
         <view class="padding-lr" :class="{ active: pitch_id === 1 }" @click="pitch(1)"> 收藏 </view>

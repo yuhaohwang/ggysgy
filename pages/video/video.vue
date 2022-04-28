@@ -1,5 +1,5 @@
 <template>
-  <view class="box-sizing-b bg-drak">
+  <view class="box-sizing-b bg-dark">
     <!-- 01. 头部组件 -->
     <view class="x-c-c bg-main padding-lr-xs">
       <view class="search flex1">

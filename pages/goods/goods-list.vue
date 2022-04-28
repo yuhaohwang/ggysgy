@@ -50,9 +50,7 @@
             :key="index"
             @click="togoods(item)"
           >
-            <view class="image-wrapper">
-              <image mode="aspectFill" :lazy-load="true" :src="item.img"></image>
-            </view>
+            <view class="image-wrapper"> <image mode="aspectFill" :lazy-load="true" :src="item.img"></image> </view>
             <text class="title clamp padding-sm">{{ item.name }}</text>
             <view class="padding-left-sm dflex-b">
               <text class="price">{{ item.price / 100 }}</text>
@@ -179,9 +177,6 @@
                   _datas.push(row);
                 }
               });
-              // res.datas.goods.forEach((row) => {
-              // 	if(res.res.datas.goods.state === '销售中')
-              // });
               this.goodsDatas = [...this.goodsDatas, ..._datas];
 
               if (res.datas.goods.length >= this.reqdata.rows) {

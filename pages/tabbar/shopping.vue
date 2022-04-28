@@ -61,8 +61,7 @@
                 <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
               </view>
               <view class="x-c-c">
-                <view class="iconfont iconaixin"></view>
-                <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                <view class="iconfont iconaixin"></view> <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
               </view>
             </view>
           </view>
@@ -91,8 +90,7 @@
                   <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
                 </view>
                 <view class="x-c-c">
-                  <view class="iconfont iconaixin"></view>
-                  <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                  <view class="iconfont iconaixin"></view> <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
                 </view>
               </view>
             </view>
@@ -124,8 +122,7 @@
                   <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
                 </view>
                 <view class="x-c-c">
-                  <view class="iconfont iconaixin"></view>
-                  <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                  <view class="iconfont iconaixin"></view> <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
                 </view>
               </view>
             </view>
@@ -133,31 +130,6 @@
         </block>
       </view>
     </view>
-    <!-- <view class="goodsRightList">
-        <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
-          <view class="bg-main margin-bottom-sm border-radius" @click="dongt(item.id)">
-            <block v-for="(img, img_idx) in [1]" :key="img_idx">
-              <image
-                src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/010c807f-a45e-40f7-8e08-49aa3dca8b49.jpg"
-                style="max-height: 340rpx" class="flex1" mode="heightFix">
-              </image>
-            </block>
-            <view class="padding-lr-sm margin-top-sm clamp-2">小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包
-            </view>
-            <view class="dflex-b padding-lr-sm margin-tb-sm">
-              <view class="dflex" style="width: 60%">
-                <image src="/static/images/user/default.png" class="border-radius-c headimg"
-                  style="width: 50rpx; height: 50rpx"></image>
-                <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
-              </view>
-              <view class="dflex">
-                <view class="iconfont iconaixin"></view>
-                <view class="clamp ft-dark margin-left-xs fs-xxs">356</view>
-              </view>
-            </view>
-          </view>
-        </block>
-      </view> -->
 
     <!-- 置顶 -->
     <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop>
@@ -173,25 +145,25 @@
             name: '全部',
           },
           {
-            name: '关注',
+            name: '油画',
           },
           {
-            name: '推荐',
+            name: '水彩',
           },
           {
-            name: '服饰',
+            name: '国画',
           },
           {
-            name: '箱包',
+            name: '素描',
           },
           {
-            name: '手机',
+            name: '雕塑',
           },
           {
-            name: '家电',
+            name: '摄影',
           },
           {
-            name: '饰品',
+            name: '数绘',
           },
         ],
         lineBg:

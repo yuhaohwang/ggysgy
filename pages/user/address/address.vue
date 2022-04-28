@@ -1,5 +1,5 @@
 <template>
-  <view class="padding-lr padding-bottom-big margin-bottom ft-main bg-drak">
+  <view class="padding-lr padding-bottom-big margin-bottom ft-main bg-dark">
     <view
       class="bg-main padding-top padding-lr border-radius margin-top-sm"
       v-for="(item, index) in addressDatas"

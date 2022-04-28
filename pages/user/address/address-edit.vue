@@ -1,5 +1,5 @@
 <template>
-  <view class="content bg-drak ft-main">
+  <view class="content bg-dark ft-main">
     <view class="gap"></view>
     <view class="row dflex border-line padding-lr">
       <text class="tit">收货人</text>

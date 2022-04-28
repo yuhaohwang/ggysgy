@@ -115,7 +115,7 @@
       "maps": {}
     },
     "devServer": {
-      "https": false,
+      "https": true,
       "port": 8084
     }
   },

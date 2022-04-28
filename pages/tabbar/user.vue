@@ -20,44 +20,21 @@
           </view>
         </view>
         <view class="border-radius-big bg-base dflex-c padding-lr" @click="to('/pages/user/integral/sign')">
-          <view class="iconfont fs-xl iconqiandao margin-right-xs"></view>
-          <view>签到</view>
+          <view class="iconfont fs-xl iconqiandao margin-right-xs"></view> <view>签到</view>
         </view>
       </view>
 
       <!-- 03. 分类区1 -->
-      <view class="x-c-c x-5 padding-xs bg-main" v-if="categoryDatas && categoryDatas.length > 0">
+      <view class="x-c-c x-5 padding-xs bg-main border-radius" v-if="categoryDatas && categoryDatas.length > 0">
         <view
           class="y-c-c padding-xs category-item"
           v-for="(item, index) in categoryDatas"
           :key="index"
           @click="to(item.url)"
         >
-          <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
-          <view>{{ item.name }}</view>
+          <image :lazy-load="true" :src="item.img" mode="widthFix"></image> <view>{{ item.name }}</view>
         </view>
       </view>
-
-      <!-- <view class="border-radius"> -->
-      <!-- 				<view class="vip-card-area pos-r padding-lr padding-tb-sm">
-					<view>
-						<text class="iconfont iconhuiyuan"></text>
-						<text class="margin-left-sm">艺设公益 会员</text>
-					</view>
-				</view> -->
-
-      <!-- <view class="stats-area dflex-c bg-main">
-          <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '全部')">
-            <text class="num">{{ member.member_monetary / 100 || 0 }}</text>
-            <text>累计消费</text>
-            <view class="vertical-line"></view>
-          </view>
-          <view class="item dflex dflex-flow-c" @click="to('/pages/user/coupon/coupon')">
-            <text class="num">{{ member.member_coupon_cnt || 6 }}</text>
-            <text>优惠券</text>
-          </view>
-        </view> -->
-      <!-- </view> -->
     </view>
 
     <view class="container-area padding-lr-sm padding-bottom-sm">

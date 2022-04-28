@@ -115,7 +115,7 @@
     <view v-if="skuDatas.length > 0" class="sku-area bg-main padding-lr padding-top padding-bottom-xs pos-r">
       <view class="con dflex dflex-wrap-w">
         <view
-          class="margin-right-sm margin-bottom-sm dflex bg-drak border-radius-lg padding-tb-16 padding-lr"
+          class="margin-right-sm margin-bottom-sm dflex bg-dark border-radius-lg padding-tb-16 padding-lr"
           :class="{ active: item.selected }"
           v-for="(item, index) in skuDatas"
           :key="index"
@@ -134,7 +134,7 @@
     <!-- <use-popup mode="bottom" v-model="couponShow" @open="couponOpen"> -->
     <!-- 优惠券区 -->
     <!--      <scroll-view>
-        <view class="coupon-area padding bg-drak">
+        <view class="coupon-area padding bg-dark">
           <view class="coupon-item bg-main pos-r fs-xs" v-for="(item, index) in couponDatas" :key="index">
             <view class="content pos-r padding dflex-b">
               <view class="">

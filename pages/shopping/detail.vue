@@ -45,7 +45,7 @@
           ></image>
           <view class="margin-left-xs fs-xxs">Usecloud</view>
         </view>
-        <view class="bg-drak border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
+        <view class="bg-dark border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
           <text class="iconfont iconaixin-01 ft-base" v-if="follow"></text>
           <text class="iconfont iconaixin" v-else></text>
           <text class="padding-tb-16" style="margin-left: 6rpx;">关注</text>
