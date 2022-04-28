@@ -19,7 +19,7 @@
     <!-- #endif -->
     <view class="gap"></view>
 
-    <use-list-title title="艺设公益" iconfont=" " :tip="version"></use-list-title>
+    <use-list-title title="以艺自强" iconfont=" " :tip="version"></use-list-title>
     <view class="gap"></view>
 
     <view class="use-item log-out-btn tac" @click="tologin">

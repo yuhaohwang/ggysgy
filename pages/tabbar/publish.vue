@@ -75,129 +75,133 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        showSex: false,
-        model: {
-          publish: {
-            name: '',
-            desc: '',
-            image: '',
-            video: '',
-            classify: '',
-            subclassify: '',
-            authType: '',
-            price: '',
-          },
+export default {
+  data() {
+    return {
+      showSex: false,
+      model: {
+        publish: {
+          name: '',
+          desc: '',
+          image: '',
+          video: '',
+          classify: '',
+          subclassify: '',
+          authType: '',
+          price: '',
         },
-        rules: {
-          'publish.name': {
-            type: 'string',
-            required: true,
-            message: '请填写姓名',
-            trigger: ['blur', 'change'],
-          },
+      },
+      rules: {
+        'publish.name': {
+          type: 'string',
+          required: true,
+          message: '请填写姓名',
+          trigger: ['blur', 'change'],
         },
-        imgList: [],
-        videoList: [],
-        classifyRadioList: [
-          {
-            name: '美术类',
-            disabled: false,
-          },
-          {
-            name: '设计类',
-            disabled: false,
-          },
-          {
-            name: '文学类',
-            disabled: false,
-          },
-        ],
-        subclassifyRadioList: [
-          {
-            name: '油画',
-            disabled: false,
-          },
-          {
-            name: '水彩',
-            disabled: false,
-          },
-          {
-            name: '国画',
-            disabled: false,
-          },
-          {
-            name: '素描',
-            disabled: false,
-          },
-          {
-            name: '雕塑',
-            disabled: false,
-          },
-          {
-            name: '摄影',
-            disabled: false,
-          },
-          {
-            name: '书法',
-            disabled: false,
-          },
-          {
-            name: '漆画',
-            disabled: false,
-          },
-          {
-            name: '版画',
-            disabled: false,
-          },
-          {
-            name: '数绘',
-            disabled: false,
-          },
-          {
-            name: '其他',
-            disabled: false,
-          },
-        ],
-        authTypeList: [
-          {
-            name: '商业使用',
-            disabled: false,
-          },
-          {
-            name: '私人使用',
-            disabled: false,
-          },
-        ],
-        classifyRadioValue: '',
-        subclassifyRadioValue: '',
-        authTypeValue: '',
-      };
-    },
-    methods: {
-      groupChange(n) {
-        console.log('groupChange', n);
       },
-      radioChange(n) {
-        console.log('radioChange', n);
-      },
+      imgList: [],
+      videoList: [],
+      classifyRadioList: [
+        {
+          name: '美术类',
+          disabled: false,
+        },
+        {
+          name: '设计类',
+          disabled: false,
+        },
+        {
+          name: '文学类',
+          disabled: false,
+        },
+      ],
+      subclassifyRadioList: [
+        {
+          name: '油画',
+          disabled: false,
+        },
+        {
+          name: '水彩',
+          disabled: false,
+        },
+        {
+          name: '国画',
+          disabled: false,
+        },
+        {
+          name: '素描',
+          disabled: false,
+        },
+        {
+          name: '雕塑',
+          disabled: false,
+        },
+        {
+          name: '摄影',
+          disabled: false,
+        },
+        {
+          name: '书法',
+          disabled: false,
+        },
+        {
+          name: '漆画',
+          disabled: false,
+        },
+        {
+          name: '版画',
+          disabled: false,
+        },
+        {
+          name: '数绘',
+          disabled: false,
+        },
+        {
+          name: '其他',
+          disabled: false,
+        },
+      ],
+      authTypeList: [
+        {
+          name: '商业使用',
+          disabled: false,
+        },
+        {
+          name: '私人使用',
+          disabled: false,
+        },
+      ],
+      classifyRadioValue: '',
+      subclassifyRadioValue: '',
+      authTypeValue: '',
+    }
+  },
+  methods: {
+    groupChange(n) {
+      console.log('groupChange', n)
     },
-    onLoad() {},
-    mounted() {
-      // #ifdef H5 || MP-360
-      this.navHeight = 50;
-      // #endif
+    radioChange(n) {
+      console.log('radioChange', n)
     },
-  };
+  },
+  onLoad() {},
+  mounted() {
+    // #ifdef H5 || MP-360
+    this.navHeight = 50
+    // #endif
+  },
+}
 </script>
 
 <style lang="scss">
-  .u-radio-group-row, .radio-row-center {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
+.u-radio-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  > view {
+    width: 33.3%;
+    padding: 10rpx;
   }
+}
 </style>

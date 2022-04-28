@@ -329,7 +329,7 @@
       }
 
       return {
-        title: '艺设公益',
+        title: '以艺自强',
         path: `/pages/tabbar/home?mid=${mid}`,
         // imageUrl: 'https://mall-os-api.use-cloud.com/files/upload/image/20200408/200408115587860242.jpg',
         success: function (res) {

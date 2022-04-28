@@ -1,15 +1,15 @@
-# Usecloud.usemall 艺设公益 v1.0.9 前后端开源版
+# Usecloud.usemall 以艺自强 v1.0.9 前后端开源版
 
-**艺设公益 uniCloud v1.0.9 前后端开源版，完整商用级项目，一套 js 解决前端、后端、数据库的全栈开发 serverless 模式（小程序、h5、android、iOS、vue + element-ui + uniCloud 版管理后台）永久开源。**
+**以艺自强 uniCloud v1.0.9 前后端开源版，完整商用级项目，一套 js 解决前端、后端、数据库的全栈开发 serverless 模式（小程序、h5、android、iOS、vue + element-ui + uniCloud 版管理后台）永久开源。**
 
 说明：目前支持平台有微信小程序、支付宝小程序、h5。全端支持可咨询**私有部署 netcore|java|php 版本一套后台管理多端小程序**。（**可定制跨境电商、海关申报、仓储系统、物联网等项目**）
 
-**艺设公益 · 传播艺术之美！**
+**以艺自强 · 传播艺术之美！**
 
 ## 用云团队项目推荐（已开源）
 
-> **[1. 艺设公益 uniCloud v1.0.9 版前后端开源](https://ext.dcloud.net.cn/plugin?id=5764)**  
-> **[3. 艺设 IM uniCloud 开源版](https://ext.dcloud.net.cn/plugin?id=5544)**
+> **[1. 以艺自强 uniCloud v1.0.9 版前后端开源](https://ext.dcloud.net.cn/plugin?id=5764)**  
+> **[3. 以艺自强 IM uniCloud 开源版](https://ext.dcloud.net.cn/plugin?id=5544)**
 
 ## [uniCloud 官方文档](https://uniapp.dcloud.io/uniCloud/README)
 
@@ -24,7 +24,7 @@
 > 账号：usemall  
 > 密码：1234
 
-**[艺设公益管理后台 v1.0.9 版本，加群（[1020565856](https://qm.qq.com/cgi-bin/qm/qr?k=BNUlrZAQXPolwALtcBm_rMabq0bx3_n-&jump_from=usecloud)）联系客服免费获取源代码]。**
+**[以艺自强管理后台 v1.0.9 版本，加群（[1020565856](https://qm.qq.com/cgi-bin/qm/qr?k=BNUlrZAQXPolwALtcBm_rMabq0bx3_n-&jump_from=usecloud)）联系客服免费获取源代码]。**
 
 ## [点击访问用云官网](https://use-cloud.com)
 

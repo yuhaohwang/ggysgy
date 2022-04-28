@@ -111,7 +111,7 @@
       <!-- #endif -->
     </view>
 
-    <!-- 艺设公益版权 -->
+    <!-- 以艺自强版权 -->
     <use-copyright class="pos-f w-full" style="bottom: -30rpx;"></use-copyright>
 
     <!-- 弹出框 -->

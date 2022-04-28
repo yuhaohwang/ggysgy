@@ -4,7 +4,7 @@
     <!-- 版权 -->
     <view class="x-c-c padding use-copyright" @click="to">
       <view class="iconfont iconxiangqing animated rotate margin-right-sm ft-base"></view>
-      <view class="ft-dark">艺设</view>
+      <view class="ft-dark">以艺自强</view>
       <text class="margin-lr-xs">·</text>
       <text>公益</text>
     </view>

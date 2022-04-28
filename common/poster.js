@@ -139,7 +139,7 @@ let uposter = {
     // 会员头像
     this.goods.views[1].src = member.member_headimg ? member.member_headimg : '/static/images/logo.png';
     // 会员名称
-    this.goods.views[2].text = member.member_nickname ? member.member_nickname : '艺设公益';
+    this.goods.views[2].text = member.member_nickname ? member.member_nickname : '以艺自强';
     // 产品图
     this.goods.views[4].src = goods.img;
     // 产品价格

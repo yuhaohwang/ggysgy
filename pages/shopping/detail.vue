@@ -6,7 +6,7 @@
         <swiper-item>
           <view class="wh-full">
             <image
-              src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/5433329e-95c5-4973-aa87-86c4d1815771.jpg"
+              src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/d1888b99-0dbd-47dc-937f-c0717f366f62.jpg"
               class="wh-full loaded"
               lazy-load="true"
               mode="aspectFill"
@@ -16,7 +16,7 @@
         <swiper-item>
           <view class="wh-full">
             <image
-              src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/010c807f-a45e-40f7-8e08-49aa3dca8b49.jpg"
+              src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/d1888b99-0dbd-47dc-937f-c0717f366f62.jpg"
               class="wh-full loaded"
               lazy-load="true"
               mode="aspectFill"
@@ -38,11 +38,7 @@
     <view class="goods-area bg-main padding">
       <view class="dflex-b margin-tb-sm">
         <view class="dflex">
-          <image
-            src="/static/images/user/default.png"
-            class="headimg border-radius-c"
-            style="width: 70rpx; height: 70rpx;"
-          ></image>
+          <image src="/static/images/user/default.png" class="headimg border-radius-c" style="width: 70rpx; height: 70rpx;"></image>
           <view class="margin-left-xs fs-xxs">Usecloud</view>
         </view>
         <view class="bg-dark border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
@@ -52,13 +48,8 @@
         </view>
       </view>
 
-      <text class="title fwb clamp-2 fs margin-bottom-xs"
-        >阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</text
-      >
-      <view class="">
-        一套 js 解决前端、后端、数据库的全栈开发 serverless 模式（小程序、h5、app、vue + element-ui + uniCloud
-        版管理后台）前后端开源 QQ群 1020565856
-      </view>
+      <text class="title fwb clamp-2 fs margin-bottom-xs">油画</text>
+      <view class=""></view>
     </view>
     <!-- 07. 操作区 -->
     <view class="oper-area pos-f dflex-b w-full padding-lr-lg">
@@ -77,9 +68,7 @@
         </view>
       </view>
       <view class="btn-container border-radius-big">
-        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx;" @click="toBuy(goods)"
-          >购买同款
-        </view>
+        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx;" @click="toBuy(goods)">购买同款</view>
       </view>
     </view>
     <!-- 置顶 -->
@@ -88,114 +77,114 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  export default {
-    computed: {
-      ...mapState(['islogin', 'member']),
-    },
-    data() {
-      return {
-        id: '',
-        follow: true,
-      };
-    },
-    onShareAppMessage: function (ops) {
-      let _this = this;
-      let mid = 0;
-      if (_this.member && _this.member._id) {
-        mid = _this.member._id;
-      }
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['islogin', 'member']),
+  },
+  data() {
+    return {
+      id: '',
+      follow: true,
+    }
+  },
+  onShareAppMessage: function(ops) {
+    let _this = this
+    let mid = 0
+    if (_this.member && _this.member._id) {
+      mid = _this.member._id
+    }
 
-      return {
-        title: '艺设公益 · 传播艺术之美',
-        path: `/pages/shopping/detail?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
-        success: function (res) {
-          // 转发成功
-          console.log('转发成功', res);
-        },
-        fail: function (res) {
-          // 转发失败
-          console.log('转发失败', res);
-        },
-      };
+    return {
+      title: '以艺自强 · 传播艺术之美',
+      path: `/pages/shopping/detail?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
+      success: function(res) {
+        // 转发成功
+        console.log('转发成功', res)
+      },
+      fail: function(res) {
+        // 转发失败
+        console.log('转发失败', res)
+      },
+    }
+  },
+  methods: {
+    // 立即购买
+    toBuy(item) {
+      this.$api.msg('购买')
     },
-    methods: {
-      // 立即购买
-      toBuy(item) {
-        this.$api.msg('购买');
-      },
-      toFollow() {
-        this.follow = !this.follow;
-        if (this.follow) {
-          this.$api.msg('已关注');
-        } else {
-          this.$api.msg('取消关注');
-        }
-      },
-      toShare() {
-        this.$api.msg('分享');
-      },
+    toFollow() {
+      this.follow = !this.follow
+      if (this.follow) {
+        this.$api.msg('已关注')
+      } else {
+        this.$api.msg('取消关注')
+      }
     },
-  };
+    toShare() {
+      this.$api.msg('分享')
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-  page {
-    padding-bottom: 120rpx;
-    background: #fff;
+page {
+  padding-bottom: 120rpx;
+  background: #fff;
+}
+
+/* 01. 轮播区 */
+.swiper-area {
+  top: 0;
+  z-index: -1;
+  height: 66vh;
+}
+
+/* #ifndef MP */
+.swiper-area {
+  margin-top: calc(44px + env(safe-area-inset-top));
+}
+
+/* #endif */
+
+/* 02. 商品数据区 */
+.goods-area {
+  height: 100vh;
+  margin-top: 66vh;
+
+  .price-box {
+    display: flex;
+    align-items: baseline;
   }
 
-  /* 01. 轮播区 */
-  .swiper-area {
-    top: 0;
-    z-index: -1;
-    height: 66vh;
+  .title {
+    height: 46rpx;
+    line-height: 46rpx;
+    color: $font-color-dark;
   }
+}
 
-  /* #ifndef MP */
-  .swiper-area {
-    margin-top: calc(44px + env(safe-area-inset-top));
-  }
+/* 07. 操作区 */
+.oper-area {
+  bottom: 0;
+  left: 0;
+  z-index: 95;
+  height: 100rpx;
+  background: rgba(245, 245, 245, 0.95);
+  box-shadow: 0 0 20rpx 0 #f0f0f0;
 
-  /* #endif */
+  .btn-area {
+    width: 96rpx;
+    margin-right: 30rpx;
+    color: #000;
+    text-align: center;
 
-  /* 02. 商品数据区 */
-  .goods-area {
-    height: 100vh;
-    margin-top: 66vh;
-
-    .price-box {
-      display: flex;
-      align-items: baseline;
+    .iconfont {
+      margin-right: 6rpx;
+      font-size: 40rpx;
+      line-height: 48rpx;
     }
-
-    .title {
-      height: 46rpx;
-      line-height: 46rpx;
-      color: $font-color-dark;
-    }
   }
-
-  /* 07. 操作区 */
-  .oper-area {
-    bottom: 0;
-    left: 0;
-    z-index: 95;
-    height: 100rpx;
-    background: rgba(245, 245, 245, 0.95);
-    box-shadow: 0 0 20rpx 0 #f0f0f0;
-
-    .btn-area {
-      width: 96rpx;
-      margin-right: 30rpx;
-      color: #000;
-      text-align: center;
-
-      .iconfont {
-        margin-right: 6rpx;
-        font-size: 40rpx;
-        line-height: 48rpx;
-      }
-    }
-  }
+}
 </style>

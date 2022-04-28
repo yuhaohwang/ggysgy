@@ -86,8 +86,8 @@
         bgImgUrl: share_img,
         title: `来自 [${_this.member.user_name}] 的收藏夹`,
         path: `/pages/goods/goods?id=${ops.target.id}&mid=${mid}`,
-        content: '艺设公益',
-        desc: '艺设公益',
+        content: '以艺自强',
+        desc: '以艺自强',
         success: function (res) {
           // 转发成功
           console.log(res);

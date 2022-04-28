@@ -18,7 +18,7 @@
       this.weburl = res.url;
 
       uni.setNavigationBarTitle({
-        title: '艺设 ' + (res.title || ''),
+        title: '以艺自强 ' + (res.title || ''),
       });
     },
   };

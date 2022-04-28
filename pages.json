@@ -3,7 +3,7 @@
     {
       "path": "pages/tabbar/home",
       "style": {
-        "navigationBarTitleText": "艺设公益",
+        "navigationBarTitleText": "以艺自强",
         "enablePullDownRefresh": true
       }
     },
@@ -185,13 +185,13 @@
     {
       "path": "pages/content/web",
       "style": {
-        "navigationBarTitleText": "艺设"
+        "navigationBarTitleText": "以艺自强"
       }
     },
     {
       "path": "pages/content/rich-text",
       "style": {
-        "navigationBarTitleText": "艺设"
+        "navigationBarTitleText": "以艺自强"
       }
     },
     {
@@ -284,7 +284,7 @@
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "艺设公益",
+    "navigationBarTitleText": "以艺自强",
     "navigationBarBackgroundColor": "#fff",
     "backgroundColor": "#fff",
 

@@ -65,7 +65,7 @@
       </view>
     </view>
 
-    <!-- 艺设公益版权 -->
+    <!-- 以艺自强版权 -->
     <use-copyright></use-copyright>
   </view>
 </template>

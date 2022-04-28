@@ -25,7 +25,7 @@
     ></image>
     <view class="banner">
       <view class="cla11"></view>
-      <text class="cla12">艺设公益 · 传播艺术的美</text>
+      <text class="cla12">以艺自强 · 传播艺术的美</text>
       <view class="cla13"></view>
     </view>
   </view>

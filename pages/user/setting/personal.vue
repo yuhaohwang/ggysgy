@@ -6,7 +6,7 @@
       </view>
       <view class="margin-left-sm">
         <view>
-          <text class="username">{{ member.member_name || '艺设' }}</text>
+          <text class="username">{{ member.member_name || '以艺自强' }}</text>
         </view>
         <view v-if="member.member_city"
           ><text>{{ member.member_city }}</text></view

@@ -9,7 +9,7 @@
           </view>
           <view class="margin-left-sm">
             <view class="info-box">
-              <text class="fs-lg">{{ member.member_name || member.member_nickname || '艺设' }}</text>
+              <text class="fs-lg">{{ member.member_name || member.member_nickname || '以艺自强' }}</text>
             </view>
             <view v-if="member.member_city">
               <text class="fs-xxs">{{ member.member_city }}</text>
@@ -164,7 +164,7 @@
       ></use-action-sheet>
     </view>
 
-    <!-- 艺设公益版权 -->
+    <!-- 以艺自强版权 -->
     <use-copyright></use-copyright>
   </view>
 </template>

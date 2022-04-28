@@ -21,7 +21,7 @@
         default() {
           return {
             more: '上拉显示更多',
-            loading: '艺设公益 · 传播艺术之美',
+            loading: '以艺自强 · 传播艺术之美',
             nomore: '已经到底了',
           };
         },
