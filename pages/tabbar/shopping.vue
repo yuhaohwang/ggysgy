@@ -39,38 +39,16 @@
 
     <view class="x-c-s x-2 padding-xs border-radius">
       <view class="y-s-c">
-        <view class="padding-xs w-full">
-          <view class="bg-main border-radius">
-            <image
-              src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/d1888b99-0dbd-47dc-937f-c0717f366f62.jpg"
-              style="width: 100%; max-height: 150rpx;"
-              mode="aspectFit"
-            ></image>
-            <view class="padding-lr-sm margin-top-sm clamp-2">油画</view>
-
-            <view class="x-b-c padding-lr-sm margin-tb-sm">
-              <view class="x-c-c">
-                <image src="/static/images/user/default.png" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx;"></image>
-                <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
-              </view>
-              <view class="x-c-c">
-                <view class="iconfont iconaixin"></view>
-                <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
-              </view>
-            </view>
-          </view>
-        </view>
-
         <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
-          <view class="padding-xs" @click="dongt(item.id)">
+          <view class="padding-xs w-full" @click="dongt(item.id)">
             <view class="bg-main border-radius">
               <image
-                src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/d1888b99-0dbd-47dc-937f-c0717f366f62.jpg"
+                src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/3db0e3e9-4af6-41e8-af00-92996a87ee3a.jpg"
                 style="width: 100%; max-height: 350rpx;"
-                mode="aspectFit"
+                mode="widthFix"
               ></image>
 
-              <view class="padding-lr-sm margin-top-sm clamp-2">油画</view>
+              <view class="padding-lr-sm margin-top-sm clamp-2">漆画</view>
 
               <view class="x-b-c padding-lr-sm margin-tb-sm">
                 <view class="x-c-c">
@@ -94,7 +72,7 @@
               <image
                 src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/d1888b99-0dbd-47dc-937f-c0717f366f62.jpg"
                 style="width: 100%; max-height: 350rpx;"
-                mode="aspectFit"
+                mode="widthFix"
               ></image>
 
               <view class="padding-lr-sm margin-top-sm clamp-2">油画</view>

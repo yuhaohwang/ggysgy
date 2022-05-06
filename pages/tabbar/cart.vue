@@ -21,8 +21,7 @@
           <view class="cart-item bg-main margin-bottom-sm padding-lg pos-r dflex-s border-radius">
             <view class="image-wrapper pos-r" @click="togoods(item)">
               <!-- 商品图片 -->
-              <image class="border-radius-xs wh-full" mode="aspectFill" :lazy-load="true" :src="item.goods.img">
-              </image>
+              <image class="border-radius-xs wh-full" mode="aspectFill" :lazy-load="true" :src="item.goods.img"></image>
               <!-- 选中|未选中按钮 -->
               <view
                 v-if="item.goods.stock_num > 0 && item.goods.stock_num >= item.goods_num"
@@ -39,16 +38,13 @@
                 v-if="item.goods.stock_num < 10 || item.goods.stock_num < item.goods_num"
                 class="disabled dflex-c dflex-flow-c pos-a pos-tl-c border-radius-c"
               >
-                <text>库存不足</text
-                ><text class="margin-left-xs fs-xs" v-if="item.stock_num > 0">剩余 {{ item.goods.stock_num }}</text>
+                <text>库存不足</text>
+                <text class="margin-left-xs fs-xs" v-if="item.stock_num > 0">剩余 {{ item.goods.stock_num }}</text>
               </view>
             </view>
-            <view class="item-right padding-left pos-r">
+            <view class="item-right padding-left pos-r flex1">
               <!-- 商品名称 -->
-              <view class="clamp-2 title" @click="togoods(item)"
-                >{{ item.goods.name }}
-                {{ item.goods.name_pw }}
-              </view>
+              <view class="clamp-2 title" @click="togoods(item)">{{ item.goods.name }} {{ item.goods.name_pw }}</view>
               <view class="ft-dark fs-xs padding-top-xs">{{ item.goods_sku.spec || '&nbsp;&nbsp;' }}</view>
               <view class="padding-tb-sm">
                 <text class="price">{{ item.goods.price / 100 }}</text>
@@ -65,8 +61,7 @@
                 :index="index"
                 :disabled="item.goods_num >= item.goods.stock_num"
                 @eventChange="numberChange"
-              >
-              </use-number-box>
+              ></use-number-box>
             </view>
 
             <!-- 删除 -->
@@ -90,7 +85,7 @@
             }"
             @click="check('all')"
           ></view>
-          <view class="clear-btn pos-a tac ft-white" :class="{ show: allChecked }" @click="clearCart">清空 </view>
+          <view class="clear-btn pos-a tac ft-white" :class="{ show: allChecked }" @click="clearCart">清空</view>
         </view>
         <view class="total-box flex1 tar padding-right-lg">
           <text class="price">{{ total || 0 }}</text>
@@ -105,300 +100,300 @@
 </template>
 
 <script>
-  const _cart = 'usemall-goods-cart';
-  import { mapState } from 'vuex';
-  export default {
-    computed: {
-      ...mapState(['islogin']),
+const _cart = 'usemall-goods-cart'
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['islogin']),
+  },
+  data() {
+    return {
+      // 空白页
+      empty: false,
+      // 购物车数据
+      cartDatas: [],
+      // 全选状态
+      allChecked: false,
+      // 总价格
+      total: 0,
+    }
+  },
+  watch: {
+    //显示空白页
+    cartDatas(e) {
+      let empty = e.length === 0
+      if (this.empty !== empty) {
+        this.empty = empty
+      }
     },
-    data() {
-      return {
-        // 空白页
-        empty: false,
-        // 购物车数据
-        cartDatas: [],
-        // 全选状态
-        allChecked: false,
-        // 总价格
-        total: 0,
-      };
-    },
-    watch: {
-      //显示空白页
-      cartDatas(e) {
-        let empty = e.length === 0;
-        if (this.empty !== empty) {
-          this.empty = empty;
-        }
-      },
-    },
-    // 监听页面显示。页面每次出现在屏幕上都触发，包括从下级页面点返回露出当前页面
-    onShow() {
-      this.loadData();
-    },
-    // 下拉刷新
-    onPullDownRefresh() {
-      this.loadData(() => {
-        uni.stopPullDownRefresh();
-      });
-    },
+  },
+  // 监听页面显示。页面每次出现在屏幕上都触发，包括从下级页面点返回露出当前页面
+  onShow() {
+    this.loadData()
+  },
+  // 下拉刷新
+  onPullDownRefresh() {
+    this.loadData(() => {
+      uni.stopPullDownRefresh()
+    })
+  },
 
-    methods: {
-      //请求数据
-      async loadData(callback) {
-        this.$db['usemall-goods-cart,usemall-goods,usemall-goods-sku']
-          .collection()
-          .where('create_uid == $env.uid')
-          .field(
-            '_id, goods_num, goods_sku.spec, goods.price, goods.market_price, goods.stock_num, goods.name,goods.name_pw ,last_modify_time, goods._id as goods_id, goods.img, goods.state'
-          )
-          .orderBy('last_modify_time desc')
-          .get()
-          .then((res) => {
-            if (res && res.result && res.result.code === 0) {
-              let _cartDatas = [];
-              res.result.data.forEach((x) => {
-                x.goods = x.goods[0];
-                x.goods_id = x.goods_id[0];
-                x.goods_sku = x.goods_sku[0] || {};
+  methods: {
+    //请求数据
+    async loadData(callback) {
+      this.$db['usemall-goods-cart,usemall-goods,usemall-goods-sku']
+        .collection()
+        .where('create_uid == $env.uid')
+        .field(
+          '_id, goods_num, goods_sku.spec, goods.price, goods.market_price, goods.stock_num, goods.name,goods.name_pw ,last_modify_time, goods._id as goods_id, goods.img, goods.state',
+        )
+        .orderBy('last_modify_time desc')
+        .get()
+        .then(res => {
+          if (res && res.result && res.result.code === 0) {
+            let _cartDatas = []
+            res.result.data.forEach(x => {
+              x.goods = x.goods[0]
+              x.goods_id = x.goods_id[0]
+              x.goods_sku = x.goods_sku[0] || {}
 
-                if (x.goods && x.goods_id) _cartDatas.push(x);
-              });
-              // 购物车数据
-              this.cartDatas = _cartDatas;
-              // 计算总价
-              this.calcTotal();
+              if (x.goods && x.goods_id) _cartDatas.push(x)
+            })
+            // 购物车数据
+            this.cartDatas = _cartDatas
+            // 计算总价
+            this.calcTotal()
 
-              if (typeof callback === 'function') {
-                // 数据加载完成回调函数
-                callback();
-              }
+            if (typeof callback === 'function') {
+              // 数据加载完成回调函数
+              callback()
             }
-          });
-        return;
-      },
-      // 跳转登录页
-      tologin() {
-        this.$api.tologin();
-      },
-      // 跳转商品页
-      togoods(item) {
-        this.$api.togoods({
-          id: item.goods_id,
-        });
-      },
-
-      // 选中状态处理
-      check(type, index) {
-        if (type === 'item') {
-          this.cartDatas[index].checked = !this.cartDatas[index].checked;
-        } else {
-          const checked = !this.allChecked;
-          this.cartDatas.forEach((item) => {
-            item.checked = checked;
-          });
-          this.allChecked = checked;
-        }
-
-        this.calcTotal();
-      },
-      // +- 数量
-      numberChange(data) {
-        let cart = this.cartDatas[data.index];
-
-        this.$db[_cart]
-          .update(cart._id, {
-            goods_num: data.number,
-          })
-          .then((res) => {
-            if (res.code === 200) {
-              cart.goods_num = data.number;
-              this.calcTotal();
-              return;
-            }
-            this.$api.msg(res.msg);
-          });
-      },
-      // 删除
-      deleteCart(id) {
-        let _this = this;
-        uni.showModal({
-          title: '提示',
-          content: '删除购物车',
-          success: function (res) {
-            if (res.confirm) {
-              _this.$db[_cart]
-                .where('create_uid == $env.uid')
-                .remove(id)
-                .then((res) => {
-                  if (res.code === 200) {
-                    _this.loadData();
-                  }
-                });
-            } else if (res.cancel) {
-            }
-          },
-        });
-      },
-      // 清空
-      clearCart() {
-        let _this = this;
-        uni.showModal({
-          title: '提示',
-          content: '清空购物车',
-          success: function (res) {
-            if (res.confirm) {
-              _this.$db[_cart]
-                .where('create_uid == $env.uid')
-                .remove()
-                .then((res) => {
-                  if (res.code === 200) {
-                    _this.cartDatas = [];
-                    return;
-                  }
-                  _this.$api.msg(res.msg);
-                });
-            } else if (res.cancel) {
-            }
-          },
-        });
-      },
-      // 计算总价
-      calcTotal() {
-        if (this.cartDatas.length === 0) {
-          this.empty = true;
-          return;
-        }
-
-        let total = 0,
-          checked = true;
-
-        this.cartDatas.forEach((item) => {
-          if (item.checked) {
-            // 存在库存
-            if (item.goods.stock_num > 0 && item.goods.stock_num >= item.goods_num) {
-              total += (item.goods.price / 100) * item.goods_num;
-            }
-          } else if (checked) {
-            checked = false;
           }
-        });
-
-        this.allChecked = checked;
-        this.total = Number(total.toFixed(2));
-      },
-      // 创建订单
-      createOrder() {
-        let cart_ids = [];
-        this.cartDatas.forEach((item) => {
-          // 选中有库存购物车
-          if (item.checked && item.goods.stock_num > 0 && item.goods.stock_num > item.goods_num) {
-            cart_ids.push(item._id);
-          }
-        });
-        if (cart_ids.length <= 0) {
-          this.$api.msg('请选择结算商品');
-          return;
-        }
-        uni.navigateTo({
-          url: `/pages/order/create?cart_ids=${cart_ids.join(',')}`,
-        });
-      },
+        })
+      return
     },
-  };
+    // 跳转登录页
+    tologin() {
+      this.$api.tologin()
+    },
+    // 跳转商品页
+    togoods(item) {
+      this.$api.togoods({
+        id: item.goods_id,
+      })
+    },
+
+    // 选中状态处理
+    check(type, index) {
+      if (type === 'item') {
+        this.cartDatas[index].checked = !this.cartDatas[index].checked
+      } else {
+        const checked = !this.allChecked
+        this.cartDatas.forEach(item => {
+          item.checked = checked
+        })
+        this.allChecked = checked
+      }
+
+      this.calcTotal()
+    },
+    // +- 数量
+    numberChange(data) {
+      let cart = this.cartDatas[data.index]
+
+      this.$db[_cart]
+        .update(cart._id, {
+          goods_num: data.number,
+        })
+        .then(res => {
+          if (res.code === 200) {
+            cart.goods_num = data.number
+            this.calcTotal()
+            return
+          }
+          this.$api.msg(res.msg)
+        })
+    },
+    // 删除
+    deleteCart(id) {
+      let _this = this
+      uni.showModal({
+        title: '提示',
+        content: '删除购物车',
+        success: function(res) {
+          if (res.confirm) {
+            _this.$db[_cart]
+              .where('create_uid == $env.uid')
+              .remove(id)
+              .then(res => {
+                if (res.code === 200) {
+                  _this.loadData()
+                }
+              })
+          } else if (res.cancel) {
+          }
+        },
+      })
+    },
+    // 清空
+    clearCart() {
+      let _this = this
+      uni.showModal({
+        title: '提示',
+        content: '清空购物车',
+        success: function(res) {
+          if (res.confirm) {
+            _this.$db[_cart]
+              .where('create_uid == $env.uid')
+              .remove()
+              .then(res => {
+                if (res.code === 200) {
+                  _this.cartDatas = []
+                  return
+                }
+                _this.$api.msg(res.msg)
+              })
+          } else if (res.cancel) {
+          }
+        },
+      })
+    },
+    // 计算总价
+    calcTotal() {
+      if (this.cartDatas.length === 0) {
+        this.empty = true
+        return
+      }
+
+      let total = 0,
+        checked = true
+
+      this.cartDatas.forEach(item => {
+        if (item.checked) {
+          // 存在库存
+          if (item.goods.stock_num > 0 && item.goods.stock_num >= item.goods_num) {
+            total += (item.goods.price / 100) * item.goods_num
+          }
+        } else if (checked) {
+          checked = false
+        }
+      })
+
+      this.allChecked = checked
+      this.total = Number(total.toFixed(2))
+    },
+    // 创建订单
+    createOrder() {
+      let cart_ids = []
+      this.cartDatas.forEach(item => {
+        // 选中有库存购物车
+        if (item.checked && item.goods.stock_num > 0 && item.goods.stock_num > item.goods_num) {
+          cart_ids.push(item._id)
+        }
+      })
+      if (cart_ids.length <= 0) {
+        this.$api.msg('请选择结算商品')
+        return
+      }
+      uni.navigateTo({
+        url: `/pages/order/create?cart_ids=${cart_ids.join(',')}`,
+      })
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-  page {
-    min-height: 100%;
+page {
+  min-height: 100%;
+}
+
+/* 购物车列表项 */
+.cart-item {
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  /* 购物车列表项 */
-  .cart-item {
-    &:last-child {
-      margin-bottom: 0;
+  .image-wrapper {
+    width: 230rpx;
+    height: 230rpx;
+    flex-shrink: 0;
+
+    image {
+      opacity: 1;
     }
+  }
 
-    .image-wrapper {
-      width: 230rpx;
-      height: 230rpx;
-      flex-shrink: 0;
+  .checkbox {
+    top: -16rpx;
+    left: -16rpx;
+    z-index: 8;
+    padding: 5rpx;
+    font-size: 46rpx;
+    line-height: 1;
+    color: $font-color-disabled;
+  }
 
-      image {
-        opacity: 1;
-      }
-    }
+  .disabled {
+    width: 70%;
+    height: 70%;
+    color: #fff !important;
+    background-color: rgba(51, 51, 51, 0.5);
+  }
 
-    .checkbox {
-      top: -16rpx;
-      left: -16rpx;
-      z-index: 8;
-      padding: 5rpx;
+  .item-right {
+    height: 260rpx;
+    overflow: hidden;
+  }
+
+  .del-btn {
+    right: 30rpx;
+    bottom: 40rpx;
+    width: 70rpx;
+    height: 70rpx;
+  }
+}
+
+/* 底部栏 */
+.action-section {
+  bottom: 0;
+  z-index: 999;
+  height: 100rpx;
+
+  .checkbox {
+    .iconfont {
       font-size: 46rpx;
-      line-height: 1;
-      color: $font-color-disabled;
-    }
-
-    .disabled {
-      width: 70%;
-      height: 70%;
-      color: #fff !important;
-      background-color: rgba(51, 51, 51, 0.5);
-    }
-
-    .item-right {
-      height: 260rpx;
-      overflow: hidden;
-    }
-
-    .del-btn {
-      right: 30rpx;
-      bottom: 40rpx;
-      width: 70rpx;
-      height: 70rpx;
+      color: #2c405a;
     }
   }
 
-  /* 底部栏 */
-  .action-section {
-    bottom: 0;
-    z-index: 999;
-    height: 100rpx;
+  .clear-btn {
+    left: 100rpx;
+    width: 0;
+    padding: 12rpx 0;
+    background: #2c405a;
+    border-radius: 0 50rpx 50rpx 0;
+    opacity: 0;
+    transition: all 0.2s;
 
-    .checkbox {
-      .iconfont {
-        font-size: 46rpx;
-        color: #2c405a;
-      }
-    }
-
-    .clear-btn {
-      left: 100rpx;
-      width: 0;
-      padding: 12rpx 0;
-      background: #2c405a;
-      border-radius: 0 50rpx 50rpx 0;
-      opacity: 0;
-      transition: all 0.2s;
-
-      &.show {
-        width: 120rpx;
-        opacity: 1;
-      }
-    }
-
-    .payment {
-      padding: 0 40rpx;
-      font-size: $font-base;
-      background: $uni-color-primary;
-      box-shadow: 1px 2px 5px rgba(254, 170, 48, 0.72);
+    &.show {
+      width: 120rpx;
+      opacity: 1;
     }
   }
 
-  /* #ifdef H5 || MP-360 */
-  .action-section {
-    margin-bottom: 50px;
+  .payment {
+    padding: 0 40rpx;
+    font-size: $font-base;
+    background: $uni-color-primary;
+    box-shadow: 1px 2px 5px rgba(254, 170, 48, 0.72);
   }
+}
 
-  /* #endif */
+/* #ifdef H5 || MP-360 */
+.action-section {
+  margin-bottom: 50px;
+}
+
+/* #endif */
 </style>

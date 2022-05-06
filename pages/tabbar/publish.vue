@@ -1,5 +1,5 @@
 <template>
-  <view class="padding-lr">
+  <view class="padding-lr" v-if="islogin">
     <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
     <u--form labelPosition="top" labelWidth="auto" :model="model" :rules="rules" ref="form1">
       <u-form-item required label="作品名称" prop="publish.name" borderBottom ref="item1">
@@ -75,7 +75,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
+  computed: {
+    ...mapState(['islogin']),
+  },
   data() {
     return {
       showSex: false,
@@ -174,23 +178,33 @@ export default {
       classifyRadioValue: '',
       subclassifyRadioValue: '',
       authTypeValue: '',
-    }
+    };
   },
   methods: {
+    // 跳转登录页
+    tologin() {
+      this.$api.tologin();
+    },
     groupChange(n) {
-      console.log('groupChange', n)
+      console.log('groupChange', n);
     },
     radioChange(n) {
-      console.log('radioChange', n)
+      console.log('radioChange', n);
     },
   },
   onLoad() {},
+  onShow() {
+    if (!this.islogin) {
+      this.tologin();
+      return;
+    }
+  },
   mounted() {
     // #ifdef H5 || MP-360
-    this.navHeight = 50
+    this.navHeight = 50;
     // #endif
   },
-}
+};
 </script>
 
 <style lang="scss">
