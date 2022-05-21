@@ -16,27 +16,13 @@
     <view v-else>
       <!-- 筛选区 -->
       <view class="navbar pos-f w-full dflex bg-main" :style="{ position: headerPosition }">
-        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 0 }" @click="navbarClick(0)"
-          >综合排序</view
-        >
-        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 1 }" @click="navbarClick(1)"
-          >销量优先</view
-        >
-        <view
-          class="nav-item dflex-c flex1 pos-r h-full"
-          :class="{ active: filterIndex === 2 }"
-          @click="navbarClick(2)"
-        >
+        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 0 }" @click="navbarClick(0)">综合排序</view>
+        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 1 }" @click="navbarClick(1)">销量优先</view>
+        <view class="nav-item dflex-c flex1 pos-r h-full" :class="{ active: filterIndex === 2 }" @click="navbarClick(2)">
           <text>价格</text>
           <view class="">
-            <view
-              class="iconfont iconjiantou02 ft-dark dflex-c"
-              :class="{ active: priceOrder === 1 && filterIndex === 2 }"
-            ></view>
-            <view
-              class="iconfont iconjiantou ft-dark dflex-c"
-              :class="{ active: priceOrder === 2 && filterIndex === 2 }"
-            ></view>
+            <view class="iconfont iconjiantou02 ft-dark dflex-c" :class="{ active: priceOrder === 1 && filterIndex === 2 }"></view>
+            <view class="iconfont iconjiantou ft-dark dflex-c" :class="{ active: priceOrder === 2 && filterIndex === 2 }"></view>
           </view>
         </view>
       </view>
@@ -50,7 +36,7 @@
             :key="index"
             @click="togoods(item)"
           >
-            <view class="image-wrapper"> <image mode="aspectFill" :lazy-load="true" :src="item.img"></image> </view>
+            <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
             <text class="title clamp padding-sm">{{ item.name }}</text>
             <view class="padding-left-sm dflex-b">
               <text class="price">{{ item.price / 100 }}</text>
@@ -165,14 +151,14 @@
           // 更多
           this.loadmoreType = 'more';
         }
-        this.$func.usemall.call('goods/list', this.reqdata).then((res) => {
+        this.$func.usemall.call('goods/list', this.reqdata).then(res => {
           if (res.code === 200) {
             if (res.datas && res.datas.goods.length > 0) {
               if (loading == 1 || type == 'refresh') {
                 this.goodsDatas = [];
               }
               let _datas = [];
-              res.datas.goods.forEach((row) => {
+              res.datas.goods.forEach(row => {
                 if (row.state === '销售中') {
                   _datas.push(row);
                 }

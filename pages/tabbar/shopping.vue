@@ -99,109 +99,109 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      list4: [
-        {
-          name: '全部',
-        },
-        {
-          name: '油画',
-        },
-        {
-          name: '水彩',
-        },
-        {
-          name: '国画',
-        },
-        {
-          name: '素描',
-        },
-        {
-          name: '雕塑',
-        },
-        {
-          name: '摄影',
-        },
-        {
-          name: '数绘',
-        },
-      ],
-      lineBg:
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAOCAYAAABdC15GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHgBzZNRTsJAEIb/WTW+lpiY+FZPIDew3ABP4GJ8hxsI9zBpOYHeQDwBPQI+mRiRvpLojtPdYhCorQqF/6GdbGd2vvwzBXZcNAt4oj1ANeUoAT5iqkUjbEFLHNmhD1YPEvpZ3ghkGlVDCkc94/BmHMq998I5ONiY1ZBfpKAyuOtgAc5yOEDmYEWNh32BHF91sGHZHmwW4azciN9aQwnz3SJEgOmte+R2tdLprTYoa50mvuomlLpD4Y3oQZnov6D2RzCqI93bWOHaEmAGqQUyRBlZR1WfarcD/EJ2z8DtzDGvsMCwpm8XOCfDUsVOCYhiqRxI/CTQo4UOvjzO7Pow18vfywneuUHHUUxLn55lLw5JFpZ8bEUcY8oXdOLWiHLTxvoGpLqoUmy6dBT15o/ox3znpoycAmxUsiJTbs1cmxeVKp+0zmFIS7bGWiVghC7Vwse8jFKAX9eljh4ggKLLv7uaQvG9/F59Oo2SouxPu7OTCxN/s8wAAAAASUVORK5CYII=',
+  export default {
+    data() {
+      return {
+        list4: [
+          {
+            name: '全部',
+          },
+          {
+            name: '油画',
+          },
+          {
+            name: '水彩',
+          },
+          {
+            name: '国画',
+          },
+          {
+            name: '素描',
+          },
+          {
+            name: '雕塑',
+          },
+          {
+            name: '摄影',
+          },
+          {
+            name: '数绘',
+          },
+        ],
+        lineBg:
+          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAOCAYAAABdC15GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHgBzZNRTsJAEIb/WTW+lpiY+FZPIDew3ABP4GJ8hxsI9zBpOYHeQDwBPQI+mRiRvpLojtPdYhCorQqF/6GdbGd2vvwzBXZcNAt4oj1ANeUoAT5iqkUjbEFLHNmhD1YPEvpZ3ghkGlVDCkc94/BmHMq998I5ONiY1ZBfpKAyuOtgAc5yOEDmYEWNh32BHF91sGHZHmwW4azciN9aQwnz3SJEgOmte+R2tdLprTYoa50mvuomlLpD4Y3oQZnov6D2RzCqI93bWOHaEmAGqQUyRBlZR1WfarcD/EJ2z8DtzDGvsMCwpm8XOCfDUsVOCYhiqRxI/CTQo4UOvjzO7Pow18vfywneuUHHUUxLn55lLw5JFpZ8bEUcY8oXdOLWiHLTxvoGpLqoUmy6dBT15o/ox3znpoycAmxUsiJTbs1cmxeVKp+0zmFIS7bGWiVghC7Vwse8jFKAX9eljh4ggKLLv7uaQvG9/F59Oo2SouxPu7OTCxN/s8wAAAAASUVORK5CYII=',
 
-      title_id: 0,
+        title_id: 0,
 
-      scrollTop: 0,
-      navHeight: 0,
-    }
-  },
-  onPageScroll(e) {
-    // this.scrollTop = e.scrollTop
-    this.$refs.usetop.change(e.scrollTop)
-  },
-  methods: {
-    // 跳转个人
-    user() {
-      uni.navigateTo({
-        url: `/pages/shopping/user`,
-      })
+        scrollTop: 0,
+        navHeight: 0,
+      };
     },
-    // 搜索
-    search() {
-      this.$api.msg('搜索')
+    onPageScroll(e) {
+      // this.scrollTop = e.scrollTop
+      this.$refs.usetop.change(e.scrollTop);
     },
-    pitch(index) {
-      this.title_id = index
+    methods: {
+      // 跳转个人
+      user() {
+        uni.navigateTo({
+          url: `/pages/shopping/user`,
+        });
+      },
+      // 搜索
+      search() {
+        this.$api.msg('搜索');
+      },
+      pitch(index) {
+        this.title_id = index;
+      },
+      // 跳转详情页
+      dongt(options) {
+        uni.navigateTo({
+          url: `/pages/shopping/detail?id=${options}`,
+        });
+      },
     },
-    // 跳转详情页
-    dongt(options) {
-      uni.navigateTo({
-        url: `/pages/shopping/detail?id=${options}`,
-      })
+    mounted() {
+      // #ifdef H5 || MP-360
+      this.navHeight = 50;
+      // #endif
     },
-  },
-  mounted() {
-    // #ifdef H5 || MP-360
-    this.navHeight = 50
-    // #endif
-  },
-}
+  };
 </script>
 
 <style lang="less">
-page {
-  background-color: #f5f5f5;
-}
-
-.active {
-  color: #feaa30;
-  font-weight: bold;
-  font-size: 34rpx;
-}
-
-.goodsContent {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-
-  .ft-dark {
-    color: #585858;
+  page {
+    background-color: #f5f5f5;
   }
-}
 
-.goodsLeftList,
-.goodsRightList {
-  width: 50%;
-  overflow: hidden;
-}
+  .active {
+    color: #feaa30;
+    font-weight: bold;
+    font-size: 34rpx;
+  }
 
-.goodsLeftList {
-  margin-right: 10rpx;
-}
+  .goodsContent {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 
-.goodsRightList {
-  margin-left: 10rpx;
-}
+    .ft-dark {
+      color: #585858;
+    }
+  }
+
+  .goodsLeftList,
+  .goodsRightList {
+    width: 50%;
+    overflow: hidden;
+  }
+
+  .goodsLeftList {
+    margin-right: 10rpx;
+  }
+
+  .goodsRightList {
+    margin-left: 10rpx;
+  }
 </style>

@@ -11,7 +11,7 @@ function initPlugins(config) {
   }
   const EXTNAME = '.js';
   const configPlugins = config.plugin || {};
-  files.forEach((file) => {
+  files.forEach(file => {
     if (path.extname(file) !== EXTNAME) {
       return;
     }

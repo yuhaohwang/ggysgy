@@ -1,13 +1,6 @@
 <template>
   <view>
-    <picker
-      @change="bindPickerChange"
-      @columnchange="columnchange"
-      :range="array"
-      range-key="name"
-      :value="value"
-      mode="multiSelector"
-    >
+    <picker @change="bindPickerChange" @columnchange="columnchange" :range="array" range-key="name" :value="value" mode="multiSelector">
       <slot></slot>
     </picker>
   </view>
@@ -48,17 +41,17 @@
        * */
       updateSourceDate() {
         this.array = [];
-        this.array[0] = AllAddress.map((obj) => {
+        this.array[0] = AllAddress.map(obj => {
           return {
             name: obj.name,
           };
         });
-        this.array[1] = AllAddress[this.value[0]].city.map((obj) => {
+        this.array[1] = AllAddress[this.value[0]].city.map(obj => {
           return {
             name: obj.name,
           };
         });
-        this.array[2] = AllAddress[this.value[0]].city[this.value[1]].area.map((obj) => {
+        this.array[2] = AllAddress[this.value[0]].city[this.value[1]].area.map(obj => {
           return {
             name: obj,
           };

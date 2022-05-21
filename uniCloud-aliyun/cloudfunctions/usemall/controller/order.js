@@ -138,9 +138,9 @@ module.exports = class OrderController extends Controller {
         return response;
       }
       let goodsCarts = goodsCartRes.data;
-      goodsCartIds = goodsCarts.map((x) => x._id);
-      let goodsIds = goodsCarts.map((x) => x.goods);
-      let goodsSkuIds = goodsCarts.map((x) => x.goods_sku);
+      goodsCartIds = goodsCarts.map(x => x._id);
+      let goodsIds = goodsCarts.map(x => x.goods);
+      let goodsSkuIds = goodsCarts.map(x => x.goods_sku);
 
       let goodsRes = await this.db
         .collection('usemall-goods')
@@ -166,12 +166,12 @@ module.exports = class OrderController extends Controller {
         goodsSkus = skuRes.data;
       }
 
-      goodsCarts.forEach((x) => {
-        goodsData = goodsDatas.find((g) => g._id == x.goods);
+      goodsCarts.forEach(x => {
+        goodsData = goodsDatas.find(g => g._id == x.goods);
         // 购物车商品数量
         goodsData.goods_num = x.goods_num;
 
-        goods_sku = goodsSkus.find((g) => g.goods_sku == x.goods_sku && g.goods_id == x.goods);
+        goods_sku = goodsSkus.find(g => g.goods_sku == x.goods_sku && g.goods_id == x.goods);
         if (goods_sku && goods_sku.goods_sku) {
           goodsData.stock_num = goods_sku.stock_num;
           goodsData.price = goods_sku.price;
@@ -227,7 +227,7 @@ module.exports = class OrderController extends Controller {
       create_time: new Date().getTime(),
     };
     let order_details = [];
-    goods.forEach((x) => {
+    goods.forEach(x => {
       order_details.push({
         order_id: order.order_id,
         goods_id: x._id,
@@ -358,9 +358,7 @@ module.exports = class OrderController extends Controller {
     if (response.order.state == '待付款') {
       // 默认1小时
       const unpay_overdue_minute = 60 * 60;
-      response.time_remaining = parseInt(
-        unpay_overdue_minute - (new Date().getTime() - response.order.create_time) / 1000
-      );
+      response.time_remaining = parseInt(unpay_overdue_minute - (new Date().getTime() - response.order.create_time) / 1000);
       if (response.time_remaining <= 0) {
         // 自动取消订单
         let orderRes = await this.db.collection('usemall-order').doc(response.order._id).update({
@@ -432,7 +430,7 @@ module.exports = class OrderController extends Controller {
       .get();
 
     let datas = [];
-    const ids = orderRes.data.map((x) => x.order_id);
+    const ids = orderRes.data.map(x => x.order_id);
 
     let orderDetailsRes = await this.db
       .collection('usemall-order-detail')
@@ -441,10 +439,10 @@ module.exports = class OrderController extends Controller {
       })
       .get();
 
-    orderRes.data.forEach((x) => {
+    orderRes.data.forEach(x => {
       datas.push({
         order: x,
-        order_detail: orderDetailsRes.data.filter((d) => d.order_id == x.order_id),
+        order_detail: orderDetailsRes.data.filter(d => d.order_id == x.order_id),
       });
     });
     response.datas = datas;
@@ -668,7 +666,7 @@ module.exports = class OrderController extends Controller {
       });
 
       if (orderDetailRes.data) {
-        orderDetailRes.data.forEach((x) => {
+        orderDetailRes.data.forEach(x => {
           this.db.collection('usemall-goods-comment').add({
             goods_id: x.goods_id,
             goods_sku: x.goods_sku,
@@ -1092,7 +1090,7 @@ module.exports = class OrderController extends Controller {
 
     const goodsRes = await this.db
       .collection('usemall-goods')
-      .where({ _id: this.db.command.in(orderDetails.map((x) => x.goods_id)) })
+      .where({ _id: this.db.command.in(orderDetails.map(x => x.goods_id)) })
       .field({
         stock_num: true,
         name: true,
@@ -1105,8 +1103,8 @@ module.exports = class OrderController extends Controller {
     const goodsDatas = goodsRes.data;
 
     // 3. 判断下单商品的状态与库存
-    orderDetails.forEach((x) => {
-      let goods = goodsDatas.find((g) => g._id == x.goods_id);
+    orderDetails.forEach(x => {
+      let goods = goodsDatas.find(g => g._id == x.goods_id);
       if (!goods) {
         this.throw('下单商品已下架');
       }

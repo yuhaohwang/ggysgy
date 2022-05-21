@@ -49,7 +49,7 @@ module.exports = class GoodsController extends Controller {
     detail.create_uid = this.ctx.auth.uid;
     detail.create_uname = this.ctx.auth.userInfo.username || this.ctx.auth.userInfo.nickname;
     // 商品SKU默认值
-    skus.forEach((x) => {
+    skus.forEach(x => {
       x.goods_id = goods_id;
       x.goods_sku = `${goods_id}_${x.spec_s}`;
       x.market_price = goods.market_price;
@@ -181,7 +181,7 @@ module.exports = class GoodsController extends Controller {
       detail.last_modify_uid = this.ctx.auth.uid;
       detail.last_modify_uname = this.ctx.auth.userInfo.username || this.ctx.auth.userInfo.nickname;
       // 商品SKU默认值
-      skus.forEach((x) => {
+      skus.forEach(x => {
         x.goods_id = goods_id;
         x.goods_sku = `${goods_id}_${x.spec_s}`;
         x.market_price = goods.market_price;
@@ -282,7 +282,7 @@ module.exports = class GoodsController extends Controller {
           last_modify_uid: uid,
           last_modify_time: new Date().getTime(),
         })
-        .then((res) => {
+        .then(res => {
           if (res && res.updated <= 0) {
             this.db.collection('usemall-search-history').add({
               keyword,

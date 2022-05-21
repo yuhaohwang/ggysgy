@@ -44,7 +44,7 @@
       dtype: {
         get() {
           console.log('get dtype', arguments);
-          let imgobj = this.imgs.find((x) => x.type == this.eType);
+          let imgobj = this.imgs.find(x => x.type == this.eType);
           this.imgurl = imgobj ? imgobj.url : this.imgurl_dft;
           return this.eType;
         },

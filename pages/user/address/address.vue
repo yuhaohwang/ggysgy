@@ -18,19 +18,19 @@
       <view class="dflex-b">
         <view v-if="item.is_default == '是'" class="dflex active">
           <text class="iconfont iconxuanzhongzhuangtai padding-tb-sm padding-right-sm"></text>
-          <text> 默认地址</text>
+          <text>默认地址</text>
         </view>
         <view v-else class="dflex ft-dark" @tap.stop="setDefault(item)">
           <text class="iconfont iconweixuanzhongzhuangtai padding-tb-sm padding-right-sm"></text>
-          <text> 设为默认</text>
+          <text>设为默认</text>
         </view>
         <view v-if="source == 0 || source == 1" class="dflex">
-          <view class="padding-tb-sm padding-right-sm" @tap.stop="addAddr('edit', item)"
-            ><text class="iconfont iconbianji-01 ft-dark"></text
-          ></view>
-          <view class="padding-tb-sm padding-left-sm" @tap.stop="removeAddr(item)"
-            ><text class="iconfont iconlajitong-01 ft-dark"></text
-          ></view>
+          <view class="padding-tb-sm padding-right-sm" @tap.stop="addAddr('edit', item)">
+            <text class="iconfont iconbianji-01 ft-dark"></text>
+          </view>
+          <view class="padding-tb-sm padding-left-sm" @tap.stop="removeAddr(item)">
+            <text class="iconfont iconlajitong-01 ft-dark"></text>
+          </view>
         </view>
       </view>
     </view>
@@ -59,7 +59,7 @@
       };
     },
     onLoad(option) {
-      this.$api.get_env((res) => {
+      this.$api.get_env(res => {
         this.env = res;
         // console.log(this.env);
         this.is_mp = this.env.is_mp;
@@ -82,7 +82,7 @@
           .tolist({
             orderby: 'is_default desc',
           })
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               this.addressDatas = res.datas;
               return;
@@ -118,7 +118,7 @@
               return;
             }
             console.log('uni chooseAddress', addr);
-            _this.$db[__name].add(addr).then((res) => {
+            _this.$db[__name].add(addr).then(res => {
               if (res.code === 200) {
                 _this.$api.msg('导入成功');
                 _this.loadData();
@@ -134,7 +134,7 @@
             } else {
               uni.showModal({
                 content: '打开授权',
-                success: (e) => {
+                success: e => {
                   if (e.confirm) {
                     uni.openSetting({});
                   }
@@ -149,7 +149,7 @@
         uni.showModal({
           title: '提示',
           content: '设为默认',
-          success: async (res) => {
+          success: async res => {
             if (res.confirm) {
               // 把默认为是的改成 否
               await this.$db[__name]
@@ -157,14 +157,14 @@
                 .update({
                   is_default: '否',
                 })
-                .then((res) => {});
+                .then(res => {});
 
               // 把当前 _id 改成 是
               await this.$db[__name]
                 .update(options._id, {
                   is_default: '是',
                 })
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     this.loadData();
                   }
@@ -199,7 +199,7 @@
           content: '删除收货人',
           success: async function (res) {
             if (res.confirm) {
-              await _this.$db[__name].remove(options._id).then((res) => {
+              await _this.$db[__name].remove(options._id).then(res => {
                 if (res.code === 200) {
                   _this.loadData();
                 }

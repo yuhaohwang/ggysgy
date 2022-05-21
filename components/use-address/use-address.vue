@@ -12,85 +12,51 @@
       @tap="hideMask(true)"
     ></view>
 
-    <view
-      class="use-address-content use-address--fixed"
-      :class="[type, ani + '-content', animation ? 'content-ani' : '']"
-    >
+    <view class="use-address-content use-address--fixed" :class="[type, ani + '-content', animation ? 'content-ani' : '']">
       <view class="use-address-header">
         <view class="use-address-header-btn-box" @click="pickerCancel">
           <text class="use-address-header-text" :style="{ color: cancelColor, fontSize: btnFontSize }">取消</text>
         </view>
         <view class="use-address-header-btn-box" @click="pickerConfirm">
-          <text class="use-address-header-text" :style="{ color: confirmColor || themeColor, fontSize: btnFontSize }"
-            >确定</text
-          >
+          <text class="use-address-header-text" :style="{ color: confirmColor || themeColor, fontSize: btnFontSize }">确定</text>
         </view>
       </view>
       <view class="use-address-box">
-        <picker-view
-          indicator-style="height: 70rpx;"
-          class="use-address-view"
-          :value="pickerValue"
-          @change="pickerChange"
-        >
+        <picker-view indicator-style="height: 70rpx;" class="use-address-view" :value="pickerValue" @change="pickerChange">
           <picker-view-column>
             <!-- #ifndef APP-NVUE -->
-            <view
-              class="picker-item"
-              :style="{ fontSize: fontSize }"
-              v-for="(item, index) in provinceDataList"
-              :key="index"
-              >{{ item.label }}</view
-            >
+            <view class="picker-item" :style="{ fontSize: fontSize }" v-for="(item, index) in provinceDataList" :key="index">
+              {{ item.label }}
+            </view>
             <!-- #endif -->
             <!-- #ifdef APP-NVUE -->
-            <text
-              class="picker-item"
-              :style="{ fontSize: fontSize }"
-              v-for="(item, index) in provinceDataList"
-              :key="index"
-              >{{ item.label }}</text
-            >
+            <text class="picker-item" :style="{ fontSize: fontSize }" v-for="(item, index) in provinceDataList" :key="index">
+              {{ item.label }}
+            </text>
             <!-- #endif -->
           </picker-view-column>
           <picker-view-column>
             <!-- #ifndef APP-NVUE -->
-            <view
-              class="picker-item"
-              :style="{ fontSize: fontSize }"
-              v-for="(item, index) in cityDataList"
-              :key="index"
-              >{{ item.label }}</view
-            >
+            <view class="picker-item" :style="{ fontSize: fontSize }" v-for="(item, index) in cityDataList" :key="index">
+              {{ item.label }}
+            </view>
             <!-- #endif -->
             <!-- #ifdef APP-NVUE -->
-            <text
-              class="picker-item"
-              :style="{ fontSize: fontSize }"
-              v-for="(item, index) in cityDataList"
-              :key="index"
-              >{{ item.label }}</text
-            >
+            <text class="picker-item" :style="{ fontSize: fontSize }" v-for="(item, index) in cityDataList" :key="index">
+              {{ item.label }}
+            </text>
             <!-- #endif -->
           </picker-view-column>
           <picker-view-column>
             <!-- #ifndef APP-NVUE -->
-            <view
-              class="picker-item"
-              :style="{ fontSize: fontSize }"
-              v-for="(item, index) in areaDataList"
-              :key="index"
-              >{{ item.label }}</view
-            >
+            <view class="picker-item" :style="{ fontSize: fontSize }" v-for="(item, index) in areaDataList" :key="index">
+              {{ item.label }}
+            </view>
             <!-- #endif -->
             <!-- #ifdef APP-NVUE -->
-            <text
-              class="picker-item"
-              :style="{ fontSize: fontSize }"
-              v-for="(item, index) in areaDataList"
-              :key="index"
-              >{{ item.label }}</text
-            >
+            <text class="picker-item" :style="{ fontSize: fontSize }" v-for="(item, index) in areaDataList" :key="index">
+              {{ item.label }}
+            </text>
             <!-- #endif -->
           </picker-view-column>
         </picker-view>
@@ -227,10 +193,7 @@
           if (this.pickerValueDefault[1] > cityData[this.pickerValueDefault[0]].length - 1) {
             this.pickerValueDefault[1] = cityData[this.pickerValueDefault[0]].length - 1;
           }
-          if (
-            this.pickerValueDefault[2] >
-            areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1
-          ) {
+          if (this.pickerValueDefault[2] > areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1) {
             this.pickerValueDefault[2] = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1;
           }
         }
@@ -283,9 +246,9 @@
       queryIndex(params = [], type = 'value') {
         // params = [ 11 ,1101,110101 ];
         // 1.获取省份的index
-        let provinceIndex = provinceData.findIndex((res) => res[type] == params[0]);
-        let cityIndex = cityData[provinceIndex].findIndex((res) => res[type] == params[1]);
-        let areaIndex = areaData[provinceIndex][cityIndex].findIndex((res) => res[type] == params[2]);
+        let provinceIndex = provinceData.findIndex(res => res[type] == params[0]);
+        let cityIndex = cityData[provinceIndex].findIndex(res => res[type] == params[1]);
+        let areaIndex = areaData[provinceIndex][cityIndex].findIndex(res => res[type] == params[2]);
         return {
           index: [provinceIndex, cityIndex, areaIndex],
           data: {

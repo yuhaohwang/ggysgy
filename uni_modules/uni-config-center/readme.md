@@ -1,4 +1,4 @@
-# 为什么使用 uni-config-center
+# 为什么使用uni-config-center
 
 实际开发中很多插件需要配置文件才可以正常运行，如果每个插件都单独进行配置的话就会产生下面这样的目录结构
 
@@ -16,7 +16,7 @@ cloudfunctions
 
 假设插件作者要发布一个项目模板，里面使用了很多需要配置的插件，无论是作者发布还是用户使用都是一个大麻烦。
 
-uni-config-center 就是用了统一管理这些配置文件的，使用 uni-config-center 后的目录结构如下
+uni-config-center就是用了统一管理这些配置文件的，使用uni-config-center后的目录结构如下
 
 ```bash
 cloudfunctions
@@ -34,32 +34,31 @@ cloudfunctions
               └─config.json  // plugin-b对应的配置文件
 ```
 
-使用 uni-config-center 后的优势
+使用uni-config-center后的优势
 
 - 配置文件统一管理，分离插件主体和配置信息，更新插件更方便
-- 支持对 config.json 设置 schema，插件使用者在 HBuilderX 内编写 config.json 文件时会有更好的提示（后续 HBuilderX 会提供支持）
+- 支持对config.json设置schema，插件使用者在HBuilderX内编写config.json文件时会有更好的提示（后续HBuilderX会提供支持）
 
 # 用法
 
-在要使用 uni-config-center 的公共模块或云函数内引入 uni-config-center 依赖，请参考：[使用公共模块](https://uniapp.dcloud.net.cn/uniCloud/cf-common)
+在要使用uni-config-center的公共模块或云函数内引入uni-config-center依赖，请参考：[使用公共模块](https://uniapp.dcloud.net.cn/uniCloud/cf-common)
 
 ```js
 const createConfig = require('uni-config-center')
 
 const uniIdConfig = createConfig({
-  pluginId: 'uni-id', // 插件id
-  defaultConfig: {
-    // 默认配置
-    tokenExpiresIn: 7200,
-    tokenExpiresThreshold: 600,
-  },
-  customMerge: function (defaultConfig, userConfig) {
-    // 自定义默认配置和用户配置的合并规则，不设置的情况侠会对默认配置和用户配置进行深度合并
-    // defaudltConfig 默认配置
-    // userConfig 用户配置
-    return Object.assign(defaultConfig, userConfig)
-  },
+    pluginId: 'uni-id', // 插件id
+    defaultConfig: { // 默认配置
+        tokenExpiresIn: 7200,
+        tokenExpiresThreshold: 600,
+    },
+    customMerge: function(defaultConfig, userConfig) { // 自定义默认配置和用户配置的合并规则，不设置的情况侠会对默认配置和用户配置进行深度合并
+        // defaudltConfig 默认配置
+        // userConfig 用户配置
+        return Object.assign(defaultConfig, userConfig)
+    }
 })
+
 
 // 以如下配置为例
 // {

@@ -1,26 +1,16 @@
 <template>
   <view class="wh-full">
     <!-- 头部组件 -->
-    <use-header
-      :fixed="headerFixed"
-      :placeholder="headerPlaceholder"
-      :search-tip="searchTip"
-      :search-auto="searchAuto"
-    ></use-header>
+    <use-header :fixed="headerFixed" :placeholder="headerPlaceholder" :search-tip="searchTip" :search-auto="searchAuto"></use-header>
 
     <!-- 分类 -->
     <view class="category dflex-s h-full padding-top-big">
       <!-- 左侧一级分类 -->
       <view class="h-full left">
         <scroll-view scroll-y class="h-full">
-          <view
-            v-for="item in fdatas"
-            :key="item._id"
-            class="item dflex-c"
-            :class="{ active: item._id === cid }"
-            @click="fSelect(item)"
-            >{{ item.name }}</view
-          >
+          <view v-for="item in fdatas" :key="item._id" class="item dflex-c" :class="{ active: item._id === cid }" @click="fSelect(item)">
+            {{ item.name }}
+          </view>
         </scroll-view>
       </view>
 
@@ -157,12 +147,12 @@
     },
     methods: {
       async loadData(callback) {
-        this.$db[_goodscategory].tolist().then((res) => {
+        this.$db[_goodscategory].tolist().then(res => {
           if (res.code === 200) {
             this.fdatas = [];
             this.sdatas = [];
 
-            res.datas.forEach((item) => {
+            res.datas.forEach(item => {
               if (!item.pid) {
                 // pid为父级id, 不存在 pid || pid=0 为一级分类
                 this.fdatas.push(item);
@@ -193,7 +183,7 @@
         this.$db[_goods]
           .where(`'${this.reqdata.cid}' in cids`)
           .tolist(this.reqdata)
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               this.goodsDatas = res.datas;
               if (this.goodsDatas.length >= this.reqdata.rows) {

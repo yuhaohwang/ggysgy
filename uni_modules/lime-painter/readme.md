@@ -338,6 +338,14 @@ this.$refs.painter.canvasToTempFilePathSync({
   quality: 1,
   success: (res) => {
     console.log(res.tempFilePath);
+	// 非H5 保存到相册
+	// H5 提示用户长按图另存
+	uni.saveImageToPhotosAlbum({
+		filePath: res.tempFilePath,
+		success: function () {
+			console.log('save success');
+		}
+	});
   },
 });
 ```
@@ -359,6 +367,13 @@ this.$refs.painter.canvasToTempFilePathSync({
   quality: 1,
   success: (res) => {
     console.log(res.tempFilePath);
+	// 非H5 保存到相册
+	uni.saveImageToPhotosAlbum({
+		filePath: res.tempFilePath,
+		success: function () {
+			console.log('save success');
+		}
+	});
   },
 });
 ```
@@ -436,7 +451,6 @@ this.$refs.painter.canvasToTempFilePathSync({
       <l-painter-text
         css="line-clamp: 2; color: #333333; line-height: 1.8em; font-size: 36rpx; width: 478rpx; padding-right:32rpx; box-sizing: border-box"
         text="360儿童电话手表9X 智能语音问答定位支付手表 4G全网通20米游泳级防水视频通话拍照手表男女孩星空蓝"
-        :replace="{word: ['儿童', '9X'], color: 'red'}"
       ></l-painter-text>
       <l-painter-qrcode
         css="width: 128rpx; height: 128rpx;"
@@ -661,7 +675,7 @@ data() {
 ### Nvue
 - 插件在nvue下是使用webview实现渲染绘制的，但uni的webviwe无法读取插件目录下的文件，只能读取根目录下的hybrid/html或static文件夹的文件。所以在尝试了很多种方式后，决定默认改由插件主动下载的方式写入到app内。如果你不想由插件主动下载写入，可以自行下载。
 - 1、默认为插件主动下载写入APP的_doc目录，无须任何设置。
-- 2、若不希望插件主动下载，可自主下载[uni.webview.1.5.2.js'](https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js')、[painter.js](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/painter.js)、[index.html](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/index.html)，到根目录的`/hybird/html/lime-painter/`再给插件设置`hybrid`属性。
+- 2、若不希望插件主动下载，可自主下载[uni.webview.1.3.2.js](https://gitee.com/dcloud/uni-app/raw/dev/dist/uni.webview.1.5.3.js)、[painter.js](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/painter.js)、[index.html](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/index.html)，到根目录的`/hybird/html/lime-painter/`再给插件设置`hybrid`属性。
 ```html
 <l-painter hybrid/>
 ```
@@ -804,7 +818,7 @@ page({
 | border-radius                                                                       | 圆角边框，支持`%`、`rpx`、`px`                                                                                                                                                       | -        |
 | box-sizing                                                                          | 可选值：`border-box`                                                                                                                                                                 | -        |
 | box-shadow                                                                          | 投影                                                                                                                                                                                 | -        |
-| background-image                                                                    | view 元素背景：`url(src)`                                                                                                                                                            | -        |
+| background-image                                                                    | view 元素背景：`url(src)`,若只是设置背景图，请不要设置`background-repeat`                                                                                                                                                           | -        |
 | background-repeat                                                                   | 设置是否及如何重复背景纹理，可选值：`repeat`、`repeat-x`、`repeat-y`、`no-repeat`                                                                                                    | `repeat` |
 | [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit/)          | 图片元素适应容器方式,类似于`mode`,可选值：`cover`、 `contain`、 `fill`、 `none`                                                                                                      | -        |
 | [object-position](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position) | 图片的对齐方式，配合`object-fit`使用                                                                                                                                                 | -        |
@@ -857,3 +871,4 @@ page({
 如果你觉得本插件，解决了你的问题，赠人玫瑰，手留余香。
 
 ![输入图片说明](https://cdn.jsdelivr.net/gh/liangei/image@latest/222521_bb543f96_518581.jpeg "微信图片编辑_20201122220352.jpg")
+![输入图片说明](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/image/wxplay.jpg "wxplay.jpg")

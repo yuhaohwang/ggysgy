@@ -15,9 +15,7 @@
     ></image>
     <text class="cla6">￥</text>
     <text class="cla7">1339.90</text>
-    <text class="cla8"
-      >小米10 Xiaomi/小米手机小米10手机骁龙865 1亿像素双模5G官方正品 骁龙865旗舰处理器 1亿像素8K电影相机</text
-    >
+    <text class="cla8">小米10 Xiaomi/小米手机小米10手机骁龙865 1亿像素双模5G官方正品 骁龙865旗舰处理器 1亿像素8K电影相机</text>
     <image
       class="cla9"
       src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/11bd19fa-6a70-49fd-9e71-72950828f6a8.jpg"

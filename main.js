@@ -27,7 +27,7 @@ if (!$config.debug) {
 }
 
 // 注册当前环境
-$api.register_env((env) => {
+$api.register_env(env => {
   Vue.prototype.$env = env;
 });
 

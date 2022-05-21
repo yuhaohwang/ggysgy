@@ -6,7 +6,10 @@
     <view v-if="expressData && expressData.data" class="padding-lr">
       <view class="border-radius padding margin-bottom-sm bg-main">
         <view class="fs-lg fwb">{{ expressData.company }}</view>
-        <view>运单号：{{ expressData.nu }}<text class="copy" @click="copy">复制</text></view>
+        <view>
+          运单号：{{ expressData.nu }}
+          <text class="copy" @click="copy">复制</text>
+        </view>
       </view>
     </view>
     <view v-if="expressData && expressData.data" class="padding-lr">
@@ -64,7 +67,7 @@
     onShow() {},
     methods: {
       loadData() {
-        this.$func.usemall.call('order/express', { order_id: this.order_id }).then((res) => {
+        this.$func.usemall.call('order/express', { order_id: this.order_id }).then(res => {
           if (res.code == 200) {
             this.expressData = res.datas;
           }

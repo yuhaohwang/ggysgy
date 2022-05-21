@@ -83,18 +83,18 @@ class Request {
       if (config.content_type === 'file') {
         task = uni.uploadFile({
           ...config,
-          success: (res) => {
+          success: res => {
             that._success(that, config, res, resolve, reject);
           },
-          fail: (res) => {
+          fail: res => {
             that._fail(that, config, res, resolve, reject);
           },
-          complete: (res) => {
+          complete: res => {
             that._complete(that, config, res, extras);
           },
         });
         if (typeof config.progress === 'function') {
-          task.onProgressUpdate((_res) => {
+          task.onProgressUpdate(_res => {
             config.progress(_res, task);
           });
         }
@@ -102,13 +102,13 @@ class Request {
         this._set_req_config(config);
         task = uni.request({
           ...this.req_config,
-          success: (res) => {
+          success: res => {
             that._success(that, config, res, resolve, reject);
           },
-          fail: (res) => {
+          fail: res => {
             that._fail(that, config, res, resolve, reject);
           },
-          complete: (res) => {
+          complete: res => {
             that._complete(that, config, res, extras);
           },
         });

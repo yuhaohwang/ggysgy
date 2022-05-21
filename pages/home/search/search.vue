@@ -92,14 +92,14 @@
           this.$db[_history]
             .where('create_uid == $env.uid')
             .tolist({ orderby: 'last_modify_time desc' })
-            .then((res) => {
+            .then(res => {
               if (res.code === 200) {
                 this.historyDatas = res.datas;
               }
             });
         }
 
-        this.$db[_hot].tolist({ orderby: 'search_cnt desc' }).then((res) => {
+        this.$db[_hot].tolist({ orderby: 'search_cnt desc' }).then(res => {
           if (res.code === 200) {
             this.hotDatas = res.datas;
           }
@@ -138,7 +138,7 @@
               _this.$db[_history]
                 .where('create_uid == $env.uid')
                 .remove()
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     _this.historyDatas = [];
                     return;

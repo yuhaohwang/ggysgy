@@ -52,9 +52,7 @@
           this.type = 'right';
         } else {
           this.circleRightCss = `transform: rotate(180deg); transition: opacity 0s step-end 1s, transform 1s linear; opacity: 0`;
-          this.circleLeftCss = `transition: transform ${(percent - 0.5) / 0.5}s linear 1s; transform: rotate(${
-            percent * 360 - 180
-          }deg)`;
+          this.circleLeftCss = `transition: transform ${(percent - 0.5) / 0.5}s linear 1s; transform: rotate(${percent * 360 - 180}deg)`;
           this.type = 'left';
         }
       },

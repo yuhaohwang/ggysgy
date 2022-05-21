@@ -38,7 +38,7 @@ FuncContext.prototype.call = function (action, data) {
         data,
       },
     })
-    .then((res) => {
+    .then(res => {
       if ($config.debug) {
         console.log(this.funcname + '/' + action + ' call', res);
       }
@@ -55,14 +55,14 @@ FuncContext.prototype.call = function (action, data) {
 
       return Promise.reject(res);
     })
-    .catch((err) => {
+    .catch(err => {
       if ($config.debug) {
         console.log(this.table + ' call catch', err);
         $api.alert(JSON.stringify(err));
       }
       return Promise.reject(err);
     })
-    .finally((res) => {
+    .finally(res => {
       uni.hideNavigationBarLoading();
     });
 };

@@ -11,18 +11,13 @@
           class="nav-item dflex-c pos-r fs padding-lr-lg h-full"
           @click="tabClick(index)"
         >
-          {{ item.state }} <text v-if="item.cnt > 0">({{ item.cnt }})</text>
+          {{ item.state }}
+          <text v-if="item.cnt > 0">({{ item.cnt }})</text>
         </view>
       </view>
     </view>
 
-    <swiper
-      :current="tabCurrentIndex"
-      :disable-touch="true"
-      class="swiper-box swiper-area h-full"
-      duration="300"
-      @change="changeTab"
-    >
+    <swiper :current="tabCurrentIndex" :disable-touch="true" class="swiper-box swiper-area h-full" duration="300" @change="changeTab">
       <swiper-item class="tab-content" v-for="(tabItem, tabIndex) in navList" :key="tabIndex">
         <scroll-view class="list-scroll-content h-full" scroll-y @scrolltolower="loadData">
           <!-- 空白页 -->
@@ -70,10 +65,7 @@
           </view>
 
           <!-- 上拉加载更多 -->
-          <use-loadmore
-            v-if="tabItem.datas.length > 0 && tabItem.loaded && tabItem.hasmore"
-            :type="tabItem.loadingType"
-          ></use-loadmore>
+          <use-loadmore v-if="tabItem.datas.length > 0 && tabItem.loaded && tabItem.hasmore" :type="tabItem.loadingType"></use-loadmore>
         </scroll-view>
       </swiper-item>
     </swiper>
@@ -160,7 +152,7 @@
           cur_nav.loadingType = 'more';
         }
 
-        this.$func.usemall.call('member/coupon', this.reqdata).then((res) => {
+        this.$func.usemall.call('member/coupon', this.reqdata).then(res => {
           cur_nav.loaded = true;
 
           if (res.code === 200) {
@@ -171,7 +163,7 @@
             if (this.reqdata.page == 1) {
               let _nav = {};
               for (let _state in res.datas.dynamic) {
-                _nav = this.navList.find((x) => x.state == _state);
+                _nav = this.navList.find(x => x.state == _state);
                 if (_nav && _nav.state) {
                   _nav.cnt = res.datas.dynamic[_state];
                 }
@@ -180,7 +172,7 @@
 
             if (res.datas.length > 0) {
               let __datas = [];
-              res.datas.forEach((row) => {
+              res.datas.forEach(row => {
                 row.end_time = row.end_time.substring(0, 10).replace(/-/g, '.');
                 __datas.push(row);
               });

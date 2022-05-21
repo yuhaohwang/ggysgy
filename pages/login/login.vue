@@ -2,10 +2,7 @@
   <view class="container bg-main pos-r">
     <view class="padding-xl dflex-c dflex-flow-c">
       <view class="portrait-box margin-bottom">
-        <image
-          class="headimg border-radius-c"
-          :src="(member && member.member_headimg) || '/static/images/user/default.png'"
-        ></image>
+        <image class="headimg border-radius-c" :src="(member && member.member_headimg) || '/static/images/user/default.png'"></image>
       </view>
 
       <view class="w-full dflex padding-bottom-sm">
@@ -59,9 +56,7 @@
         <view class="padding-tb-sm ft-base" @click="toregister">立即注册</view>
       </view>
       <view class="w-full margin-top-xl">
-        <view class="dflex-b border-radius-lg"
-          ><view class="tac padding-tb-sm flex1 bg-base fs" @click="tologin">登录</view></view
-        >
+        <view class="dflex-b border-radius-lg"><view class="tac padding-tb-sm flex1 bg-base fs" @click="tologin">登录</view></view>
       </view>
     </view>
     <view v-if="ismp" class="dflex-c margin-top-big">
@@ -98,13 +93,7 @@
       <!-- #endif -->
 
       <!-- #ifdef MP-TOUTIAO -->
-      <view
-        class="dflex-c dflex-flow-c no-border btn"
-        open-type="getUserInfo"
-        lang="zh_CN"
-        withCredentials="true"
-        @click="getUserInfo"
-      >
+      <view class="dflex-c dflex-flow-c no-border btn" open-type="getUserInfo" lang="zh_CN" withCredentials="true" @click="getUserInfo">
         <view class="iconfont padding-lr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
         <view class="dflex-c ft-dark">{{ platform_name }} · 授权</view>
       </view>
@@ -179,7 +168,7 @@
     onLoad() {
       let _this = this;
 
-      this.$api.get_env((res) => {
+      this.$api.get_env(res => {
         this.env = res;
         console.log('this.env', this.env);
         this.ismp = this.env.is_mp;
@@ -274,7 +263,7 @@
             username: this.mobile,
             password: this.password,
           })
-          .then((res) => {
+          .then(res => {
             if (res.code == 200) {
               // 调用 store login
               _this.login(res.datas);
@@ -330,12 +319,7 @@
         this.logout();
 
         this.$api.msg('请使用手机号+密码的方式登录');
-        if (
-          this.platform !== 'weixin' &&
-          this.platform !== 'baidu' &&
-          this.platform !== 'qq' &&
-          this.platform !== 'toutiao'
-        ) {
+        if (this.platform !== 'weixin' && this.platform !== 'baidu' && this.platform !== 'qq' && this.platform !== 'toutiao') {
           this.$api.msg('请使用手机号+密码的方式登录');
           return;
         }
@@ -356,7 +340,7 @@
                 .call('member/loginByAlipay', {
                   code: mpres.code,
                 })
-                .then((res) => {
+                .then(res => {
                   if (res.code == 200) {
                     console.log('member/loginByAlipay', res);
                     // 调用 store login
@@ -428,7 +412,7 @@
                 .call('member/loginByWeixin', {
                   code: mpres.code,
                 })
-                .then((res) => {
+                .then(res => {
                   if (res.code == 200) {
                     console.log('member/loginByWeixin', res);
                     // 调用 store login

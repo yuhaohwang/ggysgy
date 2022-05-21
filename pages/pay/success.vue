@@ -5,12 +5,10 @@
       <view class="title">支付成功</view>
     </view>
     <view class="padding-lr-16" style="margin-top: 200rpx;">
-      <view class="dflex-b border-radius-big"
-        ><view class="tac padding-tb-sm flex1 bg-base" @click="toOrder">查看订单</view></view
-      >
-      <view class="border-radius-big margin-tb-lg padding-lr-16"
-        ><view url="/pages/tabbar/home" open-type="switchTab" class="tac padding-tb-sm flex1">返回首页</view></view
-      >
+      <view class="dflex-b border-radius-big"><view class="tac padding-tb-sm flex1 bg-base" @click="toOrder">查看订单</view></view>
+      <view class="border-radius-big margin-tb-lg padding-lr-16">
+        <view url="/pages/tabbar/home" open-type="switchTab" class="tac padding-tb-sm flex1">返回首页</view>
+      </view>
     </view>
   </view>
 </template>

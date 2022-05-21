@@ -3,9 +3,9 @@
     <view class="padding item border-radius dflex-b margin-bottom" v-for="(item, idx) in datas" :key="idx">
       <view class="fs fwb">{{ item.time }}</view>
       <view class="tar">
-        <view class="fwb"
-          ><text class="fs-lg">{{ item.symbol }}{{ item.integral }}</text></view
-        >
+        <view class="fwb">
+          <text class="fs-lg">{{ item.symbol }}{{ item.integral }}</text>
+        </view>
         <view class="fs-xs">{{ item.type }}</view>
       </view>
     </view>

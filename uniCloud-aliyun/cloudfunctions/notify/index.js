@@ -99,7 +99,7 @@ exports.main = async (event, context) => {
     // 订单详情
     const orderDetailRes = await db.collection('usemall-order-detail').where({ order_id: order.order_id }).get();
     if (orderDetailRes && orderDetailRes.data) {
-      orderDetailRes.data.forEach(async (x) => {
+      orderDetailRes.data.forEach(async x => {
         // 扣减库存
         // todo 扣减SKU库存
         await db

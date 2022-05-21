@@ -55,9 +55,7 @@
     };
 
     me.prefixPointerEvent = function (pointerEvent) {
-      return window.MSPointerEvent
-        ? 'MSPointer' + pointerEvent.charAt(7).toUpperCase() + pointerEvent.substr(8)
-        : pointerEvent;
+      return window.MSPointerEvent ? 'MSPointer' + pointerEvent.charAt(7).toUpperCase() + pointerEvent.substr(8) : pointerEvent;
     };
 
     me.momentum = function (current, start, time, lowerMargin, wrapperSize, deceleration) {
@@ -597,10 +595,7 @@
         return;
       }
 
-      if (
-        this.options.preventDefault &&
-        !utils.preventDefaultException(e.target, this.options.preventDefaultException)
-      ) {
+      if (this.options.preventDefault && !utils.preventDefaultException(e.target, this.options.preventDefaultException)) {
         e.preventDefault();
       }
 
@@ -877,9 +872,7 @@
       pos.top = pos.top > 0 ? 0 : pos.top < this.maxScrollY ? this.maxScrollY : pos.top;
 
       time =
-        time === undefined || time === null || time === 'auto'
-          ? Math.max(Math.abs(this.x - pos.left), Math.abs(this.y - pos.top))
-          : time;
+        time === undefined || time === null || time === 'auto' ? Math.max(Math.abs(this.x - pos.left), Math.abs(this.y - pos.top)) : time;
 
       this.scrollTo(pos.left, pos.top, time, easing);
     },
@@ -1312,22 +1305,15 @@
           this.snapThresholdX = this.options.snapThreshold;
           this.snapThresholdY = this.options.snapThreshold;
         } else {
-          this.snapThresholdX = Math.round(
-            this.pages[this.currentPage.pageX][this.currentPage.pageY].width * this.options.snapThreshold
-          );
-          this.snapThresholdY = Math.round(
-            this.pages[this.currentPage.pageX][this.currentPage.pageY].height * this.options.snapThreshold
-          );
+          this.snapThresholdX = Math.round(this.pages[this.currentPage.pageX][this.currentPage.pageY].width * this.options.snapThreshold);
+          this.snapThresholdY = Math.round(this.pages[this.currentPage.pageX][this.currentPage.pageY].height * this.options.snapThreshold);
         }
       });
 
       this.on('flick', function () {
         var time =
           this.options.snapSpeed ||
-          Math.max(
-            Math.max(Math.min(Math.abs(this.x - this.startX), 1000), Math.min(Math.abs(this.y - this.startY), 1000)),
-            300
-          );
+          Math.max(Math.max(Math.min(Math.abs(this.x - this.startX), 1000), Math.min(Math.abs(this.y - this.startY), 1000)), 300);
 
         this.goToPage(this.currentPage.pageX + this.directionX, this.currentPage.pageY + this.directionY, time);
       });
@@ -1908,13 +1894,7 @@
 
         var time =
           this.options.snapSpeed ||
-          Math.max(
-            Math.max(
-              Math.min(Math.abs(this.scroller.x - snap.x), 1000),
-              Math.min(Math.abs(this.scroller.y - snap.y), 1000)
-            ),
-            300
-          );
+          Math.max(Math.max(Math.min(Math.abs(this.scroller.x - snap.x), 1000), Math.min(Math.abs(this.scroller.y - snap.y), 1000)), 300);
 
         if (this.scroller.x != snap.x || this.scroller.y != snap.y) {
           this.scroller.directionX = 0;
@@ -1958,8 +1938,7 @@
       } else if (this.options.listenY && !this.options.listenX) {
         this.indicatorStyle.display = this.scroller.hasVerticalScroll ? 'block' : 'none';
       } else {
-        this.indicatorStyle.display =
-          this.scroller.hasHorizontalScroll || this.scroller.hasVerticalScroll ? 'block' : 'none';
+        this.indicatorStyle.display = this.scroller.hasHorizontalScroll || this.scroller.hasVerticalScroll ? 'block' : 'none';
       }
 
       if (this.scroller.hasHorizontalScroll && this.scroller.hasVerticalScroll) {
@@ -1992,9 +1971,7 @@
         this.wrapperWidth = this.wrapper.clientWidth;
         if (this.options.resize) {
           this.indicatorWidth = Math.max(
-            Math.round(
-              (this.wrapperWidth * this.wrapperWidth) / (this.scroller.scrollerWidth || this.wrapperWidth || 1)
-            ),
+            Math.round((this.wrapperWidth * this.wrapperWidth) / (this.scroller.scrollerWidth || this.wrapperWidth || 1)),
             8
           );
           this.indicatorStyle.width = this.indicatorWidth + 'px';
@@ -2012,17 +1989,14 @@
           this.maxBoundaryX = this.maxPosX;
         }
 
-        this.sizeRatioX =
-          this.options.speedRatioX || (this.scroller.maxScrollX && this.maxPosX / this.scroller.maxScrollX);
+        this.sizeRatioX = this.options.speedRatioX || (this.scroller.maxScrollX && this.maxPosX / this.scroller.maxScrollX);
       }
 
       if (this.options.listenY) {
         this.wrapperHeight = this.wrapper.clientHeight;
         if (this.options.resize) {
           this.indicatorHeight = Math.max(
-            Math.round(
-              (this.wrapperHeight * this.wrapperHeight) / (this.scroller.scrollerHeight || this.wrapperHeight || 1)
-            ),
+            Math.round((this.wrapperHeight * this.wrapperHeight) / (this.scroller.scrollerHeight || this.wrapperHeight || 1)),
             8
           );
           this.indicatorStyle.height = this.indicatorHeight + 'px';
@@ -2041,8 +2015,7 @@
         }
 
         this.maxPosY = this.wrapperHeight - this.indicatorHeight;
-        this.sizeRatioY =
-          this.options.speedRatioY || (this.scroller.maxScrollY && this.maxPosY / this.scroller.maxScrollY);
+        this.sizeRatioY = this.options.speedRatioY || (this.scroller.maxScrollY && this.maxPosY / this.scroller.maxScrollY);
       }
 
       this.updatePosition();

@@ -434,8 +434,8 @@ export function useNvue(target, version, timeout) {
 		plus.io.requestFileSystem(plus.io.PRIVATE_DOC, async (fs) => {
 			try {
 				cache['lime-painter'] = 0
-				let names = ['uni.webview.1.5.2.js', 'painter.js', 'index.html']
-				let urls = ['https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/',
+				let names = ['uni.webview.1.5.3.js', 'painter.js', 'index.html']
+				let urls = ['https://gitee.com/dcloud/uni-app/raw/dev/dist/',
 					'https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/'
 				]
 				const oldVersion = plus.storage.getItem('lime-painter')
@@ -450,7 +450,7 @@ export function useNvue(target, version, timeout) {
 								fs,
 								url: file.tempFilePath,
 								target,
-								name
+								name: name.includes('uni.webview') ? 'uni.webview.js': name
 							})
 					}
 					plus.storage.setItem('lime-painter', version)

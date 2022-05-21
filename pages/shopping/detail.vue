@@ -77,114 +77,114 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-export default {
-  computed: {
-    ...mapState(['islogin', 'member']),
-  },
-  data() {
-    return {
-      id: '',
-      follow: true,
-    }
-  },
-  onShareAppMessage: function(ops) {
-    let _this = this
-    let mid = 0
-    if (_this.member && _this.member._id) {
-      mid = _this.member._id
-    }
-
-    return {
-      title: '以艺自强 · 传播艺术之美',
-      path: `/pages/shopping/detail?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
-      success: function(res) {
-        // 转发成功
-        console.log('转发成功', res)
-      },
-      fail: function(res) {
-        // 转发失败
-        console.log('转发失败', res)
-      },
-    }
-  },
-  methods: {
-    // 立即购买
-    toBuy(item) {
-      this.$api.msg('购买')
+  import { mapState } from 'vuex';
+  export default {
+    computed: {
+      ...mapState(['islogin', 'member']),
     },
-    toFollow() {
-      this.follow = !this.follow
-      if (this.follow) {
-        this.$api.msg('已关注')
-      } else {
-        this.$api.msg('取消关注')
+    data() {
+      return {
+        id: '',
+        follow: true,
+      };
+    },
+    onShareAppMessage: function (ops) {
+      let _this = this;
+      let mid = 0;
+      if (_this.member && _this.member._id) {
+        mid = _this.member._id;
       }
+
+      return {
+        title: '以艺自强 · 传播艺术之美',
+        path: `/pages/shopping/detail?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
+        success: function (res) {
+          // 转发成功
+          console.log('转发成功', res);
+        },
+        fail: function (res) {
+          // 转发失败
+          console.log('转发失败', res);
+        },
+      };
     },
-    toShare() {
-      this.$api.msg('分享')
+    methods: {
+      // 立即购买
+      toBuy(item) {
+        this.$api.msg('购买');
+      },
+      toFollow() {
+        this.follow = !this.follow;
+        if (this.follow) {
+          this.$api.msg('已关注');
+        } else {
+          this.$api.msg('取消关注');
+        }
+      },
+      toShare() {
+        this.$api.msg('分享');
+      },
     },
-  },
-}
+  };
 </script>
 
 <style lang="scss">
-page {
-  padding-bottom: 120rpx;
-  background: #fff;
-}
-
-/* 01. 轮播区 */
-.swiper-area {
-  top: 0;
-  z-index: -1;
-  height: 66vh;
-}
-
-/* #ifndef MP */
-.swiper-area {
-  margin-top: calc(44px + env(safe-area-inset-top));
-}
-
-/* #endif */
-
-/* 02. 商品数据区 */
-.goods-area {
-  height: 100vh;
-  margin-top: 66vh;
-
-  .price-box {
-    display: flex;
-    align-items: baseline;
+  page {
+    padding-bottom: 120rpx;
+    background: #fff;
   }
 
-  .title {
-    height: 46rpx;
-    line-height: 46rpx;
-    color: $font-color-dark;
+  /* 01. 轮播区 */
+  .swiper-area {
+    top: 0;
+    z-index: -1;
+    height: 66vh;
   }
-}
 
-/* 07. 操作区 */
-.oper-area {
-  bottom: 0;
-  left: 0;
-  z-index: 95;
-  height: 100rpx;
-  background: rgba(245, 245, 245, 0.95);
-  box-shadow: 0 0 20rpx 0 #f0f0f0;
+  /* #ifndef MP */
+  .swiper-area {
+    margin-top: calc(44px + env(safe-area-inset-top));
+  }
 
-  .btn-area {
-    width: 96rpx;
-    margin-right: 30rpx;
-    color: #000;
-    text-align: center;
+  /* #endif */
 
-    .iconfont {
-      margin-right: 6rpx;
-      font-size: 40rpx;
-      line-height: 48rpx;
+  /* 02. 商品数据区 */
+  .goods-area {
+    height: 100vh;
+    margin-top: 66vh;
+
+    .price-box {
+      display: flex;
+      align-items: baseline;
+    }
+
+    .title {
+      height: 46rpx;
+      line-height: 46rpx;
+      color: $font-color-dark;
     }
   }
-}
+
+  /* 07. 操作区 */
+  .oper-area {
+    bottom: 0;
+    left: 0;
+    z-index: 95;
+    height: 100rpx;
+    background: rgba(245, 245, 245, 0.95);
+    box-shadow: 0 0 20rpx 0 #f0f0f0;
+
+    .btn-area {
+      width: 96rpx;
+      margin-right: 30rpx;
+      color: #000;
+      text-align: center;
+
+      .iconfont {
+        margin-right: 6rpx;
+        font-size: 40rpx;
+        line-height: 48rpx;
+      }
+    }
+  }
 </style>

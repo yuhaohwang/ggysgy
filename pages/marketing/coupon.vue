@@ -70,7 +70,7 @@
     methods: {
       loadData() {
         // 获取数据
-        this.$func.usemall.call('marketing/coupon/list', this.reqdata).then((res) => {
+        this.$func.usemall.call('marketing/coupon/list', this.reqdata).then(res => {
           if (res.code === 200) {
             this.couponDatas = [...this.couponDatas, ...res.datas];
 
@@ -95,7 +95,7 @@
                 .call('marketing/coupon/receive', {
                   coupon_id: id,
                 })
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     _this.$api.msg('领取成功');
                     return;

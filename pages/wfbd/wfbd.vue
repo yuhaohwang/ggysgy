@@ -18,20 +18,12 @@
         fontSize: '28rpx',
       }"
       itemStyle="height: 70rpx; white-space: nowrap; padding: auto;"
-    >
-    </u-tabs>
+    ></u-tabs>
 
     <view class="padding border-line">
       <view class="x-b-c">
         <view class="x-c-c">
-          <u--image
-            src="../../static/images/user/default.png"
-            width="50rpx"
-            height="50rpx"
-            mode="scaleToFill"
-            shape="circle"
-          >
-          </u--image>
+          <u--image src="../../static/images/user/default.png" width="50rpx" height="50rpx" mode="scaleToFill" shape="circle"></u--image>
           <view class="padding-left-xs">标题</view>
         </view>
 
@@ -39,14 +31,7 @@
       </view>
 
       <view class="x-c-c">
-        <u--image
-          src="../../static/images/user/default.png"
-          width="150rpx"
-          height="200rpx"
-          mode="scaleToFill"
-          radius="10"
-        >
-        </u--image>
+        <u--image src="../../static/images/user/default.png" width="150rpx" height="200rpx" mode="scaleToFill" radius="10"></u--image>
 
         <view class="y-c-s w-full">
           <view class="padding-xs">

@@ -2,9 +2,7 @@
   <view class="box-sizing-b bg-dark">
     <!-- 01. 头部组件 -->
     <view class="x-c-c bg-main padding-lr-xs">
-      <view class="search flex1">
-        <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
-      </view>
+      <view class="search flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
       <view class="padding-xs" @click="topage(categoryAll)">分类</view>
     </view>
 
@@ -12,57 +10,45 @@
     <view class="swiper-area pos-r" v-if="swiperDatas && swiperDatas.length > 0">
       <!-- 轮播组件 -->
       <swiper class="swiper w-full" autoplay indicator-dots indicator-color="#f7f7f7" indicator-active-color="#FEAA30">
-        <swiper-item
-          class="swiper-item padding-sm wh-full box-sizing-b"
-          v-for="(item, index) in swiperDatas"
-          :key="index"
-        >
-          <view class="wh-full" @click.stop="topage(item)">
-            <image class="border-radius wh-full" mode="scaleToFill" :lazy-load="true" :src="item.img" />
-          </view>
-        </swiper-item>
+        <block v-for="(item, index) in swiperDatas" :key="index">
+          <swiper-item class="swiper-item padding-sm wh-full box-sizing-b" v-if="item.state == '启用'">
+            <view class="wh-full" @click.stop="topage(item)">
+              <image class="border-radius wh-full" mode="scaleToFill" :lazy-load="true" :src="item.img" />
+            </view>
+          </swiper-item>
+        </block>
       </swiper>
     </view>
 
     <!-- 03. 分类区1 -->
     <view class="x-a-c x-5 padding-xs bg-main" v-if="category1Datas && category1Datas.length > 0">
-      <view
-        class="y-c-c padding-xs category-item"
-        v-for="(item, index) in category1Datas"
-        :key="index"
-        @click="topage(item)"
-      >
-        <image :lazy-load="true" :src="item.img" mode="widthFix"></image> <view>{{ item.name }}</view>
-      </view>
+      <block v-for="(item, index) in category1Datas" :key="index">
+        <view class="y-c-c padding-xs category-item" v-if="item.state == '启用'" @click="topage(item)">
+          <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
+          <view>{{ item.name }}</view>
+        </view>
+      </block>
     </view>
 
     <!-- 03. 分类区2 -->
-    <view class="x-c-c-w x-3 padding-xs margin-tb-xs bg-main" v-if="categoryDatas && categoryDatas.length > 0">
-      <view
-        class="y-c-c padding-xs category-item"
-        v-for="(item, index) in categoryDatas"
-        :key="index"
-        @click="topage(item)"
-      >
-        <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
-      </view>
+    <view class="x-s-c-w x-3 padding-xs margin-tb-xs bg-main" v-if="categoryDatas && categoryDatas.length > 0">
+      <block v-for="(item, index) in categoryDatas" :key="index">
+        <view class="y-c-c padding-xs category-item" v-if="item.state == '启用'" @click="topage(item)">
+          <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
+        </view>
+      </block>
     </view>
 
     <!-- 04. 限时精选 -->
-    <use-list-title title="限时出售" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit">
-    </use-list-title>
+    <use-list-title title="限时出售" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit"></use-list-title>
     <view class="limit-area bg-main">
       <scroll-view class="padding-lr" scroll-x>
         <view class="dflex padding-bottom">
-          <view
-            class="item margin-right-sm"
-            v-for="(item, index) in goodsLimitDatas"
-            :key="index"
-            @click="togoods(item)"
-          >
+          <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index" @click="togoods(item)">
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
             <text class="title clamp padding-bottom-xs">{{ item.name }}</text>
-            <text class="price">{{ item.price / 100 }}</text> <text class="m-price">{{ item.market_price / 100 }}</text>
+            <text class="price">{{ item.price / 100 }}</text>
+            <text class="m-price">{{ item.market_price / 100 }}</text>
           </view>
         </view>
       </scroll-view>
@@ -103,8 +89,7 @@
         },
 
         // 轮播区
-        swiperDatas: [],
-        swiperDatas1: [
+        swiperDatas: [
           {
             _id: '6081038ce01ac80001db768d',
             create_time: 1619067788539,
@@ -296,7 +281,7 @@
     },
     // 监听页面加载
     onLoad() {
-      this.$api.get_env((res) => {
+      this.$api.get_env(res => {
         this.env = res;
         this.is_mp = this.env.is_mp;
         this.platform = this.env.platform;
@@ -350,14 +335,12 @@
           .call('app/mp/home', {
             rows: 8,
           })
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               // 轮播图
               this.swiperDatas = res.datas.carousel || [];
-              // console.log(JSON.stringify(this.swiperDatas));
               // 分类导航
               this.categoryDatas = res.datas.category || [];
-              // console.log(JSON.stringify(this.category1Datas));
               // 限时精选
               this.goodsLimitDatas = res.datas.limited || [];
               // 热门推荐

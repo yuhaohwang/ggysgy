@@ -10,9 +10,9 @@
 
     <!-- 02. 公益课视频 -->
     <view class="y-c-s gyk-video" id="gyk-video" v-for="(item, index) in gykDatas" :key="index">
-      <view class="container"
-        ><video class="video" :src="item.url" :danmu-list="item.danmuList" enable-danmu danmu-btn controls></video
-      ></view>
+      <view class="container">
+        <video class="video" :src="item.url" :danmu-list="item.danmuList" enable-danmu danmu-btn controls></video>
+      </view>
       <view class="x-s-c padding-xs">
         <view class="u-border border-radius-lg">
           <u--image :src="item.avatar" width="50rpx" height="50rpx" :fade="false"></u--image>

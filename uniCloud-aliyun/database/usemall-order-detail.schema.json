@@ -117,14 +117,5 @@
       "description": "数据版本"
     }
   },
-  "required": [
-    "order_id",
-    "goods_id",
-    "goods_num",
-    "goods_price",
-    "goods_market_price",
-    "version",
-    "is_delete",
-    "create_uid"
-  ]
+  "required": ["order_id", "goods_id", "goods_num", "goods_price", "goods_market_price", "version", "is_delete", "create_uid"]
 }

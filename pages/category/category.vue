@@ -12,14 +12,9 @@
       <!-- 左侧一级分类 -->
       <view class="h-full left">
         <scroll-view scroll-y class="h-full">
-          <view
-            v-for="item in fdatas"
-            :key="item._id"
-            class="item dflex-c"
-            :class="{ active: item._id === cid }"
-            @click="fSelect(item)"
-            >{{ item.name }}</view
-          >
+          <view v-for="item in fdatas" :key="item._id" class="item dflex-c" :class="{ active: item._id === cid }" @click="fSelect(item)">
+            {{ item.name }}
+          </view>
         </scroll-view>
       </view>
 
@@ -58,10 +53,12 @@
                   <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%;"></image>
                 </view>
                 <view class="x-b-c padding-lr-xs">
-                  <view class="fs-xs clamp">{{ item.name }}</view> <view class="fs-xs">￥{{ item.price / 100 }}</view>
+                  <view class="fs-xs clamp">{{ item.name }}</view>
+                  <view class="fs-xs">￥{{ item.price / 100 }}</view>
                 </view>
                 <view class="x-b-c padding-lr-xs fs-xs">
-                  <view class=""> <!-- <image src="" mode=""></image> --> </view> <view class="">陈宇轩</view>
+                  <view class=""><!-- <image src="" mode=""></image> --></view>
+                  <view class="">陈宇轩</view>
                   <view class="">广州美术学院</view>
                 </view>
               </view>
@@ -175,12 +172,12 @@
     },
     methods: {
       async loadData(callback) {
-        this.$db[_goodscategory].tolist().then((res) => {
+        this.$db[_goodscategory].tolist().then(res => {
           if (res.code === 200) {
             this.fdatas = [];
             this.sdatas = [];
 
-            res.datas.forEach((item) => {
+            res.datas.forEach(item => {
               if (!item.pid) {
                 // pid为父级id, 不存在 pid || pid=0 为一级分类
                 this.fdatas.push(item);
@@ -211,7 +208,7 @@
         this.$db[_goods]
           .where(`'${this.reqdata.cid}' in cids`)
           .tolist(this.reqdata)
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               this.goodsDatas = res.datas;
               if (this.goodsDatas.length >= this.reqdata.rows) {

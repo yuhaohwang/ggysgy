@@ -10,25 +10,25 @@
             style="width: 110rpx; height: 110rpx; border: 2px solid #fff;"
           ></image>
           <view class="">
-            <view class="fwb ft-white fs-30"> 沙发上的猫 </view>
-            <view class="fs-xxs" style="opacity: 0.6;"> 中国-广东-深圳 </view>
+            <view class="fwb ft-white fs-30">沙发上的猫</view>
+            <view class="fs-xxs" style="opacity: 0.6;">中国-广东-深圳</view>
           </view>
         </view>
-        <view class="border-radius-lg fwbd bg-main ft-base padding-tb-16 padding-lr-xl" @click="note"> 写笔记 </view>
+        <view class="border-radius-lg fwbd bg-main ft-base padding-tb-16 padding-lr-xl" @click="note">写笔记</view>
       </view>
       <view class="margin-top-xl">
         <view class="dflex">
           <view class="tac flex1" @click="follow">
-            <view class="ft-white fwb fs-xl"> 56 </view>
-            <view class="ft-main fs-xs"> 关注 </view>
+            <view class="ft-white fwb fs-xl">56</view>
+            <view class="ft-main fs-xs">关注</view>
           </view>
           <view class="tac flex1" @click="fans">
-            <view class="ft-white fwb fs-xl"> 120 </view>
-            <view class="ft-main fs-xs"> 粉丝 </view>
+            <view class="ft-white fwb fs-xl">120</view>
+            <view class="ft-main fs-xs">粉丝</view>
           </view>
           <view class="tac flex1" @click="popUp = true">
-            <view class="ft-white fwb fs-xl"> 375 </view>
-            <view class="ft-main fs-xs"> 获赞与收藏 </view>
+            <view class="ft-white fwb fs-xl">375</view>
+            <view class="ft-main fs-xs">获赞与收藏</view>
           </view>
         </view>
       </view>
@@ -37,8 +37,8 @@
     <view class="bg-base w-full" style="height: 80rpx;"></view>
     <view class="w-full bg-dark data-area padding-lr-sm">
       <view class="dflex-c w-full padding-tb-lg fs">
-        <view class="padding-lr" :class="{ active: pitch_id === 0 }" @click="pitch(0)"> 笔记 </view>
-        <view class="padding-lr" :class="{ active: pitch_id === 1 }" @click="pitch(1)"> 收藏 </view>
+        <view class="padding-lr" :class="{ active: pitch_id === 0 }" @click="pitch(0)">笔记</view>
+        <view class="padding-lr" :class="{ active: pitch_id === 1 }" @click="pitch(1)">收藏</view>
       </view>
       <view class="goodsContent border-radius">
         <view class="goodsLeftList">
@@ -58,16 +58,10 @@
                   mode="heightFix"
                 ></image>
               </block>
-              <view class="padding-lr-sm margin-top-sm clamp-2"
-                >阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view
-              >
+              <view class="padding-lr-sm margin-top-sm clamp-2">阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view>
               <view class="dflex-b padding-lr-sm margin-tb-sm">
                 <view class="dflex" style="width: 60%;">
-                  <image
-                    src="/static/images/user/default.png"
-                    class="border-radius-c headimg"
-                    style="width: 50rpx; height: 50rpx;"
-                  ></image>
+                  <image src="/static/images/user/default.png" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx;"></image>
                   <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
                 </view>
                 <view class="dflex">
@@ -87,19 +81,12 @@
                   style="max-height: 340rpx;"
                   class="flex1"
                   mode="heightFix"
-                >
-                </image>
+                ></image>
               </block>
-              <view class="padding-lr-sm margin-top-sm clamp-2"
-                >小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包
-              </view>
+              <view class="padding-lr-sm margin-top-sm clamp-2">小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包</view>
               <view class="dflex-b padding-lr-sm margin-tb-sm">
                 <view class="dflex" style="width: 60%;">
-                  <image
-                    src="/static/images/user/default.png"
-                    class="border-radius-c headimg"
-                    style="width: 50rpx; height: 50rpx;"
-                  ></image>
+                  <image src="/static/images/user/default.png" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx;"></image>
                   <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
                 </view>
                 <view class="dflex">
@@ -138,9 +125,7 @@
             <text>70</text>
           </view>
         </view>
-        <view class="bg-base margin-top-xl tac w-full border-radius-lg padding-tb-sm" @click.stop="popUp = false">
-          我知道了
-        </view>
+        <view class="bg-base margin-top-xl tac w-full border-radius-lg padding-tb-sm" @click.stop="popUp = false">我知道了</view>
       </view>
     </use-popup>
 

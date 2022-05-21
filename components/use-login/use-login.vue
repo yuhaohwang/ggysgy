@@ -3,9 +3,9 @@
     <!-- 弹出框 -->
     <view v-if="is_show" class="l-mask"></view>
     <view v-if="is_show" class="box-container">
-      <view class="title fs-lg"
-        ><text>{{ title }}</text></view
-      >
+      <view class="title fs-lg">
+        <text>{{ title }}</text>
+      </view>
       <view class="dflex dflex-flow-c margin-top">
         <image class="image-sm" mode="aspectFill" src="../../static/images/user/default.png"></image>
         <text class="">微信授权</text>
@@ -19,8 +19,9 @@
           @getuserinfo="getUserInfo"
           @getphonenumber="getPhoneNumber"
           :withCredentials="withCredentials"
-          >确定</button
         >
+          确定
+        </button>
       </view>
     </view>
   </view>

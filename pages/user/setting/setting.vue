@@ -44,7 +44,7 @@
       };
     },
     onLoad(options) {
-      this.$db[_about].tofirst().then((res) => {
+      this.$db[_about].tofirst().then(res => {
         if (res.code === 200) {
           this.aboutData = res.datas;
           // console.log('this.aboutData', this.aboutData);
@@ -95,7 +95,7 @@
       tologout() {
         uni.showModal({
           content: '退出登录',
-          success: (e) => {
+          success: e => {
             if (e.confirm) {
               this.$api.msg('退出成功');
               this.logout();

@@ -17,9 +17,9 @@
                 <text class="margin-xs">浏览</text>
                 <text>{{ item.visit_cnt }}</text>
               </view>
-              <view @tap.stop="deleteBrowsing(item._id)" class="dflex-c margin-left-sm"
-                ><text class="iconfont iconlajitong-01 margin-left-xs"></text
-              ></view>
+              <view @tap.stop="deleteBrowsing(item._id)" class="dflex-c margin-left-sm">
+                <text class="iconfont iconlajitong-01 margin-left-xs"></text>
+              </view>
             </view>
           </view>
         </view>
@@ -80,11 +80,11 @@
           )
           .orderBy('last_modify_time desc')
           .get()
-          .then((res) => {
+          .then(res => {
             console.log('history', res);
             if (res && res.result && res.result.code === 0) {
               let _historyDatas = [];
-              res.result.data.forEach((x) => {
+              res.result.data.forEach(x => {
                 _historyDatas.push(x);
               });
               console.log('_historyDatas', _historyDatas);
@@ -103,7 +103,7 @@
               _this.$db[_history]
                 .where('create_uid == $env.uid')
                 .remove(id)
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     _this.loadData();
                   }
@@ -125,7 +125,7 @@
               _this.$db[_history]
                 .where('create_uid == $env.uid')
                 .remove()
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     _this.datas = [];
                     return;

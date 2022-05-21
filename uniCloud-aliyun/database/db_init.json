@@ -5383,18 +5383,7 @@
         "delete": false,
         "count": true
       },
-      "required": [
-        "goods_id",
-        "goods_sku",
-        "price",
-        "stock_num",
-        "stock_wh_num",
-        "limit",
-        "state",
-        "version",
-        "is_delete",
-        "create_uid"
-      ],
+      "required": ["goods_id", "goods_sku", "price", "stock_num", "stock_wh_num", "limit", "state", "version", "is_delete", "create_uid"],
       "properties": {
         "_id": {
           "description": "存储文档 ID，系统自动生成"
@@ -6367,16 +6356,7 @@
         "delete": false,
         "count": true
       },
-      "required": [
-        "goods_id",
-        "goods_sku",
-        "member_id",
-        "integral",
-        "user_cnt",
-        "visit_cnt",
-        "is_delete",
-        "create_uid"
-      ],
+      "required": ["goods_id", "goods_sku", "member_id", "integral", "user_cnt", "visit_cnt", "is_delete", "create_uid"],
       "properties": {
         "_id": {
           "description": "存储文档 ID，系统自动生成"
@@ -6950,16 +6930,7 @@
         "delete": "doc.create_uid == auth.uid",
         "count": "doc.create_uid == auth.uid"
       },
-      "required": [
-        "order_id",
-        "goods_id",
-        "goods_num",
-        "goods_price",
-        "goods_market_price",
-        "version",
-        "is_delete",
-        "create_uid"
-      ],
+      "required": ["order_id", "goods_id", "goods_num", "goods_price", "goods_market_price", "version", "is_delete", "create_uid"],
       "properties": {
         "_id": {
           "description": "存储文档 ID，系统自动生成"

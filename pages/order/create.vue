@@ -8,8 +8,7 @@
       title="选择收货人"
       iconfont="icondizhi-"
       @goto="toaddr"
-    >
-    </use-list-title>
+    ></use-list-title>
     <view v-else class="padding dflex-b bg-main" @click="toaddr">
       <view class="dflex">
         <view class="iconfont icondizhi- margin-right ft-main"></view>
@@ -69,8 +68,7 @@
     <view class="gap"></view>
 
     <!-- 优惠券 -->
-    <use-list-title title="优惠券" :tip="couponName" color="#333" iconfont="iconyouhui" @goto="couponShow = true">
-    </use-list-title>
+    <use-list-title title="优惠券" :tip="couponName" color="#333" iconfont="iconyouhui" @goto="couponShow = true"></use-list-title>
     <!-- 优惠券弹出层 -->
     <use-popup mode="bottom" v-model="couponShow" @open="couponOpen">
       <!-- 优惠券区 -->
@@ -95,9 +93,7 @@
             <text class="ft-base padding-tb-sm padding-lr" @click="couponUse(item)">立即使用</text>
           </view>
         </view>
-        <view v-if="!couponDatas || couponDatas.length <= 0" class="coupon-none"
-          ><text class="coupon-none-tip">开发中!!!!!</text></view
-        >
+        <view v-if="!couponDatas || couponDatas.length <= 0" class="coupon-none"><text class="coupon-none-tip">开发中!!!!!</text></view>
       </view>
     </use-popup>
 
@@ -120,13 +116,7 @@
 
       <view class="dflex-b padding-lr padding-tb-sm">
         <view class="margin-right-xl">备注</view>
-        <input
-          class="flex1 padding-sm"
-          type="text"
-          v-model="order_desc"
-          placeholder="请填写买家备注"
-          placeholder-class="placeholder"
-        />
+        <input class="flex1 padding-sm" type="text" v-model="order_desc" placeholder="请填写买家备注" placeholder-class="placeholder" />
       </view>
     </view>
     <view class="gap"></view>
@@ -137,9 +127,7 @@
         <text class="fs-sm">实付款</text>
         <text class="price margin-left-sm fs-xl">{{ total_money }}</text>
       </view>
-      <view class="submit dflex-c bg-base fs animated-all" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="submit"
-        >提交订单</view
-      >
+      <view class="submit dflex-c bg-base fs animated-all" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="submit">提交订单</view>
     </view>
   </view>
 </template>
@@ -190,7 +178,7 @@
     },
     onLoad(options) {
       let _this = this;
-      this.$api.get_env((res) => {
+      this.$api.get_env(res => {
         this.platform = res.platform;
         this.platform_name = res.platform_name;
       });
@@ -207,7 +195,7 @@
       // 加载商品数据
       this.loadData();
 
-      uni.$on('__event_choice_address', (data) => {
+      uni.$on('__event_choice_address', data => {
         this.addrData = data;
       });
     },
@@ -216,7 +204,7 @@
       this.$db[_address]
         .where('create_uid == $env.uid')
         .tofirst()
-        .then((res) => {
+        .then(res => {
           console.log('res', res);
           if (res && res.code === 200) {
             this.addrData = res.datas;
@@ -232,7 +220,7 @@
             goods_id: this.goods_id,
             goods_sku_id: this.goods_sku_id,
           })
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               this.goodsDatas = res.datas;
               this.calcTotalMoney();
@@ -249,7 +237,7 @@
         let service_money = 0;
 
         this.goods_money = 0;
-        this.goodsDatas.forEach((x) => {
+        this.goodsDatas.forEach(x => {
           if (x.goods_sku && x.goods_sku.price) {
             x.goods.price = x.goods_sku.price;
             x.goods.stock_num = x.goods_sku.stock_num;
@@ -266,8 +254,7 @@
           this.total_coupon_money = this.coupon_money;
           this.total_money = (this.goods_money + service_money - this.coupon_money).toFixed(2);
         } else if (this.coupon_type == '折扣') {
-          this.total_coupon_money =
-            this.goods_money + service_money - ((this.goods_money + service_money) * this.coupon_money).toFixed(2);
+          this.total_coupon_money = this.goods_money + service_money - ((this.goods_money + service_money) * this.coupon_money).toFixed(2);
           this.total_money = ((this.goods_money + service_money) * this.coupon_money).toFixed(2);
         }
       },
@@ -328,7 +315,7 @@
           order_desc: _this.order_desc,
         };
 
-        this.$func.usemall.call('order/create', obj).then((res) => {
+        this.$func.usemall.call('order/create', obj).then(res => {
           if (res.code === 200) {
             // 跳转支付页
             _this.$api.topay({

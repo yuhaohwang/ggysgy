@@ -3,10 +3,7 @@
     <view class="item pos-r" v-for="(item, index) in imgs" @click="preImage(item, imgs)" :key="index">
       <video v-if="item.type.indexOf('video/') !== -1" :src="item.url"></video>
       <image v-else :src="item.url" mode="aspectFill"></image>
-      <view
-        class="del pos-a bg-main dflex-c border-radius-c iconfont iconlajitong-01 ft-dark"
-        @tap.stop="delImage(index)"
-      ></view>
+      <view class="del pos-a bg-main dflex-c border-radius-c iconfont iconlajitong-01 ft-dark" @tap.stop="delImage(index)"></view>
     </view>
 
     <view class="item dflex-c" v-if="imgs.length < limit" @tap="chooseImage">
@@ -36,7 +33,7 @@
           count: _this.limit,
           // 可以指定是原图|压缩图，默认二者都有
           sizeType: ['original', 'compressed'],
-          success: async (res) => {
+          success: async res => {
             uni.showLoading({
               title: '上传中',
               mask: true,
@@ -51,7 +48,7 @@
                     var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                   },
                 })
-                .then((uRes) => {
+                .then(uRes => {
                   console.log(uRes, res.tempFiles[i]);
                   uRes.url = uRes.fileID;
                   uRes.type = res.tempFiles[i].type || '';
@@ -60,7 +57,7 @@
                   _this.imgs.push(uRes);
                   _this.sendData();
                 })
-                .catch((err) => {
+                .catch(err => {
                   console.log('use-upload', err);
                 });
             }
@@ -75,8 +72,8 @@
         }
 
         let _urls = urls
-          .filter((x) => x.type.indexOf('image/') !== -1)
-          .map((ele) => {
+          .filter(x => x.type.indexOf('image/') !== -1)
+          .map(ele => {
             return ele.url;
           });
 

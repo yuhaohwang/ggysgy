@@ -1,12 +1,7 @@
 <template xlang="wxml" minapp="mpvue">
   <view class="use-qrcode">
     <!-- #ifndef MP-ALIPAY -->
-    <canvas
-      v-if="!result"
-      class="use-qrcode-canvas"
-      :canvas-id="cid"
-      :style="{ width: qrsize + 'px', height: qrsize + 'px' }"
-    />
+    <canvas v-if="!result" class="use-qrcode-canvas" :canvas-id="cid" :style="{ width: qrsize + 'px', height: qrsize + 'px' }" />
     <!-- #endif -->
 
     <!-- #ifdef MP-ALIPAY -->

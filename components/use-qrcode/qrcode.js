@@ -663,8 +663,7 @@ let QRCode = {};
     QRMath.EXP_TABLE[i] = 1 << i;
   }
   for (var i = 8; i < 256; i++) {
-    QRMath.EXP_TABLE[i] =
-      QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
+    QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
   }
   for (var i = 0; i < 255; i++) {
     QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
@@ -1086,10 +1085,7 @@ let QRCode = {};
     //使用QRCodeAlg创建二维码结构
     var qrCodeAlg = null;
     for (var i = 0, l = qrcodeAlgObjCache.length; i < l; i++) {
-      if (
-        qrcodeAlgObjCache[i].text == this.options.text &&
-        qrcodeAlgObjCache[i].text.correctLevel == this.options.correctLevel
-      ) {
+      if (qrcodeAlgObjCache[i].text == this.options.text && qrcodeAlgObjCache[i].text.correctLevel == this.options.correctLevel) {
         qrCodeAlg = qrcodeAlgObjCache[i].obj;
         break;
       }

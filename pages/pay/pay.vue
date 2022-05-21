@@ -13,9 +13,7 @@
           <text class="tit">微信支付</text>
           <text>推荐使用</text>
         </view>
-        <label class="radio"
-          ><radio value="" color="#feaa30" :checked="pay_way == '微信支付'" :disabled="money <= 0"
-        /></label>
+        <label class="radio"><radio value="" color="#feaa30" :checked="pay_way == '微信支付'" :disabled="money <= 0" /></label>
       </view>
       <!-- #endif -->
 
@@ -26,9 +24,7 @@
           <text class="tit">支付宝支付</text>
           <text>推荐使用</text>
         </view>
-        <label class="radio"
-          ><radio value="" color="#feaa30" :checked="pay_way == '支付宝'" :disabled="money <= 0"
-        /></label>
+        <label class="radio"><radio value="" color="#feaa30" :checked="pay_way == '支付宝'" :disabled="money <= 0" /></label>
       </view>
       <!-- #endif -->
 
@@ -39,9 +35,7 @@
           <text class="tit">百度钱包</text>
           <text>推荐使用</text>
         </view>
-        <label class="radio"
-          ><radio value="" color="#feaa30" :checked="pay_way == '百度钱包'" :disabled="money <= 0"
-        /></label>
+        <label class="radio"><radio value="" color="#feaa30" :checked="pay_way == '百度钱包'" :disabled="money <= 0" /></label>
       </view>
       <!-- #endif -->
 
@@ -52,9 +46,7 @@
           <text class="tit">QQ钱包</text>
           <text>推荐使用</text>
         </view>
-        <label class="radio"
-          ><radio value="" color="#feaa30" :checked="pay_way == 'QQ钱包'" :disabled="money <= 0"
-        /></label>
+        <label class="radio"><radio value="" color="#feaa30" :checked="pay_way == 'QQ钱包'" :disabled="money <= 0" /></label>
       </view>
       <!-- #endif -->
 
@@ -65,14 +57,15 @@
           <text class="tit">收银台</text>
           <text>推荐使用</text>
         </view>
-        <label class="radio"
-          ><radio
+        <label class="radio">
+          <radio
             value="wxpay"
             color="#feaa30"
             colors="#feaa30"
             :checked="pay_way == '头条支付' && pay_trade_type == 'MWEB'"
             :disabled="money <= 0"
-        /></label>
+          />
+        </label>
       </view>
       <!-- #endif -->
 
@@ -83,18 +76,17 @@
           <text class="tit">微信支付</text>
           <text>推荐使用 扫一扫 微信支付二维码</text>
         </view>
-        <label class="radio"
-          ><radio
+        <label class="radio">
+          <radio
             value="wxpay"
             color="#feaa30"
             colors="#feaa30"
             :checked="pay_way == '微信支付' && pay_trade_type == 'NATIVE'"
             :disabled="money <= 0"
-        /></label>
+          />
+        </label>
       </view>
-      <view class="qrcode tac padding-tb"
-        ><use-qrcode :onval="true" :val="qrcode" qrsize="200" @result="qrcode_rs"></use-qrcode
-      ></view>
+      <view class="qrcode tac padding-tb"><use-qrcode :onval="true" :val="qrcode" qrsize="200" @result="qrcode_rs"></use-qrcode></view>
 
       <view v-if="time_remaining" class="dflex-c">
         <use-count-down
@@ -114,15 +106,11 @@
     <view class="padding w-full margin-top-big pos-a" style="bottom: 30rpx;">
       <view class="dflex-b border-radius-big">
         <!-- #ifndef H5 || MP-360 -->
-        <view class="tac padding-tb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="confirm">{{
-          pay_tip
-        }}</view>
+        <view class="tac padding-tb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="confirm">{{ pay_tip }}</view>
         <!-- #endif -->
 
         <!-- #ifdef H5 || MP-360 -->
-        <view class="tac padding-tb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="check">{{
-          pay_tip
-        }}</view>
+        <view class="tac padding-tb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="check">{{ pay_tip }}</view>
         <!-- #endif -->
       </view>
     </view>
@@ -196,7 +184,7 @@
           .call('order/detail', {
             order_id: _this.order_id,
           })
-          .then((res) => {
+          .then(res => {
             if (res.code == 200) {
               if (res.datas.order.state === '待付款') {
                 _this.is_submit = 0;
@@ -253,7 +241,7 @@
                 pay_original: _this.pay_original,
                 pay_trade_type: _this.pay_trade_type,
               };
-              _this.$func.usemall.call('order/pay', obj).then((res) => {
+              _this.$func.usemall.call('order/pay', obj).then(res => {
                 console.log('支付接口', obj, res);
 
                 if (res.code === 200) {
@@ -307,7 +295,7 @@
                             .call('order/paystate', {
                               order_id: out_order_no,
                             })
-                            .then((res) => {
+                            .then(res => {
                               // 商户后端查询的微信支付状态，通知收银台支付结果
                               /*
 														  0：支付成功
@@ -334,7 +322,7 @@
                               }
                               resolve({ code: 9 });
                             })
-                            .catch((err) => {
+                            .catch(err => {
                               reject(err);
                             });
                         });
@@ -457,7 +445,7 @@
           .call('order/paystate', {
             order_id: _this.order_id,
           })
-          .then((res) => {
+          .then(res => {
             // 商户后端查询的微信支付状态，通知收银台支付结果
             /*
 					  0：支付成功
@@ -506,7 +494,7 @@
               return;
             }
           })
-          .catch((err) => {});
+          .catch(err => {});
       },
       // #ifdef H5 || MP-360
       loadQRCode() {
@@ -521,7 +509,7 @@
           title: '请求中',
         });
         // this.$api.alert('二维码支付开发中');
-        _this.$func.usemall.call('order/pay', obj).then((res) => {
+        _this.$func.usemall.call('order/pay', obj).then(res => {
           console.log('支付接口', obj);
           uni.hideLoading();
 

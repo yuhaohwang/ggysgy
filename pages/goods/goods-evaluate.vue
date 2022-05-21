@@ -80,10 +80,10 @@
             num: $.sum(1),
           })
           .end()
-          .then((res) => {
+          .then(res => {
             let __stateDatas = [];
             let total = 0;
-            res.result.data.forEach((x) => {
+            res.result.data.forEach(x => {
               __stateDatas.push({ name: x._id, cnt: x.num });
               total += x.num;
             });
@@ -95,7 +95,7 @@
           .whereif(this.state != '全部', { review_type: this.state })
           .where({ goods_id: this.goods_id })
           .tolist({ rows: 30, orderby: 'create_time desc' })
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               this.evaluateDatas = res.datas;
             }

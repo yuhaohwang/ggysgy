@@ -65,18 +65,7 @@ class Common {
    */
   guid() {
     return (
-      this.__s4() +
-      this.__s4() +
-      '-' +
-      this.__s4() +
-      '-' +
-      this.__s4() +
-      '-' +
-      this.__s4() +
-      '-' +
-      this.__s4() +
-      this.__s4() +
-      this.__s4()
+      this.__s4() + this.__s4() + '-' + this.__s4() + '-' + this.__s4() + '-' + this.__s4() + '-' + this.__s4() + this.__s4() + this.__s4()
     );
   }
   __s4() {
@@ -342,7 +331,7 @@ class Common {
     let query = uni.createSelectorQuery().select(selector);
     // console.log('offset query', query);
     if (typeof callback === 'function') {
-      query.boundingClientRect((res) => {
+      query.boundingClientRect(res => {
         callback(res);
       });
     }

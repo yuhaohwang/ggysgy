@@ -2,15 +2,15 @@
   <view class="container">
     <view class="dflex-c pos-r margin-bottom margin-top">
       <view class="portrait-box">
-        <image class="border-radius-c" :src="member.member_headimg || '/static/images/user/default.png'"> </image>
+        <image class="border-radius-c" :src="member.member_headimg || '/static/images/user/default.png'"></image>
       </view>
       <view class="margin-left-sm">
         <view>
           <text class="username">{{ member.member_name || '以艺自强' }}</text>
         </view>
-        <view v-if="member.member_city"
-          ><text>{{ member.member_city }}</text></view
-        >
+        <view v-if="member.member_city">
+          <text>{{ member.member_city }}</text>
+        </view>
       </view>
     </view>
     <view class="use-item padding-lr dflex-b">

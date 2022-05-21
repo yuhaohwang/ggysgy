@@ -33,14 +33,7 @@
       ></use-list-title>
     </view>
     <view class="padding-lr-xs">
-      <use-list-title
-        title="退款原因"
-        type="round"
-        color="#333"
-        :tip="reason"
-        iconfont=" "
-        @goto="openActionSheet(2)"
-      ></use-list-title>
+      <use-list-title title="退款原因" type="round" color="#333" :tip="reason" iconfont=" " @goto="openActionSheet(2)"></use-list-title>
     </view>
 
     <view class="refund-area padding margin-lr margin-tb-sm bg-main border-radius">
@@ -53,11 +46,7 @@
     <!-- 上传凭证 -->
     <view class="padding margin-lr margin-tb-sm bg-main border-radius">
       <!-- 退款说明 -->
-      <textarea
-        v-model="desc"
-        class="ft-black w-full margin-0 padding-0 fs-sm"
-        placeholder="请填写退款说明（选填）"
-      ></textarea>
+      <textarea v-model="desc" class="ft-black w-full margin-0 padding-0 fs-sm" placeholder="请填写退款说明（选填）"></textarea>
 
       <!-- 上传图片 -->
       <use-upload class="pos-r" @upload="refundImgs"></use-upload>
@@ -137,7 +126,7 @@
           .call('order/detail', {
             order_id: _this.order_id,
           })
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               _this.order_data = res.datas.order;
               _this.order_detail = res.datas.order_detail;
@@ -150,7 +139,7 @@
       refundImgs(options) {
         let imgs = [];
 
-        options.forEach((_) => {
+        options.forEach(_ => {
           imgs.push(_.url);
         });
 
@@ -182,7 +171,7 @@
           content: '申请退款',
           success: function (res) {
             if (res.confirm) {
-              _this.$func.usemall.call('order/refund', _this.postData).then((res) => {
+              _this.$func.usemall.call('order/refund', _this.postData).then(res => {
                 if (res.code === 200) {
                   _this.$api.msg('提交成功');
                   //setTimeout(() => {

@@ -75,7 +75,7 @@
         mid = _this.member._id;
       }
 
-      let goods = _this.datas.find((x) => x.goods_id == ops.target.id);
+      let goods = _this.datas.find(x => x.goods_id == ops.target.id);
       let share_img = '';
       if (goods && goods.id > 0) {
         share_img = goods.share_img;
@@ -116,10 +116,10 @@
           )
           .orderBy('last_modify_time desc')
           .get()
-          .then((res) => {
+          .then(res => {
             if (res && res.result && res.result.code === 0) {
               let _historyDatas = [];
-              res.result.data.forEach((x) => {
+              res.result.data.forEach(x => {
                 _historyDatas.push(x);
               });
               this.datas = _historyDatas;
@@ -140,7 +140,7 @@
               _this.$db[_collect]
                 .where('create_uid == $env.uid')
                 .remove(id)
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     _this.loadData();
                   }
@@ -162,7 +162,7 @@
               _this.$db[_collect]
                 .where('create_uid == $env.uid')
                 .remove()
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     _this.datas = [];
                     return;

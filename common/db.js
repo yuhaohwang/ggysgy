@@ -54,7 +54,7 @@ DbContext.prototype.add = function (obj) {
   });
   return this.collection()
     .add(obj)
-    .then((res) => {
+    .then(res => {
       if ($config.debug) {
         console.log(this.table + ' add', res);
       }
@@ -67,14 +67,14 @@ DbContext.prototype.add = function (obj) {
 
       return Promise.reject(res);
     })
-    .catch((err) => {
+    .catch(err => {
       if ($config.debug) {
         console.log(this.table + ' add catch', err);
         $api.alert(err.message);
       }
       return Promise.reject(err);
     })
-    .finally((res) => {
+    .finally(res => {
       uni.hideLoading();
     });
 };
@@ -88,7 +88,7 @@ DbContext.prototype.remove = function (_id) {
     return this.collection()
       .doc(_id)
       .remove()
-      .then((res) => {
+      .then(res => {
         if ($config.debug) {
           console.log(this.table + ' remove', res);
         }
@@ -101,14 +101,14 @@ DbContext.prototype.remove = function (_id) {
 
         return Promise.reject(res);
       })
-      .catch((err) => {
+      .catch(err => {
         if ($config.debug) {
           console.log(this.table + ' remove catch', err);
           $api.alert(err.message);
         }
         return Promise.reject(err);
       })
-      .finally((res) => {
+      .finally(res => {
         uni.hideLoading();
       });
   }
@@ -116,7 +116,7 @@ DbContext.prototype.remove = function (_id) {
   return this.collection()
     .where(this.where_str || this.where_obj)
     .remove()
-    .then((res) => {
+    .then(res => {
       if ($config.debug) {
         console.log(this.table + ' remove', res);
       }
@@ -129,14 +129,14 @@ DbContext.prototype.remove = function (_id) {
 
       return Promise.reject(res);
     })
-    .catch((err) => {
+    .catch(err => {
       if ($config.debug) {
         console.log(this.table + ' remove catch', err);
         $api.alert(err.message);
       }
       return Promise.reject(err);
     })
-    .finally((res) => {
+    .finally(res => {
       uni.hideLoading();
     });
 };
@@ -148,7 +148,7 @@ DbContext.prototype.set = function (_id, obj) {
   return this.collection()
     .doc(_id)
     .set(obj)
-    .then((res) => {
+    .then(res => {
       if ($config.debug) {
         console.log(this.table + ' set', res);
       }
@@ -161,14 +161,14 @@ DbContext.prototype.set = function (_id, obj) {
 
       return Promise.reject(res);
     })
-    .catch((err) => {
+    .catch(err => {
       if ($config.debug) {
         console.log(this.table + ' set catch', err);
         $api.alert(err.message);
       }
       return Promise.reject(err);
     })
-    .finally((res) => {
+    .finally(res => {
       uni.hideLoading();
     });
 };
@@ -182,7 +182,7 @@ DbContext.prototype.update = function (_id, obj) {
     return this.collection()
       .doc(_id)
       .update(obj)
-      .then((res) => {
+      .then(res => {
         if ($config.debug) {
           console.log(this.table + ' update', res);
         }
@@ -195,14 +195,14 @@ DbContext.prototype.update = function (_id, obj) {
 
         return Promise.reject(res);
       })
-      .catch((err) => {
+      .catch(err => {
         if ($config.debug) {
           console.log(this.table + ' doc update catch', err);
           $api.alert(err.message);
         }
         return Promise.reject(err);
       })
-      .finally((res) => {
+      .finally(res => {
         uni.hideLoading();
       });
   }
@@ -212,7 +212,7 @@ DbContext.prototype.update = function (_id, obj) {
   return this.collection()
     .where(this.where_str || this.where_obj)
     .update(obj)
-    .then((res) => {
+    .then(res => {
       if ($config.debug) {
         console.log(this.table + ' update', res);
       }
@@ -225,14 +225,14 @@ DbContext.prototype.update = function (_id, obj) {
 
       return Promise.reject(res);
     })
-    .catch((err) => {
+    .catch(err => {
       if ($config.debug) {
         console.log(this.table + ' update catch', err);
         $api.alert(err.message);
       }
       return Promise.reject(err);
     })
-    .finally((res) => {
+    .finally(res => {
       uni.hideLoading();
     });
 };
@@ -246,7 +246,7 @@ DbContext.prototype.tofirst = function (_id) {
       .get({
         getOne: true,
       })
-      .then((res) => {
+      .then(res => {
         if ($config.debug) {
           console.log(this.table + ' doc.tofirst', res);
         }
@@ -260,14 +260,14 @@ DbContext.prototype.tofirst = function (_id) {
 
         return Promise.reject(res);
       })
-      .catch((err) => {
+      .catch(err => {
         if ($config.debug) {
           console.log(this.table + ' doc.tofirst catch', err);
           $api.alert(err.message);
         }
         return Promise.reject(err);
       })
-      .finally((res) => {
+      .finally(res => {
         uni.hideNavigationBarLoading();
       });
   }
@@ -277,7 +277,7 @@ DbContext.prototype.tofirst = function (_id) {
     .get({
       getOne: true,
     })
-    .then((res) => {
+    .then(res => {
       if ($config.debug) {
         console.log(this.table + ' tofirst', res);
       }
@@ -290,14 +290,14 @@ DbContext.prototype.tofirst = function (_id) {
 
       return Promise.reject(res);
     })
-    .catch((err) => {
+    .catch(err => {
       if ($config.debug) {
         console.log(this.table + ' tofirst catch', err);
         $api.alert(err.message);
       }
       // return Promise.reject(err);
     })
-    .finally((res) => {
+    .finally(res => {
       uni.hideNavigationBarLoading();
     });
 };
@@ -320,7 +320,7 @@ DbContext.prototype.tolist = function (req) {
     .limit(req.rows)
     .orderBy(req.orderby)
     .get()
-    .then((res) => {
+    .then(res => {
       if ($config.debug) {
         console.log(this.table + ' tolist', res);
       }
@@ -334,14 +334,14 @@ DbContext.prototype.tolist = function (req) {
 
       return Promise.reject(res);
     })
-    .catch((err) => {
+    .catch(err => {
       if ($config.debug) {
         console.log(this.table + ' totable catch', err);
         $api.alert(err.message);
       }
       return Promise.reject(err);
     })
-    .finally((res) => {
+    .finally(res => {
       uni.hideNavigationBarLoading();
     });
 };
@@ -366,7 +366,7 @@ DbContext.prototype.totable = function (req) {
     .get({
       getCount: true,
     })
-    .then((res) => {
+    .then(res => {
       if ($config.debug) {
         console.log(this.table + ' totable', res);
       }
@@ -381,14 +381,14 @@ DbContext.prototype.totable = function (req) {
 
       return Promise.reject(res);
     })
-    .catch((err) => {
+    .catch(err => {
       if ($config.debug) {
         console.log(this.table + ' totable catch', err);
         $api.alert(err.message);
       }
       return Promise.reject(err);
     })
-    .finally((res) => {
+    .finally(res => {
       uni.hideNavigationBarLoading();
     });
 };

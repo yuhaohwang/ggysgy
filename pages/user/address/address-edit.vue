@@ -3,23 +3,11 @@
     <view class="gap"></view>
     <view class="row dflex border-line padding-lr">
       <text class="tit">收货人</text>
-      <input
-        class="input"
-        type="text"
-        v-model="addrData.consignee"
-        placeholder="请输入收货人姓名"
-        placeholder-class="placeholder"
-      />
+      <input class="input" type="text" v-model="addrData.consignee" placeholder="请输入收货人姓名" placeholder-class="placeholder" />
     </view>
     <view class="row dflex border-line padding-lr">
       <text class="tit">手机号</text>
-      <input
-        class="input"
-        type="number"
-        v-model="addrData.mobile"
-        placeholder="请输入手机号码"
-        placeholder-class="placeholder"
-      />
+      <input class="input" type="number" v-model="addrData.mobile" placeholder="请输入手机号码" placeholder-class="placeholder" />
     </view>
 
     <view class="row dflex border-line padding-left">
@@ -40,13 +28,7 @@
     </view>
     <view class="row dflex border-line padding-lr">
       <text class="tit">详细地址</text>
-      <input
-        class="input"
-        type="text"
-        v-model="addrData.addr_detail"
-        placeholder="请输入详细地址"
-        placeholder-class="placeholder"
-      />
+      <input class="input" type="text" v-model="addrData.addr_detail" placeholder="请输入详细地址" placeholder-class="placeholder" />
     </view>
     <view class="gap"></view>
     <view class="row dflex-b padding-lr">
@@ -55,9 +37,7 @@
     </view>
 
     <view class="padding w-full margin-top">
-      <view class="dflex-b border-radius-big"
-        ><view class="tac padding-tb-sm flex1 bg-base" @click="submit">提交</view></view
-      >
+      <view class="dflex-b border-radius-big"><view class="tac padding-tb-sm flex1 bg-base" @click="submit">提交</view></view>
     </view>
   </view>
 </template>
@@ -94,14 +74,13 @@
         title = '编辑收货人';
         this.id = options.id;
 
-        this.$db[__name].tofirst(this.id).then((res) => {
+        this.$db[__name].tofirst(this.id).then(res => {
           if (res.code == 200) {
             for (let key in this.addrData) {
               this.addrData[key] = res.datas[key];
             }
             this.addrDefault = this.addrData.is_default == '是';
-            this.addressName =
-              this.addrData.province_name + '-' + this.addrData.city_name + '-' + this.addrData.area_name;
+            this.addressName = this.addrData.province_name + '-' + this.addrData.city_name + '-' + this.addrData.area_name;
           }
         });
       } else {
@@ -141,7 +120,7 @@
           scope: 'scope.userLocation',
           success() {
             uni.chooseLocation({
-              success: (res) => {
+              success: res => {
                 console.log('位置', res);
                 // console.log('位置名称：' + res.name);
                 // console.log('详细地址：' + res.address);
@@ -187,7 +166,7 @@
         let _this = this;
 
         uni.chooseLocation({
-          success: (res) => {
+          success: res => {
             console.log('位置', res);
             if (res && res.address) {
               let __addr = _this.resolveAddr(res);
@@ -195,12 +174,8 @@
               _this.addrData.city_name = res.cityName || '';
               _this.addrData.area_name = res.adName || '';
 
-              _this.addrData.address = [
-                _this.addrData.province_name,
-                _this.addrData.city_name,
-                _this.addrData.area_name,
-              ]
-                .filter((x) => x)
+              _this.addrData.address = [_this.addrData.province_name, _this.addrData.city_name, _this.addrData.area_name]
+                .filter(x => x)
                 .join('-');
               _this.addressName = _this.addrData.address;
 
@@ -314,7 +289,7 @@
         }
 
         if (this.type == 'add') {
-          this.$db[__name].add(data).then((res) => {
+          this.$db[__name].add(data).then(res => {
             if (res.code === 200) {
               this.$api.msg('添加成功');
               this.$api.timerout(() => {
@@ -331,7 +306,7 @@
             return;
           }
 
-          this.$db[__name].update(this.id, data).then((res) => {
+          this.$db[__name].update(this.id, data).then(res => {
             if (res.code === 200) {
               this.$api.msg('编辑成功');
               this.$api.timerout(() => {

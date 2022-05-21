@@ -2,10 +2,7 @@
   <view class="container bg-main pos-r">
     <view class="padding-xl dflex-c dflex-flow-c">
       <view class="portrait-box margin-bottom">
-        <image
-          class="headimg border-radius-c"
-          :src="(member && member.member_headimg) || '/static/images/user/default.png'"
-        ></image>
+        <image class="headimg border-radius-c" :src="(member && member.member_headimg) || '/static/images/user/default.png'"></image>
       </view>
 
       <view class="w-full dflex padding-bottom-sm">
@@ -112,7 +109,7 @@
       // #endif
     },
     onLoad() {
-      this.$api.get_env((res) => {
+      this.$api.get_env(res => {
         this.env = res;
         // console.log(this.env);
         this.is_mp = this.env.is_mp;
@@ -154,7 +151,7 @@
             mobile: this.mobile,
             type: 'register',
           })
-          .then((res) => {
+          .then(res => {
             uni.hideLoading();
             if (res.code == 200) {
               this.$api.alert('验证码已发送', () => {
@@ -210,7 +207,7 @@
         }
 
         // #ifdef H5 || MP-360 || APP-PLUS
-        uni.getUserProfile = (x) => {
+        uni.getUserProfile = x => {
           if (typeof x.success === 'function') {
             x.success({ userInfo: {} });
           }
@@ -220,7 +217,7 @@
         uni.getUserProfile({
           desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
           lang: 'zh_CN',
-          success: (res) => {
+          success: res => {
             // console.log('getUserProfile', res);
             this.is_register = true;
             this.$func.usemall
@@ -230,7 +227,7 @@
                 code: this.code,
                 user: res.userInfo,
               })
-              .then((res) => {
+              .then(res => {
                 this.is_register = false;
                 if (res.code == 200) {
                   this.$api.alert('注册成功', () => {

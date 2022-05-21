@@ -79,41 +79,40 @@
                   v-if="item.order.order_pay_state == '待付款'"
                   class="action-btn border-radius-big bg-main main-btn"
                   @click="payment(item.order)"
-                  >立即支付</button
                 >
+                  立即支付
+                </button>
                 <button
                   v-if="item.order.order_pay_state == '待核实'"
                   class="action-btn border-radius-big bg-main main-btn"
                   @click="payment(item.order)"
-                  >待核实</button
                 >
+                  待核实
+                </button>
               </view>
               <view class="dflex" v-if="item.order.state == '待发货'">
-                <button
-                  v-if="!item.order.order_refund_state"
-                  class="action-btn border-radius-big bg-main"
-                  @click="torefund(item)"
-                  >申请退款</button
-                >
+                <button v-if="!item.order.order_refund_state" class="action-btn border-radius-big bg-main" @click="torefund(item)">
+                  申请退款
+                </button>
               </view>
               <button
                 v-if="!item.order.order_refund_state && ['待收货', '待评价', '已完成'].includes(item.order.state)"
                 class="action-btn border-radius-big bg-main"
                 @click="toexpress(item)"
-                >查看物流</button
               >
+                查看物流
+              </button>
               <view class="dflex" v-if="item.order.state == '待收货'">
                 <button
                   v-if="!item.order.order_refund_state"
                   class="action-btn border-radius-big bg-main main-btn"
                   @click="toreceipt(item)"
-                  >确认收货</button
                 >
+                  确认收货
+                </button>
               </view>
               <view class="dflex" v-if="item.order.state == '待评价'">
-                <button class="action-btn border-radius-big bg-main main-btn" @click="toevaluate(item)"
-                  >我要评价</button
-                >
+                <button class="action-btn border-radius-big bg-main main-btn" @click="toevaluate(item)">我要评价</button>
               </view>
               <view class="dflex" v-if="['已取消', '已完成'].includes(item.order.state)">
                 <button class="action-btn border-radius-big bg-main main-btn" @click="delOrder(item)">删除订单</button>
@@ -124,10 +123,7 @@
       </view>
 
       <!-- 上拉加载更多 -->
-      <use-loadmore
-        v-if="navData.orderList.length > 0 && navData.loaded && navData.hasmore"
-        :type="navData.loadingType"
-      ></use-loadmore>
+      <use-loadmore v-if="navData.orderList.length > 0 && navData.loaded && navData.hasmore" :type="navData.loadingType"></use-loadmore>
     </view>
     <!-- #endif -->
 
@@ -203,9 +199,7 @@
                 <view>
                   <!-- 当前状态 -->
                   <text class="ft-dark" v-if="item.order.order_refund_state == '处理中'">退款处理中</text>
-                  <text class="ft-dark" v-else-if="item.order.order_refund_state">{{
-                    item.order.order_refund_state
-                  }}</text>
+                  <text class="ft-dark" v-else-if="item.order.order_refund_state">{{ item.order.order_refund_state }}</text>
                   <text class="ft-dark" v-else-if="item.order.state == '待评价'">已发货</text>
                   <text class="ft-dark" v-else>{{ item.order.state }}</text>
                 </view>
@@ -218,46 +212,43 @@
                       v-if="item.order.order_pay_state == '待付款'"
                       class="action-btn border-radius-big bg-main main-btn"
                       @click="payment(item.order)"
-                      >立即支付</button
                     >
+                      立即支付
+                    </button>
                     <button
                       v-if="item.order.order_pay_state == '待核实'"
                       class="action-btn border-radius-big bg-main main-btn"
                       @click="payment(item.order)"
-                      >待核实</button
                     >
+                      待核实
+                    </button>
                   </view>
                   <view class="dflex" v-if="item.order.state == '待发货'">
-                    <button
-                      v-if="!item.order.order_refund_state"
-                      class="action-btn border-radius-big bg-main"
-                      @click="torefund(item)"
-                      >申请退款</button
-                    >
+                    <button v-if="!item.order.order_refund_state" class="action-btn border-radius-big bg-main" @click="torefund(item)">
+                      申请退款
+                    </button>
                   </view>
                   <button
                     v-if="!item.order.order_refund_state && ['待收货', '待评价', '已完成'].includes(item.order.state)"
                     class="action-btn border-radius-big bg-main"
                     @click="toexpress(item)"
-                    >查看物流</button
                   >
+                    查看物流
+                  </button>
                   <view class="dflex" v-if="item.order.state == '待收货'">
                     <button
                       v-if="!item.order.order_refund_state"
                       class="action-btn border-radius-big bg-main main-btn"
                       @click="toreceipt(item)"
-                      >确认收货</button
                     >
+                      确认收货
+                    </button>
                   </view>
                   <view class="dflex" v-if="item.order.state == '待评价'">
-                    <button class="action-btn border-radius-big bg-main main-btn" @click="toevaluate(item)"
-                      >我要评价</button
-                    >
+                    <button class="action-btn border-radius-big bg-main main-btn" @click="toevaluate(item)">我要评价</button>
                   </view>
                   <view class="dflex" v-if="['已取消', '已完成'].includes(item.order.state)">
-                    <button class="action-btn border-radius-big bg-main main-btn" @click="delOrder(item)"
-                      >删除订单</button
-                    >
+                    <button class="action-btn border-radius-big bg-main main-btn" @click="delOrder(item)">删除订单</button>
                   </view>
                 </view>
               </view>
@@ -265,10 +256,7 @@
           </view>
 
           <!-- 上拉加载更多 -->
-          <use-loadmore
-            v-if="tabItem.orderList.length > 0 && tabItem.loaded && tabItem.hasmore"
-            :type="tabItem.loadingType"
-          ></use-loadmore>
+          <use-loadmore v-if="tabItem.orderList.length > 0 && tabItem.loaded && tabItem.hasmore" :type="tabItem.loadingType"></use-loadmore>
         </scroll-view>
       </swiper-item>
     </swiper>
@@ -353,7 +341,7 @@
         success(res) {
           state = res.data;
 
-          let cur_nav = _this.navList.find((x) => x.state == state);
+          let cur_nav = _this.navList.find(x => x.state == state);
           if (cur_nav) {
             _this.tabCurrentIndex = cur_nav.id;
           }
@@ -369,7 +357,7 @@
     },
 
     onLoad(options) {
-      uni.$on('__event_order', (res) => {
+      uni.$on('__event_order', res => {
         if (res == 'refresh') {
           this.loadData('refresh');
         }
@@ -416,7 +404,7 @@
           cur_nav.loadingType = 'more';
         }
 
-        await this.$func.usemall.call('order/list', this.reqdata).then((res) => {
+        await this.$func.usemall.call('order/list', this.reqdata).then(res => {
           if (res.code === 200) {
             cur_nav.loaded = true;
 
@@ -428,7 +416,7 @@
 
               if (res.datas.length > 0) {
                 let __datas = [];
-                res.datas.forEach((row) => {
+                res.datas.forEach(row => {
                   __datas.push(row);
                 });
 
@@ -502,7 +490,7 @@
                 .call('order/deleted', {
                   order_id: item.order.order_id,
                 })
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     _this.loadData('tab_change', 1);
                   }
@@ -533,7 +521,7 @@
                   order_id: item.order.order_id,
                   state: '已取消',
                 })
-                .then((res) => {
+                .then(res => {
                   if (res.code === 200) {
                     _this.loadData('tab_change', 1);
                   }
@@ -571,7 +559,7 @@
                   order_id: item.order.order_id,
                   state: '待评价',
                 })
-                .then((res) => {
+                .then(res => {
                   _this.loadData('tab_change', 1);
                 });
             } else if (res.cancel) {

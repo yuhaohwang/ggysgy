@@ -34,8 +34,9 @@
       :hover-stay-time="150"
       @touchmove.stop.prevent
       @tap="closeClick"
-      >取消</view
     >
+      取消
+    </view>
   </use-popup>
 </template>
 
@@ -118,7 +119,7 @@
       },
       // 操作项目的样式
       itemStyle(index) {
-        return (index) => {
+        return index => {
           let style = {};
           if (this.list[index].color) style.color = this.list[index].color;
           if (this.list[index].fontSize) style.fontSize = this.list[index].fontSize + 'rpx';

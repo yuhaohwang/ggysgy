@@ -2,10 +2,7 @@
   <view class="container bg-main pos-r">
     <view class="padding-xl dflex-c dflex-flow-c">
       <view class="portrait-box margin-bottom">
-        <image
-          class="headimg border-radius-c"
-          :src="(member && member.member_headimg) || '/static/images/user/default.png'"
-        ></image>
+        <image class="headimg border-radius-c" :src="(member && member.member_headimg) || '/static/images/user/default.png'"></image>
       </view>
 
       <view class="w-full dflex padding-bottom-sm">
@@ -113,7 +110,7 @@
       // #endif
     },
     onLoad() {
-      this.$api.get_env((res) => {
+      this.$api.get_env(res => {
         this.env = res;
         console.log(this.env);
         this.is_mp = this.env.is_mp;
@@ -156,7 +153,7 @@
             type: 'forgot-password',
             platform: _this.env.platform,
           })
-          .then((res) => {
+          .then(res => {
             uni.hideLoading();
 
             if (res.code == 200) {
@@ -216,7 +213,7 @@
 
         _this.is_submit = true;
 
-        this.$func.usemall.call('member/forgotPassword', data).then((res) => {
+        this.$func.usemall.call('member/forgotPassword', data).then(res => {
           _this.is_submit = false;
           if (res.code == 200) {
             _this.$api.alert('密码已修改', () => {

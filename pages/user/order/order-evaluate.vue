@@ -36,11 +36,7 @@
     <view class="evaluate-area">
       <view class="padding margin-lr margin-tb-sm bg-main border-radius">
         <!-- 评价内容 -->
-        <textarea
-          class="ft-black w-full fs-sm"
-          v-model="postData.review_content"
-          placeholder="请输入评价内容"
-        ></textarea>
+        <textarea class="ft-black w-full fs-sm" v-model="postData.review_content" placeholder="请输入评价内容"></textarea>
 
         <!-- 上传图片 -->
         <use-upload class="pos-r" @upload="uploadImgs"></use-upload>
@@ -103,7 +99,7 @@
           .call('order/detail', {
             order_id: _this.order_id,
           })
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               _this.order_data = res.datas.order;
               _this.order_detail = res.datas.order_detail;
@@ -113,7 +109,7 @@
       uploadImgs(options) {
         let imgs = [];
 
-        options.forEach((_) => {
+        options.forEach(_ => {
           imgs.push(_.url);
         });
 
@@ -136,7 +132,7 @@
           content: '提交评价',
           success: function (res) {
             if (res.confirm) {
-              _this.$func.usemall.call('order/evaluate', _this.postData).then((res) => {
+              _this.$func.usemall.call('order/evaluate', _this.postData).then(res => {
                 if (res.code === 200) {
                   _this.$api.msg('提交成功');
                   // setTimeout(() => {

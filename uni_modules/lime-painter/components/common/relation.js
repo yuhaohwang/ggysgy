@@ -84,6 +84,9 @@ export function children(parent, options = {}) {
 			}
 		},
 		created() {
+			if(!this._uid) {
+				this._uid = this._.uid
+			}
 			Object.defineProperty(this, 'parent', {
 				get: () => this[parent] || [],
 			})

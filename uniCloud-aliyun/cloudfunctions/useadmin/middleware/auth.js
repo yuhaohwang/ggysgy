@@ -1,5 +1,5 @@
 const uniID = require('uni-id');
-module.exports = (options) => {
+module.exports = options => {
   // 初始化 uniID 配置
   if (options) {
     uniID.init(options);

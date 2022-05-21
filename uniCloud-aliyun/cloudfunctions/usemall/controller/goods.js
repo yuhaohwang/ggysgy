@@ -72,7 +72,7 @@ module.exports = class GoodsController extends Controller {
             last_modify_uid: user.uid,
             last_modify_time: new Date().getTime(),
           })
-          .then((res) => {
+          .then(res => {
             if (res && res.updated <= 0) {
               this.db.collection('usemall-goods-history').doc(obj_id).set({
                 goods: goods_id,
@@ -201,7 +201,7 @@ module.exports = class GoodsController extends Controller {
           last_modify_uid: uid,
           last_modify_time: new Date().getTime(),
         })
-        .then((res) => {
+        .then(res => {
           if (res && res.updated <= 0) {
             this.db.collection('usemall-search-history').add({
               keyword,
@@ -367,8 +367,8 @@ module.exports = class GoodsController extends Controller {
         return response;
       }
       let goodsCarts = goodsCartRes.data;
-      let goodsIds = goodsCarts.map((x) => x.goods);
-      let goodsSkuIds = goodsCarts.map((x) => x.goods_sku);
+      let goodsIds = goodsCarts.map(x => x.goods);
+      let goodsSkuIds = goodsCarts.map(x => x.goods_sku);
 
       goodsRes = await this.db
         .collection('usemall-goods')
@@ -392,13 +392,13 @@ module.exports = class GoodsController extends Controller {
         goodsSkus = skuRes.data;
       }
 
-      goodsCarts.forEach((x) => {
-        goodsData = goodsDatas.find((g) => g._id == x.goods);
+      goodsCarts.forEach(x => {
+        goodsData = goodsDatas.find(g => g._id == x.goods);
         // 购物车商品数量
         goodsData.goods_num = x.goods_num;
         goods.push({
           goods: goodsData,
-          goods_sku: goodsSkus.find((g) => g.goods_sku == x.goods_sku),
+          goods_sku: goodsSkus.find(g => g.goods_sku == x.goods_sku),
           cart: x,
         });
       });

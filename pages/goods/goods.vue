@@ -90,9 +90,7 @@
 
     <use-popup mode="bottom" bgclass=" " v-model="posterShow" @close="">
       <view class="padding border-radius margin">
-        <view v-if="!posterUrl" class="tac bg-main padding border-radius pos-a pos-l-c" style="bottom: 45vh;"
-          >海报生成中，请稍等
-        </view>
+        <view v-if="!posterUrl" class="tac bg-main padding border-radius pos-a pos-l-c" style="bottom: 45vh;">海报生成中，请稍等</view>
 
         <view class="w-full" style="height: 70vh;">
           <image :src="posterUrl" class="wh-full" mode="aspectFit"></image>
@@ -188,8 +186,7 @@
 
     <!-- 05. 评价区 -->
     <view class="evaluate-area" v-if="evaluateDatas.length > 0">
-      <use-list-title :title="evaluateTitle" tip="好评率 100%" color="#feaa30" iconfont=" " @goto="toevaluate">
-      </use-list-title>
+      <use-list-title :title="evaluateTitle" tip="好评率 100%" color="#feaa30" iconfont=" " @goto="toevaluate"></use-list-title>
       <view class="padding-lr bg-main">
         <view class="eva-box dflex-s padding-bottom-lg" v-for="(item, index) in evaluateDatas" :key="index">
           <image class="portrait border-radius-c" :src="item.member_headimg"></image>
@@ -250,9 +247,7 @@
         <text>收藏</text>
       </view>
       <view class="flex1 btn-container dflex-b border-radius-big">
-        <view class="tac padding-tb-sm flex1 bg-warn" v-if="goods.stock_num > 0" @click="tocart(goods)"
-          >加入购物车</view
-        >
+        <view class="tac padding-tb-sm flex1 bg-warn" v-if="goods.stock_num > 0" @click="tocart(goods)">加入购物车</view>
         <view class="tac padding-tb-sm flex1 bg-base" v-if="goods.stock_num > 0" @click="tobuy(goods)">立即购买</view>
         <view class="tac padding-tb-sm flex1 bg-disabled" v-else>已售磐</view>
       </view>
@@ -386,14 +381,14 @@
             goods_id: this.id,
             share_mid: this.mid,
           })
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               // 商品评价
               this.evaluateDatas = res.datas.evaluate;
               if (res.datas.evaluate_cnt) this.evaluateTitle = `评价(${res.datas.evaluate_cnt})`;
 
               if (typeof res.datas.goods.imgs === 'string') {
-                this.swiperDatas = res.datas.goods.imgs.split(',').filter((x) => x);
+                this.swiperDatas = res.datas.goods.imgs.split(',').filter(x => x);
               } else {
                 this.swiperDatas = res.datas.goods.imgs;
               }
@@ -439,7 +434,7 @@
 
               // 服务标签
               if (typeof this.goods.tags === 'string') {
-                this.goods.tags = this.goods.tags.split(',').filter((x) => x);
+                this.goods.tags = this.goods.tags.split(',').filter(x => x);
               }
 
               let __tagDatas = [];
@@ -548,7 +543,7 @@
 
       // 商品SKU
       selectSKU(res) {
-        this.skuDatas.forEach((item) => {
+        this.skuDatas.forEach(item => {
           if (res.sku == item.sku) {
             this.$set(item, 'selected', true);
           } else {
@@ -578,7 +573,7 @@
           goods_id: this.id,
           state: !this.favorite ? '已取消' : '已收藏',
         };
-        this.$func.usemall.call('member/collect', _data).then((res) => {
+        this.$func.usemall.call('member/collect', _data).then(res => {
           if (res.datas) {
             !this.favorite ? this.$api.msg('取消成功') : this.$api.msg('收藏成功');
             return;
@@ -597,7 +592,7 @@
             goods_num: 1,
             goods_sku: this.sku.id,
           })
-          .then((res) => {
+          .then(res => {
             if (res.code === 200) {
               this.$api.msg(res.datas.msg);
               return;

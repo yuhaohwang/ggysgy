@@ -43,7 +43,7 @@ module.exports = class MemberController extends Controller {
         member_gender: user.gender || 0,
         member_headimg: user.avatarUrl || '',
         member_weixin_headimg: user.avatarUrl || '',
-        member_city: citys.filter((x) => x).join('-') || '',
+        member_city: citys.filter(x => x).join('-') || '',
       };
 
       const vcid = vcRes.data[0]._id;
@@ -436,7 +436,7 @@ module.exports = class MemberController extends Controller {
           last_modify_uid: res.uid,
           last_modify_time: new Date().getTime(),
         })
-        .then((res) => {
+        .then(res => {
           if (res && res.updated <= 0) {
             this.db
               .collection('usemall-member')
