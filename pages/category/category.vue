@@ -2,9 +2,7 @@
   <view class="box-sizing-b">
     <!-- 01. 头部组件 -->
     <view class="x-c-c bg-main padding-lr-xs">
-      <view class="search flex1">
-        <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
-      </view>
+      <view class="search flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
     </view>
 
     <!-- 分类 -->
@@ -28,16 +26,14 @@
         @scroll="onScroll"
       >
         <!-- 右侧二级分类 -->
-        <view class="dflex-s dflex-wrap-w bg-main" v-if="mode == 1">
-          <view
-            class="item padding-bottom-sm dflex dflex-flow-c"
-            v-if="item.pid == cid"
-            v-for="item in sdatas"
-            :key="item._id"
-            @click="togoodslist(item)"
-          >
-            <image :lazy-load="true" :src="item.img"></image>
-            <text class="tac clamp margin-top-sm">{{ item.name }}</text>
+        <view v-if="mode == 1" class="">
+          <view class="dflex-s dflex-wrap-w bg-main">
+            <block v-for="item in sdatas" :key="item._id">
+              <view class="item padding-bottom-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="togoodslist(item)">
+                <image :lazy-load="true" :src="item.img"></image>
+                <text class="tac clamp margin-top-sm">{{ item.name }}</text>
+              </view>
+            </block>
           </view>
         </view>
 
@@ -97,237 +93,237 @@
 </template>
 
 <script>
-  const _goods = 'usemall-goods';
-  const _goodscategory = 'usemall-goods-category';
-  export default {
-    data() {
-      return {
-        // 1分类列表 2商品列表
-        mode: 2,
-        // 兼容支付宝 height 显示 bug
-        scrollHeight: '100%',
+const _goods = 'usemall-goods'
+const _goodscategory = 'usemall-goods-category'
+export default {
+  data() {
+    return {
+      // 1分类列表 2商品列表
+      mode: 2,
+      // 兼容支付宝 height 显示 bug
+      scrollHeight: '100%',
 
-        // 头部参数
-        headerPlaceholder: 0,
-        headerFixed: !0,
-        searchAuto: !0,
-        searchTip: '请输入搜索关键字',
+      // 头部参数
+      headerPlaceholder: 0,
+      headerFixed: !0,
+      searchAuto: !0,
+      searchTip: '请输入搜索关键字',
 
-        // 当前选中分类ID
-        cid: 0,
-        // 一级数据
-        fdatas: [],
-        // 二级数据
-        sdatas: [],
+      // 当前选中分类ID
+      cid: 0,
+      // 一级数据
+      fdatas: [],
+      // 二级数据
+      sdatas: [],
 
-        // 商品列表
-        goodsDatas: [],
-        empty: false,
-        hasmore: 0,
-        loadmoreType: 'nomore',
-        // 商品请求数据
-        reqdata: {
-          rows: 20,
-          page: 1,
-        },
-
-        top: 0,
-        scrollTop: 0,
-        navHeight: 0,
-      };
-    },
-    watch: {
-      goodsDatas(e) {
-        // 监听数据，呈现空白页
-        let empty = e.length === 0;
-        if (this.empty !== empty) {
-          this.empty = empty;
-        }
+      // 商品列表
+      goodsDatas: [],
+      empty: false,
+      hasmore: 0,
+      loadmoreType: 'nomore',
+      // 商品请求数据
+      reqdata: {
+        rows: 20,
+        page: 1,
       },
-    },
-    onPageScroll(e) {
-      //this.scrollTop = e.scrollTop;
-      this.$refs.usetop.change(e.scrollTop);
-    },
-    onLoad() {
-      // #ifdef MP-ALIPAY
-      this.scrollHeight = this.$env.windowHeight - this.$env.sis.titleBarHeight + 'px';
-      // #endif
 
-      // 获取存储的模式
-      this.mode = uni.getStorageSync('category.mode') || 2;
-
-      this.loadData(() => {
-        if (this.mode == 2) {
-          // 加载商品数据
-          this.loadGoodsDatas();
-        }
-      });
+      top: 0,
+      scrollTop: 0,
+      navHeight: 0,
+    }
+  },
+  watch: {
+    goodsDatas(e) {
+      // 监听数据，呈现空白页
+      let empty = e.length === 0
+      if (this.empty !== empty) {
+        this.empty = empty
+      }
     },
-    // 下拉刷新
-    onPullDownRefresh() {
-      this.loadData(() => {
-        uni.stopPullDownRefresh();
-      });
-    },
-    methods: {
-      async loadData(callback) {
-        this.$db[_goodscategory].tolist().then(res => {
-          if (res.code === 200) {
-            this.fdatas = [];
-            this.sdatas = [];
+  },
+  onPageScroll(e) {
+    //this.scrollTop = e.scrollTop;
+    this.$refs.usetop.change(e.scrollTop)
+  },
+  onLoad() {
+    // #ifdef MP-ALIPAY
+    this.scrollHeight = this.$env.windowHeight - this.$env.sis.titleBarHeight + 'px'
+    // #endif
 
-            res.datas.forEach(item => {
-              if (!item.pid) {
-                // pid为父级id, 不存在 pid || pid=0 为一级分类
-                this.fdatas.push(item);
-              } else {
-                // 二级分类
-                this.sdatas.push(item);
-              }
-            });
+    // 获取存储的模式
+    this.mode = uni.getStorageSync('category.mode') || 2
 
-            if (this.fdatas.length > 0) {
-              this.cid = this.fdatas[0]._id;
+    this.loadData(() => {
+      if (this.mode == 2) {
+        // 加载商品数据
+        this.loadGoodsDatas()
+      }
+    })
+  },
+  // 下拉刷新
+  onPullDownRefresh() {
+    this.loadData(() => {
+      uni.stopPullDownRefresh()
+    })
+  },
+  methods: {
+    async loadData(callback) {
+      this.$db[_goodscategory].tolist().then(res => {
+        if (res.code === 200) {
+          this.fdatas = []
+          this.sdatas = []
+
+          res.datas.forEach(item => {
+            if (!item.pid && item.state == '启用') {
+              // pid为父级id, 不存在 pid || pid=0 为一级分类
+              this.fdatas.push(item)
+            } else {
+              // 二级分类
+              this.sdatas.push(item)
             }
+          })
 
-            if (typeof callback === 'function') {
-              // 数据加载完成回调函数
-              callback();
-            }
+          if (this.fdatas.length > 0) {
+            this.cid = this.fdatas[0]._id
           }
-        });
-      },
-      // 加载商品数据
-      loadGoodsDatas() {
-        if (this.mode != 2) {
-          return;
-        }
-        // 根据当前 cid 加载商品数据列表
-        this.reqdata.cid = this.cid;
-        this.$db[_goods]
-          .where(`'${this.reqdata.cid}' in cids`)
-          .tolist(this.reqdata)
-          .then(res => {
-            if (res.code === 200) {
-              this.goodsDatas = res.datas;
-              if (this.goodsDatas.length >= this.reqdata.rows) {
-                if (this.reqdata.page == 1) this.hasmore = !0;
-              }
-              this.empty = this.goodsDatas.length === 0;
-            }
-          });
-      },
-      totop(e) {
-        this.top = e.scrollTop;
-        this.$nextTick(function () {
-          this.top = 0;
-        });
-      },
-      // 一级分类
-      fSelect(item) {
-        this.cid = item._id;
-        this.loadGoodsDatas();
-      },
-      // 切换模式 1分类模式 2商品模式
-      changeMode() {
-        this.mode = this.mode == 1 ? 2 : 1;
-        uni.setStorage({
-          key: 'category.mode',
-          data: this.mode,
-        });
 
-        this.loadGoodsDatas();
-      },
-      // 跳转商品详情
-      togoods(item) {
-        this.$api.togoods({
-          id: item._id,
-        });
-      },
-      // 跳转商品列表
-      togoodslist(item) {
-        this.$api.togoodslist({
-          cid: item._id,
-        });
-      },
+          if (typeof callback === 'function') {
+            // 数据加载完成回调函数
+            callback()
+          }
+        }
+      })
     },
-    mounted() {
-      // #ifdef H5 || MP-360
-      this.navHeight = 50;
-      // #endif
+    // 加载商品数据
+    loadGoodsDatas() {
+      if (this.mode != 2) {
+        return
+      }
+      // 根据当前 cid 加载商品数据列表
+      this.reqdata.cid = this.cid
+      this.$db[_goods]
+        .where(`'${this.reqdata.cid}' in cids`)
+        .tolist(this.reqdata)
+        .then(res => {
+          if (res.code === 200) {
+            this.goodsDatas = res.datas
+            if (this.goodsDatas.length >= this.reqdata.rows) {
+              if (this.reqdata.page == 1) this.hasmore = !0
+            }
+            this.empty = this.goodsDatas.length === 0
+          }
+        })
     },
-  };
+    totop(e) {
+      this.top = e.scrollTop
+      this.$nextTick(function() {
+        this.top = 0
+      })
+    },
+    // 一级分类
+    fSelect(item) {
+      this.cid = item._id
+      this.loadGoodsDatas()
+    },
+    // 切换模式 1分类模式 2商品模式
+    changeMode() {
+      this.mode = this.mode == 1 ? 2 : 1
+      uni.setStorage({
+        key: 'category.mode',
+        data: this.mode,
+      })
+
+      this.loadGoodsDatas()
+    },
+    // 跳转商品详情
+    togoods(item) {
+      this.$api.togoods({
+        id: item._id,
+      })
+    },
+    // 跳转商品列表
+    togoodslist(item) {
+      this.$api.togoodslist({
+        cid: item._id,
+      })
+    },
+  },
+  mounted() {
+    // #ifdef H5 || MP-360
+    this.navHeight = 50
+    // #endif
+  },
+}
 </script>
 
 <style lang="scss">
-  page {
-    height: 100%;
+page {
+  height: 100%;
+  background-color: $page-color-base;
+}
+
+.category {
+  overflow: hidden;
+
+  .left {
+    width: 200rpx;
     background-color: $page-color-base;
+
+    .item {
+      position: relative;
+      height: 100rpx;
+      color: $font-color-base;
+
+      &.active {
+        color: $uni-color-primary;
+        background: #fff;
+
+        &::before {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 8rpx;
+          height: 36rpx;
+          background-color: $uni-color-primary;
+          content: '';
+          opacity: 0.8;
+          transform: translateY(-50%);
+        }
+      }
+    }
   }
 
-  .category {
+  .right {
+    display: block;
     overflow: hidden;
+    flex: 1;
 
-    .left {
-      width: 200rpx;
-      background-color: $page-color-base;
+    .item {
+      flex-shrink: 0;
+      width: 33.33%;
+      font-size: $font-sm + 2upx;
+      color: #666;
 
-      .item {
-        position: relative;
-        height: 100rpx;
-        color: $font-color-base;
-
-        &.active {
-          color: $uni-color-primary;
-          background: #fff;
-
-          &::before {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 8rpx;
-            height: 36rpx;
-            background-color: $uni-color-primary;
-            content: "";
-            opacity: 0.8;
-            transform: translateY(-50%);
-          }
-        }
-      }
-    }
-
-    .right {
-      display: block;
-      overflow: hidden;
-      flex: 1;
-
-      .item {
-        flex-shrink: 0;
-        width: 33.33%;
-        font-size: $font-sm + 2upx;
-        color: #666;
-
-        image {
-          width: 130rpx;
-          height: 130rpx;
-        }
-      }
-    }
-  }
-
-  .goods {
-    display: flex;
-
-    .goods-left {
       image {
-        width: 120rpx;
-        height: 120rpx;
+        width: 130rpx;
+        height: 130rpx;
       }
     }
+  }
+}
 
-    .price-box {
-      bottom: 0;
+.goods {
+  display: flex;
+
+  .goods-left {
+    image {
+      width: 120rpx;
+      height: 120rpx;
     }
   }
+
+  .price-box {
+    bottom: 0;
+  }
+}
 </style>

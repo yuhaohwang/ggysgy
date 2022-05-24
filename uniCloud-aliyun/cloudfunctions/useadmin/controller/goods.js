@@ -1,6 +1,8 @@
 'use strict';
 
-const { Controller } = require('uni-cloud-router');
+const {
+  Controller
+} = require('uni-cloud-router');
 const dbcmd = uniCloud.database().command;
 
 module.exports = class GoodsController extends Controller {
@@ -13,7 +15,11 @@ module.exports = class GoodsController extends Controller {
     // 数据验证
     this.validate(this.ctx.data);
 
-    let { goods, detail, skus } = this.ctx.data;
+    let {
+      goods,
+      detail,
+      skus
+    } = this.ctx.data;
     console.log('this.ctx.data', this.ctx.data);
     console.log('this.ctx.auth', this.ctx.auth);
 
@@ -81,11 +87,9 @@ module.exports = class GoodsController extends Controller {
     if (!req) this.throw('请求参数不存在');
     if (!req.goods) this.throw('商品参数不存在');
     if (!req.detail) this.throw('商品详情参数不存在');
-
     if (!req.goods.name) this.throw('商品名称必填');
     if (!req.goods.cid) this.throw('请选择商品分类');
     if (req.goods.price <= 0) this.throw('商城价格不能小于0');
-    if (!req.goods.sold_out_time) this.throw('请选择下架时间');
     if (!req.goods.img) this.throw('请上传商品主图');
   }
 
@@ -99,7 +103,9 @@ module.exports = class GoodsController extends Controller {
     };
 
     let start = new Date().getTime();
-    const { goods_id } = this.ctx.data;
+    const {
+      goods_id
+    } = this.ctx.data;
 
     // 产品数据
     let goods = await this.db.collection('usemall-goods').doc(goods_id).get();
@@ -142,7 +148,12 @@ module.exports = class GoodsController extends Controller {
     // 数据验证
     this.validate(this.ctx.data);
 
-    let { goods_id, goods, detail, skus } = this.ctx.data;
+    let {
+      goods_id,
+      goods,
+      detail,
+      skus
+    } = this.ctx.data;
     console.log('this.ctx.data', this.ctx.data);
     try {
       // 产品数据
@@ -236,7 +247,10 @@ module.exports = class GoodsController extends Controller {
     console.log('this.ctx.data', this.ctx.data);
     // 请求参数
     const req = this.ctx.data;
-    let { sid, keyword } = req;
+    let {
+      sid,
+      keyword
+    } = req;
 
     if (keyword) keyword = keyword.trim();
 

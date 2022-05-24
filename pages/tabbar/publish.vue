@@ -1,222 +1,307 @@
 <template>
   <view class="padding-lr" v-if="islogin">
+    <u-toast ref="uToast"></u-toast>
     <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
-    <u--form labelPosition="top" labelWidth="auto" :model="model" :rules="rules" ref="form1">
-      <u-form-item required label="作品名称" prop="publish.name" borderBottom ref="item1">
-        <u--input v-model="model.publish.name" border="none"></u--input>
+    <u--form labelPosition="top" labelWidth="auto" :model="publishData" :rules="rules" ref="form1">
+      <u-form-item required label="作品名称" prop="name" borderBottom>
+        <u--input v-model="publishData.name" border="none"></u--input>
       </u-form-item>
-      <u-form-item label="作品简介" prop="publish.desc" borderBottom ref="item1">
-        <u--input v-model="model.publish.desc" border="none"></u--input>
+      <u-form-item label="作品简介" prop="content" borderBottom>
+        <u--input v-model="publishData.content" border="none"></u--input>
       </u-form-item>
-      <u-form-item label="图片上传" prop="publish.image" borderBottom ref="item1">
-        <u-upload
-          :fileList="imgList"
-          @afterRead="afterRead"
-          @delete="deletePic"
-          uploadText="只能上传1张"
-          name="2"
-          :maxCount="1"
-          accept="image"
-        ></u-upload>
+      <u-form-item label="图片上传" prop="image" borderBottom>
+        <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" />
       </u-form-item>
-      <u-form-item label="视频上传" prop="publish.video" borderBottom ref="item1">
-        <u-upload
-          :fileList="videoList"
-          @afterRead="afterRead"
-          @delete="deletePic"
-          uploadText="只能上传1个"
-          name="2"
-          :maxCount="1"
-          accept="video"
-          :compressed="false"
-        ></u-upload>
-      </u-form-item>
-      <u-form-item required label="作品分类" prop="publish.classify" borderBottom ref="item1">
-        <u-radio-group class="x-s-c-w x-3" v-model="classifyRadioValue" placement="row" @change="groupChange">
-          <u-radio
-            class="padding-xs"
-            v-for="(item, index) in classifyRadioList"
-            :key="index"
-            :label="item.name"
-            :name="item.name"
-            @change="radioChange"
-          ></u-radio>
+      <u-form-item required label="作品分类" prop="fdata" borderBottom>
+        <u-radio-group class="x-s-c-w x-3" v-model="publishData.fdata" @change="fdataChange">
+          <u-radio class="padding-xs" v-for="(item, index) in fdatas" :key="index" :label="item.name" :name="item._id"></u-radio>
         </u-radio-group>
       </u-form-item>
-      <u-form-item required label="品类" prop="publish.subclassify" borderBottom ref="item1">
-        <u-radio-group class="x-s-c-w x-4" v-model="subclassifyRadioValue" placement="row" @change="groupChange">
-          <u-radio
-            class="padding-xs"
-            v-for="(item, index) in subclassifyRadioList"
-            :key="index"
-            :label="item.name"
-            :name="item.name"
-            @change="radioChange"
-          ></u-radio>
+      <u-form-item required label="子分类" prop="sdata" borderBottom>
+        <u-radio-group class="x-s-c-w x-4" @change="sdataChange">
+          <block v-for="(item, index) in sdatas" :key="index">
+            <u-radio class="padding-xs" v-if="item.pid == publishData.fdata" :label="item.name" :name="item._id"></u-radio>
+          </block>
         </u-radio-group>
       </u-form-item>
-      <u-form-item required label="授予权限" prop="publish.authType" borderBottom ref="item1">
-        <u-radio-group class="x-s-c-w" v-model="authTypeValue" placement="row" @change="groupChange">
-          <u-radio
-            class="padding-xs"
-            v-for="(item, index) in authTypeList"
-            :key="index"
-            :label="item.name"
-            :name="item.name"
-            @change="radioChange"
-          ></u-radio>
-        </u-radio-group>
-      </u-form-item>
-      <u-form-item required label="价格" prop="publish.price" borderBottom ref="item1">
-        <u--input v-model="model.publish.price" border="none" type="digit"></u--input>
+      <u-form-item required label="规格" prop="authType" borderBottom>
+        <view class="y-c-c text-center">
+          <view class="x-a-c x-3 w-full">
+            <view></view>
+            <view><text>价格</text></view>
+            <view><text>库存</text></view>
+          </view>
+
+          <view class="x-a-c x-3 w-full" v-for="(item, index) in publishData.spec" :key="index">
+            <view>
+              <text>{{ item }}</text>
+            </view>
+            <view>
+              <u--input v-model="publishData.skus[index].price" type="digit" inputAlign="right">
+                <u--text text="￥" slot="prefix" type="tips"></u--text>
+              </u--input>
+            </view>
+            <view><u--input v-model="publishData.skus[index].stock_num" type="number" inputAlign="right"></u--input></view>
+          </view>
+        </view>
       </u-form-item>
     </u--form>
+    <u-button type="primary" text="提交" @click="submitData"></u-button>
   </view>
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  export default {
-    computed: {
-      ...mapState(['islogin']),
-    },
-    data() {
-      return {
-        showSex: false,
-        model: {
-          publish: {
-            name: '',
-            desc: '',
-            image: '',
-            video: '',
-            classify: '',
-            subclassify: '',
-            authType: '',
-            price: '',
-          },
+const _goodscategory = 'usemall-goods-category'
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['islogin']),
+  },
+  data() {
+    return {
+      imageStyle: {
+        height: '200rpx',
+        width: '200rpx',
+      },
+
+      // 一级数据
+      fdatas: [],
+      // 二级数据
+      sdatas: [],
+
+      goods: {
+        cid: '',
+        cids: [],
+        sort: 0,
+        name: '',
+        name_pw: '',
+        limited: 0,
+        hot: 0,
+        tags: [],
+        price: 0,
+        market_price: 0,
+        limit: 0,
+        stock_num: 999,
+        sale_cnt: 0,
+        sale: 0,
+        visit_cnt: 0,
+        visit: 0,
+        collect_cnt: 0,
+        collect: 0,
+        share_cnt: 0,
+        share: 0,
+        state: '待审核',
+      },
+      detail: { desc_mobile: '' },
+      skus: [],
+
+      publishData: {
+        name: '',
+        content: '',
+        imgs: [],
+        fdata: '',
+        sdata: '',
+        spec_s: '规格',
+        spec: ['电子版(个人授权)', '纸质版(个人授权)', '电子版(商业授权)', '纸质版(商业授权)'],
+        skus: [],
+      },
+      rules: {
+        name: {
+          type: 'string',
+          required: true,
+          message: '请填写作品名称',
+          trigger: ['blur', 'change'],
         },
-        rules: {
-          'publish.name': {
-            type: 'string',
-            required: true,
-            message: '请填写姓名',
-            trigger: ['blur', 'change'],
-          },
-        },
-        imgList: [],
-        videoList: [],
-        classifyRadioList: [
-          {
-            name: '美术类',
-            disabled: false,
-          },
-          {
-            name: '设计类',
-            disabled: false,
-          },
-          {
-            name: '文学类',
-            disabled: false,
-          },
-        ],
-        subclassifyRadioList: [
-          {
-            name: '油画',
-            disabled: false,
-          },
-          {
-            name: '水彩',
-            disabled: false,
-          },
-          {
-            name: '国画',
-            disabled: false,
-          },
-          {
-            name: '素描',
-            disabled: false,
-          },
-          {
-            name: '雕塑',
-            disabled: false,
-          },
-          {
-            name: '摄影',
-            disabled: false,
-          },
-          {
-            name: '书法',
-            disabled: false,
-          },
-          {
-            name: '漆画',
-            disabled: false,
-          },
-          {
-            name: '版画',
-            disabled: false,
-          },
-          {
-            name: '数绘',
-            disabled: false,
-          },
-          {
-            name: '其他',
-            disabled: false,
-          },
-        ],
-        authTypeList: [
-          {
-            name: '商业使用',
-            disabled: false,
-          },
-          {
-            name: '私人使用',
-            disabled: false,
-          },
-        ],
-        classifyRadioValue: '',
-        subclassifyRadioValue: '',
-        authTypeValue: '',
-      };
+      },
+    }
+  },
+  onLoad() {
+    this.loadData()
+    this.affirm()
+  },
+  onShow() {
+    if (!this.islogin) {
+      this.tologin()
+      return
+    }
+  },
+  mounted() {
+    // #ifdef H5 || MP-360
+    this.navHeight = 50
+    // #endif
+  },
+  methods: {
+    async loadData() {
+      this.$db[_goodscategory].tolist().then(res => {
+        if (res.code === 200) {
+          this.fdatas = []
+          this.sdatas = []
+
+          res.datas.forEach(item => {
+            if (!item.pid && item.state == '启用') {
+              // pid为父级id, 不存在 pid || pid=0 为一级分类
+              this.fdatas.push(item)
+            } else {
+              // 二级分类
+              this.sdatas.push(item)
+            }
+          })
+
+          if (this.fdatas.length > 0) {
+            this.publishData.fdata = this.fdatas[0]._id
+          }
+        }
+      })
     },
-    methods: {
-      // 跳转登录页
-      tologin() {
-        this.$api.tologin();
-      },
-      groupChange(n) {
-        console.log('groupChange', n);
-      },
-      radioChange(n) {
-        console.log('radioChange', n);
-      },
+    init(callback) {
+      this.publishData = {
+        name: '',
+        content: '',
+        imgs: [],
+        fdata: '',
+        sdata: '',
+        spec_s: '规格',
+        spec: ['电子版(个人授权)', '纸质版(个人授权)', '电子版(商业授权)', '纸质版(商业授权)'],
+        skus: [],
+      }
+      callback()
     },
-    onLoad() {},
-    onShow() {
-      if (!this.islogin) {
-        this.tologin();
-        return;
+    affirm() {
+      // 规格
+      if (this.publishData.spec.length > 0) {
+        this.publishData.spec.forEach((spec, spec_idx) => {
+          if (!this.publishData.skus.find(x => x.spec == spec))
+            this.publishData.skus.push({
+              price: '',
+              stock_num: '',
+              spec: spec,
+              spec_s: spec_idx,
+            })
+        })
+        this.publishData.skus = this.publishData.skus.filter(x => this.publishData.spec.find(s => s == x.spec))
       }
     },
-    mounted() {
-      // #ifdef H5 || MP-360
-      this.navHeight = 50;
-      // #endif
+    submitData() {
+      uni.showLoading({
+        mask: true,
+      })
+
+      if (this.publishData.imgs.length < 1) {
+        uni.showLoading({
+          title: '至少上传一张主图',
+          icon: 'none',
+          duration: 2000,
+        })
+        return
+      }
+      if (!this.publishData.content) {
+        uni.showLoading({
+          title: '请输入作品简介',
+          icon: 'none',
+          duration: 2000,
+        })
+        return
+      }
+      if (!this.publishData.sdata) {
+        uni.showLoading({
+          title: '请选择子分类',
+          icon: 'none',
+          duration: 2000,
+        })
+        return
+      }
+
+      this.publishData.skus.forEach(row => {
+        if (!row.price || !row.stock_num) {
+          uni.showLoading({
+            title: '请输入价格和库存',
+            icon: 'none',
+            duration: 2000,
+          })
+          return
+        }
+      })
+
+      this.goods.name = this.publishData.name
+      this.goods.cid = this.publishData.sdata
+      this.goods.cids.push(this.publishData.fdata, this.publishData.sdata)
+      this.goods.price = this.publishData.skus[0].price * 100
+      this.goods.market_price = this.publishData.skus[3].price * 100
+      this.goods.skus = JSON.stringify({
+        spec_s: this.publishData.spec_s,
+        spec: this.publishData.spec,
+      })
+      this.goods.imgs = this.publishData.imgs
+      this.goods.img = this.publishData.imgs[0].url
+      for (const key in this.goods) {
+        if (this.goods.hasOwnProperty(key)) {
+          if (typeof this.goods[key] === 'string') {
+            if (/^[0-9]*$/.test(this.goods[key])) {
+              this.goods[key] = parseInt(this.goods[key])
+            } else if (/^[0-9]+(.[0-9]{1,3})?$/.test(this.goods[key])) {
+              this.goods[key] = parseFloat(this.goods[key])
+            }
+          }
+        }
+      }
+
+      let obj = this.publishData.skus
+      let copy = JSON.parse(JSON.stringify(obj))
+      copy.forEach(row => {
+        row.price = row.price * 100
+      })
+      this.skus = copy
+
+      this.publishData.imgs.forEach(img => {
+        this.detail.desc_mobile += `<p><img style="max-width:100%;display:block;" src="${img.url}" ></p>`
+      })
+
+      let goods = this.goods
+      let detail = this.detail
+      let skus = this.skus
+      this.$func.useadmin
+        .call('goods/add', {
+          goods,
+          detail,
+          skus,
+        })
+        .then(res => {
+          console.log('res', res)
+          if (res.code == 200) {
+            uni.showToast({
+              title: '提交成功',
+              duration: 2000,
+            })
+          }
+          this.init(this.affirm)
+          uni.hideLoading()
+        })
     },
-  };
+
+    // 跳转登录页
+    tologin() {
+      this.$api.tologin()
+    },
+    fdataChange(e) {
+      this.publishData.fdata = e
+    },
+    sdataChange(e) {
+      this.publishData.sdata = e
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-  .u-radio-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+.u-radio-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 
-    > view {
-      width: 33.3%;
-      padding: 10rpx;
-    }
+  > view {
+    width: 33.3%;
+    padding: 10rpx;
   }
+}
 </style>

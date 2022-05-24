@@ -17,25 +17,7 @@
       </view>
     </view>
 
-    <u-tabs
-      :list="list4"
-      lineWidth="20"
-      lineHeight="7"
-      :scrollable="true"
-      :lineColor="`url(${lineBg}) 100% 100%`"
-      :activeStyle="{
-        color: '#303133',
-        fontWeight: 'bold',
-        transform: 'scale(1.05)',
-        fontSize: '28rpx',
-      }"
-      :inactiveStyle="{
-        color: '#606266',
-        transform: 'scale(1)',
-        fontSize: '28rpx',
-      }"
-      itemStyle="height: 70rpx; white-space: nowrap; padding: auto;"
-    ></u-tabs>
+    <top-tab :tabList="tabList" @tabClick="tabClick"></top-tab>
 
     <view class="x-c-s x-2 padding-xs border-radius">
       <view class="y-s-c">
@@ -99,109 +81,145 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        list4: [
-          {
-            name: '全部',
-          },
-          {
-            name: '油画',
-          },
-          {
-            name: '水彩',
-          },
-          {
-            name: '国画',
-          },
-          {
-            name: '素描',
-          },
-          {
-            name: '雕塑',
-          },
-          {
-            name: '摄影',
-          },
-          {
-            name: '数绘',
-          },
-        ],
-        lineBg:
-          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAOCAYAAABdC15GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHgBzZNRTsJAEIb/WTW+lpiY+FZPIDew3ABP4GJ8hxsI9zBpOYHeQDwBPQI+mRiRvpLojtPdYhCorQqF/6GdbGd2vvwzBXZcNAt4oj1ANeUoAT5iqkUjbEFLHNmhD1YPEvpZ3ghkGlVDCkc94/BmHMq998I5ONiY1ZBfpKAyuOtgAc5yOEDmYEWNh32BHF91sGHZHmwW4azciN9aQwnz3SJEgOmte+R2tdLprTYoa50mvuomlLpD4Y3oQZnov6D2RzCqI93bWOHaEmAGqQUyRBlZR1WfarcD/EJ2z8DtzDGvsMCwpm8XOCfDUsVOCYhiqRxI/CTQo4UOvjzO7Pow18vfywneuUHHUUxLn55lLw5JFpZ8bEUcY8oXdOLWiHLTxvoGpLqoUmy6dBT15o/ox3znpoycAmxUsiJTbs1cmxeVKp+0zmFIS7bGWiVghC7Vwse8jFKAX9eljh4ggKLLv7uaQvG9/F59Oo2SouxPu7OTCxN/s8wAAAAASUVORK5CYII=',
+const _goodscategory = 'usemall-goods-category'
+export default {
+  data() {
+    return {
+      // 当前选中分类ID
+      cid: 0,
+      // 一级数据
+      fdatas: [],
+      // 二级数据
+      sdatas: [],
 
-        title_id: 0,
+      tabList: [
+        {
+          name: '全部',
+        },
+        {
+          name: '油画',
+        },
+        {
+          name: '水彩',
+        },
+        {
+          name: '国画',
+        },
+        {
+          name: '素描',
+        },
+        {
+          name: '雕塑',
+        },
+        {
+          name: '摄影',
+        },
+        {
+          name: '数绘',
+        },
+      ],
 
-        scrollTop: 0,
-        navHeight: 0,
-      };
+      title_id: 0,
+
+      scrollTop: 0,
+      navHeight: 0,
+    }
+  },
+  onLoad() {
+    this.loadData()
+  },
+  mounted() {
+    // #ifdef H5 || MP-360
+    this.navHeight = 50
+    // #endif
+  },
+  onPageScroll(e) {
+    // this.scrollTop = e.scrollTop
+    this.$refs.usetop.change(e.scrollTop)
+  },
+  methods: {
+    async loadData() {
+      this.$db[_goodscategory].tolist().then(res => {
+        if (res.code === 200) {
+          this.fdatas = []
+          this.sdatas = []
+
+          res.datas.forEach(item => {
+            if (!item.pid && item.state == '启用') {
+              // pid为父级id, 不存在 pid || pid=0 为一级分类
+              this.fdatas.push(item)
+            } else {
+              // 二级分类
+              this.sdatas.push(item)
+            }
+          })
+
+          if (this.fdatas.length > 0) {
+            this.cid = this.fdatas[0]._id
+          }
+        }
+      })
     },
-    onPageScroll(e) {
-      // this.scrollTop = e.scrollTop
-      this.$refs.usetop.change(e.scrollTop);
+
+    tabClick(e) {
+      console.log(e)
     },
-    methods: {
-      // 跳转个人
-      user() {
-        uni.navigateTo({
-          url: `/pages/shopping/user`,
-        });
-      },
-      // 搜索
-      search() {
-        this.$api.msg('搜索');
-      },
-      pitch(index) {
-        this.title_id = index;
-      },
-      // 跳转详情页
-      dongt(options) {
-        uni.navigateTo({
-          url: `/pages/shopping/detail?id=${options}`,
-        });
-      },
+
+    // 跳转个人
+    user() {
+      uni.navigateTo({
+        url: `/pages/shopping/user`,
+      })
     },
-    mounted() {
-      // #ifdef H5 || MP-360
-      this.navHeight = 50;
-      // #endif
+    // 搜索
+    search() {
+      this.$api.msg('搜索')
     },
-  };
+    pitch(index) {
+      this.title_id = index
+    },
+    // 跳转详情页
+    dongt(options) {
+      uni.navigateTo({
+        url: `/pages/shopping/detail?id=${options}`,
+      })
+    },
+  },
+}
 </script>
 
 <style lang="less">
-  page {
-    background-color: #f5f5f5;
-  }
+page {
+  background-color: #f5f5f5;
+}
 
-  .active {
-    color: #feaa30;
-    font-weight: bold;
-    font-size: 34rpx;
-  }
+.active {
+  color: #feaa30;
+  font-weight: bold;
+  font-size: 34rpx;
+}
 
-  .goodsContent {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.goodsContent {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
-    .ft-dark {
-      color: #585858;
-    }
+  .ft-dark {
+    color: #585858;
   }
+}
 
-  .goodsLeftList,
-  .goodsRightList {
-    width: 50%;
-    overflow: hidden;
-  }
+.goodsLeftList,
+.goodsRightList {
+  width: 50%;
+  overflow: hidden;
+}
 
-  .goodsLeftList {
-    margin-right: 10rpx;
-  }
+.goodsLeftList {
+  margin-right: 10rpx;
+}
 
-  .goodsRightList {
-    margin-left: 10rpx;
-  }
+.goodsRightList {
+  margin-left: 10rpx;
+}
 </style>
