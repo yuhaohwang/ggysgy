@@ -190,7 +190,7 @@ export default {
         uni.showLoading({
           title: '至少上传一张主图',
           icon: 'none',
-          duration: 2000,
+          duration: 1000,
         })
         return
       }
@@ -198,7 +198,7 @@ export default {
         uni.showLoading({
           title: '请输入作品简介',
           icon: 'none',
-          duration: 2000,
+          duration: 1000,
         })
         return
       }
@@ -206,7 +206,7 @@ export default {
         uni.showLoading({
           title: '请选择子分类',
           icon: 'none',
-          duration: 2000,
+          duration: 1000,
         })
         return
       }
@@ -216,7 +216,7 @@ export default {
           uni.showLoading({
             title: '请输入价格和库存',
             icon: 'none',
-            duration: 2000,
+            duration: 1000,
           })
           return
         }
@@ -268,13 +268,18 @@ export default {
         .then(res => {
           console.log('res', res)
           if (res.code == 200) {
+            this.init(this.affirm)
             uni.showToast({
               title: '提交成功',
-              duration: 2000,
+              duration: 1000,
+            })
+          } else {
+            uni.showToast({
+              title: res.msg,
+              icon: 'none',
+              duration: 1000,
             })
           }
-          this.init(this.affirm)
-          uni.hideLoading()
         })
     },
 
