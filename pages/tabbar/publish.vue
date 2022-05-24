@@ -9,7 +9,7 @@
       <u-form-item label="作品简介" prop="content" borderBottom>
         <u-input v-model="publishData.content" border="none"></u-input>
       </u-form-item>
-      <u-form-item label="图片上传" prop="image" borderBottom>
+      <u-form-item required label="图片上传" prop="imgs" borderBottom>
         <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" />
       </u-form-item>
       <u-form-item required label="作品分类" prop="fdata" borderBottom>
@@ -182,44 +182,51 @@ export default {
       }
     },
     submitData() {
-      uni.showLoading({
-        mask: true,
-      })
+      if (!this.publishData.name) {
+        this.$refs.uToast.show({
+          type: 'error',
+          message: '请输入作品名称',
+        })
+        return
+      }
+
+      // if (!this.publishData.content) {
+      //   this.$refs.uToast.show({
+      //     type: 'error',
+      //     message: '请输入作品简介',
+      //   })
+      //   return
+      // }
 
       if (this.publishData.imgs.length < 1) {
-        uni.showLoading({
-          title: '至少上传一张主图',
-          icon: 'none',
-          duration: 1000,
+        this.$refs.uToast.show({
+          type: 'error',
+          message: '请上传图片',
         })
         return
       }
-      if (!this.publishData.content) {
-        uni.showLoading({
-          title: '请输入作品简介',
-          icon: 'none',
-          duration: 1000,
-        })
-        return
-      }
+
       if (!this.publishData.sdata) {
-        uni.showLoading({
-          title: '请选择子分类',
-          icon: 'none',
-          duration: 1000,
+        this.$refs.uToast.show({
+          type: 'error',
+          message: '请选择子分类',
         })
         return
       }
 
       this.publishData.skus.forEach(row => {
         if (!row.price || !row.stock_num) {
-          uni.showLoading({
-            title: '请输入价格和库存',
-            icon: 'none',
-            duration: 1000,
+          this.$refs.uToast.show({
+            type: 'error',
+            message: '请输入价格库存',
           })
           return
         }
+      })
+
+      this.$refs.uToast.show({
+        type: 'loading',
+        message: '正在提交',
       })
 
       this.goods.name = this.publishData.name
@@ -269,20 +276,16 @@ export default {
           console.log('res', res)
           if (res.code == 200) {
             this.init(this.affirm)
-            uni.showToast({
-              title: '提交成功',
-              duration: 1000,
+            this.$refs.uToast.show({
+              type: 'success',
+              message: '发布成功(待审核)',
             })
           } else {
-            uni.showToast({
-              title: res.msg,
-              icon: 'none',
-              duration: 1000,
+            this.$refs.uToast.show({
+              type: 'error',
+              message: res.msg,
             })
           }
-        })
-        .finally(res => {
-          uni.hideLoading()
         })
     },
 
