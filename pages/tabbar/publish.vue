@@ -4,10 +4,10 @@
     <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
     <u--form labelPosition="top" labelWidth="auto" :model="publishData" :rules="rules" ref="form1">
       <u-form-item required label="作品名称" prop="name" borderBottom>
-        <u--input v-model="publishData.name" border="none"></u--input>
+        <u-input v-model="publishData.name" border="none"></u-input>
       </u-form-item>
       <u-form-item label="作品简介" prop="content" borderBottom>
-        <u--input v-model="publishData.content" border="none"></u--input>
+        <u-input v-model="publishData.content" border="none"></u-input>
       </u-form-item>
       <u-form-item label="图片上传" prop="image" borderBottom>
         <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" />
@@ -37,11 +37,11 @@
               <text>{{ item }}</text>
             </view>
             <view>
-              <u--input v-model="publishData.skus[index].price" type="digit" inputAlign="right">
+              <u-input v-model="publishData.skus[index].price" type="digit" inputAlign="right">
                 <u--text text="￥" slot="prefix" type="tips"></u--text>
-              </u--input>
+              </u-input>
             </view>
-            <view><u--input v-model="publishData.skus[index].stock_num" type="number" inputAlign="right"></u--input></view>
+            <view><u-input v-model="publishData.skus[index].stock_num" type="number" inputAlign="right"></u-input></view>
           </view>
         </view>
       </u-form-item>
@@ -280,6 +280,9 @@ export default {
               duration: 1000,
             })
           }
+        })
+        .finally(res => {
+          uni.hideLoading()
         })
     },
 
