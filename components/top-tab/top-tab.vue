@@ -1,9 +1,11 @@
 <template>
   <u-tabs
+    ref="uTabs"
+    :current="current"
     :list="tabList"
     lineWidth="20"
     lineHeight="7"
-    :scrollable="false"
+    :scrollable="scrollable"
     :lineColor="`url(${lineBg}) 100% 100%`"
     :activeStyle="{
       color: '#303133',
@@ -17,7 +19,7 @@
       fontSize: '28rpx',
     }"
     itemStyle="height: 70rpx; white-space: nowrap; padding: auto;"
-    @click="tabClick"
+    @change="tabchange"
   ></u-tabs>
 </template>
 
@@ -28,6 +30,14 @@ export default {
     tabList: {
       require: true,
     },
+    scrollable: {
+      require: false,
+      default: false,
+    },
+    current: {
+      require: false,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -35,9 +45,16 @@ export default {
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAOCAYAAABdC15GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHgBzZNRTsJAEIb/WTW+lpiY+FZPIDew3ABP4GJ8hxsI9zBpOYHeQDwBPQI+mRiRvpLojtPdYhCorQqF/6GdbGd2vvwzBXZcNAt4oj1ANeUoAT5iqkUjbEFLHNmhD1YPEvpZ3ghkGlVDCkc94/BmHMq998I5ONiY1ZBfpKAyuOtgAc5yOEDmYEWNh32BHF91sGHZHmwW4azciN9aQwnz3SJEgOmte+R2tdLprTYoa50mvuomlLpD4Y3oQZnov6D2RzCqI93bWOHaEmAGqQUyRBlZR1WfarcD/EJ2z8DtzDGvsMCwpm8XOCfDUsVOCYhiqRxI/CTQo4UOvjzO7Pow18vfywneuUHHUUxLn55lLw5JFpZ8bEUcY8oXdOLWiHLTxvoGpLqoUmy6dBT15o/ox3znpoycAmxUsiJTbs1cmxeVKp+0zmFIS7bGWiVghC7Vwse8jFKAX9eljh4ggKLLv7uaQvG9/F59Oo2SouxPu7OTCxN/s8wAAAAASUVORK5CYII=',
     }
   },
+  watch: {
+    current: {
+      handler(newValue, oldValue) {
+        this.$refs.uTabs.clickHandler(this.tabList[newValue], newValue)
+      },
+    },
+  },
   methods: {
-    tabClick(e) {
-      this.$emit('tabClick', e)
+    tabchange(e) {
+      this.$emit('tab-change', e)
     },
   },
 }

@@ -1,5 +1,6 @@
 <template>
   <view class="">
+    <u-toast ref="uToast"></u-toast>
     <view class="x-b-c padding-xs">
       <image
         src="/static/images/user/default.png"
@@ -17,63 +18,70 @@
       </view>
     </view>
 
-    <top-tab :tabList="tabList" @tabClick="tabClick"></top-tab>
+    <top-tab :tabList="sdatas" :scrollable="true" ref="uTabs" :current="current" @tab-change="tabChange"></top-tab>
 
-    <view class="x-c-s x-2 padding-xs border-radius">
-      <view class="y-s-c">
-        <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
-          <view class="padding-xs w-full" @click="dongt(item.id)">
-            <view class="bg-main border-radius">
-              <image
-                src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/3db0e3e9-4af6-41e8-af00-92996a87ee3a.jpg"
-                style="width: 100%; max-height: 350rpx;"
-                mode="widthFix"
-              ></image>
+    <swiper style="height: 100vh;" :current="current" @animationfinish="animationfinish">
+      <swiper-item v-for="(item, index) in sdatas" :key="index">
+        <scroll-view scroll-y @scrolltolower="onReachBottom">
+          <use-empty v-if="item.empty" e-style="round" tip="无商品数据"></use-empty>
+          <view v-show="!item.empty" class="x-c-s x-2 padding-xs border-radius">
+            <view class="y-s-c waterfall_left">
+              <block v-for="(item, index) in item.goodsLeftList" :key="index">
+                <view class="padding-xs w-full" @click="togoods(item)">
+                  <view class="bg-main border-radius">
+                    <image :src="item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
 
-              <view class="padding-lr-sm margin-top-sm clamp-2">漆画</view>
+                    <view class="padding-lr-sm margin-top-sm clamp-2">{{ item.name }}</view>
 
-              <view class="x-b-c padding-lr-sm margin-tb-sm">
-                <view class="x-c-c">
-                  <image src="/static/images/user/default.png" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx;"></image>
-                  <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                    <view class="x-b-c padding-lr-sm margin-tb-sm">
+                      <view class="x-c-c">
+                        <image
+                          src="/static/images/user/default.png"
+                          class="border-radius-c headimg"
+                          style="width: 50rpx; height: 50rpx;"
+                        ></image>
+                        <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                      </view>
+                      <view class="x-c-c">
+                        <view class="iconfont iconaixin"></view>
+                        <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                      </view>
+                    </view>
+                  </view>
                 </view>
-                <view class="x-c-c">
-                  <view class="iconfont iconaixin"></view>
-                  <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+              </block>
+            </view>
+
+            <view class="y-s-c waterfall_right">
+              <block v-for="(item, index) in item.goodsRightList" :key="index">
+                <view class="padding-xs w-full" @click="togoods(item)">
+                  <view class="bg-main border-radius">
+                    <image :src="item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
+
+                    <view class="padding-lr-sm margin-top-sm clamp-2">{{ item.name }}</view>
+
+                    <view class="x-b-c padding-lr-sm margin-tb-sm">
+                      <view class="x-c-c">
+                        <image
+                          src="/static/images/user/default.png"
+                          class="border-radius-c headimg"
+                          style="width: 50rpx; height: 50rpx;"
+                        ></image>
+                        <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                      </view>
+                      <view class="x-c-c">
+                        <view class="iconfont iconaixin"></view>
+                        <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                      </view>
+                    </view>
+                  </view>
                 </view>
-              </view>
+              </block>
             </view>
           </view>
-        </block>
-      </view>
-
-      <view class="y-s-c">
-        <block v-for="(item, index) in [1, 1, 1, 1, 1, 1]" :key="index">
-          <view class="padding-xs w-full" @click="dongt(item.id)">
-            <view class="bg-main border-radius">
-              <image
-                src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/d1888b99-0dbd-47dc-937f-c0717f366f62.jpg"
-                style="width: 100%; max-height: 350rpx;"
-                mode="widthFix"
-              ></image>
-
-              <view class="padding-lr-sm margin-top-sm clamp-2">油画</view>
-
-              <view class="x-b-c padding-lr-sm margin-tb-sm">
-                <view class="x-c-c">
-                  <image src="/static/images/user/default.png" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx;"></image>
-                  <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
-                </view>
-                <view class="x-c-c">
-                  <view class="iconfont iconaixin"></view>
-                  <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
-                </view>
-              </view>
-            </view>
-          </view>
-        </block>
-      </view>
-    </view>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
 
     <!-- 置顶 -->
     <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop>
@@ -82,47 +90,48 @@
 
 <script>
 const _goodscategory = 'usemall-goods-category'
+const _goods = 'usemall-goods'
 export default {
   data() {
     return {
+      current: 0,
+
       // 当前选中分类ID
       cid: 0,
-      // 一级数据
-      fdatas: [],
       // 二级数据
       sdatas: [],
-
-      tabList: [
-        {
-          name: '全部',
-        },
-        {
-          name: '油画',
-        },
-        {
-          name: '水彩',
-        },
-        {
-          name: '国画',
-        },
-        {
-          name: '素描',
-        },
-        {
-          name: '雕塑',
-        },
-        {
-          name: '摄影',
-        },
-        {
-          name: '数绘',
-        },
-      ],
 
       title_id: 0,
 
       scrollTop: 0,
       navHeight: 0,
+
+      // 商品列表
+      prevGoodsDatas: [],
+      // 左侧商品列表
+      prevGoodsLeftList: [],
+      // 右侧商品列表
+      prevGoodsRightList: [],
+      // 组件数据备份
+      prevNewList: [],
+
+      // 商品列表
+      nowGoodsDatas: [],
+      // 左侧商品列表
+      nowGoodsLeftList: [],
+      // 右侧商品列表
+      nowGoodsRightList: [],
+      // 组件数据备份
+      nowNewList: [],
+
+      // 商品列表
+      nextGoodsDatas: [],
+      // 左侧商品列表
+      nextGoodsLeftList: [],
+      // 右侧商品列表
+      nextGoodsRightList: [],
+      // 组件数据备份
+      nextNewList: [],
     }
   },
   onLoad() {
@@ -134,35 +143,198 @@ export default {
     // #endif
   },
   onPageScroll(e) {
+    // 兼容iOS端下拉时顶部漂移
+    if (e.scrollTop >= 0) {
+      this.headerPosition = 'fixed'
+    } else {
+      this.headerPosition = 'absolute'
+    }
     // this.scrollTop = e.scrollTop
     this.$refs.usetop.change(e.scrollTop)
+  },
+  //下拉刷新
+  onPullDownRefresh() {
+    const cidx = this.current
+    this.sdatas[cidx].goodsDatas = []
+    this.sdatas[cidx].loadmoreType = 'more'
+    this.loadGoodsDatas('refresh')
+  },
+  //加载更多
+  onReachBottom() {
+    this.loadGoodsDatas()
   },
   methods: {
     async loadData() {
       this.$db[_goodscategory].tolist().then(res => {
         if (res.code === 200) {
-          this.fdatas = []
-          this.sdatas = []
+          const temp = [
+            {
+              _id: 0,
+              name: '全部',
+            },
+          ]
 
           res.datas.forEach(item => {
-            if (!item.pid && item.state == '启用') {
-              // pid为父级id, 不存在 pid || pid=0 为一级分类
-              this.fdatas.push(item)
-            } else {
+            if (item.pid && item.state == '启用') {
               // 二级分类
-              this.sdatas.push(item)
+              temp.push(item)
             }
           })
 
-          if (this.fdatas.length > 0) {
-            this.cid = this.fdatas[0]._id
+          if (temp.length > 0) {
+            temp.forEach(item => {
+              // 空白页
+              item.empty = false
+              // 商品列表
+              item.goodsDatas = []
+              // 左侧商品列表
+              item.goodsLeftList = []
+              // 右侧商品列表
+              item.goodsRightList = []
+              // 组件数据备份
+              item.newList = []
+              // 加载更多状态
+              item.loadmoreType = 'more'
+              // 商品请求数据
+              item.reqdata = {
+                rows: 20,
+                page: 1,
+              }
+            })
+            this.sdatas = temp
+            this.loadGoodsDatas()
           }
         }
       })
     },
 
-    tabClick(e) {
-      console.log(e)
+    // 加载商品，下拉刷新|上拉加载
+    async loadGoodsDatas(type = 'add', loading) {
+      const cidx = this.current
+
+      if (this.sdatas[cidx].loadmoreType === 'loading') {
+        // 防止重复加载
+        return
+      }
+
+      if (loading == 1 || type == 'refresh') {
+        // 从首页开始加载
+        this.sdatas[cidx].reqdata.page = 1
+      }
+
+      // 没有更多直接返回
+      if (type === 'add') {
+        console.log(this.sdatas[cidx].loadmoreType)
+        if (this.sdatas[cidx].loadmoreType === 'nomore') {
+          return
+        }
+        // 加载中
+        this.sdatas[cidx].loadmoreType = 'loading'
+      } else {
+        // 更多
+        this.sdatas[cidx].loadmoreType = 'more'
+      }
+
+      this.$refs.uToast.show({
+        type: 'loading',
+      })
+
+      // 根据当前 cid 加载商品数据列表
+      this.sdatas[cidx].reqdata.cid = this.cid
+      this.$db[_goods]
+        .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids`)
+        .tolist(this.sdatas[cidx].reqdata)
+        .then(res => {
+          if (res.code === 200) {
+            if (res.datas && res.datas.length > 0) {
+              if (loading == 1 || type == 'refresh') {
+                this.sdatas[cidx].goodsDatas = []
+              }
+              let _datas = []
+              res.datas.forEach(row => {
+                if (row.state === '销售中') {
+                  _datas.push(row)
+                }
+              })
+              this.sdatas[cidx].goodsDatas = [...this.sdatas[cidx].goodsDatas, ..._datas]
+
+              if (res.datas.length >= this.sdatas[cidx].reqdata.rows) {
+                this.sdatas[cidx].reqdata.page++
+                this.sdatas[cidx].loadmoreType = 'more'
+              } else {
+                this.sdatas[cidx].loadmoreType = 'nomore'
+              }
+            } else {
+              this.sdatas[cidx].loadmoreType = 'nomore'
+            }
+          }
+
+          this.sdatas[cidx].empty = this.sdatas[cidx].goodsDatas.length === 0 ? true : false
+          this.touchOff()
+
+          if (loading == 1) {
+            uni.hideLoading()
+          } else if (type == 'refresh') {
+            uni.stopPullDownRefresh()
+          }
+
+          this.$refs.uToast.show({
+            type: 'loading',
+            duration: 0,
+          })
+        })
+    },
+
+    // 触发重新排列
+    touchOff() {
+      console.log('touchOff')
+      const cidx = this.current
+      this.sdatas[cidx].newList = [...this.sdatas[cidx].goodsDatas]
+      this.sdatas[cidx].goodsLeftList = []
+      this.sdatas[cidx].goodsRightList = []
+
+      this.$nextTick(function() {
+        if (this.sdatas[cidx].newList.length != 0) {
+          this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift()) //触发排列
+        }
+      })
+    },
+
+    // 计算排列
+    considerPush() {
+      const cidx = this.current
+      if (this.sdatas[cidx].newList.length == 0) return //没有数据了
+      var query = uni.createSelectorQuery().in(this)
+      query.selectAll('.waterfall_left').boundingClientRect()
+      query.selectAll('.waterfall_right').boundingClientRect()
+      query.exec(res => {
+        let leftH = res[0].length ? res[0][cidx].height : 0 //防止查询不到做个处理
+        let rightH = res[1].length ? res[1][cidx].height : 0
+        if (leftH <= rightH) {
+          // 相等 || 左边小
+          this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift())
+        } else {
+          // 右边小
+          this.sdatas[cidx].goodsRightList.push(this.sdatas[cidx].newList.shift())
+        }
+      })
+    },
+
+    // tabs通知swiper切换
+    tabChange(e) {
+      const cidx = e.index
+      this.cid = e._id
+      this.current = cidx
+      this.sdatas[cidx].goodsDatas = []
+      this.sdatas[cidx].loadmoreType = 'more'
+      this.loadGoodsDatas('refresh')
+    },
+
+    // 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
+    // swiper滑动结束，分别设置tabs和swiper的状态
+    animationfinish(e) {
+      let current = e.detail.current
+      this.current = current
     },
 
     // 跳转个人
@@ -182,6 +354,18 @@ export default {
     dongt(options) {
       uni.navigateTo({
         url: `/pages/shopping/detail?id=${options}`,
+      })
+    },
+    // 跳转商品详情
+    togoods(item) {
+      this.$api.togoods({
+        id: item._id,
+      })
+    },
+    // 跳转商品列表
+    togoodslist(item) {
+      this.$api.togoodslist({
+        cid: item._id,
       })
     },
   },

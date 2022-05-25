@@ -30,7 +30,7 @@
           <view class="dflex-s dflex-wrap-w bg-main">
             <block v-for="item in sdatas" :key="item._id">
               <view class="item padding-bottom-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="togoodslist(item)">
-                <image :lazy-load="true" :src="item.img"></image>
+                <image :lazy-load="true" :src="item.img || '/static/images/user/default.png'"></image>
                 <text class="tac clamp margin-top-sm">{{ item.name }}</text>
               </view>
             </block>
@@ -168,31 +168,36 @@ export default {
   },
   methods: {
     async loadData(callback) {
-      this.$db[_goodscategory].tolist().then(res => {
-        if (res.code === 200) {
-          this.fdatas = []
-          this.sdatas = []
+      this.$db[_goodscategory]
+        .tolist({
+          rows: 500,
+          page: 1,
+        })
+        .then(res => {
+          if (res.code === 200) {
+            this.fdatas = []
+            this.sdatas = []
 
-          res.datas.forEach(item => {
-            if (!item.pid && item.state == '启用') {
-              // pid为父级id, 不存在 pid || pid=0 为一级分类
-              this.fdatas.push(item)
-            } else {
-              // 二级分类
-              this.sdatas.push(item)
+            res.datas.forEach(item => {
+              if (!item.pid && item.state == '启用') {
+                // pid为父级id, 不存在 pid || pid=0 为一级分类
+                this.fdatas.push(item)
+              } else {
+                // 二级分类
+                this.sdatas.push(item)
+              }
+            })
+
+            if (this.fdatas.length > 0) {
+              this.cid = this.fdatas[0]._id
             }
-          })
 
-          if (this.fdatas.length > 0) {
-            this.cid = this.fdatas[0]._id
+            if (typeof callback === 'function') {
+              // 数据加载完成回调函数
+              callback()
+            }
           }
-
-          if (typeof callback === 'function') {
-            // 数据加载完成回调函数
-            callback()
-          }
-        }
-      })
+        })
     },
     // 加载商品数据
     loadGoodsDatas() {

@@ -116,7 +116,6 @@ export default {
     }
   },
   onLoad() {
-    this.loadData()
     this.affirm()
   },
   onShow() {
@@ -125,33 +124,56 @@ export default {
       return
     }
   },
+  onReady() {
+    this.loadData()
+  },
   mounted() {
     // #ifdef H5 || MP-360
     this.navHeight = 50
     // #endif
   },
+  //下拉刷新
+  onPullDownRefresh() {
+    this.loadData()
+    this.init(this.affirm)
+  },
   methods: {
     async loadData() {
-      this.$db[_goodscategory].tolist().then(res => {
-        if (res.code === 200) {
-          this.fdatas = []
-          this.sdatas = []
-
-          res.datas.forEach(item => {
-            if (!item.pid && item.state == '启用') {
-              // pid为父级id, 不存在 pid || pid=0 为一级分类
-              this.fdatas.push(item)
-            } else {
-              // 二级分类
-              this.sdatas.push(item)
-            }
-          })
-
-          if (this.fdatas.length > 0) {
-            this.publishData.fdata = this.fdatas[0]._id
-          }
-        }
+      this.$refs.uToast.show({
+        type: 'loading',
       })
+
+      this.$db[_goodscategory]
+        .tolist({
+          rows: 500,
+          page: 1,
+        })
+        .then(res => {
+          if (res.code === 200) {
+            this.fdatas = []
+            this.sdatas = []
+
+            res.datas.forEach(item => {
+              if (!item.pid && item.state == '启用') {
+                // pid为父级id, 不存在 pid || pid=0 为一级分类
+                this.fdatas.push(item)
+              } else if (item.pid && item.state == '启用') {
+                // 二级分类
+                this.sdatas.push(item)
+              }
+            })
+
+            if (this.fdatas.length > 0) {
+              this.publishData.fdata = this.fdatas[0]._id
+            }
+
+            this.$refs.uToast.show({
+              type: 'loading',
+              duration: 0,
+            })
+            uni.stopPullDownRefresh()
+          }
+        })
     },
     init(callback) {
       this.publishData = {
@@ -172,8 +194,8 @@ export default {
         this.publishData.spec.forEach((spec, spec_idx) => {
           if (!this.publishData.skus.find(x => x.spec == spec))
             this.publishData.skus.push({
-              price: '',
-              stock_num: '',
+              price: null,
+              stock_num: null,
               spec: spec,
               spec_s: spec_idx,
             })
@@ -214,7 +236,7 @@ export default {
         return
       }
 
-      this.publishData.skus.forEach(row => {
+      for (let row of this.publishData.skus) {
         if (!row.price || !row.stock_num) {
           this.$refs.uToast.show({
             type: 'error',
@@ -222,7 +244,7 @@ export default {
           })
           return
         }
-      })
+      }
 
       this.$refs.uToast.show({
         type: 'loading',

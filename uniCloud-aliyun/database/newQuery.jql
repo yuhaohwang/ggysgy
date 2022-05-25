@@ -11,3 +11,43 @@
 // 下面示例查询 usemall-goods 表的所有数据
 // db.collection('usemall-goods').get();
 // db.collection('usemall-goods-detail').get();
+
+this.$db[_goods]
+  .where(`'${this.cid}' in cids`)
+  .tolist(this.reqdata)
+  .then(res => {
+    if (res.code === 200) {
+      if (res.datas && res.datas.length > 0) {
+        if (loading == 1 || type == 'refresh') {
+          this.goodsDatas = []
+        }
+        let _datas = []
+        res.datas.forEach(row => {
+          if (row.state === '销售中') {
+            _datas.push(row)
+          }
+        })
+        this.goodsDatas = [...this.goodsDatas, ..._datas]
+
+        if (res.datas.length >= this.reqdata.rows) {
+          this.reqdata.page++
+          this.loadmoreType = 'more'
+        } else {
+          this.loadmoreType = 'nomore'
+        }
+      } else {
+        this.loadmoreType = 'nomore'
+      }
+    }
+
+    if (this.goodsDatas.length === 0) {
+      this.empty = true
+    }
+
+    if (loading == 1) {
+      uni.hideLoading()
+    } else if (type == 'refresh') {
+      uni.stopPullDownRefresh()
+    }
+  })
+},
