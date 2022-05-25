@@ -1,7 +1,8 @@
 <template>
-  <view class="">
+  <view class="y-s-c h-full">
     <u-toast ref="uToast"></u-toast>
-    <view class="x-b-c padding-xs">
+
+    <view class="x-b-c w-full padding-xs">
       <image
         src="/static/images/user/default.png"
         class="border-radius-lg headimg"
@@ -18,73 +19,76 @@
       </view>
     </view>
 
-    <top-tab :tabList="sdatas" :scrollable="true" ref="uTabs" :current="current" @tab-change="tabChange"></top-tab>
+    <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="current" @tab-change="tabChange"></top-tab>
 
-    <swiper style="height: 100vh;" :current="current" @animationfinish="animationfinish">
-      <swiper-item v-for="(item, index) in sdatas" :key="index">
-        <scroll-view scroll-y @scrolltolower="onReachBottom">
-          <use-empty v-if="item.empty" e-style="round" tip="无商品数据"></use-empty>
-          <view v-show="!item.empty" class="x-c-s x-2 padding-xs border-radius">
-            <view class="y-s-c waterfall_left">
-              <block v-for="(item, index) in item.goodsLeftList" :key="index">
-                <view class="padding-xs w-full" @click="togoods(item)">
-                  <view class="bg-main border-radius">
-                    <image :src="item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
+    <view class="flex1 w-full">
+      <swiper style="height: 100%;" :current="current" @animationfinish="animationfinish">
+        <swiper-item v-for="(sdata, index) in sdatas" :key="index">
+          <scroll-view class="wh-full" scroll-y @scrolltolower="onreachBottom">
+            <use-empty v-if="sdata.empty" e-style="round" tip="无商品数据"></use-empty>
 
-                    <view class="padding-lr-sm margin-top-sm clamp-2">{{ item.name }}</view>
+            <view v-show="!sdata.empty" class="x-c-s x-2 padding-xs border-radius">
+              <view class="y-s-c waterfall_left">
+                <block v-for="(l_item, l_index) in sdata.goodsLeftList" :key="l_index">
+                  <view class="padding-xs w-full" @click="togoods(l_item)">
+                    <view class="bg-main border-radius">
+                      <image :src="l_item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
 
-                    <view class="x-b-c padding-lr-sm margin-tb-sm">
-                      <view class="x-c-c">
-                        <image
-                          src="/static/images/user/default.png"
-                          class="border-radius-c headimg"
-                          style="width: 50rpx; height: 50rpx;"
-                        ></image>
-                        <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
-                      </view>
-                      <view class="x-c-c">
-                        <view class="iconfont iconaixin"></view>
-                        <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
-                      </view>
-                    </view>
-                  </view>
-                </view>
-              </block>
-            </view>
+                      <view class="padding-lr-sm margin-top-sm clamp-2">{{ l_item.name }}</view>
 
-            <view class="y-s-c waterfall_right">
-              <block v-for="(item, index) in item.goodsRightList" :key="index">
-                <view class="padding-xs w-full" @click="togoods(item)">
-                  <view class="bg-main border-radius">
-                    <image :src="item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
-
-                    <view class="padding-lr-sm margin-top-sm clamp-2">{{ item.name }}</view>
-
-                    <view class="x-b-c padding-lr-sm margin-tb-sm">
-                      <view class="x-c-c">
-                        <image
-                          src="/static/images/user/default.png"
-                          class="border-radius-c headimg"
-                          style="width: 50rpx; height: 50rpx;"
-                        ></image>
-                        <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
-                      </view>
-                      <view class="x-c-c">
-                        <view class="iconfont iconaixin"></view>
-                        <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                      <view class="x-b-c padding-lr-sm margin-tb-sm">
+                        <view class="x-c-c">
+                          <image
+                            src="/static/images/user/default.png"
+                            class="border-radius-c headimg"
+                            style="width: 50rpx; height: 50rpx;"
+                          ></image>
+                          <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                        </view>
+                        <view class="x-c-c">
+                          <view class="iconfont iconaixin"></view>
+                          <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                        </view>
                       </view>
                     </view>
                   </view>
-                </view>
-              </block>
-            </view>
-          </view>
-        </scroll-view>
-      </swiper-item>
-    </swiper>
+                </block>
+              </view>
 
-    <!-- 置顶 -->
-    <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop>
+              <view class="y-s-c waterfall_right">
+                <block v-for="(r_item, r_index) in sdata.goodsRightList" :key="r_index">
+                  <view class="padding-xs w-full" @click="togoods(r_item)">
+                    <view class="bg-main border-radius">
+                      <image :src="r_item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
+
+                      <view class="padding-lr-sm margin-top-sm clamp-2">{{ r_item.name }}</view>
+
+                      <view class="x-b-c padding-lr-sm margin-tb-sm">
+                        <view class="x-c-c">
+                          <image
+                            src="/static/images/user/default.png"
+                            class="border-radius-c headimg"
+                            style="width: 50rpx; height: 50rpx;"
+                          ></image>
+                          <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                        </view>
+                        <view class="x-c-c">
+                          <view class="iconfont iconaixin"></view>
+                          <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                </block>
+              </view>
+            </view>
+
+            <!-- 置顶 -->
+            <!-- <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop> -->
+          </scroll-view>
+        </swiper-item>
+      </swiper>
+    </view>
   </view>
 </template>
 
@@ -157,12 +161,11 @@ export default {
     const cidx = this.current
     this.sdatas[cidx].goodsDatas = []
     this.sdatas[cidx].loadmoreType = 'more'
-    this.loadGoodsDatas('refresh')
+    this.$nextTick(function() {
+      this.loadGoodsDatas('refresh')
+    })
   },
-  //加载更多
-  onReachBottom() {
-    this.loadGoodsDatas()
-  },
+
   methods: {
     async loadData() {
       this.$db[_goodscategory].tolist().then(res => {
@@ -184,7 +187,7 @@ export default {
           if (temp.length > 0) {
             temp.forEach(item => {
               // 空白页
-              item.empty = false
+              item.empty = true
               // 商品列表
               item.goodsDatas = []
               // 左侧商品列表
@@ -201,8 +204,12 @@ export default {
                 page: 1,
               }
             })
+
             this.sdatas = temp
-            this.loadGoodsDatas()
+
+            this.$nextTick(function() {
+              this.loadGoodsDatas()
+            })
           }
         }
       })
@@ -270,7 +277,10 @@ export default {
           }
 
           this.sdatas[cidx].empty = this.sdatas[cidx].goodsDatas.length === 0 ? true : false
-          this.touchOff()
+
+          this.$nextTick(function() {
+            this.touchOff()
+          })
 
           if (loading == 1) {
             uni.hideLoading()
@@ -320,6 +330,11 @@ export default {
       })
     },
 
+    //加载更多
+    onreachBottom() {
+      this.loadGoodsDatas()
+    },
+
     // tabs通知swiper切换
     tabChange(e) {
       const cidx = e.index
@@ -327,7 +342,9 @@ export default {
       this.current = cidx
       this.sdatas[cidx].goodsDatas = []
       this.sdatas[cidx].loadmoreType = 'more'
-      this.loadGoodsDatas('refresh')
+      this.$nextTick(function() {
+        this.loadGoodsDatas('refresh')
+      })
     },
 
     // 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
@@ -358,6 +375,7 @@ export default {
     },
     // 跳转商品详情
     togoods(item) {
+      console.log(item._id)
       this.$api.togoods({
         id: item._id,
       })
@@ -374,6 +392,7 @@ export default {
 
 <style lang="less">
 page {
+  height: 100%;
   background-color: #f5f5f5;
 }
 
