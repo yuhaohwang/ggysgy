@@ -30,7 +30,7 @@
             <view v-show="!sdata.empty" class="x-c-s x-2 padding-xs border-radius">
               <view class="y-s-c waterfall_left">
                 <block v-for="(l_item, l_index) in sdata.goodsLeftList" :key="l_index">
-                  <view class="padding-xs w-full" @click="togoods(l_item)">
+                  <view v-if="l_item" class="padding-xs w-full" @click="togoods(l_item)">
                     <view class="bg-main border-radius">
                       <image :src="l_item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
 
@@ -57,7 +57,7 @@
 
               <view class="y-s-c waterfall_right">
                 <block v-for="(r_item, r_index) in sdata.goodsRightList" :key="r_index">
-                  <view class="padding-xs w-full" @click="togoods(r_item)">
+                  <view v-if="r_item" class="padding-xs w-full" @click="togoods(r_item)">
                     <view class="bg-main border-radius">
                       <image :src="r_item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
 
@@ -300,8 +300,8 @@ export default {
       console.log('touchOff')
       const cidx = this.current
       this.sdatas[cidx].newList = [...this.sdatas[cidx].goodsDatas]
-      this.sdatas[cidx].goodsLeftList = []
-      this.sdatas[cidx].goodsRightList = []
+      this.$set(this.sdatas[cidx], 'goodsLeftList', [])
+      this.$set(this.sdatas[cidx], 'goodsRightList', [])
 
       this.$nextTick(function() {
         if (this.sdatas[cidx].newList.length != 0) {
