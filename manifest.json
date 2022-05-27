@@ -1,9 +1,9 @@
 {
-    "name" : "以艺自强",
+    "name" : "艺心益意",
     "appid" : "__UNI__D548F10",
-    "description" : "广工以艺自强",
-    "versionName" : "1.0.9.210804",
-    "versionCode" : 109,
+    "description" : "艺心益意",
+    "versionName" : "1.0.0.220527",
+    "versionCode" : 100,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -62,7 +62,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx3c069ba1261272e8",
+        "appid" : "wx73b4e1be70f7c4b2",
         "setting" : {
             "urlCheck" : true,
             "minified" : true,

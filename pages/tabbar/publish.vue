@@ -10,7 +10,8 @@
         <u-input v-model="publishData.content" border="none"></u-input>
       </u-form-item>
       <u-form-item required label="图片上传" prop="imgs" borderBottom>
-        <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" />
+        <use-upload class="w-full" v-model="publishData.imgs" @upload="uploadImgs" :limit="9"></use-upload>
+        <!-- <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" /> -->
       </u-form-item>
       <u-form-item required label="作品分类" prop="fdata" borderBottom>
         <u-radio-group class="x-s-c-w x-3" v-model="publishData.fdata" @change="fdataChange">
@@ -175,6 +176,7 @@ export default {
           }
         })
     },
+
     init(callback) {
       this.publishData = {
         name: '',
@@ -188,6 +190,7 @@ export default {
       }
       callback()
     },
+
     affirm() {
       // 规格
       if (this.publishData.spec.length > 0) {
@@ -203,6 +206,12 @@ export default {
         this.publishData.skus = this.publishData.skus.filter(x => this.publishData.spec.find(s => s == x.spec))
       }
     },
+
+    uploadImgs(options) {
+      if (options.length > 0) this.publishData.imgs = options
+      console.log('uploadImgs', this.publishData.imgs)
+    },
+
     submitData() {
       if (!this.publishData.name) {
         this.$refs.uToast.show({

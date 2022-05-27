@@ -1,10 +1,8 @@
 {
-  "passwordSecret": [
-    {
-      "version": 1,
-      "value": "usemall.unicloud.password.secret"
-    }
-  ],
+  "passwordSecret": [{
+    "version": 1,
+    "value": "usemall.unicloud.password.secret"
+  }],
   "tokenSecret": "usemall.unicloud.token.secret",
   "tokenExpiresIn": 259200,
   "tokenExpiresThreshold": 600,
@@ -17,8 +15,8 @@
     "tokenExpiresIn": 2592000,
     "oauth": {
       "weixin": {
-        "appid": "wx3c069ba1261272e8",
-        "appsecret": "f0b9830d49e183c4f4c09486865ec1a9"
+        "appid": "",
+        "appsecret": ""
       }
     }
   },
@@ -26,12 +24,12 @@
     "tokenExpiresIn": 259200,
     "oauth": {
       "weixin": {
-        "appid": "wx3c069ba1261272e8",
-        "appsecret": "f0b9830d49e183c4f4c09486865ec1a9"
+        "appid": "wx73b4e1be70f7c4b2",
+        "appsecret": "d0a4d65a1d099e5003275499e7b6e1ac"
       }
     },
     "pay": {
-      "appId": "微信小程序appid",
+      "appId": "wx73b4e1be70f7c4b2",
       "mchId": "微信支付商户号",
       "key": "微信支付商户key (API密钥)"
     },

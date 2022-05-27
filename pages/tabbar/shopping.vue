@@ -24,7 +24,7 @@
     <view class="flex1 w-full">
       <swiper style="height: 100%;" :current="current" @animationfinish="animationfinish">
         <swiper-item v-for="(sdata, index) in sdatas" :key="index">
-          <scroll-view class="wh-full" scroll-y @scrolltolower="onreachBottom">
+          <scroll-view class="wh-full" scroll-y @scrolltolower="onreachBottom" :enable-flex="true">
             <use-empty v-if="sdata.empty" e-style="round" tip="无商品数据"></use-empty>
 
             <view v-show="!sdata.empty" class="x-c-s x-2 padding-xs border-radius">
@@ -105,11 +105,6 @@ export default {
       // 二级数据
       sdatas: [],
 
-      title_id: 0,
-
-      scrollTop: 0,
-      navHeight: 0,
-
       // 商品列表
       prevGoodsDatas: [],
       // 左侧商品列表
@@ -140,21 +135,6 @@ export default {
   },
   onLoad() {
     this.loadData()
-  },
-  mounted() {
-    // #ifdef H5 || MP-360
-    this.navHeight = 50
-    // #endif
-  },
-  onPageScroll(e) {
-    // 兼容iOS端下拉时顶部漂移
-    if (e.scrollTop >= 0) {
-      this.headerPosition = 'fixed'
-    } else {
-      this.headerPosition = 'absolute'
-    }
-    // this.scrollTop = e.scrollTop
-    this.$refs.usetop.change(e.scrollTop)
   },
   //下拉刷新
   onPullDownRefresh() {
@@ -187,7 +167,7 @@ export default {
           if (temp.length > 0) {
             temp.forEach(item => {
               // 空白页
-              item.empty = true
+              item.empty = false
               // 商品列表
               item.goodsDatas = []
               // 左侧商品列表
@@ -242,9 +222,9 @@ export default {
         this.sdatas[cidx].loadmoreType = 'more'
       }
 
-      this.$refs.uToast.show({
-        type: 'loading',
-      })
+      // this.$refs.uToast.show({
+      //   type: 'loading',
+      // })
 
       // 根据当前 cid 加载商品数据列表
       this.sdatas[cidx].reqdata.cid = this.cid
@@ -288,10 +268,10 @@ export default {
             uni.stopPullDownRefresh()
           }
 
-          this.$refs.uToast.show({
-            type: 'loading',
-            duration: 0,
-          })
+          // this.$refs.uToast.show({
+          //   type: 'loading',
+          //   duration: 0,
+          // })
         })
     },
 
@@ -320,13 +300,15 @@ export default {
       query.exec(res => {
         let leftH = res[0].length ? res[0][cidx].height : 0 //防止查询不到做个处理
         let rightH = res[1].length ? res[1][cidx].height : 0
-        if (leftH <= rightH) {
-          // 相等 || 左边小
-          this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift())
-        } else {
-          // 右边小
-          this.sdatas[cidx].goodsRightList.push(this.sdatas[cidx].newList.shift())
-        }
+        this.$nextTick(function() {
+          if (leftH <= rightH) {
+            // 相等 || 左边小
+            this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift())
+          } else {
+            // 右边小
+            this.sdatas[cidx].goodsRightList.push(this.sdatas[cidx].newList.shift())
+          }
+        })
       })
     },
 
@@ -363,9 +345,6 @@ export default {
     // 搜索
     search() {
       this.$api.msg('搜索')
-    },
-    pitch(index) {
-      this.title_id = index
     },
     // 跳转详情页
     dongt(options) {
