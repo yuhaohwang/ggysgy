@@ -99,20 +99,30 @@ export function children(parent, options = {}) {
 			});
 			this.el.type = this.type
 		},
-		beforeDestroy() {
-			if (this.parent) {
-				this.parent.el.views = this.parent.el.views.filter(
-					(item) => item._uid !== this._uid
-				);
-			}
+		// #ifdef VUE3
+		beforeUnmount() {
+			this.removeEl()
 		},
+		// #endif
+		// #ifdef VUE2
+		beforeDestroy() {
+			this.removeEl()
+		},
+		// #endif
 		methods: {
+			removeEl() {
+				if (this.parent) {
+					this.parent.el.views = this.parent.el.views.filter(
+						(item) => item._uid !== this._uid
+					);
+				}
+			},
 			bindRelation() {
 				if(!this.el._uid) {
 					this.el._uid = this._uid 
 				}
 				if(['text','qrcode'].includes(this.type)) {
-					this.el.text = this.$slots.default && this.$slots.default[0].text || `${this.text || ''}`.replace(/\\n/g, '\n')
+					this.el.text = this.$slots && this.$slots.default && this.$slots.default[0].text || `${this.text || ''}`.replace(/\\n/g, '\n')
 				}
 				if(this.type == 'image') {
 					this.el.src = this.src

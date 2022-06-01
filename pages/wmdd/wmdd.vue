@@ -34,7 +34,7 @@
       </view>
       <view class="x-b-c">
         <view class="padding-xs"><u--text mode="text" text="更多" :size="12" color="#8D9299"></u--text></view>
-        <view class="x-c-c" style="white-space: nowrap;">
+        <view class="x-c-c" style="white-space: nowrap">
           <view class="padding-xs"><u-button size="mini" :hairline="true" shape="circle">联系卖家</u-button></view>
           <view class="padding-xs"><u-button size="mini" :hairline="true" shape="circle">去评价</u-button></view>
         </view>
@@ -44,47 +44,47 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      tabList: [
-        {
-          name: '全部',
-        },
-        {
-          name: '待付款',
-        },
-        {
-          name: '待发货',
-        },
-        {
-          name: '待收货',
-        },
-        {
-          name: '待评价',
-        },
-        {
-          name: '退款中',
-        },
-      ],
-    }
-  },
-  methods: {
-    tabClick(e) {
-      console.log(e)
+  export default {
+    data() {
+      return {
+        tabList: [
+          {
+            name: '全部',
+          },
+          {
+            name: '待付款',
+          },
+          {
+            name: '待发货',
+          },
+          {
+            name: '待收货',
+          },
+          {
+            name: '待评价',
+          },
+          {
+            name: '退款中',
+          },
+        ],
+      }
     },
-    // 点击跳转详情页面
-    todetail(order) {
-      uni.navigateTo({
-        url: `/pages/user/order/order-detail?order_id=${order.order_id}`,
-      })
+    methods: {
+      tabClick(e) {
+        console.log(e)
+      },
+      // 点击跳转详情页面
+      todetail(order) {
+        uni.navigateTo({
+          url: `/pages/user/order/order-detail?order_id=${order.order_id}`,
+        })
+      },
     },
-  },
-}
+  }
 </script>
 
 <style lang="scss">
-// .title {
-//   text-align: left;
-// }
+  // .title {
+  //   text-align: left;
+  // }
 </style>

@@ -192,7 +192,7 @@
       </view>
     </view>
 
-    <view style="height: 100rpx;"></view>
+    <view style="height: 100rpx"></view>
 
     <!-- 底部操作区 -->
     <view class="oper-area dflex-b padding-right padding-left-sm">
@@ -242,328 +242,328 @@
 </template>
 
 <script>
-export default {
-  components: {
-    // share
-  },
-  data() {
-    return {
-      // 商品数据
-      order_detail: [],
-      // 订单数据
-      order_data: {},
-      addressData: [],
-      sharekefuList: [],
-      shareEmptyList: [],
-      order_id: '',
-      goods_price_tip: '产品总计',
-      time_remaining: 0,
-    }
-  },
-  onUnload() {
-    uni.$emit('__event_order', 'refresh')
-  },
-  onLoad(options) {
-    this.order_id = options.order_id
-
-    this.loadData()
-  },
-  onShow() {
-    this.loadData()
-  },
-  methods: {
-    tohome() {
-      this.$api.tohome()
+  export default {
+    components: {
+      // share
     },
-    async loadData() {
-      let _this = this
-      await this.$func.usemall
-        .call('order/detail', {
-          order_id: _this.order_id,
-        })
-        .then(res => {
-          if (res.code === 200) {
-            res.datas.order.create_time = this.$api.format(res.datas.order.create_time)
-            _this.order_data = res.datas.order
-            _this.order_detail = res.datas.order_detail
-            _this.addressData = res.datas.order_trip
-            if (res.datas.order && res.datas.order.state === '待付款') {
-              _this.time_remaining = res.datas.time_remaining
-            }
-
-            _this.order_detail.forEach(data => {
-              if (data.goods_opt_id > 0) {
-                let desc = ''
-                if (data.goods_opt_desc) {
-                  desc = ' (' + data.goods_opt_desc + ')'
-                }
-                _this.goods_price_tip = data.goods_opt_name + desc
-              }
-            })
-
-            // console.log(_this.order_detail);
-            // console.log(_this.order_data.state);
-          }
-        })
-    },
-    // 立即支付
-    payment() {
-      if (this.order_data.order_pay_state == '待核实') {
-        this.$api.msg('订单已支付待核实状态')
-        return
+    data() {
+      return {
+        // 商品数据
+        order_detail: [],
+        // 订单数据
+        order_data: {},
+        addressData: [],
+        sharekefuList: [],
+        shareEmptyList: [],
+        order_id: '',
+        goods_price_tip: '产品总计',
+        time_remaining: 0,
       }
-
-      this.$api.topay({
-        order_id: this.order_data.order_id,
-        money: this.order_data.order_actural_paid,
-      })
     },
-    // 查看物流
-    toexpress(item) {
-      // this.$api.msg('查看物流开发中');
-      uni.navigateTo({
-        url: `/pages/user/order/order-express?order_id=${this.order_id}`,
-      })
+    onUnload() {
+      uni.$emit('__event_order', 'refresh')
     },
-    // 已发货
-    toreceipt() {
-      let _this = this
+    onLoad(options) {
+      this.order_id = options.order_id
 
-      uni.showModal({
-        title: '提示',
-        content: '确认收货',
-        success: function(res) {
-          if (res.confirm) {
-            uni.showLoading({
-              title: '请稍后',
-            })
-            _this.$func.usemall
-              .call('order/received', {
-                order_id: _this.order_id,
-                state: '待评价',
-              })
-              .then(res => {
-                _this.loadData('refresh')
-              })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        },
-        complete() {
-          uni.hideLoading()
-        },
-      })
+      this.loadData()
     },
-    // 删除订单
-    delorder() {
-      let _this = this
-
-      uni.showModal({
-        title: '提示',
-        content: '删除订单',
-        success: function(res) {
-          if (res.confirm) {
-            uni.showLoading({
-              title: '请稍后',
-            })
-            _this.$func.usemall
-              .call('order/deleted', {
-                order_id: _this.order_id,
-              })
-              .then(res => {
-                if (res.code === 200) {
-                  uni.navigateBack({})
-                }
-              })
-          } else if (res.cancel) {
-            console.log('点击取消')
-          }
-        },
-        complete() {
-          uni.hideLoading()
-        },
-      })
+    onShow() {
+      this.loadData()
     },
-    // 取消订单
-    cancelOrder() {
-      let _this = this
-
-      uni.showModal({
-        title: '提示',
-        content: '取消订单',
-        success: function(res) {
-          if (res.confirm) {
-            uni.showLoading({
-              title: '请稍后',
-            })
-            _this.$func.usemall
-              .call('order/cancel', {
-                order_id: _this.order_id,
-                state: '已取消',
-              })
-              .then(res => {
-                if (res.code === 200) {
-                  _this.loadData('refresh')
-                }
-              })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        },
-        complete() {
-          uni.hideLoading()
-        },
-      })
-    },
-    // 点击复制
-    copy() {
-      let _this = this
-
-      uni.setClipboardData({
-        data: _this.order_id,
-        success: function(res) {
-          uni.getClipboardData({
-            success: function(res) {
-              uni.showToast({
-                title: '复制成功',
-              })
-            },
+    methods: {
+      tohome() {
+        this.$api.tohome()
+      },
+      async loadData() {
+        let _this = this
+        await this.$func.usemall
+          .call('order/detail', {
+            order_id: _this.order_id,
           })
-        },
-      })
+          .then(res => {
+            if (res.code === 200) {
+              res.datas.order.create_time = this.$api.format(res.datas.order.create_time)
+              _this.order_data = res.datas.order
+              _this.order_detail = res.datas.order_detail
+              _this.addressData = res.datas.order_trip
+              if (res.datas.order && res.datas.order.state === '待付款') {
+                _this.time_remaining = res.datas.time_remaining
+              }
+
+              _this.order_detail.forEach(data => {
+                if (data.goods_opt_id > 0) {
+                  let desc = ''
+                  if (data.goods_opt_desc) {
+                    desc = ' (' + data.goods_opt_desc + ')'
+                  }
+                  _this.goods_price_tip = data.goods_opt_name + desc
+                }
+              })
+
+              // console.log(_this.order_detail);
+              // console.log(_this.order_data.state);
+            }
+          })
+      },
+      // 立即支付
+      payment() {
+        if (this.order_data.order_pay_state == '待核实') {
+          this.$api.msg('订单已支付待核实状态')
+          return
+        }
+
+        this.$api.topay({
+          order_id: this.order_data.order_id,
+          money: this.order_data.order_actural_paid,
+        })
+      },
+      // 查看物流
+      toexpress(item) {
+        // this.$api.msg('查看物流开发中');
+        uni.navigateTo({
+          url: `/pages/user/order/order-express?order_id=${this.order_id}`,
+        })
+      },
+      // 已发货
+      toreceipt() {
+        let _this = this
+
+        uni.showModal({
+          title: '提示',
+          content: '确认收货',
+          success: function (res) {
+            if (res.confirm) {
+              uni.showLoading({
+                title: '请稍后',
+              })
+              _this.$func.usemall
+                .call('order/received', {
+                  order_id: _this.order_id,
+                  state: '待评价',
+                })
+                .then(res => {
+                  _this.loadData('refresh')
+                })
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          },
+          complete() {
+            uni.hideLoading()
+          },
+        })
+      },
+      // 删除订单
+      delorder() {
+        let _this = this
+
+        uni.showModal({
+          title: '提示',
+          content: '删除订单',
+          success: function (res) {
+            if (res.confirm) {
+              uni.showLoading({
+                title: '请稍后',
+              })
+              _this.$func.usemall
+                .call('order/deleted', {
+                  order_id: _this.order_id,
+                })
+                .then(res => {
+                  if (res.code === 200) {
+                    uni.navigateBack({})
+                  }
+                })
+            } else if (res.cancel) {
+              console.log('点击取消')
+            }
+          },
+          complete() {
+            uni.hideLoading()
+          },
+        })
+      },
+      // 取消订单
+      cancelOrder() {
+        let _this = this
+
+        uni.showModal({
+          title: '提示',
+          content: '取消订单',
+          success: function (res) {
+            if (res.confirm) {
+              uni.showLoading({
+                title: '请稍后',
+              })
+              _this.$func.usemall
+                .call('order/cancel', {
+                  order_id: _this.order_id,
+                  state: '已取消',
+                })
+                .then(res => {
+                  if (res.code === 200) {
+                    _this.loadData('refresh')
+                  }
+                })
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          },
+          complete() {
+            uni.hideLoading()
+          },
+        })
+      },
+      // 点击复制
+      copy() {
+        let _this = this
+
+        uni.setClipboardData({
+          data: _this.order_id,
+          success: function (res) {
+            uni.getClipboardData({
+              success: function (res) {
+                uni.showToast({
+                  title: '复制成功',
+                })
+              },
+            })
+          },
+        })
+      },
+      // 评价
+      evaluate() {
+        uni.navigateTo({
+          url: `/pages/user/order/order-evaluate?id=${this.order_id}`,
+        })
+      },
+      // 申请退款
+      refund() {
+        uni.navigateTo({
+          url: `/pages/user/order/order-refund?order_id=${this.order_id}`,
+        })
+      },
     },
-    // 评价
-    evaluate() {
-      uni.navigateTo({
-        url: `/pages/user/order/order-evaluate?id=${this.order_id}`,
-      })
-    },
-    // 申请退款
-    refund() {
-      uni.navigateTo({
-        url: `/pages/user/order/order-refund?order_id=${this.order_id}`,
-      })
-    },
-  },
-}
+  }
 </script>
 
 <style lang="scss">
-page {
-  background: $page-color-base;
-}
-
-.order-detail .item text:first-child {
-  display: inline-block;
-  width: 152rpx;
-  text-align: right;
-}
-
-/* 状态区 */
-.state-area {
-}
-
-/* 收货人 */
-.address-area {
-}
-
-/* 商品区 */
-.goods-area {
-  &:last-child {
-    margin-bottom: 0;
+  page {
+    background: $page-color-base;
   }
 
-  image {
-    width: 180rpx;
-    height: 180rpx;
+  .order-detail .item text:first-child {
+    display: inline-block;
+    width: 152rpx;
+    text-align: right;
   }
-}
 
-/* 订单数据区 */
-.order-area {
-  .item {
-    line-height: 66rpx;
+  /* 状态区 */
+  .state-area {
+  }
 
-    .copy {
-      padding: 10rpx 40rpx;
-      margin-left: 20rpx;
-      font-size: 24rpx;
-      background-color: #f1f1f1;
-      border-radius: 40rpx;
+  /* 收货人 */
+  .address-area {
+  }
+
+  /* 商品区 */
+  .goods-area {
+    &:last-child {
+      margin-bottom: 0;
     }
-  }
-}
 
-/* 数据统计区 */
-.total-area {
-  .item {
-    line-height: 48rpx;
-
-    text {
-      padding-right: 16rpx;
-    }
-  }
-}
-
-/* 发货区域 */
-.shipping-area {
-  .item {
-    line-height: 66rpx;
-  }
-}
-
-/* 操作区 */
-.oper-area {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100rpx;
-  background-color: #fff;
-  border-top: 1px solid #f0f0f0;
-
-  .btn-area {
-    width: 96rpx;
-    font-size: $font-sm;
-    color: $font-color-base;
-
-    .iconfont {
-      font-size: 40rpx;
-      line-height: 48rpx;
+    image {
+      width: 180rpx;
+      height: 180rpx;
     }
   }
 
-  /* 操作按钮 */
-  .action-btn {
-    width: 156rpx;
-    height: inherit;
-    padding: 12rpx 0;
-    margin: 0;
-    margin-left: 20rpx;
-    font-size: $font-sm + 2upx;
-    line-height: inherit;
-    color: $font-color-dark;
-    background: #fff;
+  /* 订单数据区 */
+  .order-area {
+    .item {
+      line-height: 66rpx;
 
-    /* #ifdef MP-QQ || MP-ALIPAY */
-    border: 1px solid;
-    border-radius: 100px;
-
-    /* #endif */
-
-    &::after {
-      border-radius: 100px;
-    }
-
-    &.main-btn {
-      color: $base-color;
-      background: #fff9f9;
-
-      &::after {
-        border-color: #f7bcc8;
+      .copy {
+        padding: 10rpx 40rpx;
+        margin-left: 20rpx;
+        font-size: 24rpx;
+        background-color: #f1f1f1;
+        border-radius: 40rpx;
       }
     }
   }
-}
+
+  /* 数据统计区 */
+  .total-area {
+    .item {
+      line-height: 48rpx;
+
+      text {
+        padding-right: 16rpx;
+      }
+    }
+  }
+
+  /* 发货区域 */
+  .shipping-area {
+    .item {
+      line-height: 66rpx;
+    }
+  }
+
+  /* 操作区 */
+  .oper-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100rpx;
+    background-color: #fff;
+    border-top: 1px solid #f0f0f0;
+
+    .btn-area {
+      width: 96rpx;
+      font-size: $font-sm;
+      color: $font-color-base;
+
+      .iconfont {
+        font-size: 40rpx;
+        line-height: 48rpx;
+      }
+    }
+
+    /* 操作按钮 */
+    .action-btn {
+      width: 156rpx;
+      height: inherit;
+      padding: 12rpx 0;
+      margin: 0;
+      margin-left: 20rpx;
+      font-size: $font-sm + 2upx;
+      line-height: inherit;
+      color: $font-color-dark;
+      background: #fff;
+
+      /* #ifdef MP-QQ || MP-ALIPAY */
+      border: 1px solid;
+      border-radius: 100px;
+
+      /* #endif */
+
+      &::after {
+        border-radius: 100px;
+      }
+
+      &.main-btn {
+        color: $base-color;
+        background: #fff9f9;
+
+        &::after {
+          border-color: #f7bcc8;
+        }
+      }
+    }
+  }
 </style>

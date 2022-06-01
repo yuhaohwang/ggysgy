@@ -88,6 +88,7 @@ export const prefix = () => {
 }
 // #endif
 
+
 const base64ToArrayBuffer = (data) => {
 	// #ifndef MP-WEIXIN || APP-PLUS
 	/**
@@ -329,23 +330,42 @@ export function pathToBase64(path) {
 
 
 
-export function getImageInfo(img) {
+export function getImageInfo(path) {
 	return new Promise(async (resolve, reject) => {
-		if (cache[img] && cache[img].errMsg) {
-			resolve(cache[img])
+		let src = path
+		if (cache[path] && cache[path].errMsg) {
+			resolve(cache[path])
 		} else {
+			try {
+				// if (!isBase64 && PLATFORM == UNI_PLATFORM.PLUS && !/^\/?(static|_doc)\//.test(src)) {
+				// 	src = await downloadFile(path) as string
+				// } else 
+				// #ifdef MP || APP-PLUS
+				if (isBase64(path)) {
+					src = await base64ToPath(path)
+				}
+				// #endif
+			} catch (error) {
+				reject({
+					...error,
+					src
+				})
+			}
 			uni.getImageInfo({
-				src: img,
+				src,
 				success: (image) => {
 					if (isDev) {
 						resolve(image)
 					} else {
-						cache[img] = image
-						resolve(cache[img])
+						cache[path] = image
+						resolve(cache[path])
 					}
 				},
 				fail(err) {
-					reject({err, path: img})
+					reject({
+						err,
+						path
+					})
 				}
 			})
 		}
@@ -357,9 +377,9 @@ export function downloadFile(url) {
 		err: 'no url'
 	})
 	return new Promise((resolve, reject) => {
-		if(cache[url]) {
+		if (cache[url]) {
 			return reject()
-		} 
+		}
 		cache[url] = 1
 		uni.downloadFile({
 			url,
@@ -417,8 +437,8 @@ const createFile = ({
 					res1.remove()
 					resolve()
 				}
-				getFile(target+name).then(res => {
-					if(res) {
+				getFile(target + name).then(res => {
+					if (res) {
 						res.remove((res2) => {
 							res1.moveTo(fileEntry, name, success, reject)
 						})
@@ -440,18 +460,18 @@ export function useNvue(target, version, timeout) {
 				]
 				const oldVersion = plus.storage.getItem('lime-painter')
 				const isFile = await getFile(`${target}${names[1]}`)
-				if(isFile && oldVersion && compareVersion(oldVersion, version) >= 0) {
+				if (isFile && oldVersion && compareVersion(oldVersion, version) >= 0) {
 					resolve()
 				} else {
 					for (var i = 0; i < names.length; i++) {
 						const name = names[i]
-							const file = await downloadFile(urls[i >= 1 ? 1 : 0] + name)
-							await createFile({
-								fs,
-								url: file.tempFilePath,
-								target,
-								name: name.includes('uni.webview') ? 'uni.webview.js': name
-							})
+						const file = await downloadFile(urls[i >= 1 ? 1 : 0] + name)
+						await createFile({
+							fs,
+							url: file.tempFilePath,
+							target,
+							name: name.includes('uni.webview') ? 'uni.webview.js' : name
+						})
 					}
 					plus.storage.setItem('lime-painter', version)
 					cache['lime-painter'] = version

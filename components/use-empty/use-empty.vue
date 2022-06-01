@@ -43,13 +43,13 @@
     computed: {
       dtype: {
         get() {
-          console.log('get dtype', arguments);
-          let imgobj = this.imgs.find(x => x.type == this.eType);
-          this.imgurl = imgobj ? imgobj.url : this.imgurl_dft;
-          return this.eType;
+          console.log('get dtype', arguments)
+          let imgobj = this.imgs.find(x => x.type == this.eType)
+          this.imgurl = imgobj ? imgobj.url : this.imgurl_dft
+          return this.eType
         },
         set(val) {
-          console.log('set dtype', arguments);
+          console.log('set dtype', arguments)
         },
       },
     },
@@ -62,23 +62,23 @@
           { type: 'search', url: '/static/images/empty/search.jpg' },
           { type: 'other', url: '/static/images/empty/empty.jpg' },
         ],
-      };
+      }
     },
     methods: {
       to() {
         this.$emit('goto', {
           type: 'goto',
-        });
+        })
 
         if (this.auto) {
           // 跳转指定页
           uni.switchTab({
             url: this.btnGoto,
-          });
+          })
         }
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

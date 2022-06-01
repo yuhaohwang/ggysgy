@@ -140,5 +140,5 @@ var provinceData = [
     label: '钓鱼岛',
     value: '69',
   },
-];
-export default provinceData;
+]
+export default provinceData

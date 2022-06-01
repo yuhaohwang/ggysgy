@@ -237,4 +237,4 @@ module.exports = {
     'arrow-spacing': 0,
     'object-curly-spacing': 0,
   },
-};
+}

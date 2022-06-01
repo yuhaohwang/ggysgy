@@ -113,73 +113,73 @@
             ],
           },
         ],
-      };
+      }
     },
     onReady: function (res) {
       // #ifndef MP-ALIPAY
-      this.videoContext = uni.createVideoContext('gyk-video');
+      this.videoContext = uni.createVideoContext('gyk-video')
       // #endif
     },
 
     methods: {
       // 搜索回调函数
       search() {
-        console.log('home search');
+        console.log('home search')
       },
       // 跳转页面
       topage(item) {
-        console.log('分类点击', item.url);
+        console.log('分类点击', item.url)
         if (item && item.type == '网页') {
           uni.navigateTo({
             url: `/pages/content/web?url=${item.url}`,
-          });
+          })
         } else if (item && item.type == '页面') {
           uni.navigateTo({
             url: `${item.url}`,
-          });
+          })
         } else if (item && item.type == '标签') {
           uni.switchTab({
             url: `${item.url}`,
-          });
+          })
         } else {
           if (item.id)
             this.$api.togoods({
               id: item._id,
-            });
+            })
         }
       },
       sendDanmu: function () {
         this.videoContext.sendDanmu({
           text: this.danmuValue,
           color: this.getRandomColor(),
-        });
-        this.danmuValue = '';
+        })
+        this.danmuValue = ''
       },
       getRandomColor: function () {
-        const rgb = [];
+        const rgb = []
         for (let i = 0; i < 3; ++i) {
-          let color = Math.floor(Math.random() * 256).toString(16);
-          color = color.length == 1 ? '0' + color : color;
-          rgb.push(color);
+          let color = Math.floor(Math.random() * 256).toString(16)
+          color = color.length == 1 ? '0' + color : color
+          rgb.push(color)
         }
-        return '#' + rgb.join('');
+        return '#' + rgb.join('')
       },
     },
     onPageScroll(e) {
       // 兼容iOS端下拉时顶部漂移
       if (e.scrollTop >= 0) {
-        this.headerPosition = 'fixed';
+        this.headerPosition = 'fixed'
       } else {
-        this.headerPosition = 'absolute';
+        this.headerPosition = 'absolute'
       }
       // this.scrollTop = e.scrollTop
-      this.$refs.usetop.change(e.scrollTop);
+      this.$refs.usetop.change(e.scrollTop)
     },
     //下拉刷新
     onPullDownRefresh() {
-      this.loadData('refresh');
+      this.loadData('refresh')
     },
-  };
+  }
 </script>
 
 <style lang="scss">

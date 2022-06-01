@@ -83,50 +83,50 @@
           review_imgs: '',
           review_anonymity: '否',
         },
-      };
+      }
     },
     onLoad(options) {
-      this.order_id = options.id;
+      this.order_id = options.id
       if (!this.order_id) {
-        this.$api.msg('订单编号不存在');
+        this.$api.msg('订单编号不存在')
       }
-      this.loadData();
+      this.loadData()
     },
     methods: {
       async loadData() {
-        let _this = this;
+        let _this = this
         await _this.$func.usemall
           .call('order/detail', {
             order_id: _this.order_id,
           })
           .then(res => {
             if (res.code === 200) {
-              _this.order_data = res.datas.order;
-              _this.order_detail = res.datas.order_detail;
+              _this.order_data = res.datas.order
+              _this.order_detail = res.datas.order_detail
             }
-          });
+          })
       },
       uploadImgs(options) {
-        let imgs = [];
+        let imgs = []
 
         options.forEach(_ => {
-          imgs.push(_.url);
-        });
+          imgs.push(_.url)
+        })
 
-        if (imgs.length > 0) this.postData.review_imgs = imgs;
+        if (imgs.length > 0) this.postData.review_imgs = imgs
 
-        console.log('uploadImgs', this.postData.review_imgs);
+        console.log('uploadImgs', this.postData.review_imgs)
       },
       submit() {
-        let _this = this;
+        let _this = this
         if (!this.postData.review_content) {
-          this.$api.msg('请填写评价内容');
-          return;
+          this.$api.msg('请填写评价内容')
+          return
         }
-        if (this.issubmit) return;
+        if (this.issubmit) return
 
-        this.issubmit = true;
-        this.postData.order_id = _this.order_id;
+        this.issubmit = true
+        this.postData.order_id = _this.order_id
         uni.showModal({
           title: '提示',
           content: '提交评价',
@@ -134,43 +134,43 @@
             if (res.confirm) {
               _this.$func.usemall.call('order/evaluate', _this.postData).then(res => {
                 if (res.code === 200) {
-                  _this.$api.msg('提交成功');
+                  _this.$api.msg('提交成功')
                   // setTimeout(() => {
-                  _this.issubmit = false;
-                  uni.navigateBack({});
+                  _this.issubmit = false
+                  uni.navigateBack({})
                   //}, 1000);
-                  return;
+                  return
                 }
-                _this.$api.msg(res.msg);
-                _this.issubmit = false;
-              });
+                _this.$api.msg(res.msg)
+                _this.issubmit = false
+              })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
-        });
+        })
       },
       switchChange(options) {
-        this.postData.review_anonymity = options.detail.value ? '是' : '否';
+        this.postData.review_anonymity = options.detail.value ? '是' : '否'
       },
       rateChange(options) {
         switch (options.value) {
           case 1:
-            this.postData.review_type = '差评';
-            break;
+            this.postData.review_type = '差评'
+            break
           case 2:
           case 3:
-            this.postData.review_type = '中评';
-            break;
+            this.postData.review_type = '中评'
+            break
           case 4:
           case 5:
-            this.postData.review_type = '好评';
-            break;
+            this.postData.review_type = '好评'
+            break
         }
-        this.postData.review_cnt = options.value;
+        this.postData.review_cnt = options.value
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

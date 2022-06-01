@@ -39,7 +39,7 @@
             <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
             <text class="title clamp padding-sm">{{ item.name }}</text>
             <view class="padding-left-sm dflex-b">
-              <text class="price">{{ item.price / 100 }}</text>
+              <text class="price">{{ item.price ? item.price / 100 : '面议' }}</text>
               <text class="ft-dark margin-right-sm fs-xs">已售 {{ item.sale_cnt }}</text>
             </view>
           </view>
@@ -80,174 +80,174 @@
           sord: 'asc',
         },
         scrollTop: 0,
-      };
+      }
     },
     watch: {
       // 显示空白页
       goodsDatas(e) {
-        let empty = e.length === 0;
+        let empty = e.length === 0
         if (this.empty !== empty) {
-          this.empty = empty;
+          this.empty = empty
         }
       },
     },
     onPageScroll(e) {
       // 兼容iOS端下拉时顶部漂移
       if (e.scrollTop >= 0) {
-        this.headerPosition = 'fixed';
+        this.headerPosition = 'fixed'
       } else {
-        this.headerPosition = 'absolute';
+        this.headerPosition = 'absolute'
       }
       // this.scrollTop = e.scrollTop
-      this.$refs.usetop.change(e.scrollTop);
+      this.$refs.usetop.change(e.scrollTop)
     },
     //下拉刷新
     onPullDownRefresh() {
-      this.loadData('refresh');
+      this.loadData('refresh')
     },
     //加载更多
     onReachBottom() {
-      this.loadData();
+      this.loadData()
     },
     onLoad(options) {
-      let title = '搜索列表';
+      let title = '搜索列表'
       if (options && options.hot) {
-        title = '热门推荐';
+        title = '热门推荐'
       } else if (options && options.limited) {
-        title = '限时精选';
+        title = '限时精选'
       }
 
       uni.setNavigationBarTitle({
         title: title,
-      });
+      })
 
       for (let key in options) {
-        this.reqdata[key] = decodeURIComponent(options[key]);
+        this.reqdata[key] = decodeURIComponent(options[key])
       }
 
-      this.loadData();
+      this.loadData()
     },
     methods: {
       // 加载商品，下拉刷新|上拉加载
       async loadData(type = 'add', loading) {
         if (this.loadmoreType === 'loading') {
           // 防止重复加载
-          return;
+          return
         }
 
         if (loading == 1 || type == 'refresh') {
           // 从首页开始加载
-          this.reqdata.page = 1;
+          this.reqdata.page = 1
         }
 
         // 没有更多直接返回
         if (type === 'add') {
           if (this.loadmoreType === 'nomore') {
-            return;
+            return
           }
           // 加载中
-          this.loadmoreType = 'loading';
+          this.loadmoreType = 'loading'
         } else {
           // 更多
-          this.loadmoreType = 'more';
+          this.loadmoreType = 'more'
         }
         this.$func.usemall.call('goods/list', this.reqdata).then(res => {
           if (res.code === 200) {
             if (res.datas && res.datas.goods.length > 0) {
               if (loading == 1 || type == 'refresh') {
-                this.goodsDatas = [];
+                this.goodsDatas = []
               }
-              let _datas = [];
+              let _datas = []
               res.datas.goods.forEach(row => {
                 if (row.state === '销售中') {
-                  _datas.push(row);
+                  _datas.push(row)
                 }
-              });
-              this.goodsDatas = [...this.goodsDatas, ..._datas];
+              })
+              this.goodsDatas = [...this.goodsDatas, ..._datas]
 
               if (res.datas.goods.length >= this.reqdata.rows) {
-                this.reqdata.page++;
-                this.loadmoreType = 'more';
+                this.reqdata.page++
+                this.loadmoreType = 'more'
               } else {
-                this.loadmoreType = 'nomore';
+                this.loadmoreType = 'nomore'
               }
             } else {
-              this.loadmoreType = 'nomore';
+              this.loadmoreType = 'nomore'
             }
           }
 
           if (this.goodsDatas.length === 0) {
-            this.empty = true;
+            this.empty = true
           }
 
           if (loading == 1) {
-            uni.hideLoading();
+            uni.hideLoading()
           } else if (type == 'refresh') {
-            uni.stopPullDownRefresh();
+            uni.stopPullDownRefresh()
           }
-        });
+        })
       },
       // 点击筛选
       navbarClick(index) {
         //
         if (this.filterIndex === index && index !== 2) {
-          return;
+          return
         }
 
-        this.filterIndex = index;
+        this.filterIndex = index
 
         if (index === 2) {
-          this.priceOrder = this.priceOrder === 1 ? 2 : 1;
+          this.priceOrder = this.priceOrder === 1 ? 2 : 1
         } else {
-          this.priceOrder = 0;
+          this.priceOrder = 0
         }
 
         if (this.filterIndex == 0) {
           // 综合排序
-          this.reqdata.sidx = 'sort';
-          this.reqdata.sord = 'asc';
+          this.reqdata.sidx = 'sort'
+          this.reqdata.sord = 'asc'
         } else if (this.filterIndex == 1) {
           // 销量优先
-          this.reqdata.sidx = 'sale_cnt';
-          this.reqdata.sord = 'desc';
+          this.reqdata.sidx = 'sale_cnt'
+          this.reqdata.sord = 'desc'
         } else if (this.filterIndex == 2) {
           // 价格排序
-          this.reqdata.sidx = 'price';
+          this.reqdata.sidx = 'price'
           if (this.priceOrder == 1) {
             // 降序
-            this.reqdata.sord = 'desc';
+            this.reqdata.sord = 'desc'
           } else if (this.priceOrder == 2) {
             // 升序
-            this.reqdata.sord = 'asc';
+            this.reqdata.sord = 'asc'
           }
         }
 
         uni.pageScrollTo({
           duration: 300,
           scrollTop: 0,
-        });
+        })
 
-        this.loadData('refresh', 1);
+        this.loadData('refresh', 1)
         uni.showLoading({
           title: '正在加载',
-        });
+        })
       },
       // 搜索页
       tosearch() {
         if (this.$api.pages().length > 1) {
-          uni.navigateBack();
-          return;
+          uni.navigateBack()
+          return
         }
-        this.$api.tosearch();
+        this.$api.tosearch()
       },
       // 商品详情
       togoods(options) {
         this.$api.togoods({
           id: options._id,
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">
@@ -274,7 +274,7 @@
           width: 120rpx;
           height: 0;
           border-bottom: 4rpx solid $base-color;
-          content: "";
+          content: '';
           transform: translateX(-50%);
         }
       }

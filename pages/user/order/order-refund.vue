@@ -107,65 +107,65 @@
           color: '#9a9a9a',
           size: 24,
         },
-      };
+      }
     },
     onUnload() {
-      uni.$emit('__event_order', 'refresh');
+      uni.$emit('__event_order', 'refresh')
     },
     onLoad(option) {
-      this.order_id = option.order_id;
+      this.order_id = option.order_id
       if (!this.order_id) {
-        this.$api.msg('订单编号不存在');
+        this.$api.msg('订单编号不存在')
       }
-      this.loadData();
+      this.loadData()
     },
     methods: {
       async loadData() {
-        let _this = this;
+        let _this = this
         await this.$func.usemall
           .call('order/detail', {
             order_id: _this.order_id,
           })
           .then(res => {
             if (res.code === 200) {
-              _this.order_data = res.datas.order;
-              _this.order_detail = res.datas.order_detail;
+              _this.order_data = res.datas.order
+              _this.order_detail = res.datas.order_detail
 
               // 退款金额为实付款金额
-              _this.refund_money = _this.order_data.order_actural_paid;
+              _this.refund_money = _this.order_data.order_actural_paid
             }
-          });
+          })
       },
       refundImgs(options) {
-        let imgs = [];
+        let imgs = []
 
         options.forEach(_ => {
-          imgs.push(_.url);
-        });
+          imgs.push(_.url)
+        })
 
-        if (imgs.length > 0) this.postData.imgs = imgs;
+        if (imgs.length > 0) this.postData.imgs = imgs
 
-        console.log('refundImgs', this.postData.imgs);
+        console.log('refundImgs', this.postData.imgs)
       },
       submit() {
         if (!this.postData.goods_state) {
-          this.$api.msg('请选择货物状态');
-          return;
+          this.$api.msg('请选择货物状态')
+          return
         }
         if (!this.postData.reason) {
-          this.$api.msg('请选择退款原因');
-          return;
+          this.$api.msg('请选择退款原因')
+          return
         }
 
-        if (this.issubmit) return;
+        if (this.issubmit) return
 
-        this.issubmit = true;
+        this.issubmit = true
 
-        this.postData.order_id = this.order_id;
-        this.postData.refund_money = this.refund_money;
-        this.postData.desc = this.desc;
+        this.postData.order_id = this.order_id
+        this.postData.refund_money = this.refund_money
+        this.postData.desc = this.desc
 
-        let _this = this;
+        let _this = this
         uni.showModal({
           title: '提示',
           content: '申请退款',
@@ -173,31 +173,31 @@
             if (res.confirm) {
               _this.$func.usemall.call('order/refund', _this.postData).then(res => {
                 if (res.code === 200) {
-                  _this.$api.msg('提交成功');
+                  _this.$api.msg('提交成功')
                   //setTimeout(() => {
-                  _this.issubmit = false;
-                  uni.navigateBack({});
+                  _this.issubmit = false
+                  uni.navigateBack({})
                   //}, 1000);
-                  return;
+                  return
                 }
-                _this.$api.msg(res.msg);
-                _this.issubmit = false;
-              });
+                _this.$api.msg(res.msg)
+                _this.issubmit = false
+              })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
-        });
+        })
       },
       // 打开操作菜单
       openActionSheet(idx) {
-        let type = '';
-        let actionSheetList = [];
+        let type = ''
+        let actionSheetList = []
 
         switch (idx) {
           case 1:
-            type = '货物状态';
-            this.actionSheetTips.text = '请选择' + type;
+            type = '货物状态'
+            this.actionSheetTips.text = '请选择' + type
             actionSheetList = [
               {
                 text: '已收到货',
@@ -209,12 +209,12 @@
                 color: '#333',
                 type: type,
               },
-            ];
+            ]
 
-            break;
+            break
           case 2:
-            type = '退款原因';
-            this.actionSheetTips.text = '请选择' + type;
+            type = '退款原因'
+            this.actionSheetTips.text = '请选择' + type
             actionSheetList = [
               {
                 text: '未发货不要了',
@@ -236,35 +236,35 @@
                 color: '#333',
                 type: type,
               },
-            ];
+            ]
 
-            break;
+            break
         }
 
-        this.actionSheetShow = true;
-        this.actionSheetList = actionSheetList;
+        this.actionSheetShow = true
+        this.actionSheetList = actionSheetList
       },
       // 关闭操作菜单
       actionSheetClose() {
-        console.log(this.actionSheetShow);
+        console.log(this.actionSheetShow)
       },
       // 点击操作菜单
       actionSheetClick(index) {
-        let item = this.actionSheetList[index];
+        let item = this.actionSheetList[index]
 
         switch (item.type) {
           case '货物状态':
-            this.goods_state = item.text;
-            this.postData.goods_state = item.text;
-            break;
+            this.goods_state = item.text
+            this.postData.goods_state = item.text
+            break
           case '退款原因':
-            this.reason = item.text;
-            this.postData.reason = item.text;
-            break;
+            this.reason = item.text
+            this.postData.reason = item.text
+            break
         }
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

@@ -6,23 +6,23 @@
       <image
         src="/static/images/user/default.png"
         class="border-radius-lg headimg"
-        style="width: 66rpx; height: 66rpx;"
+        style="width: 66rpx; height: 66rpx"
         mode=""
         @click="user"
       ></image>
 
       <view class="flex1 margin-left-sm">
-        <view class="bg-main border-radius-lg dflex" style="height: 76rpx; line-height: 76rpx;">
+        <view class="bg-main border-radius-lg dflex" style="height: 76rpx; line-height: 76rpx">
           <input type="text" placeholder="输入关键词" class="w-full padding-lr" />
           <view class="iconfont iconsousuo-01 bg-base border-radius-lg h-full padding-lr-xl" @click="search"></view>
         </view>
       </view>
     </view>
 
-    <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="current" @tab-change="tabChange"></top-tab>
+    <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="tabCurrent" @tab-change="tabChange"></top-tab>
 
     <view class="flex1 w-full">
-      <swiper style="height: 100%;" :current="current" @animationfinish="animationfinish">
+      <swiper style="height: 100%" :current="current" @animationfinish="animationfinish">
         <swiper-item v-for="(sdata, index) in sdatas" :key="index">
           <scroll-view class="wh-full" scroll-y @scrolltolower="onreachBottom" :enable-flex="true">
             <use-empty v-if="sdata.empty" e-style="round" tip="无商品数据"></use-empty>
@@ -32,7 +32,7 @@
                 <block v-for="(l_item, l_index) in sdata.goodsLeftList" :key="l_index">
                   <view v-if="l_item" class="padding-xs w-full" @click="togoods(l_item)">
                     <view class="bg-main border-radius">
-                      <image :src="l_item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
+                      <image :src="l_item.img" style="width: 100%; max-height: 350rpx" mode="widthFix" @load="considerPush"></image>
 
                       <view class="padding-lr-sm margin-top-sm clamp-2">{{ l_item.name }}</view>
 
@@ -41,13 +41,13 @@
                           <image
                             src="/static/images/user/default.png"
                             class="border-radius-c headimg"
-                            style="width: 50rpx; height: 50rpx;"
+                            style="width: 50rpx; height: 50rpx"
                           ></image>
-                          <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                          <view class="ft-dark margin-left-xs fs-xxs">广东工业大学</view>
                         </view>
                         <view class="x-c-c">
-                          <view class="iconfont iconaixin"></view>
-                          <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                          <!--                          <view class="iconfont iconaixin"></view>
+                          <view class="clamp ft-dark margin-left-xs fs-xxs">355</view> -->
                         </view>
                       </view>
                     </view>
@@ -59,7 +59,7 @@
                 <block v-for="(r_item, r_index) in sdata.goodsRightList" :key="r_index">
                   <view v-if="r_item" class="padding-xs w-full" @click="togoods(r_item)">
                     <view class="bg-main border-radius">
-                      <image :src="r_item.img" style="width: 100%; max-height: 350rpx;" mode="widthFix" @load="considerPush"></image>
+                      <image :src="r_item.img" style="width: 100%; max-height: 350rpx" mode="widthFix" @load="considerPush"></image>
 
                       <view class="padding-lr-sm margin-top-sm clamp-2">{{ r_item.name }}</view>
 
@@ -68,13 +68,13 @@
                           <image
                             src="/static/images/user/default.png"
                             class="border-radius-c headimg"
-                            style="width: 50rpx; height: 50rpx;"
+                            style="width: 50rpx; height: 50rpx"
                           ></image>
-                          <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
+                          <view class="ft-dark margin-left-xs fs-xxs">广东工业大学</view>
                         </view>
                         <view class="x-c-c">
-                          <view class="iconfont iconaixin"></view>
-                          <view class="clamp ft-dark margin-left-xs fs-xxs">355</view>
+                          <!--                          <view class="iconfont iconaixin"></view>
+                          <view class="clamp ft-dark margin-left-xs fs-xxs">355</view> -->
                         </view>
                       </view>
                     </view>
@@ -99,6 +99,7 @@ export default {
   data() {
     return {
       current: 0,
+      tabCurrent: 0,
 
       // 当前选中分类ID
       cid: 0,
@@ -140,6 +141,8 @@ export default {
   onPullDownRefresh() {
     const cidx = this.current
     this.sdatas[cidx].goodsDatas = []
+    this.sdatas[cidx].goodsLeftList = []
+    this.sdatas[cidx].goodsRightList = []
     this.sdatas[cidx].loadmoreType = 'more'
     this.$nextTick(function() {
       this.loadGoodsDatas('refresh')
@@ -168,6 +171,8 @@ export default {
             temp.forEach(item => {
               // 空白页
               item.empty = false
+              // 是否首次获取分类数据
+              item.firstGet = true
               // 商品列表
               item.goodsDatas = []
               // 左侧商品列表
@@ -230,7 +235,7 @@ export default {
       this.sdatas[cidx].reqdata.cid = this.cid
       this.$db[_goods]
         .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids`)
-        .tolist(this.sdatas[cidx].reqdata)
+        .tolist({ ...this.sdatas[cidx].reqdata, rows: 20, orderby: 'create_time desc' })
         .then(res => {
           if (res.code === 200) {
             if (res.datas && res.datas.length > 0) {
@@ -257,6 +262,7 @@ export default {
           }
 
           this.sdatas[cidx].empty = this.sdatas[cidx].goodsDatas.length === 0 ? true : false
+          this.sdatas[cidx].firstGet = false
 
           this.$nextTick(function() {
             this.touchOff()
@@ -279,15 +285,19 @@ export default {
     touchOff() {
       console.log('touchOff')
       const cidx = this.current
-      this.sdatas[cidx].newList = [...this.sdatas[cidx].goodsDatas]
-      this.$set(this.sdatas[cidx], 'goodsLeftList', [])
-      this.$set(this.sdatas[cidx], 'goodsRightList', [])
+      var goods = new Set([...this.sdatas[cidx].goodsLeftList, ...this.sdatas[cidx].goodsRightList])
+      let temp = this.sdatas[cidx].goodsDatas.filter(x => !goods.has(x))
+      this.sdatas[cidx].newList = temp
 
-      this.$nextTick(function() {
-        if (this.sdatas[cidx].newList.length != 0) {
+      if (this.sdatas[cidx].goodsLeftList.length == 0) {
+        this.$set(this.sdatas[cidx], 'goodsLeftList', [])
+        this.$set(this.sdatas[cidx], 'goodsRightList', [])
+        this.$nextTick(function() {
           this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift()) //触发排列
-        }
-      })
+        })
+      } else {
+        this.considerPush()
+      }
     },
 
     // 计算排列
@@ -301,12 +311,16 @@ export default {
         let leftH = res[0].length ? res[0][cidx].height : 0 //防止查询不到做个处理
         let rightH = res[1].length ? res[1][cidx].height : 0
         this.$nextTick(function() {
-          if (leftH <= rightH) {
+          if (leftH <= rightH + 200) {
             // 相等 || 左边小
-            this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift())
+            if (this.sdatas[cidx].newList) {
+              this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift())
+            }
           } else {
             // 右边小
-            this.sdatas[cidx].goodsRightList.push(this.sdatas[cidx].newList.shift())
+            if (this.sdatas[cidx].newList) {
+              this.sdatas[cidx].goodsRightList.push(this.sdatas[cidx].newList.shift())
+            }
           }
         })
       })
@@ -314,7 +328,9 @@ export default {
 
     //加载更多
     onreachBottom() {
-      this.loadGoodsDatas()
+      this.$nextTick(function() {
+        this.loadGoodsDatas()
+      })
     },
 
     // tabs通知swiper切换
@@ -322,11 +338,13 @@ export default {
       const cidx = e.index
       this.cid = e._id
       this.current = cidx
-      this.sdatas[cidx].goodsDatas = []
-      this.sdatas[cidx].loadmoreType = 'more'
-      this.$nextTick(function() {
-        this.loadGoodsDatas('refresh')
-      })
+      if (this.sdatas[cidx].firstGet) {
+        this.sdatas[cidx].goodsDatas = []
+        this.sdatas[cidx].loadmoreType = 'more'
+        this.$nextTick(function() {
+          this.loadGoodsDatas('refresh')
+        })
+      }
     },
 
     // 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
@@ -334,6 +352,7 @@ export default {
     animationfinish(e) {
       let current = e.detail.current
       this.current = current
+      this.tabCurrent = current
     },
 
     // 跳转个人

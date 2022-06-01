@@ -10,8 +10,8 @@
         <u-input v-model="publishData.content" border="none"></u-input>
       </u-form-item>
       <u-form-item required label="图片上传" prop="imgs" borderBottom>
-        <use-upload class="w-full" v-model="publishData.imgs" @upload="uploadImgs" :limit="9"></use-upload>
-        <!-- <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" /> -->
+        <!-- <use-upload class="w-full" v-model="publishData.imgs" @upload="uploadImgs" :limit="9"></use-upload> -->
+        <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" />
       </u-form-item>
       <u-form-item required label="作品分类" prop="fdata" borderBottom>
         <u-radio-group class="x-s-c-w x-3" v-model="publishData.fdata" @change="fdataChange">
@@ -25,7 +25,7 @@
           </block>
         </u-radio-group>
       </u-form-item>
-      <u-form-item required label="规格" prop="authType" borderBottom>
+      <u-form-item required label="规格" prop="authType">
         <view class="y-c-c text-center">
           <view class="x-a-c x-3 w-full">
             <view></view>
@@ -47,7 +47,7 @@
         </view>
       </u-form-item>
     </u--form>
-    <u-button type="primary" text="提交" @click="submitData"></u-button>
+    <view class="padding"><u-button type="primary" text="提交" @click="submitData"></u-button></view>
   </view>
 </template>
 
@@ -117,7 +117,10 @@ export default {
     }
   },
   onLoad() {
-    this.affirm()
+    this.init(this.affirm)
+    this.$nextTick(function() {
+      this.loadData()
+    })
   },
   onShow() {
     if (!this.islogin) {
@@ -125,9 +128,7 @@ export default {
       return
     }
   },
-  onReady() {
-    this.loadData()
-  },
+  onReady() {},
   mounted() {
     // #ifdef H5 || MP-360
     this.navHeight = 50
@@ -135,8 +136,8 @@ export default {
   },
   //下拉刷新
   onPullDownRefresh() {
-    this.loadData()
     this.init(this.affirm)
+    this.loadData()
   },
   methods: {
     async loadData() {
@@ -262,6 +263,7 @@ export default {
 
       this.goods.name = this.publishData.name
       this.goods.cid = this.publishData.sdata
+      this.goods.cids = []
       this.goods.cids.push(this.publishData.fdata, this.publishData.sdata)
       this.goods.price = this.publishData.skus[0].price * 100
       this.goods.market_price = this.publishData.skus[3].price * 100
@@ -293,6 +295,8 @@ export default {
       this.publishData.imgs.forEach(img => {
         this.detail.desc_mobile += `<p><img style="max-width:100%;display:block;" src="${img.url}" ></p>`
       })
+
+      console.log(this.goods)
 
       let goods = this.goods
       let detail = this.detail

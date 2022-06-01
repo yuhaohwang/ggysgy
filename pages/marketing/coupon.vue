@@ -54,38 +54,38 @@
           rows: 20,
           page: 1,
         },
-      };
+      }
     },
     watch: {
       couponDatas(e) {
-        let empty = e.length === 0;
+        let empty = e.length === 0
         if (this.empty !== empty) {
-          this.empty = empty;
+          this.empty = empty
         }
       },
     },
     onShow() {
-      this.loadData();
+      this.loadData()
     },
     methods: {
       loadData() {
         // 获取数据
         this.$func.usemall.call('marketing/coupon/list', this.reqdata).then(res => {
           if (res.code === 200) {
-            this.couponDatas = [...this.couponDatas, ...res.datas];
+            this.couponDatas = [...this.couponDatas, ...res.datas]
 
             if (res.datas.length >= this.reqdata.rows) {
-              if (this.reqdata.page == 1) this.hasmore = !0;
+              if (this.reqdata.page == 1) this.hasmore = !0
             }
 
             if (this.couponDatas.length === 0) {
-              this.empty = true;
+              this.empty = true
             }
           }
-        });
+        })
       },
       receive(id) {
-        let _this = this;
+        let _this = this
         uni.showModal({
           title: '提示',
           content: '领取优惠券',
@@ -97,26 +97,26 @@
                 })
                 .then(res => {
                   if (res.code === 200) {
-                    _this.$api.msg('领取成功');
-                    return;
+                    _this.$api.msg('领取成功')
+                    return
                   }
 
-                  _this.$api.msg(res.msg);
-                });
+                  _this.$api.msg(res.msg)
+                })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
-        });
+        })
       },
       togoods(item) {
-        return;
+        return
         this.$api.togoods({
           id: item.goods_id,
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">
@@ -148,7 +148,7 @@
     .discount::after {
       margin-left: 6rpx;
       font-size: 24rpx;
-      content: "折";
+      content: '折';
     }
 
     .border-line {

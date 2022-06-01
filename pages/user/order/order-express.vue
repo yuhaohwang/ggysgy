@@ -13,7 +13,7 @@
       </view>
     </view>
     <view v-if="expressData && expressData.data" class="padding-lr">
-      <view class="product border-radius padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
+      <view class="product border-radius padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx">
         <view
           :class="{ active: index == 0, fwb: index == 0 }"
           class="dflex item pos-r"
@@ -41,37 +41,37 @@
         empty: false,
         order_id: '',
         expressData: {},
-      };
+      }
     },
     watch: {
       expressData(e) {
-        let empty = !(e && e.data);
+        let empty = !(e && e.data)
         if (this.empty !== empty) {
-          this.empty = empty;
+          this.empty = empty
         }
       },
     },
     onPageScroll(e) {
       //this.scrollTop = e.scrollTop;
-      this.$refs.usetop.change(e.scrollTop);
+      this.$refs.usetop.change(e.scrollTop)
     },
     onLoad(options) {
-      this.order_id = options.order_id;
+      this.order_id = options.order_id
 
       if (!this.order_id) {
-        this.$api.msg('订单号不存在');
+        this.$api.msg('订单号不存在')
       }
 
-      this.loadData();
+      this.loadData()
     },
     onShow() {},
     methods: {
       loadData() {
         this.$func.usemall.call('order/express', { order_id: this.order_id }).then(res => {
           if (res.code == 200) {
-            this.expressData = res.datas;
+            this.expressData = res.datas
           }
-        });
+        })
       },
       // 点击复制
       copy() {
@@ -82,14 +82,14 @@
               success: function (res) {
                 uni.showToast({
                   title: '复制成功',
-                });
+                })
               },
-            });
+            })
           },
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style>
@@ -114,7 +114,7 @@
     border-left-color: rgb(211 211 211);
     border-left-style: solid;
     border-left-width: 1px;
-    content: " ";
+    content: ' ';
   }
 
   .item.active::before {
@@ -141,7 +141,7 @@
     height: 20rpx;
     background: rgba(255, 106, 108, 0.5) !important;
     border-radius: 50%;
-    content: " ";
+    content: ' ';
     -webkit-transform: scale(1.6);
     transform: scale(1.6);
   }

@@ -9,7 +9,7 @@
         :key="index"
         @click="change(item)"
       >
-        <text style="font-size: 26rpx;">{{ item.name }}({{ item.cnt }})</text>
+        <text style="font-size: 26rpx">{{ item.name }}({{ item.cnt }})</text>
       </view>
     </view>
     <view class="gap"></view>
@@ -59,16 +59,16 @@
         goods_id: 0,
         // 评价类型
         state: '全部',
-      };
+      }
     },
     onLoad(res) {
-      this.goods_id = res.id;
+      this.goods_id = res.id
 
-      this.loadData();
+      this.loadData()
     },
     methods: {
       loadData() {
-        const $ = this.$dbcmd.aggregate;
+        const $ = this.$dbcmd.aggregate
         this.$db['usemall-goods-comment']
           .collection()
           .aggregate()
@@ -81,15 +81,15 @@
           })
           .end()
           .then(res => {
-            let __stateDatas = [];
-            let total = 0;
+            let __stateDatas = []
+            let total = 0
             res.result.data.forEach(x => {
-              __stateDatas.push({ name: x._id, cnt: x.num });
-              total += x.num;
-            });
+              __stateDatas.push({ name: x._id, cnt: x.num })
+              total += x.num
+            })
 
-            this.stateDatas = [{ name: '全部', cnt: total }, ...__stateDatas];
-          });
+            this.stateDatas = [{ name: '全部', cnt: total }, ...__stateDatas]
+          })
 
         this.$db['usemall-goods-comment']
           .whereif(this.state != '全部', { review_type: this.state })
@@ -97,17 +97,17 @@
           .tolist({ rows: 30, orderby: 'create_time desc' })
           .then(res => {
             if (res.code === 200) {
-              this.evaluateDatas = res.datas;
+              this.evaluateDatas = res.datas
             }
-          });
+          })
       },
       change(options) {
-        this.state = options.name;
+        this.state = options.name
 
-        this.loadData();
+        this.loadData()
       },
       preview(imgs, cur) {
-        if (!imgs) return;
+        if (!imgs) return
 
         uni.previewImage({
           urls: imgs,
@@ -115,16 +115,16 @@
           longPressActions: {
             itemList: ['发送给朋友', '保存图片', '收藏'],
             success: function (data) {
-              console.log(res);
+              console.log(res)
             },
             fail: function (err) {
-              console.log(err);
+              console.log(err)
             },
           },
-        });
+        })
       },
     },
-  };
+  }
 </script>
 <style lang="scss">
   page {

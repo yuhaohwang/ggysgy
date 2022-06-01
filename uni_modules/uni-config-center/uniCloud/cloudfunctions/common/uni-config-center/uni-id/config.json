@@ -30,8 +30,8 @@
     },
     "pay": {
       "appId": "wx73b4e1be70f7c4b2",
-      "mchId": "微信支付商户号",
-      "key": "微信支付商户key (API密钥)"
+      "mchId": "1626500351",
+      "key": "DvU1Knb2fVKsV0wfiSduoiaWNimCQvHB"
     },
     "notify-url": "云函数URL化http地址 + /wxpay"
   },

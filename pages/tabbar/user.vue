@@ -6,7 +6,7 @@
           <view><image class="headimg border-radius-c" :src="member.member_headimg || '/static/images/user/default.png'"></image></view>
           <view class="margin-left-sm">
             <view class="info-box">
-              <text class="fs-lg">{{ member.member_name || member.member_nickname || '以艺自强' }}</text>
+              <text class="fs-lg">{{ member.member_name || member.member_nickname || '艺心益盟' }}</text>
             </view>
             <view v-if="member.member_city">
               <text class="fs-xxs">{{ member.member_city }}</text>
@@ -16,19 +16,19 @@
             <view :class="{ rotate: isreq }" class="animated iconfont">&#xe6ff;</view>
           </view>
         </view>
-        <view class="border-radius-big bg-base dflex-c padding-lr" @click="to('/pages/user/integral/sign')">
+        <!--        <view class="border-radius-big bg-base dflex-c padding-lr" @click="to('/pages/user/integral/sign')">
           <view class="iconfont fs-xl iconqiandao margin-right-xs"></view>
           <view>签到</view>
-        </view>
+        </view> -->
       </view>
 
       <!-- 03. 分类区1 -->
-      <view class="x-c-c x-5 padding-xs bg-main border-radius" v-if="categoryDatas && categoryDatas.length > 0">
+      <!--      <view class="x-c-c x-5 padding-xs bg-main border-radius" v-if="categoryDatas && categoryDatas.length > 0">
         <view class="y-c-c padding-xs category-item" v-for="(item, index) in categoryDatas" :key="index" @click="to(item.url)">
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
           <view>{{ item.name }}</view>
         </view>
-      </view>
+      </view> -->
     </view>
 
     <!-- 我的订单 -->
@@ -156,8 +156,8 @@
   </view>
 </template>
 <script>
-  import { mapState, mapMutations } from 'vuex';
-  const _history = 'usemall-goods-history';
+  import { mapState, mapMutations } from 'vuex'
+  const _history = 'usemall-goods-history'
   export default {
     computed: {
       ...mapState(['islogin', 'member']),
@@ -228,22 +228,22 @@
 
         is_mp: false,
         is_alipay: false,
-      };
+      }
     },
     onLoad() {
       this.$nextTick(() => {
-        this.is_mp = this.$env.is_mp;
-        this.is_alipay = this.$env.platform == 'alipay';
-      });
+        this.is_mp = this.$env.is_mp
+        this.is_alipay = this.$env.platform == 'alipay'
+      })
     },
     onShow() {
-      let _this = this;
+      let _this = this
       if (!this.islogin) {
-        this.$api.msg('账号未登录');
-        return;
+        this.$api.msg('账号未登录')
+        return
       }
 
-      this.loadData();
+      this.loadData()
     },
     methods: {
       ...mapMutations(['logout', 'putMember']),
@@ -251,16 +251,16 @@
       loadData() {
         this.$func.usemall.call('member/data').then(res => {
           if (res.code == 200) {
-            this.putMember(res.datas.member);
-            console.log('member/data', res);
+            this.putMember(res.datas.member)
+            console.log('member/data', res)
 
-            this.stats = res.datas.stats;
-            this.stats.order_state = {};
+            this.stats = res.datas.stats
+            this.stats.order_state = {}
             this.stats.order.forEach(_order => {
-              this.stats.order_state[_order._id] = _order.num;
-            });
+              this.stats.order_state[_order._id] = _order.num
+            })
           }
-        });
+        })
 
         // 浏览历史
         this.$db['usemall-goods-history, usemall-goods']
@@ -271,21 +271,21 @@
           .get()
           .then(res => {
             if (res && res.result && res.result.code === 0) {
-              let _historyDatas = [];
+              let _historyDatas = []
               res.result.data.forEach(x => {
-                x._id = x.goods_id[0];
-                x.img = x.goods_img[0];
-                x.state = x.goods_state[0];
-                _historyDatas.push(x);
-              });
-              this.historyDatas = _historyDatas;
+                x._id = x.goods_id[0]
+                x.img = x.goods_img[0]
+                x.state = x.goods_state[0]
+                _historyDatas.push(x)
+              })
+              this.historyDatas = _historyDatas
             }
-          });
+          })
       },
 
       // 打开操作菜单
       openActionSheet() {
-        this.actionSheetShow = true;
+        this.actionSheetShow = true
 
         this.$api.timerout(() => {
           this.actionSheetList = [
@@ -297,33 +297,33 @@
               text: '切换账号',
               color: '#333',
             },
-          ];
-        }, 0);
+          ]
+        }, 0)
       },
       // 关闭操作菜单
       actionSheetClose() {
-        console.log(this.actionSheetShow);
+        console.log(this.actionSheetShow)
       },
       // 点击操作菜单
       actionSheetClick(index) {
         switch (index) {
           case 0:
-            this.$api.msg('退出成功');
-            this.logout();
+            this.$api.msg('退出成功')
+            this.logout()
             this.$api.timerout(() => {
-              this.$api.tohome();
-            }, 200);
-            break;
+              this.$api.tohome()
+            }, 200)
+            break
           case 1:
-            this.$api.tologin();
-            break;
+            this.$api.tologin()
+            break
         }
       },
 
       updateMember() {
-        if (this.isreq) return;
-        this.isreq = true;
-        let _this = this;
+        if (this.isreq) return
+        this.isreq = true
+        let _this = this
 
         uni.getUserProfile({
           desc: '更新会员信息',
@@ -337,63 +337,63 @@
                 comment: [res.userInfo.country, res.userInfo.province, res.userInfo.city].filter(x => x).join('-'),
               })
               .then(res => {
-                _this.isreq = false;
+                _this.isreq = false
 
                 if (res.code == 200) {
-                  _this.loadData();
-                  return;
+                  _this.loadData()
+                  return
                 }
 
-                _this.$api.msg(res.msg);
-              });
+                _this.$api.msg(res.msg)
+              })
           },
           fail(err) {
-            console.log(err);
-            _this.isreq = false;
+            console.log(err)
+            _this.isreq = false
           },
-        });
+        })
       },
 
       // 统一跳转接口，拦截未登录路由
       to(url) {
         if (!this.islogin) {
-          this.$api.tologin();
-          return;
+          this.$api.tologin()
+          return
         }
 
         uni.navigateTo({
           url,
-        });
+        })
       },
       // 跳转到 订单
       toOrder(url, state) {
         if (!this.islogin) {
-          this.$api.tologin();
-          return;
+          this.$api.tologin()
+          return
         }
 
         uni.setStorage({
           key: '__order_state',
           data: state,
           success(res) {
-            console.log(res);
+            console.log(res)
           },
           complete() {
             uni.navigateTo({
               url,
-            });
+            })
           },
-        });
+        })
       },
 
       // 跳转商品详情
       togoods(item) {
         this.$api.togoods({
           id: item._id,
-        });
+        })
       },
     },
-  };
+  }
 </script>
 <style lang="scss">
   page {
@@ -453,7 +453,8 @@
     }
   }
 
-  .stats-area .item, .order-area .item {
+  .stats-area .item,
+  .order-area .item {
     position: relative;
     font-size: $font-sm;
     color: $font-color-base;

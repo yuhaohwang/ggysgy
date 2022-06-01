@@ -86,9 +86,9 @@
    * @example  <use-address ref="simpleAddress" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm" themeColor='#007AFF'></use-address>
    */
 
-  import provinceData from './city-data/province.js';
-  import cityData from './city-data/city.js';
-  import areaData from './city-data/area.js';
+  import provinceData from './city-data/province.js'
+  import cityData from './city-data/city.js'
+  import areaData from './city-data/area.js'
   export default {
     name: 'simpleAddress',
     props: {
@@ -148,7 +148,7 @@
       pickerValueDefault: {
         type: Array,
         default() {
-          return [0, 0, 0];
+          return [0, 0, 0]
         },
       },
     },
@@ -160,59 +160,59 @@
         provinceDataList: [],
         cityDataList: [],
         areaDataList: [],
-      };
+      }
     },
     watch: {
       show(newValue) {
         if (newValue) {
-          this.open();
+          this.open()
         } else {
-          this.close();
+          this.close()
         }
       },
       pickerValueDefault() {
-        this.init();
+        this.init()
       },
     },
     created() {
-      this.init();
+      this.init()
     },
     methods: {
       init() {
-        this.handPickValueDefault(); // 对 pickerValueDefault 做兼容处理
-        this.provinceDataList = provinceData;
-        this.cityDataList = cityData[this.pickerValueDefault[0]];
-        this.areaDataList = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]];
-        this.pickerValue = this.pickerValueDefault;
+        this.handPickValueDefault() // 对 pickerValueDefault 做兼容处理
+        this.provinceDataList = provinceData
+        this.cityDataList = cityData[this.pickerValueDefault[0]]
+        this.areaDataList = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]]
+        this.pickerValue = this.pickerValueDefault
       },
       handPickValueDefault() {
         if (this.pickerValueDefault !== [0, 0, 0]) {
           if (this.pickerValueDefault[0] > provinceData.length - 1) {
-            this.pickerValueDefault[0] = provinceData.length - 1;
+            this.pickerValueDefault[0] = provinceData.length - 1
           }
           if (this.pickerValueDefault[1] > cityData[this.pickerValueDefault[0]].length - 1) {
-            this.pickerValueDefault[1] = cityData[this.pickerValueDefault[0]].length - 1;
+            this.pickerValueDefault[1] = cityData[this.pickerValueDefault[0]].length - 1
           }
           if (this.pickerValueDefault[2] > areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1) {
-            this.pickerValueDefault[2] = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1;
+            this.pickerValueDefault[2] = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]].length - 1
           }
         }
       },
       pickerChange(e) {
-        let changePickerValue = e.detail.value;
+        let changePickerValue = e.detail.value
         if (this.pickerValue[0] !== changePickerValue[0]) {
           // 第一级发生滚动
-          this.cityDataList = cityData[changePickerValue[0]];
-          this.areaDataList = areaData[changePickerValue[0]][0];
-          changePickerValue[1] = 0;
-          changePickerValue[2] = 0;
+          this.cityDataList = cityData[changePickerValue[0]]
+          this.areaDataList = areaData[changePickerValue[0]][0]
+          changePickerValue[1] = 0
+          changePickerValue[2] = 0
         } else if (this.pickerValue[1] !== changePickerValue[1]) {
           // 第二级滚动
-          this.areaDataList = areaData[changePickerValue[0]][changePickerValue[1]];
-          changePickerValue[2] = 0;
+          this.areaDataList = areaData[changePickerValue[0]][changePickerValue[1]]
+          changePickerValue[2] = 0
         }
-        this.pickerValue = changePickerValue;
-        this._$emit('onChange');
+        this.pickerValue = changePickerValue
+        this._$emit('onChange')
       },
       _$emit(emitName) {
         let pickObj = {
@@ -222,8 +222,8 @@
           areaCode: this._getAreaCode(),
           provinceCode: this._getProvinceCode(),
           labelArr: this._getLabel().split('-'),
-        };
-        this.$emit(emitName, pickObj);
+        }
+        this.$emit(emitName, pickObj)
       },
       _getLabel() {
         let pcikerLabel =
@@ -231,24 +231,24 @@
           '-' +
           this.cityDataList[this.pickerValue[1]].label +
           '-' +
-          this.areaDataList[this.pickerValue[2]].label;
-        return pcikerLabel;
+          this.areaDataList[this.pickerValue[2]].label
+        return pcikerLabel
       },
       _getCityCode() {
-        return this.cityDataList[this.pickerValue[1]].value;
+        return this.cityDataList[this.pickerValue[1]].value
       },
       _getProvinceCode() {
-        return this.provinceDataList[this.pickerValue[0]].value;
+        return this.provinceDataList[this.pickerValue[0]].value
       },
       _getAreaCode() {
-        return this.areaDataList[this.pickerValue[2]].value;
+        return this.areaDataList[this.pickerValue[2]].value
       },
       queryIndex(params = [], type = 'value') {
         // params = [ 11 ,1101,110101 ];
         // 1.获取省份的index
-        let provinceIndex = provinceData.findIndex(res => res[type] == params[0]);
-        let cityIndex = cityData[provinceIndex].findIndex(res => res[type] == params[1]);
-        let areaIndex = areaData[provinceIndex][cityIndex].findIndex(res => res[type] == params[2]);
+        let provinceIndex = provinceData.findIndex(res => res[type] == params[0])
+        let cityIndex = cityData[provinceIndex].findIndex(res => res[type] == params[1])
+        let areaIndex = areaData[provinceIndex][cityIndex].findIndex(res => res[type] == params[2])
         return {
           index: [provinceIndex, cityIndex, areaIndex],
           data: {
@@ -256,40 +256,40 @@
             city: cityData[provinceIndex][cityIndex],
             area: areaData[provinceIndex][cityIndex][areaIndex],
           },
-        };
+        }
       },
       clear() {},
       hideMask() {
-        this._$emit('onCancel');
-        this.close();
+        this._$emit('onCancel')
+        this.close()
       },
       pickerCancel() {
-        this._$emit('onCancel');
-        this.close();
+        this._$emit('onCancel')
+        this.close()
       },
       pickerConfirm() {
-        this._$emit('onConfirm');
-        this.close();
+        this._$emit('onConfirm')
+        this.close()
       },
       open() {
-        this.showPopup = true;
+        this.showPopup = true
         this.$nextTick(() => {
           setTimeout(() => {
-            this.ani = 'simple-' + this.type;
-          }, 100);
-        });
+            this.ani = 'simple-' + this.type
+          }, 100)
+        })
       },
       close(type) {
-        if (!this.maskClick && type) return;
-        this.ani = '';
+        if (!this.maskClick && type) return
+        this.ani = ''
         this.$nextTick(() => {
           setTimeout(() => {
-            this.showPopup = false;
-          }, 300);
-        });
+            this.showPopup = false
+          }, 300)
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss" scoped>

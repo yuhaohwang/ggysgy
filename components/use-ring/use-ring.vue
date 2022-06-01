@@ -37,37 +37,37 @@
         circleLeftCss: '',
         circleRightCss: '',
         type: 'right',
-      };
+      }
     },
     methods: {
       draw(val) {
         if (val !== 0) {
-          val = val || this.value;
+          val = val || this.value
         }
 
-        const percent = val / this.max;
+        const percent = val / this.max
 
         if (percent <= 0.5) {
-          this.circleRightCss = `transform: rotate(${percent * 360}deg)`;
-          this.type = 'right';
+          this.circleRightCss = `transform: rotate(${percent * 360}deg)`
+          this.type = 'right'
         } else {
-          this.circleRightCss = `transform: rotate(180deg); transition: opacity 0s step-end 1s, transform 1s linear; opacity: 0`;
-          this.circleLeftCss = `transition: transform ${(percent - 0.5) / 0.5}s linear 1s; transform: rotate(${percent * 360 - 180}deg)`;
-          this.type = 'left';
+          this.circleRightCss = `transform: rotate(180deg); transition: opacity 0s step-end 1s, transform 1s linear; opacity: 0`
+          this.circleLeftCss = `transition: transform ${(percent - 0.5) / 0.5}s linear 1s; transform: rotate(${percent * 360 - 180}deg)`
+          this.type = 'left'
         }
       },
       leftSuccess() {
         if (this.type == 'left') {
-          this.$emit('success');
+          this.$emit('success')
         }
       },
       rightSuccess() {
         if (this.type == 'right') {
-          this.$emit('success');
+          this.$emit('success')
         }
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

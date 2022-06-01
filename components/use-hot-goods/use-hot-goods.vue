@@ -18,7 +18,7 @@
         <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
         <text class="title clamp padding-sm">{{ item.name }}</text>
         <view class="padding-left-sm">
-          <text class="price">{{ item.price / 100 }}</text>
+          <text class="price">{{ item.price ? item.price / 100 : '面议' }}</text>
           <text class="m-price">{{ item.market_price / 100 }}</text>
         </view>
       </view>
@@ -52,16 +52,16 @@
     data() {
       return {
         hotDatas: [],
-      };
+      }
     },
     watch: {
       datas() {
-        this.hotDatas = this.datas;
+        this.hotDatas = this.datas
       },
     },
     created() {
       if (this.autoload === 'auto') {
-        this.loadData();
+        this.loadData()
       }
     },
     methods: {
@@ -72,24 +72,24 @@
           .then(res => {
             // console.log('usemall-goods',res);
             if (res.code === 200) {
-              this.hotDatas = res.datas || [];
+              this.hotDatas = res.datas || []
             }
-          });
+          })
       },
       goto() {
-        console.log('goto');
+        console.log('goto')
         this.$emit('goto', {
           type: 'goto',
-        });
+        })
       },
       hot() {
-        this.$api.togoodslist({ hot: 1 });
+        this.$api.togoodslist({ hot: 1 })
       },
       to_detail(options) {
-        this.$api.togoods({ id: options._id });
+        this.$api.togoods({ id: options._id })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

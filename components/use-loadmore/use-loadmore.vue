@@ -21,18 +21,18 @@
         default() {
           return {
             more: '上拉显示更多',
-            loading: '以艺自强 · 传播艺术之美',
+            loading: '艺心益盟 · 传播艺术之美',
             nomore: '已经到底了',
-          };
+          }
         },
       },
     },
     data() {
-      return {};
+      return {}
     },
     computed: {},
     methods: {},
-  };
+  }
 </script>
 
 <style lang="scss">

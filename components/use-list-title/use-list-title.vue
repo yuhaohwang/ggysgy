@@ -55,17 +55,17 @@
       },
     },
     data() {
-      return {};
+      return {}
     },
     methods: {
       goto() {
-        console.log('goto');
+        console.log('goto')
         this.$emit('goto', {
           type: 'goto',
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

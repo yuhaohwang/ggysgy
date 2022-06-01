@@ -19,7 +19,7 @@
     <!-- #endif -->
     <view class="gap"></view>
 
-    <use-list-title title="以艺自强" iconfont=" " :tip="version"></use-list-title>
+    <use-list-title title="艺心益盟" iconfont=" " :tip="version"></use-list-title>
     <view class="gap"></view>
 
     <view class="use-item log-out-btn tac" @click="tologin">
@@ -34,26 +34,26 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
-  const _about = 'usemall-app-about';
+  import { mapState, mapMutations } from 'vuex'
+  const _about = 'usemall-app-about'
   export default {
     data() {
       return {
         version: '1.0.0',
         aboutData: {},
-      };
+      }
     },
     onLoad(options) {
       this.$db[_about].tofirst().then(res => {
         if (res.code === 200) {
-          this.aboutData = res.datas;
+          this.aboutData = res.datas
           // console.log('this.aboutData', this.aboutData);
-          return;
+          return
         }
-      });
+      })
     },
     onShow() {
-      this.version = '版本 ' + this.$config.version;
+      this.version = '版本 ' + this.$config.version
     },
     computed: {
       ...mapState(['member']),
@@ -64,14 +64,14 @@
       to() {
         uni.navigateTo({
           url: '/pages/user/setting/personal',
-        });
+        })
       },
       // 关于用云
       toabout() {
         if (this.aboutData.type == '网页') {
           uni.navigateTo({
             url: `/pages/content/web?url=${this.aboutData.url}`,
-          });
+          })
         } else if (this.aboutData.type == '内容') {
           uni.setStorage({
             key: '__rich_text',
@@ -79,17 +79,17 @@
             success() {
               uni.navigateTo({
                 url: '/pages/content/rich-text',
-              });
+              })
             },
-          });
+          })
         }
       },
       tofeedback() {
-        this.$api.msg('打开右上角-反馈功能');
+        this.$api.msg('打开右上角-反馈功能')
       },
       // 切换账号
       tologin() {
-        this.$api.tologin();
+        this.$api.tologin()
       },
       // 退出登录
       tologout() {
@@ -97,18 +97,18 @@
           content: '退出登录',
           success: e => {
             if (e.confirm) {
-              this.$api.msg('退出成功');
-              this.logout();
+              this.$api.msg('退出成功')
+              this.logout()
 
               this.$api.timerout(() => {
-                this.$api.tohome();
-              }, 200);
+                this.$api.tohome()
+              }, 200)
             }
           },
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

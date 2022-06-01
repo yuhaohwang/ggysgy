@@ -34,7 +34,7 @@
       </view>
       <view class="x-b-c">
         <view class="padding-xs"><u--text mode="text" text="更多" :size="12" color="#8D9299"></u--text></view>
-        <view class="x-c-c" style="white-space: nowrap;">
+        <view class="x-c-c" style="white-space: nowrap">
           <view class="padding-xs"><u-button size="mini" :hairline="true" shape="circle">下架</u-button></view>
           <view class="padding-xs"><u-button size="mini" :hairline="true" shape="circle">编辑</u-button></view>
         </view>
@@ -44,45 +44,45 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      tabList: [
-        {
-          name: '全部',
-        },
-        {
-          name: '待审核',
-        },
-        {
-          name: '已上架',
-        },
-        {
-          name: '已下架',
-        },
-        {
-          name: '草稿',
-        },
-      ],
-    }
-  },
-  methods: {
-    tabClick(e) {
-      console.log(e)
+  export default {
+    data() {
+      return {
+        tabList: [
+          {
+            name: '全部',
+          },
+          {
+            name: '待审核',
+          },
+          {
+            name: '已上架',
+          },
+          {
+            name: '已下架',
+          },
+          {
+            name: '草稿',
+          },
+        ],
+      }
     },
-    // 商品详情
-    togoods(options) {
-      console.log(options._id)
-      this.$api.togoods({
-        id: options._id,
-      })
+    methods: {
+      tabClick(e) {
+        console.log(e)
+      },
+      // 商品详情
+      togoods(options) {
+        console.log(options._id)
+        this.$api.togoods({
+          id: options._id,
+        })
+      },
     },
-  },
-}
+  }
 </script>
 
 <style lang="scss">
-// .title {
-//   text-align: left;
-// }
+  // .title {
+  //   text-align: left;
+  // }
 </style>

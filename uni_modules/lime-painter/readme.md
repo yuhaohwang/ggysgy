@@ -675,7 +675,7 @@ data() {
 ### Nvue
 - 插件在nvue下是使用webview实现渲染绘制的，但uni的webviwe无法读取插件目录下的文件，只能读取根目录下的hybrid/html或static文件夹的文件。所以在尝试了很多种方式后，决定默认改由插件主动下载的方式写入到app内。如果你不想由插件主动下载写入，可以自行下载。
 - 1、默认为插件主动下载写入APP的_doc目录，无须任何设置。
-- 2、若不希望插件主动下载，可自主下载[uni.webview.1.3.2.js](https://gitee.com/dcloud/uni-app/raw/dev/dist/uni.webview.1.5.3.js)、[painter.js](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/painter.js)、[index.html](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/index.html)，到根目录的`/hybird/html/lime-painter/`再给插件设置`hybrid`属性。
+- 2、若不希望插件主动下载，可自行下载[uni.webview.1.5.3.js](https://gitee.com/dcloud/uni-app/raw/dev/dist/uni.webview.1.5.3.js)、[painter.js](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/painter.js)、[index.html](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/index.html)，到根目录的`/hybird/html/lime-painter/`再给插件设置`hybrid`属性。
 ```html
 <l-painter hybrid/>
 ```
@@ -870,5 +870,5 @@ page({
 
 如果你觉得本插件，解决了你的问题，赠人玫瑰，手留余香。
 
-![输入图片说明](https://cdn.jsdelivr.net/gh/liangei/image@latest/222521_bb543f96_518581.jpeg "微信图片编辑_20201122220352.jpg")
+![输入图片说明](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/image/222521_bb543f96_518581.jpeg "微信图片编辑_20201122220352.jpg")
 ![输入图片说明](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/image/wxplay.jpg "wxplay.jpg")

@@ -178,7 +178,7 @@
         <text class="price">{{ order_data.order_actural_paid / 100 }}</text>
       </view>
     </view>
-    <view style="height: 100rpx;"></view>
+    <view style="height: 100rpx"></view>
 
     <!-- 底部操作区 -->
     <view class="oper-area dflex-b padding-right padding-left-sm">
@@ -244,76 +244,76 @@
         order_id: '',
         goods_price_tip: '产品总计',
         time_remaining: 0,
-      };
+      }
     },
     onUnload() {
-      uni.$emit('__event_order', 'refresh');
+      uni.$emit('__event_order', 'refresh')
     },
     onLoad(options) {
-      this.order_id = options.order_id;
+      this.order_id = options.order_id
 
-      this.loadData();
+      this.loadData()
     },
     onShow() {
-      this.loadData();
+      this.loadData()
     },
     methods: {
       tohome() {
-        this.$api.tohome();
+        this.$api.tohome()
       },
       async loadData() {
-        let _this = this;
+        let _this = this
         await this.$func.usemall
           .call('order/detail', {
             order_id: _this.order_id,
           })
           .then(res => {
             if (res.code === 200) {
-              res.datas.order.create_time = this.$api.format(res.datas.order.create_time);
-              _this.order_data = res.datas.order;
-              _this.order_detail = res.datas.order_detail;
-              _this.addressData = res.datas.order_trip;
+              res.datas.order.create_time = this.$api.format(res.datas.order.create_time)
+              _this.order_data = res.datas.order
+              _this.order_detail = res.datas.order_detail
+              _this.addressData = res.datas.order_trip
               if (res.datas.order && res.datas.order.state === '待付款') {
-                _this.time_remaining = res.datas.time_remaining;
+                _this.time_remaining = res.datas.time_remaining
               }
 
               _this.order_detail.forEach(data => {
                 if (data.goods_opt_id > 0) {
-                  let desc = '';
+                  let desc = ''
                   if (data.goods_opt_desc) {
-                    desc = ' (' + data.goods_opt_desc + ')';
+                    desc = ' (' + data.goods_opt_desc + ')'
                   }
-                  _this.goods_price_tip = data.goods_opt_name + desc;
+                  _this.goods_price_tip = data.goods_opt_name + desc
                 }
-              });
+              })
 
               // console.log(_this.order_detail);
               // console.log(_this.order_data.state);
             }
-          });
+          })
       },
       // 立即支付
       payment() {
         if (this.order_data.order_pay_state == '待核实') {
-          this.$api.msg('订单已支付待核实状态');
-          return;
+          this.$api.msg('订单已支付待核实状态')
+          return
         }
 
         this.$api.topay({
           order_id: this.order_data.order_id,
           money: this.order_data.order_actural_paid,
-        });
+        })
       },
       // 查看物流
       toexpress(item) {
         // this.$api.msg('查看物流开发中');
         uni.navigateTo({
           url: `/pages/user/order/order-express?order_id=${this.order_id}`,
-        });
+        })
       },
       // 已发货
       toreceipt() {
-        let _this = this;
+        let _this = this
 
         uni.showModal({
           title: '提示',
@@ -322,27 +322,27 @@
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
-              });
+              })
               _this.$func.usemall
                 .call('order/received', {
                   order_id: _this.order_id,
                   state: '待评价',
                 })
                 .then(res => {
-                  _this.loadData('refresh');
-                });
+                  _this.loadData('refresh')
+                })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
           complete() {
-            uni.hideLoading();
+            uni.hideLoading()
           },
-        });
+        })
       },
       // 删除订单
       delorder() {
-        let _this = this;
+        let _this = this
 
         uni.showModal({
           title: '提示',
@@ -351,28 +351,28 @@
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
-              });
+              })
               _this.$func.usemall
                 .call('order/deleted', {
                   order_id: _this.order_id,
                 })
                 .then(res => {
                   if (res.code === 200) {
-                    uni.navigateBack({});
+                    uni.navigateBack({})
                   }
-                });
+                })
             } else if (res.cancel) {
-              console.log('点击取消');
+              console.log('点击取消')
             }
           },
           complete() {
-            uni.hideLoading();
+            uni.hideLoading()
           },
-        });
+        })
       },
       // 取消订单
       cancelOrder() {
-        let _this = this;
+        let _this = this
 
         uni.showModal({
           title: '提示',
@@ -381,7 +381,7 @@
             if (res.confirm) {
               uni.showLoading({
                 title: '请稍后',
-              });
+              })
               _this.$func.usemall
                 .call('order/cancel', {
                   order_id: _this.order_id,
@@ -389,21 +389,21 @@
                 })
                 .then(res => {
                   if (res.code === 200) {
-                    _this.loadData('refresh');
+                    _this.loadData('refresh')
                   }
-                });
+                })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
           complete() {
-            uni.hideLoading();
+            uni.hideLoading()
           },
-        });
+        })
       },
       // 点击复制
       copy() {
-        let _this = this;
+        let _this = this
 
         uni.setClipboardData({
           data: _this.order_id,
@@ -412,26 +412,26 @@
               success: function (res) {
                 uni.showToast({
                   title: '复制成功',
-                });
+                })
               },
-            });
+            })
           },
-        });
+        })
       },
       // 评价
       evaluate() {
         uni.navigateTo({
           url: `/pages/user/order/order-evaluate?id=${this.order_id}`,
-        });
+        })
       },
       // 申请退款
       refund() {
         uni.navigateTo({
           url: `/pages/user/order/order-refund?order_id=${this.order_id}`,
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

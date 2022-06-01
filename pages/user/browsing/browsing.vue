@@ -4,14 +4,12 @@
     <use-empty v-if="empty" e-style="round" tip="无足迹数据"></use-empty>
 
     <view v-else class="padding-lr" v-for="(item, index) in datas" :key="index" @click="togoods(item)">
-      <view class="product border-radius-sm padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
-        <view class="left">
-          <image :src="item.img[0]" mode="aspectFill"></image>
-        </view>
+      <view class="product border-radius-sm padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx">
+        <view class="left"><image :src="item.img[0]" mode="aspectFill"></image></view>
         <view class="margin-left-sm pos-r w-full">
           <text class="clamp-2">{{ item.name[0] }} {{ item.name_pw[0] }}</text>
           <view class="pos-a dflex-b price-box w-full">
-            <text class="price">{{ item.price[0] / 100 }}</text>
+            <text class="price">{{ item.price[0] ? item.price[0] / 100 : '面议' }}</text>
             <view class="dflex-c ft-dark">
               <view class="dflex-c fs-xs">
                 <text class="margin-xs">浏览</text>
@@ -36,7 +34,7 @@
 </template>
 
 <script>
-  const _history = 'usemall-goods-history';
+  const _history = 'usemall-goods-history'
   export default {
     data() {
       return {
@@ -52,22 +50,22 @@
           page: 1,
         },
         scrollTop: 0,
-      };
+      }
     },
     watch: {
       datas(e) {
-        let empty = e.length === 0;
+        let empty = e.length === 0
         if (this.empty !== empty) {
-          this.empty = empty;
+          this.empty = empty
         }
       },
     },
     onPageScroll(e) {
       //this.scrollTop = e.scrollTop;
-      this.$refs.usetop.change(e.scrollTop);
+      this.$refs.usetop.change(e.scrollTop)
     },
     onShow() {
-      this.loadData();
+      this.loadData()
     },
     methods: {
       // 加载数据
@@ -81,20 +79,20 @@
           .orderBy('last_modify_time desc')
           .get()
           .then(res => {
-            console.log('history', res);
+            console.log('history', res)
             if (res && res.result && res.result.code === 0) {
-              let _historyDatas = [];
+              let _historyDatas = []
               res.result.data.forEach(x => {
-                _historyDatas.push(x);
-              });
-              console.log('_historyDatas', _historyDatas);
-              this.datas = _historyDatas;
+                _historyDatas.push(x)
+              })
+              console.log('_historyDatas', _historyDatas)
+              this.datas = _historyDatas
             }
-          });
+          })
       },
       // 删除足迹
       deleteBrowsing(id) {
-        let _this = this;
+        let _this = this
         uni.showModal({
           title: '提示',
           content: '删除足迹',
@@ -105,18 +103,18 @@
                 .remove(id)
                 .then(res => {
                   if (res.code === 200) {
-                    _this.loadData();
+                    _this.loadData()
                   }
-                });
+                })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
-        });
+        })
       },
       // 清空所有
       clear() {
-        let _this = this;
+        let _this = this
         uni.showModal({
           title: '提示',
           content: '清空足迹',
@@ -127,24 +125,24 @@
                 .remove()
                 .then(res => {
                   if (res.code === 200) {
-                    _this.datas = [];
-                    return;
+                    _this.datas = []
+                    return
                   }
-                  _this.$api.msg(res.msg);
-                });
+                  _this.$api.msg(res.msg)
+                })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
-        });
+        })
       },
       togoods(item) {
         this.$api.togoods({
           id: item.goods_id[0],
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

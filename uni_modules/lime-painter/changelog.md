@@ -1,3 +1,16 @@
+## 1.9.2（2022-05-30）
+- fix: 修复 `canvasToTempFilePathSync` 在 vue3 下只生成一次
+## 1.9.1.7（2022-05-28）
+- fix: 修复 `qrcode`显示不全问题
+## 1.9.1.6（2022-05-28）
+- fix: 修复 `canvasToTempFilePathSync` 会重复多次问题
+- fix: 修复 `view` css `backgroundImage` 图片下载失败导致 子节点不渲染
+## 1.9.1.5（2022-05-27）
+- fix: 修正支付宝小程序 canvas 2d版本号 2.7.15
+## 1.9.1.4（2022-05-22）
+- fix: 修复字节小程序无法使用xml方式
+- fix: 修复字节小程序无法使用base64(非2D情况下工具上无法显示)
+- fix: 修复支付宝小程序 `canvasToTempFilePath` 报错
 ## 1.9.1.3（2022-04-29）
 - fix: 修复vue3打包后uni对象为空后的报错
 ## 1.9.1.2（2022-04-25）

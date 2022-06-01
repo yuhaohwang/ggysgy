@@ -1,7 +1,7 @@
 {
   "name": "usemall",
   "version": "1.0.0",
-  "description": "以艺自强",
+  "description": "艺心益盟",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

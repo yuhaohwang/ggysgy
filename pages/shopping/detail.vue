@@ -28,7 +28,7 @@
 
     <view
       class="pos-f dflex-c border-radius-c"
-      style="top: 30rpx; right: 30rpx; width: 80rpx; height: 80rpx; background: #333; opacity: 0.6;"
+      style="top: 30rpx; right: 30rpx; width: 80rpx; height: 80rpx; background: #333; opacity: 0.6"
       @click="toShare"
     >
       <view class="iconfont iconfenxiang ft-white fs-xl"></view>
@@ -38,13 +38,13 @@
     <view class="goods-area bg-main padding">
       <view class="dflex-b margin-tb-sm">
         <view class="dflex">
-          <image src="/static/images/user/default.png" class="headimg border-radius-c" style="width: 70rpx; height: 70rpx;"></image>
+          <image src="/static/images/user/default.png" class="headimg border-radius-c" style="width: 70rpx; height: 70rpx"></image>
           <view class="margin-left-xs fs-xxs">Usecloud</view>
         </view>
         <view class="bg-dark border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
           <text class="iconfont iconaixin-01 ft-base" v-if="follow"></text>
           <text class="iconfont iconaixin" v-else></text>
-          <text class="padding-tb-16" style="margin-left: 6rpx;">关注</text>
+          <text class="padding-tb-16" style="margin-left: 6rpx">关注</text>
         </view>
       </view>
 
@@ -68,7 +68,7 @@
         </view>
       </view>
       <view class="btn-container border-radius-big">
-        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx;" @click="toBuy(goods)">购买同款</view>
+        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx" @click="toBuy(goods)">购买同款</view>
       </view>
     </view>
     <!-- 置顶 -->
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState } from 'vuex'
   export default {
     computed: {
       ...mapState(['islogin', 'member']),
@@ -86,46 +86,46 @@
       return {
         id: '',
         follow: true,
-      };
+      }
     },
     onShareAppMessage: function (ops) {
-      let _this = this;
-      let mid = 0;
+      let _this = this
+      let mid = 0
       if (_this.member && _this.member._id) {
-        mid = _this.member._id;
+        mid = _this.member._id
       }
 
       return {
-        title: '以艺自强 · 传播艺术之美',
+        title: '艺心益盟 · 传播艺术之美',
         path: `/pages/shopping/detail?id=${this.id}&mid=${mid}`, //这里设定都是以"/page"开头,并拼接好传递的参数
         success: function (res) {
           // 转发成功
-          console.log('转发成功', res);
+          console.log('转发成功', res)
         },
         fail: function (res) {
           // 转发失败
-          console.log('转发失败', res);
+          console.log('转发失败', res)
         },
-      };
+      }
     },
     methods: {
       // 立即购买
       toBuy(item) {
-        this.$api.msg('购买');
+        this.$api.msg('购买')
       },
       toFollow() {
-        this.follow = !this.follow;
+        this.follow = !this.follow
         if (this.follow) {
-          this.$api.msg('已关注');
+          this.$api.msg('已关注')
         } else {
-          this.$api.msg('取消关注');
+          this.$api.msg('取消关注')
         }
       },
       toShare() {
-        this.$api.msg('分享');
+        this.$api.msg('分享')
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

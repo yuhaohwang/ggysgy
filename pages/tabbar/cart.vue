@@ -100,8 +100,8 @@
 </template>
 
 <script>
-  const _cart = 'usemall-goods-cart';
-  import { mapState } from 'vuex';
+  const _cart = 'usemall-goods-cart'
+  import { mapState } from 'vuex'
   export default {
     computed: {
       ...mapState(['islogin']),
@@ -116,26 +116,26 @@
         allChecked: false,
         // 总价格
         total: 0,
-      };
+      }
     },
     watch: {
       //显示空白页
       cartDatas(e) {
-        let empty = e.length === 0;
+        let empty = e.length === 0
         if (this.empty !== empty) {
-          this.empty = empty;
+          this.empty = empty
         }
       },
     },
     // 监听页面显示。页面每次出现在屏幕上都触发，包括从下级页面点返回露出当前页面
     onShow() {
-      this.loadData();
+      this.loadData()
     },
     // 下拉刷新
     onPullDownRefresh() {
       this.loadData(() => {
-        uni.stopPullDownRefresh();
-      });
+        uni.stopPullDownRefresh()
+      })
     },
 
     methods: {
@@ -151,55 +151,55 @@
           .get()
           .then(res => {
             if (res && res.result && res.result.code === 0) {
-              let _cartDatas = [];
+              let _cartDatas = []
               res.result.data.forEach(x => {
-                x.goods = x.goods[0];
-                x.goods_id = x.goods_id[0];
-                x.goods_sku = x.goods_sku[0] || {};
+                x.goods = x.goods[0]
+                x.goods_id = x.goods_id[0]
+                x.goods_sku = x.goods_sku[0] || {}
 
-                if (x.goods && x.goods_id) _cartDatas.push(x);
-              });
+                if (x.goods && x.goods_id) _cartDatas.push(x)
+              })
               // 购物车数据
-              this.cartDatas = _cartDatas;
+              this.cartDatas = _cartDatas
               // 计算总价
-              this.calcTotal();
+              this.calcTotal()
 
               if (typeof callback === 'function') {
                 // 数据加载完成回调函数
-                callback();
+                callback()
               }
             }
-          });
-        return;
+          })
+        return
       },
       // 跳转登录页
       tologin() {
-        this.$api.tologin();
+        this.$api.tologin()
       },
       // 跳转商品页
       togoods(item) {
         this.$api.togoods({
           id: item.goods_id,
-        });
+        })
       },
 
       // 选中状态处理
       check(type, index) {
         if (type === 'item') {
-          this.cartDatas[index].checked = !this.cartDatas[index].checked;
+          this.cartDatas[index].checked = !this.cartDatas[index].checked
         } else {
-          const checked = !this.allChecked;
+          const checked = !this.allChecked
           this.cartDatas.forEach(item => {
-            item.checked = checked;
-          });
-          this.allChecked = checked;
+            item.checked = checked
+          })
+          this.allChecked = checked
         }
 
-        this.calcTotal();
+        this.calcTotal()
       },
       // +- 数量
       numberChange(data) {
-        let cart = this.cartDatas[data.index];
+        let cart = this.cartDatas[data.index]
 
         this.$db[_cart]
           .update(cart._id, {
@@ -207,16 +207,16 @@
           })
           .then(res => {
             if (res.code === 200) {
-              cart.goods_num = data.number;
-              this.calcTotal();
-              return;
+              cart.goods_num = data.number
+              this.calcTotal()
+              return
             }
-            this.$api.msg(res.msg);
-          });
+            this.$api.msg(res.msg)
+          })
       },
       // 删除
       deleteCart(id) {
-        let _this = this;
+        let _this = this
         uni.showModal({
           title: '提示',
           content: '删除购物车',
@@ -227,17 +227,17 @@
                 .remove(id)
                 .then(res => {
                   if (res.code === 200) {
-                    _this.loadData();
+                    _this.loadData()
                   }
-                });
+                })
             } else if (res.cancel) {
             }
           },
-        });
+        })
       },
       // 清空
       clearCart() {
-        let _this = this;
+        let _this = this
         uni.showModal({
           title: '提示',
           content: '清空购物车',
@@ -248,59 +248,59 @@
                 .remove()
                 .then(res => {
                   if (res.code === 200) {
-                    _this.cartDatas = [];
-                    return;
+                    _this.cartDatas = []
+                    return
                   }
-                  _this.$api.msg(res.msg);
-                });
+                  _this.$api.msg(res.msg)
+                })
             } else if (res.cancel) {
             }
           },
-        });
+        })
       },
       // 计算总价
       calcTotal() {
         if (this.cartDatas.length === 0) {
-          this.empty = true;
-          return;
+          this.empty = true
+          return
         }
 
         let total = 0,
-          checked = true;
+          checked = true
 
         this.cartDatas.forEach(item => {
           if (item.checked) {
             // 存在库存
             if (item.goods.stock_num > 0 && item.goods.stock_num >= item.goods_num) {
-              total += (item.goods.price / 100) * item.goods_num;
+              total += (item.goods.price / 100) * item.goods_num
             }
           } else if (checked) {
-            checked = false;
+            checked = false
           }
-        });
+        })
 
-        this.allChecked = checked;
-        this.total = Number(total.toFixed(2));
+        this.allChecked = checked
+        this.total = Number(total.toFixed(2))
       },
       // 创建订单
       createOrder() {
-        let cart_ids = [];
+        let cart_ids = []
         this.cartDatas.forEach(item => {
           // 选中有库存购物车
           if (item.checked && item.goods.stock_num > 0 && item.goods.stock_num > item.goods_num) {
-            cart_ids.push(item._id);
+            cart_ids.push(item._id)
           }
-        });
+        })
         if (cart_ids.length <= 0) {
-          this.$api.msg('请选择结算商品');
-          return;
+          this.$api.msg('请选择结算商品')
+          return
         }
         uni.navigateTo({
           url: `/pages/order/create?cart_ids=${cart_ids.join(',')}`,
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

@@ -9,10 +9,12 @@ module.exports = {
   requirePragma: false, //顶部注释
   htmlWhitespaceSensitivity: 'ignore',
   vueIndentScriptAndStyle: true,
-  overrides: [{
-    files: '*.md',
-    options: {
-      tabWidth: 2,
+  overrides: [
+    {
+      files: '*.md',
+      options: {
+        tabWidth: 2,
+      },
     },
-  }, ],
-};
+  ],
+}

@@ -34,23 +34,23 @@
       },
     },
     data() {
-      return {};
+      return {}
     },
     methods: {
       search() {
         this.$emit('search', {
           type: 'search',
-        });
+        })
 
         if (this.searchAuto) {
           // 跳转搜索页
           uni.navigateTo({
             url: '/pages/home/search/search',
-          });
+          })
         }
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

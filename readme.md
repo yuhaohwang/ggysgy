@@ -1,15 +1,15 @@
-# Usecloud.usemall 以艺自强 v1.0.9 前后端开源版
+# Usecloud.usemall 艺心益盟 v1.0.9 前后端开源版
 
-**以艺自强 uniCloud v1.0.9 前后端开源版，完整商用级项目，一套 js 解决前端、后端、数据库的全栈开发 serverless 模式（小程序、h5、android、iOS、vue + element-ui + uniCloud 版管理后台）永久开源。**
+**艺心益盟 uniCloud v1.0.9 前后端开源版，完整商用级项目，一套 js 解决前端、后端、数据库的全栈开发 serverless 模式（小程序、h5、android、iOS、vue + element-ui + uniCloud 版管理后台）永久开源。**
 
 说明：目前支持平台有微信小程序、支付宝小程序、h5。全端支持可咨询**私有部署 netcore|java|php 版本一套后台管理多端小程序**。（**可定制跨境电商、海关申报、仓储系统、物联网等项目**）
 
-**以艺自强 · 传播艺术之美！**
+**艺心益盟 · 传播艺术之美！**
 
 ## 用云团队项目推荐（已开源）
 
-> **[1. 以艺自强 uniCloud v1.0.9 版前后端开源](https://ext.dcloud.net.cn/plugin?id=5764)**  
-> **[3. 以艺自强 IM uniCloud 开源版](https://ext.dcloud.net.cn/plugin?id=5544)**
+> **[1. 艺心益盟 uniCloud v1.0.9 版前后端开源](https://ext.dcloud.net.cn/plugin?id=5764)**  
+> **[3. 艺心益盟 IM uniCloud 开源版](https://ext.dcloud.net.cn/plugin?id=5544)**
 
 ## [uniCloud 官方文档](https://uniapp.dcloud.io/uniCloud/README)
 

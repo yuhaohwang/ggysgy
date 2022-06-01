@@ -1,93 +1,93 @@
-'use strict';
+'use strict'
 
-const uidObj = require('uni-id');
-const { Controller } = require('uni-cloud-router');
+const uidObj = require('uni-id')
+const { Controller } = require('uni-cloud-router')
 
 module.exports = class MemberController extends Controller {
   // 注册
   async register() {
-    this.ctx.data.role = ['admin'];
-    const res = await uidObj.register(this.ctx.data);
+    this.ctx.data.role = ['admin']
+    const res = await uidObj.register(this.ctx.data)
 
-    return res;
+    return res
   }
 
   // 添加账号
   async add() {
     let response = {
       code: 1,
-    };
-    const encResult = await uidObj.encryptPwd(this.ctx.data.password);
-    this.ctx.data.password = encResult.passwordHash;
-    this.ctx.data.password_secret_version = encResult.version;
-    this.ctx.data.register_date = new Date().getTime();
-    this.ctx.data.register_ip = this.ctx.context.CLIENTIP;
+    }
+    const encResult = await uidObj.encryptPwd(this.ctx.data.password)
+    this.ctx.data.password = encResult.passwordHash
+    this.ctx.data.password_secret_version = encResult.version
+    this.ctx.data.register_date = new Date().getTime()
+    this.ctx.data.register_ip = this.ctx.context.CLIENTIP
 
     // 写入账号添加数据
-    response.datas = await this.db.collection('uni-id-users').add(this.ctx.data);
-    response.code = 0;
+    response.datas = await this.db.collection('uni-id-users').add(this.ctx.data)
+    response.code = 0
 
-    return response;
+    return response
   }
 
   // 编辑账号
   async edit() {
     let response = {
       code: 1,
-    };
-    let _id = this.ctx.data.dataId;
+    }
+    let _id = this.ctx.data.dataId
 
-    delete this.ctx.data.dataId;
+    delete this.ctx.data.dataId
     // 编辑账号添加数据
-    response.datas = await this.db.collection('uni-id-users').doc(_id).update(this.ctx.data);
-    response.code = 0;
+    response.datas = await this.db.collection('uni-id-users').doc(_id).update(this.ctx.data)
+    response.code = 0
 
-    return response;
+    return response
   }
 
   // 登录
   async login() {
-    const { username, password } = this.ctx.data;
+    const { username, password } = this.ctx.data
 
     const res = await uidObj.login({
       username,
       password,
       needPermission: true,
-    });
-    console.log(res);
+    })
+    console.log(res)
 
     // 日志记录
-    this.uidlog(res);
-    return res;
+    this.uidlog(res)
+    return res
   }
 
   // 登出
   async logout() {
-    const res = await uniID.logout(this.ctx.event.uniIdToken);
-    return res;
+    const res = await uniID.logout(this.ctx.event.uniIdToken)
+    return res
   }
 
   //修改密码
   async updatePwd() {
-    const { oldPassword, newPassword, passwordConfirmation } = this.ctx.data;
+    const { oldPassword, newPassword, passwordConfirmation } = this.ctx.data
     // 校验新密码与确认新密码是否一致
-    const payload = await uidObj.checkToken(this.ctx.event.uniIdToken);
+    const payload = await uidObj.checkToken(this.ctx.event.uniIdToken)
     if (payload.code) {
-      return payload;
+      return payload
     }
 
     const res = await uidObj.updatePwd({
       uid: payload.uid,
       oldPassword,
       newPassword,
-    });
-    return res;
+    })
+    return res
   }
 
   // 注销
   async logout() {
-    const res = await uidObj.logout(this.ctx.event.uniIdToken);
-    return res;
+    const res = await uidObj.logout(this.ctx.event.uniIdToken)
+    return res
   }
 
   // 验证码
@@ -97,28 +97,28 @@ module.exports = class MemberController extends Controller {
       type: this.ctx.data.type,
       code: Math.floor(Math.random() * 1000000),
       templateId: '11878',
-    });
+    })
 
-    return res;
+    return res
   }
 
   // 手机号+验证码 登录|注册
   async loginBySms() {
-    this.ctx.data.role = ['admin'];
-    const res = await uidObj.loginBySms(this.ctx.data);
-    console.log(res);
+    this.ctx.data.role = ['admin']
+    const res = await uidObj.loginBySms(this.ctx.data)
+    console.log(res)
 
-    return res;
+    return res
   }
 
   // 修改数据
   async update() {
-    const user = await uidObj.checkToken(this.ctx.event.uniIdToken);
+    const user = await uidObj.checkToken(this.ctx.event.uniIdToken)
     if (user && user.code == 0) {
-      const res = await this.db.collection('uni-id-users').doc(user.uid).update(this.ctx.data);
+      const res = await this.db.collection('uni-id-users').doc(user.uid).update(this.ctx.data)
     }
 
-    return user;
+    return user
   }
 
   // 日志记录
@@ -129,7 +129,7 @@ module.exports = class MemberController extends Controller {
       type,
       ua: this.ctx.context.CLIENTUA,
       create_date: Date.now(),
-    };
+    }
 
     Object.assign(
       data,
@@ -141,8 +141,8 @@ module.exports = class MemberController extends Controller {
         : {
             state: 0,
           }
-    );
+    )
 
-    return this.db.collection('uni-id-log').add(data);
+    return this.db.collection('uni-id-log').add(data)
   }
-};
+}

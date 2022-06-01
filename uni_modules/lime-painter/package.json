@@ -1,14 +1,14 @@
 {
   "id": "lime-painter",
   "displayName": "海报画板",
-  "version": "1.9.1.3",
+  "version": "1.9.2",
   "description": "一款canvas海报组件，更优雅的海报生成方案",
   "keywords": [
+    "海报",
     "canvas",
     "生成海报",
     "生成二维码",
-    "JSON",
-    "XML"
+    "JSON"
 ],
   "repository": "https://gitee.com/liangei/lime-painter", 
   "engines": {
@@ -68,7 +68,12 @@
           "阿里": "y",
           "百度": "y",
           "字节跳动": "y",
-          "QQ": "y"
+        "QQ": "y",
+        "钉钉": "u",
+        "快手": "u",
+        "飞书": "u",
+        "京东": "u",
+        "小红书": "u"
         },
         "快应用": {
           "华为": "u",

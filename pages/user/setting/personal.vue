@@ -6,7 +6,7 @@
       </view>
       <view class="margin-left-sm">
         <view>
-          <text class="username">{{ member.member_name || '以艺自强' }}</text>
+          <text class="username">{{ member.member_name || '艺心益盟' }}</text>
         </view>
         <view v-if="member.member_city">
           <text>{{ member.member_city }}</text>
@@ -26,22 +26,22 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState } from 'vuex'
   export default {
     computed: {
       ...mapState(['islogin', 'member']),
     },
     data() {
-      return {};
+      return {}
     },
     onShow() {
       if (!this.islogin) {
-        this.$api.msg('账号未登录');
-        return;
+        this.$api.msg('账号未登录')
+        return
       }
     },
     methods: {},
-  };
+  }
 </script>
 
 <style lang="scss">

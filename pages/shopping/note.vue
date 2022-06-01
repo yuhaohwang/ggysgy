@@ -10,7 +10,7 @@
       <view class="dflex">
         <image
           class="margin-right-xs"
-          style="width: 48rpx; height: 48rpx;"
+          style="width: 48rpx; height: 48rpx"
           mode="widthFix"
           src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/11bd19fa-6a70-49fd-9e71-72950828f6a8.jpg"
         ></image>
@@ -53,48 +53,48 @@
           title: '',
           content: '',
         },
-      };
+      }
     },
     onLoad(options) {
-      this.loadData();
+      this.loadData()
     },
     methods: {
       async loadData() {
-        let _this = this;
+        let _this = this
       },
       uploadImgs(options) {
-        if (options.length > 0) this.postData.imgs = options;
+        if (options.length > 0) this.postData.imgs = options
 
-        console.log('uploadImgs', this.postData.imgs);
+        console.log('uploadImgs', this.postData.imgs)
       },
       submit() {
-        let _this = this;
+        let _this = this
 
         if (!this.postData.title) {
-          this.$api.msg('请填写标题');
-          return;
+          this.$api.msg('请填写标题')
+          return
         }
         if (!this.postData.content) {
-          this.$api.msg('请填写正文');
-          return;
+          this.$api.msg('请填写正文')
+          return
         }
 
-        if (this.issubmit) return;
+        if (this.issubmit) return
 
-        this.issubmit = true;
+        this.issubmit = true
         uni.showModal({
           title: '提示',
           content: '发布',
           success: function (res) {
             if (res.confirm) {
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

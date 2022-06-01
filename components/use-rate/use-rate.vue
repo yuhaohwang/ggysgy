@@ -44,46 +44,46 @@
       return {
         maxSync: this.max,
         valueSync: this.value,
-      };
+      }
     },
     computed: {
       stars() {
-        const max = Number(this.maxSync) ? Number(this.maxSync) : 5;
-        const value = Number(this.valueSync) ? Number(this.valueSync) : 0;
-        const starList = [];
-        const floorValue = Math.floor(value);
-        const ceilValue = Math.ceil(value);
+        const max = Number(this.maxSync) ? Number(this.maxSync) : 5
+        const value = Number(this.valueSync) ? Number(this.valueSync) : 0
+        const starList = []
+        const floorValue = Math.floor(value)
+        const ceilValue = Math.ceil(value)
         for (let i = 0; i < max; i++) {
           if (floorValue > i) {
             starList.push({
               activeWitch: '100%',
-            });
+            })
           } else if (ceilValue - 1 === i) {
             starList.push({
               activeWitch: (value - floorValue) * 100 + '%',
-            });
+            })
           } else {
             starList.push({
               activeWitch: '0',
-            });
+            })
           }
         }
-        return starList;
+        return starList
       },
     },
     methods: {
       onClick(index) {
         if (this.disabled || this.disabled === 'true') {
-          return;
+          return
         }
 
-        this.valueSync = index + 1;
+        this.valueSync = index + 1
         this.$emit('change', {
           value: this.valueSync,
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">

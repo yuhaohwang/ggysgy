@@ -12942,5 +12942,5 @@ var areaData = [
       },
     ],
   ],
-];
-export default areaData;
+]
+export default areaData

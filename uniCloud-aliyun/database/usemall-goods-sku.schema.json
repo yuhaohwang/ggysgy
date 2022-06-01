@@ -149,7 +149,5 @@
       "description": "数据版本"
     }
   },
-  "required": ["goods_id", "goods_sku", "price", "stock_num", "stock_wh_num", "limit", "state", "version", "is_delete",
-    "create_uid"
-  ]
+  "required": ["goods_id", "goods_sku", "price", "stock_num", "stock_wh_num", "limit", "state", "version", "is_delete", "create_uid"]
 }

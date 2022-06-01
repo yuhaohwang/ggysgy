@@ -24,17 +24,17 @@
 
 ## 1.0.9.210806（2021-08-06）
 
-### 【添加】以艺自强 uniCloud v1.0.9 购物圈。
+### 【添加】艺心益盟 uniCloud v1.0.9 购物圈。
 
 ## 1.0.9.210804（2021-08-04）
 
-### 【添加】以艺自强 uniCloud v1.0.9 购物圈首页 UI。
+### 【添加】艺心益盟 uniCloud v1.0.9 购物圈首页 UI。
 
 ### 【免费】加 QQ 群（[1020565856](https://qm.qq.com/cgi-bin/qm/qr?k=BNUlrZAQXPolwALtcBm_rMabq0bx3_n-&jump_from=usecloud)）、永久免费获取 v1.0.9 版本以艺自强管理后台源代码。
 
 ## 1.0.9（2021-07-30）
 
-### 【提交】以艺自强 uniCloud v1.0.9 前后端开源版。
+### 【提交】艺心益盟 uniCloud v1.0.9 前后端开源版。
 
 ### 【免费】加 QQ 群（[1020565856](https://qm.qq.com/cgi-bin/qm/qr?k=BNUlrZAQXPolwALtcBm_rMabq0bx3_n-&jump_from=usecloud)）、永久免费获取 v1.0.9 版本以艺自强管理后台源代码。
 

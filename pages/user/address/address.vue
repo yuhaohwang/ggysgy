@@ -43,7 +43,7 @@
 </template>
 
 <script>
-  const __name = 'usemall-member-address';
+  const __name = 'usemall-member-address'
   export default {
     data() {
       return {
@@ -56,22 +56,22 @@
 
         source: 0,
         addressDatas: [],
-      };
+      }
     },
     onLoad(option) {
       this.$api.get_env(res => {
-        this.env = res;
+        this.env = res
         // console.log(this.env);
-        this.is_mp = this.env.is_mp;
-        this.platform = this.env.platform;
-        this.platform_icon = this.env.platform_icon;
-        this.platform_name = this.env.platform_name;
-      });
+        this.is_mp = this.env.is_mp
+        this.platform = this.env.platform
+        this.platform_icon = this.env.platform_icon
+        this.platform_name = this.env.platform_name
+      })
 
-      this.source = option.source || 0;
+      this.source = option.source || 0
     },
     onShow() {
-      this.loadData();
+      this.loadData()
     },
     methods: {
       // 加载数据
@@ -84,65 +84,65 @@
           })
           .then(res => {
             if (res.code === 200) {
-              this.addressDatas = res.datas;
-              return;
+              this.addressDatas = res.datas
+              return
             }
-            this.$api.msg(res.msg);
-          });
+            this.$api.msg(res.msg)
+          })
       },
       // 导入地址
       importAddr() {
-        let _this = this;
+        let _this = this
 
         uni.chooseAddress({
           success(res) {
-            let addr = {};
+            let addr = {}
 
-            addr.is_default = '否';
-            addr.consignee = res.userName;
-            addr.mobile = res.telNumber;
-            addr.addr_detail = res.detailInfo;
-            addr.province_name = res.provinceName;
-            addr.city_name = res.cityName;
-            addr.area_name = res.countyName || '';
+            addr.is_default = '否'
+            addr.consignee = res.userName
+            addr.mobile = res.telNumber
+            addr.addr_detail = res.detailInfo
+            addr.province_name = res.provinceName
+            addr.city_name = res.cityName
+            addr.area_name = res.countyName || ''
 
             // #ifdef MP-ALIPAY
-            addr.area_name = res.result.area;
+            addr.area_name = res.result.area
             // #endif
 
-            addr.address = `${addr.province_name}-${addr.city_name}-${addr.area_name}`;
-            addr.addr_source = _this.$env.platform;
+            addr.address = `${addr.province_name}-${addr.city_name}-${addr.area_name}`
+            addr.addr_source = _this.$env.platform
 
             if (!addr.mobile) {
-              _this.$api.msg('收货人手机不存在');
-              return;
+              _this.$api.msg('收货人手机不存在')
+              return
             }
-            console.log('uni chooseAddress', addr);
+            console.log('uni chooseAddress', addr)
             _this.$db[__name].add(addr).then(res => {
               if (res.code === 200) {
-                _this.$api.msg('导入成功');
-                _this.loadData();
-                return;
+                _this.$api.msg('导入成功')
+                _this.loadData()
+                return
               }
 
-              _this.$api.msg(res.msg);
-            });
+              _this.$api.msg(res.msg)
+            })
           },
           fail(err) {
             if (err.errMsg.indexOf('cancel') !== -1) {
-              _this.$api.msg('已取消');
+              _this.$api.msg('已取消')
             } else {
               uni.showModal({
                 content: '打开授权',
                 success: e => {
                   if (e.confirm) {
-                    uni.openSetting({});
+                    uni.openSetting({})
                   }
                 },
-              });
+              })
             }
           },
-        });
+        })
       },
       // 默认地址
       setDefault(options) {
@@ -157,7 +157,7 @@
                 .update({
                   is_default: '否',
                 })
-                .then(res => {});
+                .then(res => {})
 
               // 把当前 _id 改成 是
               await this.$db[__name]
@@ -166,34 +166,34 @@
                 })
                 .then(res => {
                   if (res.code === 200) {
-                    this.loadData();
+                    this.loadData()
                   }
-                });
+                })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
-        });
+        })
       },
       // 选择地址
       selectAddr(options) {
         if (this.source == 1) {
-          uni.$emit('__event_choice_address', options);
-          uni.navigateBack();
+          uni.$emit('__event_choice_address', options)
+          uni.navigateBack()
         }
       },
       // 添加|编辑 收货人
       addAddr(type, options) {
         options = options || {
           id: 0,
-        };
+        }
         uni.navigateTo({
           url: `/pages/user/address/address-edit?type=${type}&id=${options._id}`,
-        });
+        })
       },
       // 删除收货人
       removeAddr(options) {
-        let _this = this;
+        let _this = this
         uni.showModal({
           title: '提示',
           content: '删除收货人',
@@ -201,17 +201,17 @@
             if (res.confirm) {
               await _this.$db[__name].remove(options._id).then(res => {
                 if (res.code === 200) {
-                  _this.loadData();
+                  _this.loadData()
                 }
-              });
+              })
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log('用户点击取消')
             }
           },
-        });
+        })
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">
