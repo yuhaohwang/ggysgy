@@ -185,7 +185,7 @@ export default {
               item.loadmoreType = 'more'
               // 商品请求数据
               item.reqdata = {
-                rows: 20,
+                rows: 8,
                 page: 1,
               }
             })
@@ -235,7 +235,7 @@ export default {
       this.sdatas[cidx].reqdata.cid = this.cid
       this.$db[_goods]
         .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids`)
-        .tolist({ ...this.sdatas[cidx].reqdata, rows: 20, orderby: 'create_time desc' })
+        .tolist({ ...this.sdatas[cidx].reqdata, orderby: 'create_time desc' })
         .then(res => {
           if (res.code === 200) {
             if (res.datas && res.datas.length > 0) {
