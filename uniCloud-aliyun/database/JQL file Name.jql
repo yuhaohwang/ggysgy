@@ -16,3 +16,26 @@ db.collection('usemall-goods-category').where(
     pid: id,
   })
 ).get();
+
+db.collection('usemall-app-category').update({
+  ctype: 1
+})
+
+db.collection('usemall-app-category').get()
+
+db.collection('usemall-app-category').add({
+  "_id": '6083a669ff01b00001bb591e',
+  "cid": 0,
+  "create_time": 1619240553775,
+  "create_uid": '607e63e021576100016eded3',
+  "img": '../../static/images/home-category1/zpfl.png',
+  "is_delete": 0,
+  "name": '作品分类',
+  "remark": '',
+  "sort": 1,
+  "state": '启用',
+  "type": '页面',
+  "url": '/pages/category/category',
+  "version": 1,
+  "ctype": 0
+})

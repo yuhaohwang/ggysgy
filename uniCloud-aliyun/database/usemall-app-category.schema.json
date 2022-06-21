@@ -112,6 +112,12 @@
       "bsonType": "int",
       "defaultValue": 1,
       "description": "数据版本"
+    },
+    "ctype": {
+      "bsonType": "int",
+      "defaultValue": 0,
+      "description": "分类类型 0图文 1卡片",
+      "trim": "both"
     }
   },
   "required": ["sort", "state", "version", "is_delete", "create_uid"]

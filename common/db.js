@@ -5,7 +5,7 @@ let db = {}
 let unidb = uniCloud.database()
 
 db = new Proxy(db, {
-  get: function (target, key) {
+  get: function(target, key) {
     return new DbContext(key)
   },
 })
@@ -30,7 +30,7 @@ DbContext.prototype = {
   response: {}, // 统一响应格式
 }
 
-DbContext.prototype.where = function (params) {
+DbContext.prototype.where = function(params) {
   if (typeof params === 'object') {
     Object.assign(this.where_obj, params)
   }
@@ -39,16 +39,16 @@ DbContext.prototype.where = function (params) {
   }
   return this
 }
-DbContext.prototype.whereif = function (_flag, _obj) {
+DbContext.prototype.whereif = function(_flag, _obj) {
   if (_flag) this.where(_obj)
   return this
 }
 
-DbContext.prototype.collection = function () {
+DbContext.prototype.collection = function() {
   return unidb.collection(this.table)
 }
 
-DbContext.prototype.add = function (obj) {
+DbContext.prototype.add = function(obj) {
   uni.showLoading({
     title: '请求中',
   })
@@ -79,7 +79,7 @@ DbContext.prototype.add = function (obj) {
     })
 }
 
-DbContext.prototype.remove = function (_id) {
+DbContext.prototype.remove = function(_id) {
   uni.showLoading({
     title: '请求中',
   })
@@ -141,7 +141,7 @@ DbContext.prototype.remove = function (_id) {
     })
 }
 
-DbContext.prototype.set = function (_id, obj) {
+DbContext.prototype.set = function(_id, obj) {
   uni.showLoading({
     title: '请求中',
   })
@@ -173,7 +173,7 @@ DbContext.prototype.set = function (_id, obj) {
     })
 }
 
-DbContext.prototype.update = function (_id, obj) {
+DbContext.prototype.update = function(_id, obj) {
   uni.showLoading({
     title: '请求中',
   })
@@ -238,7 +238,7 @@ DbContext.prototype.update = function (_id, obj) {
 }
 
 //
-DbContext.prototype.tofirst = function (_id) {
+DbContext.prototype.tofirst = function(_id) {
   uni.showNavigationBarLoading()
   if (_id) {
     return this.collection()
@@ -302,10 +302,9 @@ DbContext.prototype.tofirst = function (_id) {
     })
 }
 
-DbContext.prototype.tolist = function (req) {
+DbContext.prototype.tolist = function(req) {
   // 页码 页数 排序
-  req = Object.assign(
-    {
+  req = Object.assign({
       page: 1,
       rows: 30,
       orderby: '',
@@ -346,10 +345,9 @@ DbContext.prototype.tolist = function (req) {
     })
 }
 
-DbContext.prototype.totable = function (req) {
+DbContext.prototype.totable = function(req) {
   // 页码 页数 排序
-  req = Object.assign(
-    {
+  req = Object.assign({
       page: 1,
       rows: 10,
       orderby: '',
