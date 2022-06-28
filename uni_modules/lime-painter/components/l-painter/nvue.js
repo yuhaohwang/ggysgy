@@ -1,12 +1,14 @@
 // #ifdef APP-NVUE
-import { sleep, getImageInfo, isBase64, useNvue } from './utils';
+import { sleep, getImageInfo, isBase64, useNvue, networkReg } from './utils';
 const dom = weex.requireModule('dom')
 import {version } from '../../package.json'
+
 export default {
 	data() {
 		return {
 			tempFilePath: [],
-			isInitFile: false
+			isInitFile: false,
+			osName: uni.getSystemInfoSync().osName
 		}
 	},
 	created() {
@@ -19,7 +21,8 @@ export default {
 		getParentWeith() {
 			return new Promise(resolve => {
 				dom.getComponentRect(this.$refs.limepainter, (res) => {
-					this.canvasWidth = this.canvasWidth || Math.ceil(res.size.width)||300
+					this.parentWidth = Math.ceil(res.size.width)
+					this.canvasWidth = this.canvasWidth || this.parentWidth ||300
 					this.canvasHeight = res.size.height || this.canvasHeight||150
 					resolve(res.size)
 				})
@@ -60,7 +63,7 @@ export default {
 							this.tempFilePath.shift()
 						}
 						if (this.isCanvasToTempFilePath) {
-							this.setFilePath(this.tempFilePath.join(''), true)
+							this.setFilePath(this.tempFilePath.join(''), {isEmit:true})
 						}
 					} else {
 						this.$emit('fail', 'canvas no data')
@@ -110,6 +113,7 @@ export default {
 					async val => {
 						if (val == 1) {
 							this.$emit('done')
+							this.done = true
 							resolve(val)
 						}
 					}, {
@@ -121,6 +125,10 @@ export default {
 		async render(args) {
 			try {
 				await this.getSize(args)
+				const {width} = args.css || args
+				if(!width && this.parentWidth) {
+					Object.assign(args, {width: this.parentWidth})
+				}
 				const newNode = await this.calcImage(args);
 				await this.getWebViewInited()
 				this.webview.evalJS(`source(${JSON.stringify(newNode)})`)
@@ -131,7 +139,7 @@ export default {
 						fileType: this.fileType,
 						quality: this.quality
 					}
-					webview.evalJS(`save(${JSON.stringify(params)})`)
+					this.webview.evalJS(`save(${JSON.stringify(params)})`)
 				}
 				return Promise.resolve()
 			} catch (e) {
@@ -160,11 +168,17 @@ export default {
 		async calcImage(args) {
 			let node = JSON.parse(JSON.stringify(args))
 			const urlReg = /url\((.+)\)/
-			const isBG = node.css.backgroundImage && urlReg.exec(node.css.backgroundImage)?.[1]
+			const {backgroundImage} = node.css||{}
+			const isBG = backgroundImage && urlReg.exec(backgroundImage)[1]
 			const url = node.url || node.src || isBG
-			if ((node.type === "image" || isBG) && url && !isBase64(url)) {
-				const {path, type} = await getImageInfo(url)
-				// const src = await this.getfile(path)
+			if(['text', 'qrcode'].includes(node.type)) {
+				return node
+			}
+			if ((node.type === "image" || isBG) && url && !isBase64(url) && (this.osName == 'ios' ? true : !networkReg.test(url))) {
+				let {path} = await getImageInfo(url)
+				if(this.osName == 'ios') {
+					path = await this.getfile(path)
+				}
 				if (isBG) {
 					node.css.backgroundImage = `url(${path})`
 				} else {
@@ -185,7 +199,7 @@ export default {
 			if (args.fileType == 'jpg') {
 				args.fileType = 'jpeg'
 			}
-			this.$refs.webview.evalJS(`save(${JSON.stringify(args)})`)
+			this.webview.evalJS(`save(${JSON.stringify(args)})`)
 			try {
 				let tempFilePath = await this.getTempFilePath()
 				tempFilePath = await this.setFilePath(tempFilePath)

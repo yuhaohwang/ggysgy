@@ -1,3 +1,54 @@
+## 1.9.3.4（2022-06-20）
+- fix: 修复 因创建节点速度问题导致顺序出错。 
+- fix: 修复 微信小程序 PC 无法显示本地图片 
+- fix: 修复 flex-box 对齐问题 
+- feat: 增加 `text-shadow`
+- feat: 重写 `text` 对齐方式
+- chore: 更新文档
+## 1.9.3.3（2022-06-17）
+- fix: 修复 支付宝小程序 canvas 2d 存在ctx.draw问题导致报错
+- fix: 修复 支付宝小程序 toDataURL 存在权限问题改用 `toTempFilePath`
+- fix: 修复 支付宝小程序 image size 问题导致 `objectFit` 无效
+## 1.9.3.2（2022-06-14）
+- fix: 修复 image 设置背景色不生效问题
+- fix: 修复 nvue 环境判断缺少参数问题
+## 1.9.3.1（2022-06-14）
+- fix: 修复 bottom 定位不对问题
+- fix: 修复 因小数导致计算出错换行问题
+- feat: 增加 `useCORS` h5端图片跨域 在设置请求头无效果后试一下设置这个值
+- chore: 更新文档
+## 1.9.3（2022-06-13）
+- feat: 增加 `zIndex`
+- feat: 增加 `flex-box` 该功能处于原始阶段，非常简陋。
+- tips: QQ小程序 vue3 不支持, 为 uni 官方BUG
+## 1.9.2.9（2022-06-10）
+- fix: 修复`text-align`及`margin`居中问题
+## 1.9.2.8（2022-06-10）
+- fix: 修复 Nvue `canvasToTempFilePathSync` 不生效问题
+## 1.9.2.7（2022-06-10）
+- fix: 修复 margin及padding的bug
+- fix: 修复 Nvue `isCanvasToTempFilePath` 不生效问题
+## 1.9.2.6（2022-06-09）
+- fix: 修复 Nvue 不显示
+- feat: 增加支持字体渐变
+```html
+<l-painter-text 
+	text="水调歌头\n明月几时有？把酒问青天。不知天上宫阙，今夕是何年。我欲乘风归去，又恐琼楼玉宇，高处不胜寒。起舞弄清影，何似在人间。"
+	css="background: linear-gradient(,#ff971b 0%, #1989fa 100%); background-clip: text" />
+```
+## 1.9.2.5（2022-06-09）
+- chore: 更变获取父级宽度的设定
+- chore: `pathType` 在canvas 2d 默认为 `url`
+## 1.9.2.4（2022-06-08）
+- fix: 修复 `pathType` 不生效问题
+## 1.9.2.3（2022-06-08）
+- fix: 修复 `canvasToTempFilePath` 漏写 `success` 参数
+## 1.9.2.2（2022-06-07）
+- chore: 更新文档
+## 1.9.2.1（2022-06-07）
+- fix: 修复 vue3 赋值给this再传入导致image无法绘制
+- fix: 修复 `canvasToTempFilePathSync` 时机问题
+- feat: canvas 2d 更改图片生成方式 `toDataURL` 
 ## 1.9.2（2022-05-30）
 - fix: 修复 `canvasToTempFilePathSync` 在 vue3 下只生成一次
 ## 1.9.1.7（2022-05-28）

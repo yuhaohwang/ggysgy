@@ -1,9 +1,11 @@
 <template>
   <view class="box-sizing-b bg-dark">
     <!-- 01. 头部组件 -->
-    <view class="x-c-c bg-main padding-lr-xs">
-      <view class="search flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
-      <view class="padding-xs" @click="topage(categoryAll)">分类</view>
+    <view class="x-c-c bg-main padding-lr-sm">
+      <view class="search flex1 margin-right-sm">
+        <use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header>
+      </view>
+      <view class="" @click="topage(categoryAll)">分类</view>
     </view>
 
     <!-- 02. 轮播区 -->

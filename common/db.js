@@ -37,6 +37,7 @@ DbContext.prototype.where = function(params) {
   if (typeof params === 'string') {
     this.where_arr.push(params)
   }
+  console.log(JSON.stringify(params))
   return this
 }
 DbContext.prototype.whereif = function(_flag, _obj) {

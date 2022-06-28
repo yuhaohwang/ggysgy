@@ -1,6 +1,5 @@
 {
-  "pages": [
-    {
+  "pages": [{
       "path": "pages/tabbar/home",
       "style": {
         "navigationBarTitleText": "艺心益盟",
@@ -254,21 +253,21 @@
       }
     },
     {
-      "path": "pages/wmcd/wmcd",
+      "path": "pages/user/goods/wmcd/wmcd",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
     },
     {
-      "path": "pages/wfbd/wfbd",
+      "path": "pages/user/goods/wfbd/wfbd",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
     },
     {
-      "path": "pages/wmdd/wmdd",
+      "path": "pages/user/goods/wmdd/wmdd",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
@@ -301,6 +300,20 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
+    }, {
+      "path": "pages/service/agreement",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/user/setting/account",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
     }
   ],
   "globalStyle": {
@@ -323,8 +336,7 @@
     "selectedColor": "#FEAA30",
     "borderStyle": "white",
     "backgroundColor": "#ffffff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/tabbar/home",
         "iconPath": "static/images/tabbar/home.png",
         "selectedIconPath": "static/images/tabbar/home-active.png",
@@ -358,12 +370,10 @@
   },
   "condition": {
     "current": 0,
-    "list": [
-      {
-        "name": "",
-        "path": "",
-        "query": ""
-      }
-    ]
+    "list": [{
+      "name": "",
+      "path": "",
+      "query": ""
+    }]
   }
 }

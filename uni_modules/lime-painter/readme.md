@@ -20,6 +20,8 @@
 
 - 插件提供 JSON 及 XML 的方式绘制海报
 - 参考了 css 块状流布局模拟 css schema 方式。
+- 使用JSON的方式时，请使用驼峰key
+
 
 #### 方式一 XML
 
@@ -44,7 +46,7 @@
 
 - 在 json 里四种类型组件的`type`为`view`、`text`、`image`、`qrcode`
 - 通过 `board` 设置海报所需的 JSON 数据进行绘制或`ref`获取组件实例调用组件内的`render(json)`
-- 所有类型的 schema 都具有`css`字段，css 的样式属性 key 值使用驼峰命名如：`lineHeight`
+- 所有类型的 schema 都具有`css`字段，css 的 key 值使用**驼峰**如：`lineHeight`
 
 ```html
 <l-painter :board="poster"/>
@@ -181,7 +183,7 @@ data() {
     />
     <l-painter-text
       text="水调歌头\n明月几时有？把酒问青天。不知天上宫阙，今夕是何年。我欲乘风归去，又恐琼楼玉宇，高处不胜寒。起舞弄清影，何似在人间。"
-      css="line-clamp: 3; padding-top: 20rpx"
+      css="line-clamp: 3; padding-top: 20rpx; background: linear-gradient(,#ff971b 0%, #ff5000 100%); background-clip: text"
     />
   </l-painter-view>
 </l-painter>
@@ -219,6 +221,9 @@ data() {
 	css: {
 		// 设置行数，超出显示省略号
 		lineClamp: 3,
+		// 渐变文字
+		background: 'linear-gradient(,#ff971b 0%, #1989fa 100%)',
+		backgroundClip: 'text'
 	}
 }
 ```
@@ -230,7 +235,7 @@ data() {
 - 通过 `css` 的 `object-fit`属性可以设置图片的填充方式，可选值见下方 CSS 表格。
 - 通过 `css` 的 `object-position`配合 `object-fit` 可以设置图片的对齐方式，类似于`background-position`，详情见下方 CSS 表格。
 - 使用网络图片时：小程序需要去公众平台配置 [downloadFile](https://mp.weixin.qq.com/) 域名
-- 使用网络图片时：**H5 需要决跨域问题**
+- 使用网络图片时：**H5 和 Nvue 需要决跨域问题**
 
 #### 方式一 XML
 
@@ -333,8 +338,9 @@ data() {
 
 ```js
 this.$refs.painter.canvasToTempFilePathSync({
-  // 在nvue里是jpeg
   fileType: "jpg",
+  // 如果返回的是base64是无法使用 saveImageToPhotosAlbum，需要设置 pathType为url
+  pathType: 'url',
   quality: 1,
   success: (res) => {
     console.log(res.tempFilePath);
@@ -364,6 +370,8 @@ this.$refs.painter.render(jsonSchema);
 // 生成图片
 this.$refs.painter.canvasToTempFilePathSync({
   fileType: "jpg",
+  // 如果返回的是base64是无法使用 saveImageToPhotosAlbum，需要设置 pathType为url
+  pathType: 'url',
   quality: 1,
   success: (res) => {
     console.log(res.tempFilePath);
@@ -378,11 +386,38 @@ this.$refs.painter.canvasToTempFilePathSync({
 });
 ```
 
+
+### H5跨域
+- 一般是需要后端或管理OSS资源的大佬处理
+- 一般OSS的处理方式:
+
+1、设置来源
+```cmd
+*
+```
+
+2、允许Methods
+```html
+GET
+```
+
+3、允许Headers
+```html
+access-control-allow-origin:*
+```
+
+4、最后如果还是不行,可试下给插件设置`useCORS`
+```html
+<l-painter useCORS>
+```
+
+
+
 ### 海报示例
 
-- 提供一份示例，只把插件当成生成图片的工具，弹窗之类的功能另外寻找。
+- 提供一份示例，只把插件当成生成图片的工具，非必要不要在弹窗里使用。
 - 通过设置`isCanvasToTempFilePath`主动生成图片，再由 `@success` 事件接收海报临时路径
-- 使用`custom-style`样式把画板移到屏幕之外，因为可能 canvas 的层级比较高，无法覆盖。
+- 设置`custom-style="position: fixed; left: 200%"`样式把画板移到屏幕之外，达到隐藏画板的效果。
 - **注意**：受平台影响海报画板最好不要隐藏，可能会无法生成图片。
 
 #### 方式一 XML
@@ -493,7 +528,7 @@ data() {
 		    },
 		    views: [
 		        {
-		            src: "https://cdn.jsdelivr.net/gh/liangei/image@latest/avatar-1.jpeg",
+		            src: "https://fastly.jsdelivr.net/gh/liangei/image@latest/avatar-1.jpeg",
 		            type: "image",
 		            css: {
 		                background: "#fff",
@@ -673,12 +708,9 @@ data() {
 ```
 
 ### Nvue
-- 插件在nvue下是使用webview实现渲染绘制的，但uni的webviwe无法读取插件目录下的文件，只能读取根目录下的hybrid/html或static文件夹的文件。所以在尝试了很多种方式后，决定默认改由插件主动下载的方式写入到app内。如果你不想由插件主动下载写入，可以自行下载。
-- 1、默认为插件主动下载写入APP的_doc目录，无须任何设置。
-- 2、若不希望插件主动下载，可自行下载[uni.webview.1.5.3.js](https://gitee.com/dcloud/uni-app/raw/dev/dist/uni.webview.1.5.3.js)、[painter.js](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/painter.js)、[index.html](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/index.html)，到根目录的`/hybird/html/lime-painter/`再给插件设置`hybrid`属性。
-```html
-<l-painter hybrid/>
-```
+- 必须为HBX 3.4.11及以上
+
+
 ### 原生小程序
 
 - 插件里的`painter.js`支持在原生小程序中使用
@@ -795,7 +827,6 @@ page({
 | height                     | **废弃** 画板的高度 ，同上                                   | <em>number</em>  | ``           |
 
 ### css
-
 | 属性名                                                                              | 支持的值或类型                                                                                                                                                                       | 默认值   |
 | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
 | (min\max)width                                                                      | 支持`%`、`rpx`、`px`                                                                                                                                                                 | -        |
@@ -807,17 +838,22 @@ page({
 | padding                                                                             | 可简写或各方向分别写，支持`rpx`、`px`                                                                                                                                                | -        |
 | border                                                                              | 可简写或各个值分开写：`border-width`、`border-style` 、`border-color`，简写请按顺序写                                                                                                | -        |
 | line-clamp                                                                          | `number`，超过行数显示省略号                                                                                                                                                         | -        |
-| background(color)                                                                   | 支持渐变，但必须写百分比！如:`linear-gradient(,#ff971b 0%, #ff5000 100%)`、`radial-gradient(#0ff 15%, #f0f 60%)`,目前 radial-gradient 渐变的圆心为元素中点，半径为最长边，不支持设置 | -        |
 | vertical-align                                                                      | 文字垂直对齐，可选值：`bottom`、`top`、`middle`                                                                                                                                      | `middle` |
 | line-height                                                                         | 文字行高，支持`rpx`、`px`、`em`                                                                                                                                                      | `1.4em`  |
 | font-weight                                                                         | 文字粗细，可选值：`normal`、`bold`                                                                                                                                                   | `normal` |
 | font-size                                                                           | 文字大小，`string`，支持`rpx`、`px`                                                                                                                                                  | `14px`   |
 | text-decoration                                                                     | 文本修饰，可选值：`underline` 、`line-through`、`overline`                                                                                                                           | -        |
 | text-align                                                                          | 文本水平对齐，可选值：`right` 、`center`                                                                                                                                             | `left`   |
-| display                                                                             | 框类型，可选值：`block`、`inline-block`、`none`，当为`none`时是不渲染该段                                                                                                            | -        |
+| display                                                                             | 框类型，可选值：`block`、`inline-block`、`flex`、`none`，当为`none`时是不渲染该段, `flex`功能简陋。                                                                                                            | -        |
+| flex                                                                                | 配合 display: flex; 属性定义了在分配多余空间,目前只用为数值如： flex: 1                                                                                                           | -        |
+| align-self                                                                          | 配合 display: flex; 单个项目垂直轴对齐方式: `flex-start` `flex-end` `center`                                                                                                         | `flex-start`        |
+| justify-content                                                                     | 配合 display: flex; 水平轴对齐方式: `flex-start` `flex-end` `center`                                                                                                         | `flex-start`        |
+| align-items                                                                         | 配合 display: flex; 垂直轴对齐方式: `flex-start` `flex-end` `center`                                                                                                  | `flex-start`        |
 | border-radius                                                                       | 圆角边框，支持`%`、`rpx`、`px`                                                                                                                                                       | -        |
 | box-sizing                                                                          | 可选值：`border-box`                                                                                                                                                                 | -        |
 | box-shadow                                                                          | 投影                                                                                                                                                                                 | -        |
+| background(color)                                                                   | 支持渐变，但必须写百分比！如:`linear-gradient(,#ff971b 0%, #ff5000 100%)`、`radial-gradient(#0ff 15%, #f0f 60%)`,目前 radial-gradient 渐变的圆心为元素中点，半径为最长边，不支持设置 | -        |
+| background-clip                                                                	  | 文字渐变，配合`background`背景渐变，设置`background-clip: text` 达到文字渐变效果 | -        |
 | background-image                                                                    | view 元素背景：`url(src)`,若只是设置背景图，请不要设置`background-repeat`                                                                                                                                                           | -        |
 | background-repeat                                                                   | 设置是否及如何重复背景纹理，可选值：`repeat`、`repeat-x`、`repeat-y`、`no-repeat`                                                                                                    | `repeat` |
 | [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit/)          | 图片元素适应容器方式,类似于`mode`,可选值：`cover`、 `contain`、 `fill`、 `none`                                                                                                      | -        |
@@ -856,7 +892,7 @@ page({
 - 3、H5 端生成图片是 base64，有时显示只有一半可以使用原生标签`<IMG/>`
 - 4、发生保存图片倾斜变形或提示 native buffer exceed size limit 时，使用 pixel-ratio="2"参数，降分辨率。
 - 5、h5 保存图片不需要调接口，提示用户长按图片保存。
-- 6、画板不能隐藏，包括`v-if`，`v-show`、`display:none`、`opacity:0`，另外也不要把画板放在弹窗里。
+- 6、画板不能隐藏，包括`v-if`，`v-show`、`display:none`、`opacity:0`，另外也不要把画板放在弹窗里。如果需要隐藏画板请设置 `custom-style="position: fixed; left: 200%"`
 - 7、微信小程序 canvas 2d **不支持真机调试**，请使用真机预览方式。
 - 8、微信小程序打开调试时可以生但并闭无法生成时，这种情况一般是没有在公众号配置download域名
 - 9、HBX 3.4.5之前的版本不支持vue3

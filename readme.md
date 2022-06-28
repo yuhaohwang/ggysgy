@@ -1,4 +1,4 @@
-# Usecloud.usemall 艺心益盟 v1.0.9 前后端开源版
+# 艺心益盟 v1.0.9 前后端开源版
 
 **艺心益盟 uniCloud v1.0.9 前后端开源版，完整商用级项目，一套 js 解决前端、后端、数据库的全栈开发 serverless 模式（小程序、h5、android、iOS、vue + element-ui + uniCloud 版管理后台）永久开源。**
 
@@ -6,27 +6,14 @@
 
 **艺心益盟 · 传播艺术之美！**
 
-## 用云团队项目推荐（已开源）
-
-> **[1. 艺心益盟 uniCloud v1.0.9 版前后端开源](https://ext.dcloud.net.cn/plugin?id=5764)**  
-> **[3. 艺心益盟 IM uniCloud 开源版](https://ext.dcloud.net.cn/plugin?id=5544)**
-
 ## [uniCloud 官方文档](https://uniapp.dcloud.io/uniCloud/README)
 
 ## 手机扫码体验
 
-| 微信小程序                                                                                                                                                              | H5                                                                                                                                                                      |
+<!-- | 微信小程序                                                                                                                                                              | H5                                                                                                                                                                      |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-d7265b2d-188d-44bf-83cb-f04b9e27f865/e9293ae3-c2b5-408a-9130-341bbdfbf284.png" style="width: 240px" width="240px" /> | <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-d7265b2d-188d-44bf-83cb-f04b9e27f865/fd69047a-1aa4-4109-995b-2eb62d4d0ae4.png" style="width: 240px" width="240px" /> |
-
-## [点击体验管理后台](https://usemall.use-cloud.com)
-
-> 账号：usemall  
-> 密码：1234
-
-**[以艺自强管理后台 v1.0.9 版本，加群（[1020565856](https://qm.qq.com/cgi-bin/qm/qr?k=BNUlrZAQXPolwALtcBm_rMabq0bx3_n-&jump_from=usecloud)）联系客服免费获取源代码]。**
-
-## [点击访问用云官网](https://use-cloud.com)
+ -->
 
 ## 新手指南
 
@@ -136,11 +123,3 @@
    > 2. 连接本地云函数运行出错，则需右键云函数 usemall -> 管理公共模块依赖 -> 更新选中依赖。
    > 3. 连接云端云函数，注意小程序开发工具（校验|不校验合法域名、web-view（业务域名）、TLS 版本以及 HTTPS 证书）。
    > 4. 小程序中使用 uniCloud [白名单配置](https://uniapp.dcloud.io/uniCloud/quickstart?id=%e5%b0%8f%e7%a8%8b%e5%ba%8f%e4%b8%ad%e4%bd%bf%e7%94%a8unicloud%e7%9a%84%e7%99%bd%e5%90%8d%e5%8d%95%e9%85%8d%e7%bd%ae)。
-9. **开源不易，请勿以差评的评论方式提问，谢谢！有任何问题欢迎加群咨询。**
-10. **长期招募合伙人！加企业微信咨询。**
-
-## 欢迎加 QQ 群（[1020565856](https://qm.qq.com/cgi-bin/qm/qr?k=BNUlrZAQXPolwALtcBm_rMabq0bx3_n-&jump_from=usecloud)）、永久免费获取 v1.0.9 版本管理后台源代码、各种活动福利。
-
-## 个人微信扫码添加企业微信，vip 一对一服务。
-
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-d7265b2d-188d-44bf-83cb-f04b9e27f865/df0230c7-a54d-4a78-88c9-725c71f73cc2.png" />

@@ -1,7 +1,7 @@
 {
   "id": "lime-painter",
   "displayName": "海报画板",
-  "version": "1.9.2",
+  "version": "1.9.3.4",
   "description": "一款canvas海报组件，更优雅的海报生成方案",
   "keywords": [
     "海报",
@@ -12,7 +12,7 @@
 ],
   "repository": "https://gitee.com/liangei/lime-painter", 
   "engines": {
-    "HBuilderX": "^3.4.7"
+    "HBuilderX": "^3.4.14"
   },
   "dcloudext": {
     "category": [

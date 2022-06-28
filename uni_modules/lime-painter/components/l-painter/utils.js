@@ -1,4 +1,4 @@
-const networkReg = /^(http|\/\/)/;
+export const networkReg = /^(http|\/\/)/;
 export const isBase64 = (path) => /^data:image\/(\w+);base64/.test(path);
 export function sleep(delay) {
 	return new Promise(resolve => setTimeout(resolve, delay))
@@ -162,7 +162,7 @@ const base64ToArrayBuffer = (data) => {
  * @param {Object} base64
  */
 export function base64ToPath(base64) {
-	const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64) || [];
+	const [, format] = /^data:image\/(\w+);base64,/.exec(base64) || [];
 
 	return new Promise((resolve, reject) => {
 		// #ifdef MP
@@ -177,7 +177,7 @@ export function base64ToPath(base64) {
 		//let buffer = base64ToArrayBuffer(bodyData)
 		fs.writeFile({
 			filePath,
-			data: base64.replace(/^data:\S+\/\S+;base64,/, ''),
+			data: base64.split(',')[1], //base64.replace(/^data:\S+\/\S+;base64,/, ''),
 			encoding: 'base64',
 			// data: buffer,
 			// encoding: 'binary',
@@ -240,60 +240,21 @@ export function pathToBase64(path) {
 	if (/^data:/.test(path)) return path
 	return new Promise((resolve, reject) => {
 		// #ifdef H5
-		const _canvas = () => {
-			let image = new Image();
-			image.setAttribute("crossOrigin", 'Anonymous');
-			image.onload = function() {
-				let canvas = document.createElement('canvas');
-				// 获取图片原始宽高
-				canvas.width = this.naturalWidth;
-				canvas.height = this.naturalHeight;
-				// 将图片插入画布并开始绘制
-				canvas.getContext('2d').drawImage(image, 0, 0);
-				let result = canvas.toDataURL('image/png')
-				resolve(result);
-				canvas.height = canvas.width = 0
-			}
-			image.src = path
-			image.onerror = (error) => {
-				reject(error);
-			};
+		let image = new Image();
+		image.setAttribute("crossOrigin", 'Anonymous');
+		image.onload = function() {
+			let canvas = document.createElement('canvas');
+			canvas.width = this.naturalWidth;
+			canvas.height = this.naturalHeight;
+			canvas.getContext('2d').drawImage(image, 0, 0);
+			let result = canvas.toDataURL('image/png')
+			resolve(result);
+			canvas.height = canvas.width = 0
 		}
-		const _fileReader = (blob) => {
-			const fileReader = new FileReader();
-			fileReader.onload = (e) => {
-				resolve(e.target.result);
-			};
-			fileReader.readAsDataURL(blob);
-			fileReader.onerror = (error) => {
-				reject(error);
-			};
-		}
-		const isFileReader = typeof FileReader === 'function'
-		if (networkReg.test(path) && isFileReader) {
-			window.URL = window.URL || window.webkitURL;
-			const xhr = new XMLHttpRequest();
-			xhr.open("get", path, true);
-			xhr.timeout = 2000;
-			xhr.responseType = "blob";
-			xhr.onload = function() {
-				if (this.status == 200) {
-					_fileReader(this.response)
-				} else {
-					_canvas()
-				}
-			}
-			xhr.onreadystatechange = function() {
-				if (this.status === 0) {
-					reject(new Error('图片跨域'))
-				}
-			}
-			xhr.send();
-		} else if (/^blob/.test(path) && isFileReader) {
-			_fileReader(path)
-		} else {
-			_canvas()
-		}
+		image.src = path + '?v=' + Math.random()
+		image.onerror = (error) => {
+			reject(error);
+		};
 		// #endif
 
 		// #ifdef MP
@@ -330,7 +291,7 @@ export function pathToBase64(path) {
 
 
 
-export function getImageInfo(path) {
+export function getImageInfo(path, useCORS) {
 	return new Promise(async (resolve, reject) => {
 		let src = path
 		if (cache[path] && cache[path].errMsg) {
@@ -345,6 +306,12 @@ export function getImageInfo(path) {
 					src = await base64ToPath(path)
 				}
 				// #endif
+				// #ifdef H5
+				if(useCORS) {
+					src = await pathToBase64(path)
+				}
+				// #endif
+				
 			} catch (error) {
 				reject({
 					...error,
@@ -354,6 +321,13 @@ export function getImageInfo(path) {
 			uni.getImageInfo({
 				src,
 				success: (image) => {
+					const localReg = /^\.|^\/(?=[^\/])/;
+					// #ifdef MP-WEIXIN || MP-BAIDU || MP-QQ || MP-TOUTIAO
+					image.path = localReg.test(src) ?  `/${image.path}` : image.path;
+					// #endif
+					// #ifdef H5
+					image.path = image.path.replace(/^\./, window.location.origin)
+					// #endif
 					if (isDev) {
 						resolve(image)
 					} else {

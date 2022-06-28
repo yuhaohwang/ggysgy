@@ -60,6 +60,8 @@ export default {
   },
   data() {
     return {
+      agreementShow: true,
+
       imageStyle: {
         height: '200rpx',
         width: '200rpx',
@@ -146,6 +148,7 @@ export default {
       })
 
       this.$db[_goodscategory]
+        .where(`'state'=='启用'`)
         .tolist({
           rows: 500,
           page: 1,
@@ -156,10 +159,10 @@ export default {
             this.sdatas = []
 
             res.datas.forEach(item => {
-              if (!item.pid && item.state == '启用') {
+              if (!item.pid) {
                 // pid为父级id, 不存在 pid || pid=0 为一级分类
                 this.fdatas.push(item)
-              } else if (item.pid && item.state == '启用') {
+              } else {
                 // 二级分类
                 this.sdatas.push(item)
               }

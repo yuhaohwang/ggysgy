@@ -73,8 +73,8 @@
 						emit('progressChange', v);
 					},
 					onEffectFail(err) {
-						console.error(err)
-						// emit('fail', err);
+						//console.error(err)
+						emit('fail', err);
 					}
 				}
 			});
@@ -96,7 +96,7 @@
 						}
 					};
 				} else {
-					console.error('canvas no data')
+					// console.log('canvas no data')
 					emit('fail', 'canvas no data');
 				};
 			}, 30);
@@ -105,12 +105,12 @@
 			let size = await painter.source(args);
 			emit('layoutChange', size);
 			if(!canvas.height) {
-				console.error('canvas no size')
+				console.log('canvas no size')
 				emit('fail', 'canvas no size');
 			}
 			painter.render().catch(err => {
-				console.error(err)
-				// emit('fail', err);
+				// console.error(err)
+				emit('fail', err);
 			});
 		};
 	</script>

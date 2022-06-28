@@ -2,7 +2,7 @@
   <view class="y-s-c h-full">
     <u-toast ref="uToast"></u-toast>
 
-    <view class="x-b-c w-full padding-xs">
+    <view class="x-b-c w-full bg-main padding-lr-sm">
       <image
         src="/static/images/user/default.png"
         class="border-radius-lg headimg"
@@ -10,14 +10,16 @@
         mode=""
         @click="user"
       ></image>
-
-      <view class="flex1 margin-left-sm">
-        <view class="bg-main border-radius-lg dflex" style="height: 76rpx; line-height: 76rpx">
-          <input type="text" placeholder="输入关键词" class="w-full padding-lr" />
-          <view class="iconfont iconsousuo-01 bg-base border-radius-lg h-full padding-lr-xl" @click="search"></view>
-        </view>
-      </view>
+      <view class="margin-lr-sm flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
+      <view class="" @click="topage(categoryAll)">分类</view>
     </view>
+
+    <!--    <view class="flex1 margin-left-sm">
+      <view class="bg-dark border-radius-lg dflex" style="height: 76rpx; line-height: 76rpx">
+        <input type="text" placeholder="输入关键词" class="w-full padding-lr" />
+        <view class="iconfont iconsousuo-01 bg-base border-radius-lg h-full padding-lr-xl" @click="search"></view>
+      </view>
+    </view> -->
 
     <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="tabCurrent" @tab-change="tabChange"></top-tab>
 
@@ -98,6 +100,16 @@ const _goods = 'usemall-goods'
 export default {
   data() {
     return {
+      // 头部参数
+      searchAuto: !0,
+      searchTip: '请输入搜索关键字',
+
+      // 分类入口
+      categoryAll: {
+        type: '页面',
+        url: `/pages/category/category`,
+      },
+
       current: 0,
       tabCurrent: 0,
 
@@ -151,53 +163,56 @@ export default {
 
   methods: {
     async loadData() {
-      this.$db[_goodscategory].tolist().then(res => {
-        if (res.code === 200) {
-          const temp = [
-            {
-              _id: 0,
-              name: '全部',
-            },
-          ]
+      this.$db[_goodscategory]
+        .where(`'state'=='启用'`)
+        .tolist()
+        .then(res => {
+          if (res.code === 200) {
+            const temp = [
+              {
+                _id: 0,
+                name: '全部',
+              },
+            ]
 
-          res.datas.forEach(item => {
-            if (item.pid && item.state == '启用') {
-              // 二级分类
-              temp.push(item)
-            }
-          })
-
-          if (temp.length > 0) {
-            temp.forEach(item => {
-              // 空白页
-              item.empty = false
-              // 是否首次获取分类数据
-              item.firstGet = true
-              // 商品列表
-              item.goodsDatas = []
-              // 左侧商品列表
-              item.goodsLeftList = []
-              // 右侧商品列表
-              item.goodsRightList = []
-              // 组件数据备份
-              item.newList = []
-              // 加载更多状态
-              item.loadmoreType = 'more'
-              // 商品请求数据
-              item.reqdata = {
-                rows: 8,
-                page: 1,
+            res.datas.forEach(item => {
+              if (item.pid) {
+                // 二级分类
+                temp.push(item)
               }
             })
 
-            this.sdatas = temp
+            if (temp.length > 0) {
+              temp.forEach(item => {
+                // 空白页
+                item.empty = false
+                // 是否首次获取分类数据
+                item.firstGet = true
+                // 商品列表
+                item.goodsDatas = []
+                // 左侧商品列表
+                item.goodsLeftList = []
+                // 右侧商品列表
+                item.goodsRightList = []
+                // 组件数据备份
+                item.newList = []
+                // 加载更多状态
+                item.loadmoreType = 'more'
+                // 商品请求数据
+                item.reqdata = {
+                  rows: 8,
+                  page: 1,
+                }
+              })
 
-            this.$nextTick(function() {
-              this.loadGoodsDatas()
-            })
+              this.sdatas = temp
+
+              this.$nextTick(function() {
+                this.loadGoodsDatas()
+              })
+            }
           }
-        }
-      })
+        })
     },
 
     // 加载商品，下拉刷新|上拉加载
@@ -383,6 +398,32 @@ export default {
       this.$api.togoodslist({
         cid: item._id,
       })
+    },
+    // 跳转页面
+    topage(item) {
+      console.log('分类点击', item.url)
+      if (item && item.type == '网页') {
+        uni.navigateTo({
+          url: `/pages/content/web?url=${item.url}`,
+        })
+      } else if (item && item.type == '页面') {
+        uni.navigateTo({
+          url: `${item.url}`,
+        })
+      } else if (item && item.type == '标签') {
+        uni.switchTab({
+          url: `${item.url}`,
+        })
+      } else {
+        if (item.id)
+          this.$api.togoods({
+            id: item._id,
+          })
+      }
+    },
+    // 搜索回调函数
+    search() {
+      console.log('home search')
     },
   },
 }

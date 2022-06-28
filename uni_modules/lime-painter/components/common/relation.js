@@ -98,6 +98,8 @@ export function children(parent, options = {}) {
 				},
 			});
 			this.el.type = this.type
+			
+			this.bindRelation()
 		},
 		// #ifdef VUE3
 		beforeUnmount() {
@@ -139,7 +141,7 @@ export function children(parent, options = {}) {
 			}
 		},
 		mounted() {
-			this.bindRelation()
+			// this.bindRelation()
 		},
 	}
 }

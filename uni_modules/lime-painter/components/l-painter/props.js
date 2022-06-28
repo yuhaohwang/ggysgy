@@ -11,11 +11,13 @@ export default {
 			default: 1
 		},
 		css: [String, Object],
+		// styles: [String, Object],
 		width: [Number, String],
 		height: [Number, String],
 		pixelRatio: Number,
 		customStyle: String,
 		isCanvasToTempFilePath: Boolean,
+		// useCanvasToTempFilePath: Boolean,
 		sleep: {
 			type: Number,
 			default: 1000 / 30
@@ -39,7 +41,10 @@ export default {
 		timeout: {
 			type: Number,
 			default: 2000
-		}
+		},
+		// #endif
+		// #ifdef H5
+		useCORS: Boolean
 		// #endif
 	}
 }

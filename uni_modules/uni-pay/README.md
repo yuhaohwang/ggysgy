@@ -8,9 +8,9 @@
 
 `uni-pay`是开源 sdk，可放心使用。本插件还包含示例工程，配置自己在微信和支付宝申请的相关配置后即可运行。
 
-对于`uni-pay`还未封装的支付能力，欢迎大家在开源项目上提交 pr，共同完善这个开源项目。
+对于`uni-pay`还未封装的支付能力，欢迎大家在开源项目上提交pr，共同完善这个开源项目。
 
-详细 Api 请参考：[uni-pay](https://uniapp.dcloud.io/uniCloud/unipay)
+详细Api请参考：[uni-pay](https://uniapp.dcloud.io/uniCloud/unipay)
 
 ## 示例项目使用说明
 
@@ -21,20 +21,20 @@
 如需开通对应平台的支付能力请参考以下文档
 
 - [支付宝小程序开通支付](https://opendocs.alipay.com/mini/introduce/pay)
-- [App 接入支付宝支付](https://opendocs.alipay.com/open/204/105297/)
+- [App接入支付宝支付](https://opendocs.alipay.com/open/204/105297/)
 - [接入微信支付](https://pay.weixin.qq.com/index.php/apply/applyment_home/guide_normal#none)
 
 **注意**
 
 - 商户认证不支持个人类型的账号。
-- 微信的 App 支付、小程序支付、H5 支付是不同的体系。微信小程序支付在 微信商户平台 申请支付时，选择公众号支付；
+- 微信的App支付、小程序支付、H5支付是不同的体系。微信小程序支付在 微信商户平台 申请支付时，选择公众号支付；
 
 2. 在`cloudfunctions`目录右键选择服务空间
 3. 上传公用模块，公用模块用法请参考：[云函数公用模块](https://uniapp.dcloud.io/uniCloud/cf-common)
 4. 上传所有云函数
 5. 在`cloudfunctions/db_init.json`上右键初始化数据库
-6. 在项目内的`manifest.json`内配置 App 端支付参数或者微信小程序 appid，[manifest.json 里配置 App 支付相关参数](https://uniapp.dcloud.io/api/plugins/payment?id=manifestjson%e9%87%8c%e9%85%8d%e7%bd%ae%e7%9b%b8%e5%85%b3%e5%8f%82%e6%95%b0)
-7. 如果是运行到 App 端请使用云打包制作自定义基座来测试，其他平台直接运行即可
+6. 在项目内的`manifest.json`内配置App端支付参数或者微信小程序appid，[manifest.json里配置App支付相关参数](https://uniapp.dcloud.io/api/plugins/payment?id=manifestjson%e9%87%8c%e9%85%8d%e7%bd%ae%e7%9b%b8%e5%85%b3%e5%8f%82%e6%95%b0)
+7. 如果是运行到App端请使用云打包制作自定义基座来测试，其他平台直接运行即可
 
 ## 支付流程说明
 
