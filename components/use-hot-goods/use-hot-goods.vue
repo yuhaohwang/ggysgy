@@ -13,13 +13,15 @@
       @goto="hot"
     ></use-list-title>
 
-    <view class="list dflex-b dflex dflex-wrap-w w-full">
-      <view v-for="(item, index) in hotDatas" :key="index" class="item border-radius-sm padding-bottom-sm" @click="to_detail(item)">
-        <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
-        <text class="title clamp padding-sm">{{ item.name }}</text>
-        <view class="padding-left-sm">
-          <text class="price">{{ item.price ? item.price / 100 : '面议' }}</text>
-          <text class="m-price">{{ item.market_price / 100 }}</text>
+    <view class="x-c-c-w x-2 padding-xs">
+      <view v-for="(item, index) in hotDatas" :key="index" class="padding-xs" @click="to_detail(item)">
+        <view class="bg-main border-radius-sm padding-bottom-sm">
+          <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
+          <text class="title clamp padding-sm">{{ item.name }}</text>
+          <view class="padding-left-sm">
+            <text class="price">{{ item.price ? item.price / 100 : '面议' }}</text>
+            <text class="m-price">{{ item.market_price / 100 }}</text>
+          </view>
         </view>
       </view>
     </view>
@@ -30,101 +32,95 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      title: {
-        type: String,
-        default: '热卖产品',
-      },
-      titleType: {
-        type: String,
-        default: 'square',
-      },
-      autoload: {
-        type: String,
-        default: 'auto',
-      },
-      datas: {
-        type: Array,
-        default: () => [],
-      },
+export default {
+  props: {
+    title: {
+      type: String,
+      default: '热卖产品',
     },
-    data() {
-      return {
-        hotDatas: [],
-      }
+    titleType: {
+      type: String,
+      default: 'square',
     },
-    watch: {
-      datas() {
-        this.hotDatas = this.datas
-      },
+    autoload: {
+      type: String,
+      default: 'auto',
     },
-    created() {
-      if (this.autoload === 'auto') {
-        this.loadData()
-      }
+    datas: {
+      type: Array,
+      default: () => [],
     },
-    methods: {
-      loadData() {
-        this.$db['usemall-goods']
-          .where('state == "销售中" && hot == 1')
-          .tolist({ rows: 8, orderby: 'sort asc' })
-          .then(res => {
-            // console.log('usemall-goods',res);
-            if (res.code === 200) {
-              this.hotDatas = res.datas || []
-            }
-          })
-      },
-      goto() {
-        console.log('goto')
-        this.$emit('goto', {
-          type: 'goto',
+  },
+  data() {
+    return {
+      hotDatas: [],
+    }
+  },
+  watch: {
+    datas() {
+      this.hotDatas = this.datas
+    },
+  },
+  created() {
+    if (this.autoload === 'auto') {
+      this.loadData()
+    }
+  },
+  methods: {
+    loadData() {
+      this.$db['usemall-goods']
+        .where('state == "销售中" && hot == 1')
+        .tolist({ rows: 8, orderby: 'sort asc' })
+        .then(res => {
+          // console.log('usemall-goods',res);
+          if (res.code === 200) {
+            this.hotDatas = res.datas || []
+          }
         })
-      },
-      hot() {
-        this.$api.togoodslist({ hot: 1 })
-      },
-      to_detail(options) {
-        this.$api.togoods({ id: options._id })
-      },
     },
-  }
+    goto() {
+      console.log('goto')
+      this.$emit('goto', {
+        type: 'goto',
+      })
+    },
+    hot() {
+      this.$api.togoodslist({ hot: 1 })
+    },
+    to_detail(options) {
+      this.$api.togoods({ id: options._id })
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-  .use-hot-goods {
-    background-color: #f3f4f6;
+.use-hot-goods {
+  background-color: #f3f4f6;
 
-    .list {
-      padding: 0 3vw 20rpx;
+  .item {
+    overflow: hidden;
+    background: #fff;
+
+    &:nth-child(2n) {
+      margin-left: 1vw;
     }
 
-    .item {
-      width: 46vw;
-      margin-top: 2vw;
-      overflow: hidden;
-      background: #fff;
-
-      &:nth-child(2n) {
-        margin-left: 1vw;
-      }
-
-      &:nth-child(2n + 1) {
-        margin-right: 1vw;
-      }
-    }
-
-    .image-wrapper {
-      width: 100%;
-      height: 300rpx;
-      overflow: hidden;
-
-      image {
-        width: 100%;
-        height: 100%;
-        opacity: 1;
-      }
+    &:nth-child(2n + 1) {
+      margin-right: 1vw;
     }
   }
+
+  .image-wrapper {
+    width: 100%;
+    height: 300rpx;
+    overflow: hidden;
+
+    image {
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+    }
+  }
+}
 </style>

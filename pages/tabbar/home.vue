@@ -33,7 +33,7 @@
     </view>
 
     <!-- 03. 卡片分类 -->
-    <view class="x-s-c-w x-3 padding-xs margin-tb-xs bg-main" v-if="cardCategoryDatas && cardCategoryDatas.length > 0">
+    <view class="x-s-c-w x-3 padding-xs bg-main" v-if="cardCategoryDatas && cardCategoryDatas.length > 0">
       <block v-for="(item, index) in cardCategoryDatas" :key="index">
         <view class="y-c-c padding-xs category-item" v-if="item.state == '启用'" @click="topage(item)">
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
@@ -42,9 +42,17 @@
     </view>
 
     <!-- 04. 限时精选 -->
-    <use-list-title title="限时出售" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit"></use-list-title>
-    <view class="limit-area bg-main">
-      <scroll-view class="padding-lr" scroll-x>
+    <use-list-title
+      class="margin-tb-sm"
+      title="限时出售"
+      size="32"
+      fwt="600"
+      color="#333"
+      iconfont="icondaishouhuo-"
+      @goto="limit"
+    ></use-list-title>
+    <view class="padding-xs limit-area bg-main">
+      <scroll-view class="padding-xs" scroll-x>
         <view class="dflex padding-bottom">
           <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index" @click="togoods(item)">
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
@@ -55,10 +63,9 @@
         </view>
       </scroll-view>
     </view>
-    <view class="gap"></view>
 
     <!-- 05. 热门推荐 -->
-    <use-hot-goods :datas="goodsHotDatas" autoload="none" title="热门作品"></use-hot-goods>
+    <use-hot-goods class="margin-top-sm" :datas="goodsHotDatas" autoload="none" title="热门作品"></use-hot-goods>
 
     <!-- 置顶 -->
     <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop>
