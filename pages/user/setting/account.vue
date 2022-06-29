@@ -1,7 +1,5 @@
 <template>
-  <view class="container">
-    <use-list-title class="margin-tb-sm" title="手机号" iconfont=" " tip="13192727680" @goto="to"></use-list-title>
-  </view>
+  <view class="container"><use-list-title title="手机号" iconfont=" " tip="13192727680" @goto="to"></use-list-title></view>
 </template>
 
 <script>

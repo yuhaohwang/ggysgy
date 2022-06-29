@@ -13,7 +13,7 @@ Vue.use(uView)
 // import $iscroll from './common/iscroll.js'
 // Vue.prototype.$iscroll = $iscroll
 
-uni.canIUse = function (name) {
+uni.canIUse = function(name) {
   return name in uni
 }
 // #endif
@@ -40,7 +40,27 @@ Vue.prototype.$dbcmd = uniCloud.database().command
 Vue.prototype.$func = $func
 Vue.prototype.$store = $store
 
-App.mpType = 'app'
+Vue.prototype.$toUrl = (url, type = 0) => {
+    switch (type) {
+      case 0:
+        uni.navigateTo({
+          url,
+        })
+        break
+      case 1:
+        uni.switchTab({
+          url,
+        })
+        break
+      default:
+        uni.navigateTo({
+          url: `/pages/content/web?url=${url}`,
+        })
+        break
+    }
+  },
+
+  App.mpType = 'app'
 
 const app = new Vue({
   ...App,

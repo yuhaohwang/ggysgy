@@ -1,8 +1,8 @@
 <template>
   <view class="container">
-    <use-list-title class="margin-tb-sm" title="个人资料" iconfont=" " @goto="toProfile"></use-list-title>
-    <use-list-title class="margin-tb-sm" title="账号设置" iconfont=" " @goto="toAccount"></use-list-title>
-    <use-list-title class="margin-tb-sm" v-if="aboutData && aboutData._id" title="关于益盟" iconfont=" " @goto="toabout"></use-list-title>
+    <use-list-title title="个人资料" iconfont=" " @goto="toProfile"></use-list-title>
+    <use-list-title title="账号设置" iconfont=" " @goto="toAccount"></use-list-title>
+    <use-list-title v-if="aboutData && aboutData._id" title="关于益盟" iconfont=" " @goto="toabout"></use-list-title>
 
     <!-- #ifdef MP-ALIPAY -->
     <view class="use-item padding-left">
@@ -14,7 +14,7 @@
     <view class="use-item"><button class="no-border wh-full tal" open-type="feedback" @click="tofeedback">意见反馈</button></view>
     <!-- #endif -->
 
-    <use-list-title class="margin-tb-sm" title="艺心益盟" iconfont=" " :tip="version"></use-list-title>
+    <use-list-title title="艺心益盟" iconfont=" " :tip="version"></use-list-title>
     <view class="use-item margin-tb-sm log-out-btn tac" @click="tologout"><text>退出登录</text></view>
   </view>
 </template>

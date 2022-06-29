@@ -13,7 +13,17 @@
         </view>
       </view>
     </view>
-    <view class="use-item padding-lr dflex-b">
+
+    <use-list-title title="昵称" iconfont=" " :tip="member.member_name || member.member_nickname" @goto=""></use-list-title>
+
+    <use-list-title
+      title="性别"
+      iconfont=" "
+      :tip="(member.member_gender == 0 ? '未知' : member.member_gender == 1 ? '男' : '女') || '未知'"
+      @goto=""
+    ></use-list-title>
+
+    <!--    <view class="use-item padding-lr dflex-b">
       <text class="tac">昵称</text>
       <text>{{ member.member_name || member.member_nickname }}</text>
     </view>
@@ -21,43 +31,43 @@
     <view class="use-item padding-lr dflex-b">
       <text class="tac">性别</text>
       <text>{{ (member.member_gender == 0 ? '未知' : member.member_gender == 1 ? '男' : '女') || '未知' }}</text>
-    </view>
+    </view> -->
   </view>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  export default {
-    computed: {
-      ...mapState(['islogin', 'member']),
-    },
-    data() {
-      return {}
-    },
-    onShow() {
-      if (!this.islogin) {
-        this.$api.msg('账号未登录')
-        return
-      }
-    },
-    methods: {},
-  }
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['islogin', 'member']),
+  },
+  data() {
+    return {}
+  },
+  onShow() {
+    if (!this.islogin) {
+      this.$api.msg('账号未登录')
+      return
+    }
+  },
+  methods: {},
+}
 </script>
 
 <style lang="scss">
-  page {
-    background: $page-color-base;
-  }
+page {
+  background: $page-color-base;
+}
 
-  image {
-    width: 130rpx;
-    height: 130rpx;
-  }
+image {
+  width: 130rpx;
+  height: 130rpx;
+}
 
-  .use-item {
-    position: relative;
-    height: 100rpx;
-    line-height: 100rpx;
-    background: #fff;
-  }
+.use-item {
+  position: relative;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #fff;
+}
 </style>

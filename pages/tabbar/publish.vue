@@ -47,7 +47,15 @@
         </view>
       </u-form-item>
     </u--form>
-    <view class="padding"><u-button type="primary" text="提交" @click="submitData"></u-button></view>
+
+    <u-checkbox-group @change="agreementChecked = !agreementChecked">
+      <u-checkbox></u-checkbox>
+      <view class="">
+        <text>我已阅读</text>
+        <text style="color: #3c9cff;" @click="toUrl('/pages/service/agreement', 0)">《全国艺术院校公益助学平台发布作品协议》</text>
+      </view>
+    </u-checkbox-group>
+    <view class="padding"><u-button type="primary" text="提交" @click="submitData" :disabled="!agreementChecked"></u-button></view>
   </view>
 </template>
 
@@ -60,7 +68,7 @@ export default {
   },
   data() {
     return {
-      agreementShow: true,
+      agreementChecked: false,
 
       imageStyle: {
         height: '200rpx',
@@ -142,6 +150,10 @@ export default {
     this.loadData()
   },
   methods: {
+    toUrl() {
+      let arr = [].concat.apply([], arguments)
+      this.$toUrl(...arr)
+    },
     async loadData() {
       this.$refs.uToast.show({
         type: 'loading',

@@ -1,5 +1,5 @@
 <template>
-  <view :style="fixed ? { paddingBottom: '70rpx' } : {}">
+  <view :class="fixed ? 'tab-offset' : ''">
     <view :class="fixed ? 'w-full bg-main fixed' : 'w-full bg-main'">
       <u-tabs
         ref="uTabs"
@@ -69,6 +69,9 @@ export default {
 </script>
 
 <style lang="scss">
+.tab-offset {
+  padding-bottom: 70rpx;
+}
 .fixed {
   position: fixed;
 }

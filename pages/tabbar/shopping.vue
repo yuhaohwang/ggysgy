@@ -24,7 +24,7 @@
     <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="tabCurrent" @tab-change="tabChange"></top-tab>
 
     <view class="flex1 w-full">
-      <swiper style="height: 100%" :current="current" @animationfinish="animationfinish">
+      <swiper style="height: 100%" :duration="0" :current="current" @animationfinish="animationfinish">
         <swiper-item v-for="(sdata, index) in sdatas" :key="index">
           <scroll-view class="wh-full" scroll-y @scrolltolower="onreachBottom" :enable-flex="true">
             <use-empty v-if="sdata.empty" e-style="round" tip="无商品数据"></use-empty>
