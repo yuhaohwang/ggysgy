@@ -351,22 +351,23 @@ export default {
     // tabs通知swiper切换
     tabChange(e) {
       const cidx = e.index
-      this.cid = e._id
-      this.current = cidx
-      if (this.sdatas[cidx].firstGet) {
+
+      if (this.current != cidx && this.sdatas[cidx].firstGet) {
         this.sdatas[cidx].goodsDatas = []
         this.sdatas[cidx].loadmoreType = 'more'
         this.$nextTick(function() {
           this.loadGoodsDatas('refresh')
         })
       }
+
+      this.cid = e._id
+      this.current = cidx
     },
 
     // 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
     // swiper滑动结束，分别设置tabs和swiper的状态
     animationfinish(e) {
       let current = e.detail.current
-      this.current = current
       this.tabCurrent = current
     },
 
