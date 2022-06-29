@@ -1,7 +1,7 @@
 <template>
   <view class="box-sizing-b">
     <!-- 01. 头部组件 -->
-    <view class="x-c-c bg-main padding-lr-xs">
+    <view class="x-c-c bg-main padding-lr-sm">
       <view class="search flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
     </view>
 

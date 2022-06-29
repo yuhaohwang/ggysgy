@@ -10,8 +10,8 @@
         mode=""
         @click="user"
       ></image>
-      <view class="margin-lr-sm flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
-      <view class="" @click="topage(categoryAll)">分类</view>
+      <view class="margin-left-xs flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
+      <view class="margin-left-xs" @click="topage(categoryAll)">分类</view>
     </view>
 
     <!--    <view class="flex1 margin-left-sm">
