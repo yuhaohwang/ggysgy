@@ -68,6 +68,8 @@ export default {
   },
   data() {
     return {
+      isInit: false,
+
       agreementChecked: false,
 
       imageStyle: {
@@ -126,16 +128,22 @@ export default {
       },
     }
   },
-  onLoad() {
-    this.init(this.affirm)
-    this.$nextTick(function() {
-      this.loadData()
-    })
+  onLoad() {},
+  mounted() {
+    // #ifdef H5 || MP-360
+    this.navHeight = 50
+    // #endif
   },
   onShow() {
     if (!this.islogin) {
       this.tologin()
       return
+    }
+    if (!this.isInit) {
+      this.init(this.affirm)
+      this.$nextTick(function() {
+        this.loadData()
+      })
     }
   },
   onReady() {},
@@ -189,6 +197,8 @@ export default {
               duration: 0,
             })
             uni.stopPullDownRefresh()
+
+            this.isInit = true
           }
         })
     },

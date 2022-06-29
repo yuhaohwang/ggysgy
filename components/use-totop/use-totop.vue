@@ -1,6 +1,6 @@
 <template>
   <view
-    class="use-totop fixed-top animated"
+    class="fixed-top animated"
     :class="visible ? 'fade-in' : 'dn'"
     :style="{ bottom: bottom + 'rpx', right: right + 'rpx' }"
     @tap.stop="totop"
@@ -10,68 +10,61 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      top: {
-        type: Number,
-        default: 100,
-      },
-
-      right: {
-        type: String,
-        default: '30',
-      },
-      bottom: {
-        type: String,
-        default: '30',
-      },
-
-      duration: {
-        type: Number,
-        default: 120,
-      },
-      scrollTop: {
-        type: Number,
-        default: 0,
-      },
+export default {
+  props: {
+    top: {
+      type: Number,
+      default: 100,
     },
-    watch: {
-      scrollTop(nv, ov) {
-        this.s_top = nv
-        this.change()
-      },
+
+    right: {
+      type: String,
+      default: '30',
     },
-    data() {
-      return {
-        s_top: 0,
-        visible: false,
+    bottom: {
+      type: String,
+      default: '30',
+    },
+
+    duration: {
+      type: Number,
+      default: 120,
+    },
+    scrollTop: {
+      type: Number,
+      default: 0,
+    },
+  },
+  data() {
+    return {
+      s_top: 0,
+      visible: false,
+    }
+  },
+  methods: {
+    totop: function() {
+      uni.pageScrollTo({
+        scrollTop: 0,
+        duration: this.duration,
+      })
+
+      // this.$emit('to', {
+      //   type: 'to',
+      //   scrollTop: this.s_top,
+      // })
+
+      this.$emit('toTop')
+    },
+    change(scrollTop) {
+      this.s_top = scrollTop
+      if (this.s_top > this.top) {
+        this.visible = true
+      } else {
+        this.visible = false
       }
     },
-    methods: {
-      totop: function () {
-        uni.pageScrollTo({
-          scrollTop: 0,
-          duration: this.duration,
-        })
-
-        this.$emit('to', {
-          type: 'to',
-          scrollTop: this.s_top,
-        })
-      },
-      change(scrollTop) {
-        this.s_top = scrollTop
-        if (this.s_top > this.top) {
-          if (!this.visible) this.visible = true
-        } else {
-          if (this.visible) this.visible = false
-        }
-      },
-    },
-  }
+  },
+}
 </script>
 
-<style lang="scss">
-  .use-totop {
-  }
-</style>
+<style lang="scss"></style>

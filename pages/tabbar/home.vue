@@ -11,7 +11,7 @@
       <!-- 轮播组件 -->
       <swiper class="swiper w-full" autoplay indicator-dots indicator-color="#f7f7f7" indicator-active-color="#FEAA30">
         <block v-for="(item, index) in swiperDatas" :key="index">
-          <swiper-item class="swiper-item padding-sm wh-full box-sizing-b" v-if="item.state == '启用'">
+          <swiper-item class="swiper-item padding-sm wh-full box-sizing-b">
             <view class="wh-full" @click.stop="topage(item)">
               <image class="border-radius wh-full" mode="scaleToFill" :lazy-load="true" :src="item.img" />
             </view>
@@ -23,7 +23,7 @@
     <!-- 03. 图文分类 -->
     <view class="x-a-c x-5 padding-xs bg-main" v-if="graphicCategoryDatas && graphicCategoryDatas.length > 0">
       <block v-for="(item, index) in graphicCategoryDatas" :key="index">
-        <view class="y-c-c padding-xs category-item" v-if="item.state == '启用'" @click="topage(item)">
+        <view class="y-c-c padding-xs category-item" @click="topage(item)">
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
           <view>{{ item.name }}</view>
         </view>
@@ -33,24 +33,18 @@
     <!-- 03. 卡片分类 -->
     <view class="x-s-c-w x-3 padding-xs bg-main" v-if="cardCategoryDatas && cardCategoryDatas.length > 0">
       <block v-for="(item, index) in cardCategoryDatas" :key="index">
-        <view class="y-c-c padding-xs category-item" v-if="item.state == '启用'" @click="topage(item)">
+        <view class="y-c-c padding-xs category-item" @click="topage(item)">
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
         </view>
       </block>
     </view>
 
     <!-- 04. 限时精选 -->
-    <use-list-title
-      class="margin-tb-sm"
-      title="限时出售"
-      size="32"
-      fwt="600"
-      color="#333"
-      iconfont="icondaishouhuo-"
-      @goto="limit"
-    ></use-list-title>
-    <view class="padding-xs limit-area bg-main">
-      <scroll-view class="padding-xs" scroll-x>
+    <view class="margin-top-sm">
+      <use-list-title title="限时出售" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit"></use-list-title>
+    </view>
+    <view class="padding-sm limit-area bg-main">
+      <scroll-view scroll-x>
         <view class="dflex padding-bottom">
           <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index" @click="togoods(item)">
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
@@ -63,7 +57,7 @@
     </view>
 
     <!-- 05. 热门推荐 -->
-    <use-hot-goods class="margin-top-sm" :datas="goodsHotDatas" autoload="none" title="热门作品"></use-hot-goods>
+    <view class="margin-top-sm"><use-hot-goods :datas="goodsHotDatas" autoload="none" title="热门作品"></use-hot-goods></view>
 
     <!-- 置顶 -->
     <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop>
@@ -119,13 +113,18 @@ export default {
       this.platform_name = this.env.platform_name
     })
   },
-  onPageScroll(e) {
-    // this.scrollTop = e.scrollTop
-    this.$refs.usetop.change(e.scrollTop)
+  mounted() {
+    // #ifdef H5 || MP-360
+    this.navHeight = 50
+    // #endif
   },
   // 监听页面显示。页面每次出现在屏幕上都触发，包括从下级页面点返回露出当前页面
   onShow() {
     this.loadData()
+  },
+  onPageScroll(e) {
+    // this.scrollTop = e.scrollTop
+    this.$refs.usetop.change(e.scrollTop)
   },
   // 监听用户下拉刷新
   onPullDownRefresh() {
@@ -236,11 +235,6 @@ export default {
         limited: 1,
       })
     },
-  },
-  mounted() {
-    // #ifdef H5 || MP-360
-    this.navHeight = 50
-    // #endif
   },
 }
 </script>

@@ -655,10 +655,10 @@ contact-button {
 }
 
 /* #ifndef MP */
-.swiper-area {
-  margin-top: calc(44px + env(safe-area-inset-top));
-  margin-top: 44px;
-}
+// .swiper-area {
+//   margin-top: calc(44px + env(safe-area-inset-top));
+//   margin-top: 44px;
+// }
 
 /* #endif */
 

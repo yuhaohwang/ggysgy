@@ -26,7 +26,14 @@
     <view class="flex1 w-full">
       <swiper style="height: 100%" :duration="0" :current="current" @animationfinish="animationfinish">
         <swiper-item v-for="(sdata, index) in sdatas" :key="index">
-          <scroll-view class="wh-full" scroll-y @scrolltolower="onreachBottom" :enable-flex="true">
+          <scroll-view
+            class="wh-full"
+            :scroll-top="sdata.scrollTop"
+            scroll-y
+            @scroll="toTopShow($event.detail.scrollTop)"
+            @scrolltolower="onreachBottom"
+            :enable-flex="true"
+          >
             <use-empty v-if="sdata.empty" e-style="round" tip="无商品数据"></use-empty>
 
             <view v-show="!sdata.empty" class="x-c-s x-2 padding-xs border-radius">
@@ -84,13 +91,13 @@
                 </block>
               </view>
             </view>
-
-            <!-- 置顶 -->
-            <!-- <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop> -->
           </scroll-view>
         </swiper-item>
       </swiper>
     </view>
+
+    <!-- 置顶 -->
+    <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }" @toTop="toTop"></use-totop>
   </view>
 </template>
 
@@ -103,6 +110,8 @@ export default {
       // 头部参数
       searchAuto: !0,
       searchTip: '请输入搜索关键字',
+
+      navHeight: 0,
 
       // 分类入口
       categoryAll: {
@@ -117,37 +126,15 @@ export default {
       cid: 0,
       // 二级数据
       sdatas: [],
-
-      // 商品列表
-      prevGoodsDatas: [],
-      // 左侧商品列表
-      prevGoodsLeftList: [],
-      // 右侧商品列表
-      prevGoodsRightList: [],
-      // 组件数据备份
-      prevNewList: [],
-
-      // 商品列表
-      nowGoodsDatas: [],
-      // 左侧商品列表
-      nowGoodsLeftList: [],
-      // 右侧商品列表
-      nowGoodsRightList: [],
-      // 组件数据备份
-      nowNewList: [],
-
-      // 商品列表
-      nextGoodsDatas: [],
-      // 左侧商品列表
-      nextGoodsLeftList: [],
-      // 右侧商品列表
-      nextGoodsRightList: [],
-      // 组件数据备份
-      nextNewList: [],
     }
   },
   onLoad() {
     this.loadData()
+  },
+  mounted() {
+    // #ifdef H5 || MP-360
+    this.navHeight = 50
+    // #endif
   },
   //下拉刷新
   onPullDownRefresh() {
@@ -162,6 +149,15 @@ export default {
   },
 
   methods: {
+    toTopShow(top) {
+      const cidx = this.current
+      this.sdatas[cidx].scrollTop = top
+      this.$refs.usetop.change(top)
+    },
+    toTop() {
+      const cidx = this.current
+      this.sdatas[cidx].scrollTop = 0
+    },
     async loadData() {
       this.$db[_goodscategory]
         .where(`'state'=='启用'`)
@@ -199,10 +195,11 @@ export default {
                 // 加载更多状态
                 item.loadmoreType = 'more'
                 // 商品请求数据
-                item.reqdata = {
+                ;(item.reqdata = {
                   rows: 8,
                   page: 1,
-                }
+                }),
+                  (item.scrollTop = 0)
               })
 
               this.sdatas = temp
@@ -216,84 +213,55 @@ export default {
     },
 
     // 加载商品，下拉刷新|上拉加载
-    async loadGoodsDatas(type = 'add', loading) {
+    async loadGoodsDatas(type = 'add') {
       const cidx = this.current
+      console.log(this.sdatas[cidx].loadmoreType)
 
+      // 防止重复加载
       if (this.sdatas[cidx].loadmoreType === 'loading') {
-        // 防止重复加载
         return
       }
 
-      if (loading == 1 || type == 'refresh') {
+      // 没有更多直接返回
+      if (type === 'add' && this.sdatas[cidx].loadmoreType === 'nomore') {
+        return
+      } else if (type === 'add') {
+        this.sdatas[cidx].loadmoreType = 'loading'
+      }
+
+      if (type === 'refresh') {
+        this.sdatas[cidx].goodsDatas = []
         // 从首页开始加载
         this.sdatas[cidx].reqdata.page = 1
       }
 
-      // 没有更多直接返回
-      if (type === 'add') {
-        console.log(this.sdatas[cidx].loadmoreType)
-        if (this.sdatas[cidx].loadmoreType === 'nomore') {
-          return
-        }
-        // 加载中
-        this.sdatas[cidx].loadmoreType = 'loading'
-      } else {
-        // 更多
-        this.sdatas[cidx].loadmoreType = 'more'
-      }
-
-      // this.$refs.uToast.show({
-      //   type: 'loading',
-      // })
-
       // 根据当前 cid 加载商品数据列表
       this.sdatas[cidx].reqdata.cid = this.cid
-      this.$db[_goods]
-        .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids`)
+
+      let res = await this.$db[_goods]
+        .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids && state == '销售中'`)
         .tolist({ ...this.sdatas[cidx].reqdata, orderby: 'create_time desc' })
-        .then(res => {
-          if (res.code === 200) {
-            if (res.datas && res.datas.length > 0) {
-              if (loading == 1 || type == 'refresh') {
-                this.sdatas[cidx].goodsDatas = []
-              }
-              let _datas = []
-              res.datas.forEach(row => {
-                if (row.state === '销售中') {
-                  _datas.push(row)
-                }
-              })
-              this.sdatas[cidx].goodsDatas = [...this.sdatas[cidx].goodsDatas, ..._datas]
 
-              if (res.datas.length >= this.sdatas[cidx].reqdata.rows) {
-                this.sdatas[cidx].reqdata.page++
-                this.sdatas[cidx].loadmoreType = 'more'
-              } else {
-                this.sdatas[cidx].loadmoreType = 'nomore'
-              }
-            } else {
-              this.sdatas[cidx].loadmoreType = 'nomore'
-            }
-          }
+      if (res.datas) {
+        this.sdatas[cidx].goodsDatas = [...this.sdatas[cidx].goodsDatas, ...res.datas]
+        if (res.datas.length >= this.sdatas[cidx].reqdata.rows) {
+          this.sdatas[cidx].reqdata.page++
+          this.sdatas[cidx].loadmoreType = 'more'
+        } else {
+          this.sdatas[cidx].loadmoreType = 'nomore'
+        }
+      }
 
-          this.sdatas[cidx].empty = this.sdatas[cidx].goodsDatas.length === 0 ? true : false
-          this.sdatas[cidx].firstGet = false
+      this.sdatas[cidx].empty = this.sdatas[cidx].goodsDatas.length === 0 ? true : false
+      this.sdatas[cidx].firstGet = false
 
-          this.$nextTick(function() {
-            this.touchOff()
-          })
+      this.$nextTick(function() {
+        this.touchOff()
+      })
 
-          if (loading == 1) {
-            uni.hideLoading()
-          } else if (type == 'refresh') {
-            uni.stopPullDownRefresh()
-          }
-
-          // this.$refs.uToast.show({
-          //   type: 'loading',
-          //   duration: 0,
-          // })
-        })
+      if (type === 'refresh') {
+        uni.stopPullDownRefresh()
+      }
     },
 
     // 触发重新排列
@@ -326,16 +294,10 @@ export default {
         let leftH = res[0].length ? res[0][cidx].height : 0 //防止查询不到做个处理
         let rightH = res[1].length ? res[1][cidx].height : 0
         this.$nextTick(function() {
-          if (leftH <= rightH + 200) {
-            // 相等 || 左边小
-            if (this.sdatas[cidx].newList) {
-              this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift())
-            }
-          } else {
-            // 右边小
-            if (this.sdatas[cidx].newList) {
-              this.sdatas[cidx].goodsRightList.push(this.sdatas[cidx].newList.shift())
-            }
+          if (this.sdatas[cidx].newList) {
+            leftH <= rightH + 200
+              ? this.sdatas[cidx].goodsLeftList.push(this.sdatas[cidx].newList.shift())
+              : this.sdatas[cidx].goodsRightList.push(this.sdatas[cidx].newList.shift())
           }
         })
       })
@@ -352,9 +314,10 @@ export default {
     tabChange(e) {
       const cidx = e.index
 
+      let top = this.sdatas[cidx].scrollTop
+      this.$refs.usetop.change(top)
+
       if (this.current != cidx && this.sdatas[cidx].firstGet) {
-        this.sdatas[cidx].goodsDatas = []
-        this.sdatas[cidx].loadmoreType = 'more'
         this.$nextTick(function() {
           this.loadGoodsDatas('refresh')
         })
