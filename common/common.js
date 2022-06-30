@@ -65,7 +65,8 @@ class Common {
    */
   guid() {
     return (
-      this.__s4() + this.__s4() + '-' + this.__s4() + '-' + this.__s4() + '-' + this.__s4() + '-' + this.__s4() + this.__s4() + this.__s4()
+      this.__s4() + this.__s4() + '-' + this.__s4() + '-' + this.__s4() + '-' + this.__s4() + '-' + this.__s4() +
+      this.__s4() + this.__s4()
     )
   }
   __s4() {
@@ -99,8 +100,7 @@ class Common {
           if (typeof callback === 'function') {
             callback()
           }
-        } else if (res.cancel) {
-        }
+        } else if (res.cancel) {}
       },
     })
   }
@@ -430,6 +430,28 @@ class Common {
 
     return path.split('/').reverse()[0]
   }
+
+  /**
+   * @description 节流函数
+   */
+  throttled(fn, delay) {
+    let timer = null
+    let starttime = Date.now()
+    return function() {
+      let curTime = Date.now() // 当前时间
+      let remaining = delay - (curTime - starttime) // 从上一次到现在，还剩下多少多余时间
+      let context = this
+      let args = arguments
+      clearTimeout(timer)
+      if (remaining <= 0) {
+        fn.apply(context, args)
+        starttime = Date.now()
+      } else {
+        timer = setTimeout(fn, remaining);
+      }
+    }
+  }
+
 }
 
 export default new Common()

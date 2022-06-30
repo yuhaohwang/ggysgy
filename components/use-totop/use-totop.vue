@@ -37,9 +37,17 @@ export default {
   },
   data() {
     return {
-      s_top: 0,
       visible: false,
     }
+  },
+  watch: {
+    scrollTop(nv, ov) {
+      if (nv >= this.top) {
+        this.visible = true
+      } else {
+        this.visible = false
+      }
+    },
   },
   methods: {
     totop: function() {
@@ -48,16 +56,10 @@ export default {
         duration: this.duration,
       })
 
-      // this.$emit('to', {
-      //   type: 'to',
-      //   scrollTop: this.s_top,
-      // })
-
       this.$emit('toTop')
     },
     change(scrollTop) {
-      this.s_top = scrollTop
-      if (this.s_top > this.top) {
+      if (scrollTop >= this.top) {
         this.visible = true
       } else {
         this.visible = false

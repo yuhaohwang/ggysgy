@@ -30,7 +30,8 @@
             class="wh-full"
             :scroll-top="sdata.scrollTop"
             scroll-y
-            @scroll="toTopShow($event.detail.scrollTop)"
+            :lower-threshold="10000"
+            @scroll="toTopShow"
             @scrolltolower="onreachBottom"
             :enable-flex="true"
           >
@@ -97,11 +98,29 @@
     </view>
 
     <!-- 置顶 -->
-    <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }" @toTop="toTop"></use-totop>
+    <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }" @toTop="toTop" :scrollTop="scrollTop"></use-totop>
   </view>
 </template>
 
 <script>
+const throttled = (fn, delay) => {
+  let timer = null
+  let starttime = Date.now()
+  return function() {
+    let curTime = Date.now() // 当前时间
+    let remaining = delay - (curTime - starttime) // 从上一次到现在，还剩下多少多余时间
+    let context = this
+    let args = arguments
+    clearTimeout(timer)
+    if (remaining <= 0) {
+      fn.apply(context, args)
+      starttime = Date.now()
+    } else {
+      timer = setTimeout(fn, remaining)
+    }
+  }
+}
+
 const _goodscategory = 'usemall-goods-category'
 const _goods = 'usemall-goods'
 export default {
@@ -111,6 +130,7 @@ export default {
       searchAuto: !0,
       searchTip: '请输入搜索关键字',
 
+      scrollTop: 0,
       navHeight: 0,
 
       // 分类入口
@@ -149,15 +169,6 @@ export default {
   },
 
   methods: {
-    toTopShow(top) {
-      const cidx = this.current
-      this.sdatas[cidx].scrollTop = top
-      this.$refs.usetop.change(top)
-    },
-    toTop() {
-      const cidx = this.current
-      this.sdatas[cidx].scrollTop = 0
-    },
     async loadData() {
       this.$db[_goodscategory]
         .where(`'state'=='启用'`)
@@ -195,11 +206,12 @@ export default {
                 // 加载更多状态
                 item.loadmoreType = 'more'
                 // 商品请求数据
-                ;(item.reqdata = {
-                  rows: 8,
+                item.reqdata = {
+                  rows: 20,
                   page: 1,
-                }),
-                  (item.scrollTop = 0)
+                }
+                item.scrollTop = 0
+                item.scrollTopTemp = 0
               })
 
               this.sdatas = temp
@@ -215,7 +227,6 @@ export default {
     // 加载商品，下拉刷新|上拉加载
     async loadGoodsDatas(type = 'add') {
       const cidx = this.current
-      console.log(this.sdatas[cidx].loadmoreType)
 
       // 防止重复加载
       if (this.sdatas[cidx].loadmoreType === 'loading') {
@@ -262,6 +273,8 @@ export default {
       if (type === 'refresh') {
         uni.stopPullDownRefresh()
       }
+
+      uni.hideLoading()
     },
 
     // 触发重新排列
@@ -305,8 +318,29 @@ export default {
 
     //加载更多
     onreachBottom() {
+      const cidx = this.current
+      if (this.sdatas[cidx].newList < 2) {
+        this.$nextTick(function() {
+          this.loadGoodsDatas()
+        })
+      }
+    },
+
+    toTopShow: throttled(function(e) {
+      if (typeof e != 'undefined') {
+        const top = e.detail.scrollTop
+        const cidx = this.current
+        this.sdatas[cidx].scrollTopTemp = top
+        this.scrollTop = top
+      }
+    }, 100),
+
+    toTop() {
+      const cidx = this.current
+      // 回到顶部之前先更新scrollTop位置
+      this.sdatas[cidx].scrollTop = this.sdatas[cidx].scrollTopTemp
       this.$nextTick(function() {
-        this.loadGoodsDatas()
+        this.sdatas[cidx].scrollTop = 0
       })
     },
 
@@ -314,10 +348,11 @@ export default {
     tabChange(e) {
       const cidx = e.index
 
-      let top = this.sdatas[cidx].scrollTop
-      this.$refs.usetop.change(top)
-
       if (this.current != cidx && this.sdatas[cidx].firstGet) {
+        uni.showLoading({
+          title: '正在加载',
+          mask: true,
+        })
         this.$nextTick(function() {
           this.loadGoodsDatas('refresh')
         })
@@ -332,6 +367,11 @@ export default {
     animationfinish(e) {
       let current = e.detail.current
       this.tabCurrent = current
+
+      // 切换tab之前先更新scrollTop位置
+      this.sdatas[this.current].scrollTop = this.sdatas[this.current].scrollTopTemp
+      let top = this.sdatas[current].scrollTop
+      this.scrollTop = top
     },
 
     // 跳转个人
