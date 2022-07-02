@@ -30,7 +30,6 @@
             class="wh-full"
             :scroll-top="sdata.scrollTop"
             scroll-y
-            :lower-threshold="10000"
             @scroll="toTopShow"
             @scrolltolower="onreachBottom"
             :enable-flex="true"
@@ -42,7 +41,13 @@
                 <block v-for="(l_item, l_index) in sdata.goodsLeftList" :key="l_index">
                   <view v-if="l_item" class="padding-xs w-full" @click="togoods(l_item)">
                     <view class="bg-main border-radius">
-                      <image :src="l_item.img" style="width: 100%; max-height: 350rpx" mode="widthFix" @load="considerPush"></image>
+                      <image
+                        :src="l_item.img"
+                        style="width: 100%; max-height: 350rpx"
+                        mode="widthFix"
+                        :lazy-load="true"
+                        @load="considerPush"
+                      ></image>
 
                       <view class="padding-lr-sm margin-top-sm clamp-2">{{ l_item.name }}</view>
 
@@ -69,7 +74,13 @@
                 <block v-for="(r_item, r_index) in sdata.goodsRightList" :key="r_index">
                   <view v-if="r_item" class="padding-xs w-full" @click="togoods(r_item)">
                     <view class="bg-main border-radius">
-                      <image :src="r_item.img" style="width: 100%; max-height: 350rpx" mode="widthFix" @load="considerPush"></image>
+                      <image
+                        :src="r_item.img"
+                        style="width: 100%; max-height: 350rpx"
+                        mode="widthFix"
+                        :lazy-load="true"
+                        @load="considerPush"
+                      ></image>
 
                       <view class="padding-lr-sm margin-top-sm clamp-2">{{ r_item.name }}</view>
 
@@ -92,6 +103,8 @@
                 </block>
               </view>
             </view>
+            <!-- 上拉加载更多 -->
+            <use-loadmore :type="sdata.loadmoreType" v-if="!sdata.empty"></use-loadmore>
           </scroll-view>
         </swiper-item>
       </swiper>
@@ -103,7 +116,21 @@
 </template>
 
 <script>
-const throttled = (fn, delay) => {
+const debounce = (fn, delay) => {
+  var timer // 维护一个 timer
+  return function() {
+    var _this = this // 取debounce执行作用域的this
+    var args = arguments
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(function() {
+      fn.apply(_this, args) // 用apply指向调用debounce的对象，相当于_this.fn(args);
+    }, delay)
+  }
+}
+
+const throttle = (func, delay) => {
   let timer = null
   let starttime = Date.now()
   return function() {
@@ -113,10 +140,10 @@ const throttled = (fn, delay) => {
     let args = arguments
     clearTimeout(timer)
     if (remaining <= 0) {
-      fn.apply(context, args)
+      func.apply(context, args)
       starttime = Date.now()
     } else {
-      timer = setTimeout(fn, remaining)
+      timer = setTimeout(func, remaining)
     }
   }
 }
@@ -207,7 +234,7 @@ export default {
                 item.loadmoreType = 'more'
                 // 商品请求数据
                 item.reqdata = {
-                  rows: 20,
+                  rows: 8,
                   page: 1,
                 }
                 item.scrollTop = 0
@@ -249,6 +276,25 @@ export default {
       // 根据当前 cid 加载商品数据列表
       this.sdatas[cidx].reqdata.cid = this.cid
 
+      // this.$db['usemall-goods, usemall-goods']
+      //   .collection()
+      //   .where('create_uid == $env.uid')
+      //   .field('visit_cnt, last_modify_time, goods._id as goods_id, goods.img as goods_img, goods.state as goods_state')
+      //   .orderBy('last_modify_time desc')
+      //   .get()
+      //   .then(res => {
+      //     if (res && res.result && res.result.code === 0) {
+      //       let _historyDatas = []
+      //       res.result.data.forEach(x => {
+      //         x._id = x.goods_id[0]
+      //         x.img = x.goods_img[0]
+      //         x.state = x.goods_state[0]
+      //         _historyDatas.push(x)
+      //       })
+      //       this.historyDatas = _historyDatas
+      //     }
+      //   })
+
       let res = await this.$db[_goods]
         .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids && state == '销售中'`)
         .tolist({ ...this.sdatas[cidx].reqdata, orderby: 'create_time desc' })
@@ -279,7 +325,7 @@ export default {
 
     // 触发重新排列
     touchOff() {
-      console.log('touchOff')
+      // console.log('touchOff')
       const cidx = this.current
       var goods = new Set([...this.sdatas[cidx].goodsLeftList, ...this.sdatas[cidx].goodsRightList])
       let temp = this.sdatas[cidx].goodsDatas.filter(x => !goods.has(x))
@@ -319,14 +365,12 @@ export default {
     //加载更多
     onreachBottom() {
       const cidx = this.current
-      if (this.sdatas[cidx].newList < 2) {
-        this.$nextTick(function() {
-          this.loadGoodsDatas()
-        })
-      }
+      this.$nextTick(function() {
+        this.loadGoodsDatas()
+      })
     },
 
-    toTopShow: throttled(function(e) {
+    toTopShow: debounce(function(e) {
       if (typeof e != 'undefined') {
         const top = e.detail.scrollTop
         const cidx = this.current
@@ -341,6 +385,7 @@ export default {
       this.sdatas[cidx].scrollTop = this.sdatas[cidx].scrollTopTemp
       this.$nextTick(function() {
         this.sdatas[cidx].scrollTop = 0
+        this.scrollTop = 0
       })
     },
 

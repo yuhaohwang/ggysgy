@@ -13,7 +13,7 @@
       @goto="hot"
     ></use-list-title>
 
-    <view class="x-c-c-w x-2 padding-xs">
+    <view class="x-s-c-w x-2 padding-xs">
       <view v-for="(item, index) in hotDatas" :key="index" class="padding-xs" @click="to_detail(item)">
         <view class="bg-main border-radius-sm padding-bottom-sm">
           <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
