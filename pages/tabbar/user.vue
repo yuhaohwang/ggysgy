@@ -3,14 +3,19 @@
     <view class="header-area padding-lr-sm" :class="is_mp && !is_alipay ? 'padding-top-big' : 'padding-top'">
       <view class="dflex-b">
         <view class="member-area padding-top-sm margin-bottom dflex pos-r" @click="to('/pages/user/setting/personal')">
-          <view><image class="headimg border-radius-c" :src="member.member_headimg || '/static/images/user/default.png'"></image></view>
+          <view>
+            <image
+              class="headimg border-radius-c"
+              :src="member.avatar_file ? member.avatar_file.url : '/static/images/user/default.png'"
+            ></image>
+          </view>
           <view class="margin-left-sm">
             <view class="info-box">
-              <text class="fs-lg">{{ member.member_name || member.member_nickname || '艺心益盟' }}</text>
+              <text class="fs-lg">{{ member.nickname ? member.nickname : '艺心益盟' }}</text>
             </view>
-            <view v-if="member.member_city">
+            <!--            <view v-if="member.member_city">
               <text class="fs-xxs">{{ member.member_city }}</text>
-            </view>
+            </view> -->
           </view>
           <view v-if="islogin && is_mp" class="padding" @click.stop="updateMember">
             <view :class="{ rotate: isreq }" class="animated iconfont">&#xe6ff;</view>
@@ -105,7 +110,7 @@
         <scroll-view scroll-x class="browsing-area padding-lr">
           <view class="dflex">
             <view v-for="(item, index) in historyDatas" :key="index">
-              <image class="border-radius-sm margin-right-sm" @click="togoods(item)" :src="item.img" mode="aspectFill"></image>
+              <image class="border-radius-sm margin-right-sm" @click="toGood(item)" :src="item.img" mode="aspectFill"></image>
             </view>
           </view>
         </scroll-view>
@@ -311,11 +316,11 @@ export default {
           this.$api.msg('退出成功')
           this.logout()
           this.$api.timerout(() => {
-            this.$api.tohome()
+            this.$api.toHome()
           }, 200)
           break
         case 1:
-          this.$api.tologin()
+          this.$api.toLogin()
           break
       }
     },
@@ -357,7 +362,7 @@ export default {
     // 统一跳转接口，拦截未登录路由
     to(url) {
       if (!this.islogin) {
-        this.$api.tologin()
+        this.$api.toLogin()
         return
       }
 
@@ -368,7 +373,7 @@ export default {
     // 跳转到 订单
     toOrder(url, state) {
       if (!this.islogin) {
-        this.$api.tologin()
+        this.$api.toLogin()
         return
       }
 
@@ -387,8 +392,8 @@ export default {
     },
 
     // 跳转商品详情
-    togoods(item) {
-      this.$api.togoods({
+    toGood(item) {
+      this.$api.toGood({
         id: item._id,
       })
     },

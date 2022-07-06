@@ -9,7 +9,7 @@
       btn-tip="去登录"
       height="70vh"
       :auto="false"
-      @goto="tologin"
+      @goto="toLogin"
     ></use-empty>
     <!-- 00. 空白页 -->
     <use-empty v-else-if="empty" e-style="round" e-type="cart" tip="购物车数据为空" height="70vh"></use-empty>
@@ -19,7 +19,7 @@
       <view class="cart-list padding-sm">
         <block v-for="(item, index) in cartDatas" :key="item._id">
           <view class="cart-item bg-main margin-bottom-sm padding-lg pos-r dflex-s border-radius">
-            <view class="image-wrapper pos-r" @click="togoods(item)">
+            <view class="image-wrapper pos-r" @click="toGood(item)">
               <!-- 商品图片 -->
               <image class="border-radius-xs wh-full" mode="aspectFill" :lazy-load="true" :src="item.goods.img"></image>
               <!-- 选中|未选中按钮 -->
@@ -44,7 +44,7 @@
             </view>
             <view class="item-right padding-left pos-r flex1">
               <!-- 商品名称 -->
-              <view class="clamp-2 title" @click="togoods(item)">{{ item.goods.name }} {{ item.goods.name_pw }}</view>
+              <view class="clamp-2 title" @click="toGood(item)">{{ item.goods.name }} {{ item.goods.name_pw }}</view>
               <view class="ft-dark fs-xs padding-top-xs">{{ item.goods_sku.spec || '&nbsp;&nbsp;' }}</view>
               <view class="padding-tb-sm">
                 <text class="price">{{ item.goods.price / 100 }}</text>
@@ -173,12 +173,12 @@
         return
       },
       // 跳转登录页
-      tologin() {
-        this.$api.tologin()
+      toLogin() {
+        this.$api.toLogin()
       },
       // 跳转商品页
-      togoods(item) {
-        this.$api.togoods({
+      toGood(item) {
+        this.$api.toGood({
           id: item.goods_id,
         })
       },

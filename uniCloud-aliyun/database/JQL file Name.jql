@@ -9,6 +9,19 @@
 // 详细JQL语法，请参考 https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=jsquery
 
 // 下面示例查询uni-id-users表的所有数据
+const dbCmd = db.command
+db.collection('uni-id-users').update({
+  wx_openid: {
+    'app-plus': dbCmd.rename('wx_openid.app'), // app端微信openid
+    'mp-weixin': dbCmd.rename('wx_openid.mp'), // 小程序端微信openid
+    'h5-weixin': dbCmd.rename('wx_openid.h5'), // 微信公众号端微信openid
+    'h5-web': dbCmd.rename('wx_openid.web') // web端微信openid
+  },
+  qq_openid: {
+    'app-plus': dbCmd.rename('qq_openid.app'), // app端QQ openid
+    'mp-qq': dbCmd.rename('qq_openid.mp') // 小程序端QQ openid
+  }
+})
 db.collection("usemall-goods-category").where(
   dbCmd.or({
     _id: id,
@@ -22,3 +35,28 @@ db.collection("usemall-app-category").update({
 })
 
 db.collection("usemall-app-category").get()
+
+db.collection("usemall-goods").where({
+  cid: '628cb47fd3209100019a55c4'
+}).remove()
+
+db.collection("uni-id-users").remove()
+
+'use strict';
+const db = uniCloud.database()
+const dbCmd = db.command
+exports.main = async (event, context) => {
+  await db.collection('uni-id-users').update({
+    wx_openid: {
+      'app-plus': dbCmd.rename('wx_openid.app'), // app端微信openid
+      'mp-weixin': dbCmd.rename('wx_openid.mp'), // 小程序端微信openid
+      'h5-weixin': dbCmd.rename('wx_openid.h5'), // 微信公众号端微信openid
+      'h5-web': dbCmd.rename('wx_openid.web') // web端微信openid
+    },
+    qq_openid: {
+      'app-plus': dbCmd.rename('qq_openid.app'), // app端QQ openid
+      'mp-qq': dbCmd.rename('qq_openid.mp') // 小程序端QQ openid
+    }
+  })
+  return {}
+};

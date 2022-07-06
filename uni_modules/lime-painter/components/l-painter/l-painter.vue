@@ -26,6 +26,7 @@
 	//  #ifndef APP-NVUE
 	import { compareVersion } from './utils';
 	import Painter from './painter'
+	// import Painter from '@lime/'
 	const nvue = {}
 	//  #endif
 	//  #ifdef APP-NVUE
@@ -80,7 +81,7 @@
 				return this.board && Object.keys(this.board).length
 			},
 			elements() {
-				return JSON.parse(JSON.stringify(this.hasBoard ? this.board : this.el))
+				return this.hasBoard ? this.board : JSON.parse(JSON.stringify(this.el))
 			}
 		},
 		watch: {
@@ -123,7 +124,7 @@
 		},
 		methods: {
 			async watchRender(val, old) {
-				if (!val || !val.views || (!this.firstRender ? !val.views.length : !this.firstRender) || !Object.keys(val).length || val == old) return;
+				if (!val || !val.views || (!this.firstRender ? !val.views.length : !this.firstRender) || !Object.keys(val).length || JSON.stringify(val) == JSON.stringify(old)) return;
 				this.firstRender = 1
 				clearTimeout(this.rendertimer)
 				this.rendertimer = setTimeout(() => {
@@ -221,6 +222,7 @@
 						height: boardHeight,
 						pixelRatio: this.dpr,
 						useCORS: this.useCORS,
+						createImage: getImageInfo.bind(this),
 						listen: {
 							onProgress: (v) => {
 								this.progress = v
@@ -231,10 +233,7 @@
 							}
 						}
 					}
-					if(!use2dCanvas) {
-						param.createImage = getImageInfo
-					}
-					this.painter = new Painter(param, this)
+					this.painter = new Painter(param)
 				} 
 				
 				// vue3 赋值给data会引起图片无法绘制 
@@ -242,9 +241,8 @@
 				this.boundary.height = this.canvasHeight = height
 				this.boundary.width = this.canvasWidth = width
 				await sleep(this.sleep);
-				if(!use2dCanvas) {
-					this.painter.init(this.ctx)
-				}
+				// 可能会因为尺寸改变影响绘制上下文
+				this.painter.setContext(this.ctx)
 				await this.painter.render()
 				await new Promise(resolve => this.$nextTick(resolve));
 				if (!use2dCanvas) {

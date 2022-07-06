@@ -224,7 +224,7 @@
 
     <!-- 07. 操作区 -->
     <view class="oper-area pos-f dflex-b w-full padding-lr-sm">
-      <view class="btn-area dflex dflex-flow-c" @click="tohome">
+      <view class="btn-area dflex dflex-flow-c" @click="toHome">
         <text class="iconfont iconshouye-1"></text>
         <text>首页</text>
       </view>
@@ -559,8 +559,8 @@ export default {
       })
     },
     // 首页
-    tohome() {
-      this.$api.tohome()
+    toHome() {
+      this.$api.toHome()
     },
     // 收藏
     tofavorite() {
@@ -616,7 +616,7 @@ export default {
           title: '授权登录',
           success: function(res) {
             if (res.confirm) {
-              _this.$api.tologin()
+              _this.$api.toLogin()
             }
           },
         })

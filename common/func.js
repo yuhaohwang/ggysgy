@@ -4,7 +4,7 @@ import $api from './common.js'
 let func = {}
 
 func = new Proxy(func, {
-  get: function (target, key) {
+  get: function(target, key) {
     return new FuncContext(key)
   },
 })
@@ -28,7 +28,7 @@ FuncContext.prototype = {
  * action controller 函数路径
  * data controller 数据参数
  * */
-FuncContext.prototype.call = function (action, data) {
+FuncContext.prototype.call = function(action, data) {
   uni.showNavigationBarLoading()
   return uniCloud
     .callFunction({

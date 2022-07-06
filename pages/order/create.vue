@@ -318,7 +318,7 @@
         this.$func.usemall.call('order/create', obj).then(res => {
           if (res.code === 200) {
             // 跳转支付页
-            _this.$api.topay({
+            _this.$api.toPay({
               order_id: res.datas.order_id,
               money: res.datas.money,
               type: 'redirect',

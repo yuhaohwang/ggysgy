@@ -12,33 +12,34 @@
 | √   | √          | √            | 未测       | √          | √         | √   |
 
 ## 安装
-在市场导入[海报画板](https://ext.dcloud.net.cn/plugin?id=2389)uni_modules版本的即可，无需`import`
+在市场导入**[海报画板](https://ext.dcloud.net.cn/plugin?id=2389)uni_modules**版本的即可，无需`import`
 
 ## 代码演示
 
 ### 基本用法
 
 - 插件提供 JSON 及 XML 的方式绘制海报
-- 参考了 css 块状流布局模拟 css schema 方式。
-- 使用JSON的方式时，请使用驼峰key
+- 参考 css 块状流布局模拟 css schema。
 
 
 #### 方式一 XML
 
 - 提供`l-painter-view`、`l-painter-text`、`l-painter-image`、`l-painter-qrcode`四种类型组件
 - 通过 `css` 属性绘制样式，与 style 使用方式保持一致。
-
 ```html
 <l-painter>
-  <l-painter-view
-    css="background: #07c160; height: 120rpx; width: 120rpx; display: inline-block"
-  ></l-painter-view>
-  <l-painter-view
-    css="background: #1989fa; height: 120rpx; width: 120rpx; border-top-right-radius: 60rpx; border-bottom-left-radius: 60rpx; display: inline-block; margin: 0 30rpx;"
-  ></l-painter-view>
-  <l-painter-view
-    css="background: #ff9d00; height: 120rpx; width: 120rpx; border-radius: 50%; display: inline-block"
-  ></l-painter-view>
+	//如果使用XML出现顺序错乱，可使用`template` 等所有变量完成再显示
+	<template v-if="show">
+		<l-painter-view
+			css="background: #07c160; height: 120rpx; width: 120rpx; display: inline-block"
+		></l-painter-view>
+		<l-painter-view
+			css="background: #1989fa; height: 120rpx; width: 120rpx; border-top-right-radius: 60rpx; border-bottom-left-radius: 60rpx; display: inline-block; margin: 0 30rpx;"
+		></l-painter-view>
+		<l-painter-view
+			css="background: #ff9d00; height: 120rpx; width: 120rpx; border-radius: 50%; display: inline-block"
+		></l-painter-view>
+	<template>
 </l-painter>
 ```
 

@@ -328,7 +328,19 @@ export function getImageInfo(path, useCORS) {
 					// #ifdef H5
 					image.path = image.path.replace(/^\./, window.location.origin)
 					// #endif
-					if (isDev) {
+					
+					if(this.canvas.createImage) {
+						const img = this.canvas.createImage()
+						img.src = image.path
+						img.onload = function() {
+							image.path = img
+							cache[path] = image
+							resolve(cache[path])
+						}
+						img.onerror = function(err) {
+							reject({err,path})
+						}
+					} else if (isDev) {
 						resolve(image)
 					} else {
 						cache[path] = image
@@ -336,10 +348,8 @@ export function getImageInfo(path, useCORS) {
 					}
 				},
 				fail(err) {
-					reject({
-						err,
-						path
-					})
+					console.error({err, path})
+					reject({err,path})
 				}
 			})
 		}

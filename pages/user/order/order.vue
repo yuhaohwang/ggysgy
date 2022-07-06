@@ -325,9 +325,9 @@
           title: '授权登录',
           success: function (res) {
             if (res.confirm) {
-              _this.$api.tologin()
+              _this.$api.toLogin()
             } else if (res.cancel) {
-              _this.$api.tohome()
+              _this.$api.toHome()
             }
           },
         })
@@ -469,7 +469,7 @@
           return
         }
 
-        this.$api.topay({
+        this.$api.toPay({
           order_id: order.order_id,
           money: order.order_actural_paid,
         })

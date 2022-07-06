@@ -85,10 +85,10 @@ export default {
       })
     },
     hot() {
-      this.$api.togoodslist({ hot: 1 })
+      this.$api.toGoodList({ hot: 1 })
     },
     to_detail(options) {
-      this.$api.togoods({ id: options._id })
+      this.$api.toGood({ id: options._id })
     },
   },
 }

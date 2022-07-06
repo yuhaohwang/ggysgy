@@ -1,22 +1,35 @@
 <template>
-  <view class="container"><use-list-title title="手机号" iconfont=" " tip="13192727680" @goto="to"></use-list-title></view>
+  <view class="container">
+    <use-list-title
+      title="手机号"
+      iconfont=" "
+      :tip="member.mobile ? member.mobile : ''"
+      @goto="toUrl('/pages/uni-id-pages/userinfo/bind-mobile/bind-mobile')"
+    ></use-list-title>
+    <use-list-title title="修改密码" iconfont=" " @goto="toUrl('/pages/uni-id-pages/userinfo/change_pwd/change_pwd')"></use-list-title>
+  </view>
 </template>
 
 <script>
+const db = uniCloud.database()
+const usersTable = db.collection('uni-id-users')
+const uniIdCo = uniCloud.importObject('uni-id-co')
 import { mapState, mapMutations } from 'vuex'
 const _about = 'usemall-app-about'
 export default {
+  computed: {
+    ...mapState(['member']),
+  },
   data() {
     return {}
   },
   onLoad(options) {},
+  onUnload() {},
   onShow() {},
   methods: {
-    // 个人资料
-    to() {
-      uni.navigateTo({
-        url: '/pages/user/setting/personal',
-      })
+    toUrl() {
+      let arr = [].concat.apply([], arguments)
+      this.$api.toUrl(...arr)
     },
   },
 }

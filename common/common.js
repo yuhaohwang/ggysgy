@@ -1,6 +1,7 @@
 'use strict'
 
-import $config from './config.js'
+import $config from '@/common/config.js'
+import $store from '@/common/store.js'
 
 class Common {
   constructor(arg) {}
@@ -76,7 +77,8 @@ class Common {
   /**
    * @description 消息提示 toast
    */
-  msg(title, duration = 1500, mask = false, icon = 'none') {
+  async msg(title, autoBack = false, duration = 1500, mask = false, icon = 'none') {
+
     if (!title) return
 
     uni.showToast({
@@ -85,6 +87,15 @@ class Common {
       mask,
       icon,
     })
+
+    await new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        resolve("成功!"); //代码正常执行！
+      }, duration);
+    })
+
+    if (autoBack) this.toBack()
+
   }
 
   /**
@@ -270,6 +281,26 @@ class Common {
     })
   }
 
+  /**
+   * @description 获取用户信息
+   * */
+  getUserInfo(e) {
+    const db = uniCloud.database()
+    const usersTable = db.collection('uni-id-users')
+    usersTable
+      .where("'_id' == $cloudEnv_uid")
+      .field('nickname,mobile,avatar_file')
+      .get()
+      .then(res => {
+        if (res.result.data.length) {
+          $store.commit('putMember', res.result.data[0])
+        }
+      })
+      .catch(e => {
+        console.log(e.message, e.errCode)
+      })
+  }
+
   dom(a, b) {
     if (arguments.length === 1 && typeof arguments[0] == 'string') {
       if (document.querySelector) {
@@ -321,7 +352,7 @@ class Common {
       return
     }
 
-    this.tohome()
+    this.toHome()
   }
 
   /**
@@ -350,18 +381,53 @@ class Common {
   }
 
   /**
+   * @description 跳转页面
+   */
+  toUrl(url, type = 0) {
+    switch (type) {
+      case 0:
+        uni.navigateTo({
+          url,
+        })
+        break
+      case 1:
+        uni.switchTab({
+          url,
+        })
+        break
+      default:
+        uni.navigateTo({
+          url: `/pages/content/web?url=${url}`,
+        })
+        break
+    }
+  }
+
+  /**
    * @description 跳转登录页
    */
-  tologin() {
+  toLogin() {
     uni.navigateTo({
       url: $config.route.login,
     })
   }
 
   /**
+   * @description 根据错误码返回上一页或者回到首页
+   */
+  toBack(errCode = 0) {
+    let pages = getCurrentPages()
+    switch (errCode) {
+      case 0:
+        pages.length ? uni.navigateBack() : this.toHome()
+        break
+    }
+  }
+
+  /**
    * @description 跳转首页
    */
-  tohome() {
+  toHome() {
     uni.switchTab({
       url: $config.route.home,
     })
@@ -370,7 +436,7 @@ class Common {
   /**
    * @description 跳转订单页
    */
-  toorder() {
+  toOrder() {
     uni.redirectTo({
       url: $config.route.order,
     })
@@ -379,7 +445,7 @@ class Common {
   /**
    * @description 跳转支付页
    */
-  topay(params) {
+  toPay(params) {
     params.money = params.money || 0
     params.type = params.type || 'navigate'
 
@@ -398,7 +464,7 @@ class Common {
   /**
    * @description 跳转搜索页
    */
-  tosearch() {
+  toSearch() {
     uni.reLaunch({
       url: $config.route.search,
     })
@@ -407,7 +473,7 @@ class Common {
   /**
    * @description 跳转产品详情页
    */
-  togoods(params) {
+  toGood(params) {
     uni.navigateTo({
       url: $config.route.goods + this.get_params(params),
     })
@@ -416,9 +482,9 @@ class Common {
   /**
    * @description 跳转产品列表页
    */
-  togoodslist(params) {
+  toGoodList(params) {
     uni.navigateTo({
-      url: $config.route.goodslist + this.get_params(params),
+      url: $config.route.goodList + this.get_params(params),
     })
   }
 
@@ -432,9 +498,26 @@ class Common {
   }
 
   /**
+   * @description 防抖函数
+   */
+  debounce(fn, delay) {
+    var timer // 维护一个 timer
+    return function() {
+      var _this = this // 取debounce执行作用域的this
+      var args = arguments
+      if (timer) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(function() {
+        fn.apply(_this, args) // 用apply指向调用debounce的对象，相当于_this.fn(args);
+      }, delay)
+    }
+  }
+
+  /**
    * @description 节流函数
    */
-  throttled(fn, delay) {
+  throttle(func, delay) {
     let timer = null
     let starttime = Date.now()
     return function() {
@@ -444,10 +527,10 @@ class Common {
       let args = arguments
       clearTimeout(timer)
       if (remaining <= 0) {
-        fn.apply(context, args)
+        func.apply(context, args)
         starttime = Date.now()
       } else {
-        timer = setTimeout(fn, remaining);
+        timer = setTimeout(func, remaining)
       }
     }
   }

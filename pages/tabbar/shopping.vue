@@ -39,7 +39,7 @@
             <view v-show="!sdata.empty" class="x-c-s x-2 padding-xs border-radius">
               <view class="y-s-c waterfall_left">
                 <block v-for="(l_item, l_index) in sdata.goodsLeftList" :key="l_index">
-                  <view v-if="l_item" class="padding-xs w-full" @click="togoods(l_item)">
+                  <view v-if="l_item" class="padding-xs w-full" @click="toGood(l_item)">
                     <view class="bg-main border-radius">
                       <image
                         :src="l_item.img"
@@ -72,7 +72,7 @@
 
               <view class="y-s-c waterfall_right">
                 <block v-for="(r_item, r_index) in sdata.goodsRightList" :key="r_index">
-                  <view v-if="r_item" class="padding-xs w-full" @click="togoods(r_item)">
+                  <view v-if="r_item" class="padding-xs w-full" @click="toGood(r_item)">
                     <view class="bg-main border-radius">
                       <image
                         :src="r_item.img"
@@ -147,6 +147,8 @@ const throttle = (func, delay) => {
     }
   }
 }
+
+import api from '@/common/common.js'
 
 const _goodscategory = 'usemall-goods-category'
 const _goods = 'usemall-goods'
@@ -370,7 +372,7 @@ export default {
       })
     },
 
-    toTopShow: debounce(function(e) {
+    toTopShow: api.debounce(function(e) {
       if (typeof e != 'undefined') {
         const top = e.detail.scrollTop
         const cidx = this.current
@@ -436,15 +438,15 @@ export default {
       })
     },
     // 跳转商品详情
-    togoods(item) {
+    toGood(item) {
       console.log(item._id)
-      this.$api.togoods({
+      this.$api.toGood({
         id: item._id,
       })
     },
     // 跳转商品列表
-    togoodslist(item) {
-      this.$api.togoodslist({
+    toGoodList(item) {
+      this.$api.toGoodList({
         cid: item._id,
       })
     },
@@ -465,7 +467,7 @@ export default {
         })
       } else {
         if (item.id)
-          this.$api.togoods({
+          this.$api.toGood({
             id: item._id,
           })
       }

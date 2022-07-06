@@ -46,7 +46,7 @@
     <view class="padding-sm limit-area bg-main">
       <scroll-view scroll-x>
         <view class="dflex padding-bottom">
-          <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index" @click="togoods(item)">
+          <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index" @click="toGood(item)">
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
             <text class="title clamp padding-bottom-xs">{{ item.name }}</text>
             <text class="price">{{ item.price ? item.price / 100 : '面议' }}</text>
@@ -216,22 +216,22 @@ export default {
         })
       } else {
         if (item.id)
-          this.$api.togoods({
+          this.$api.toGood({
             id: item._id,
           })
       }
     },
     // 限时精选 -> 商品详情
-    togoods(item) {
+    toGood(item) {
       // 跳转商品详情
-      this.$api.togoods({
+      this.$api.toGood({
         id: item._id,
       })
     },
     // 限时精选
     limit() {
       // 跳转商品列表 - 限时精选类目
-      this.$api.togoodslist({
+      this.$api.toGoodList({
         limited: 1,
       })
     },

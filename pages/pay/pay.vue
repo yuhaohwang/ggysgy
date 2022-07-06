@@ -335,14 +335,14 @@
                       uni.checkSession({
                         success() {
                           // 调用支付
-                          _this.topayment(pay_datas, res.datas.order_id)
+                          _this.toPayment(pay_datas, res.datas.order_id)
                         },
                         fail() {
                           // 当前 session 无效，调用 uni.login 获取数据
                           uni.login({
                             success() {
                               // 调用支付
-                              _this.topayment(pay_datas, res.datas.order_id)
+                              _this.toPayment(pay_datas, res.datas.order_id)
                             },
                             fail() {},
                           })
@@ -350,7 +350,7 @@
                       })
                     } else {
                       // 调用支付
-                      _this.topayment(pay_datas, res.datas.order_id)
+                      _this.toPayment(pay_datas, res.datas.order_id)
                     }
                   } else {
                     uni.setStorage({
@@ -360,7 +360,7 @@
                         console.log(res)
                       },
                       complete() {
-                        _this.$api.toorder()
+                        _this.$api.toOrder()
                       },
                     })
                   }
@@ -384,7 +384,7 @@
           },
         })
       },
-      topayment(pay_datas, order_id) {
+      toPayment(pay_datas, order_id) {
         let _this = this
 
         uni.requestPayment({
@@ -431,7 +431,7 @@
                 console.log(res)
               },
               complete() {
-                _this.$api.toorder()
+                _this.$api.toOrder()
               },
             })
           },
@@ -525,7 +525,7 @@
                   console.log(res)
                 },
                 complete() {
-                  _this.$api.toorder()
+                  _this.$api.toOrder()
                 },
               })
             }

@@ -32,7 +32,7 @@
           maxlength="20"
           :value="password"
           @input="inputChange"
-          @confirm="tologin"
+          @confirm="toLogin"
           placeholder="请输入密码"
         />
         <!-- #endif -->
@@ -46,7 +46,7 @@
           maxlength="20"
           :value="password"
           @input="inputChange"
-          @confirm="tologin"
+          @confirm="toLogin"
           placeholder="请输入密码"
         />
         <!-- #endif -->
@@ -56,12 +56,12 @@
         <view class="padding-tb-sm ft-base" @click="toregister">立即注册</view>
       </view>
       <view class="w-full margin-top-xl">
-        <view class="dflex-b border-radius-lg"><view class="tac padding-tb-sm flex1 bg-base fs" @click="tologin">登录</view></view>
+        <view class="dflex-b border-radius-lg"><view class="tac padding-tb-sm flex1 bg-base fs" @click="toLogin">登录</view></view>
       </view>
     </view>
     <view v-if="ismp" class="dflex-c margin-top-big">
       <!-- #ifdef MP-WEIXIN -->
-      <button class="dflex-c dflex-flow-c no-border btn" lang="zh_CN" @click="mpWeixinTologin">
+      <button class="dflex-c dflex-flow-c no-border btn" lang="zh_CN" @click="mpWeixintoLogin">
         <view class="iconfont padding-lr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
         <view class="dflex-c fs-sm ft-dark">{{ platform_name }} · 授权登录</view>
       </button>
@@ -240,7 +240,7 @@
         })
       },
 
-      tologin() {
+      toLogin() {
         let _this = this
         if (_this.is_login) return
 
@@ -275,7 +275,7 @@
                   return
                 }
                 // 首页
-                _this.$api.tohome()
+                _this.$api.toHome()
               })
               return
             }
@@ -353,7 +353,7 @@
                         return
                       }
                       // 首页
-                      _this.$api.tohome()
+                      _this.$api.toHome()
                     })
                     return
                   }
@@ -401,7 +401,7 @@
         uni.getUserProfile()
       },
       // #ifdef MP-WEIXIN
-      mpWeixinTologin() {
+      mpWeixintoLogin() {
         let _this = this
         uni.login({
           provider: 'weixin',
@@ -425,7 +425,7 @@
                         return
                       }
                       // 首页
-                      _this.$api.tohome()
+                      _this.$api.toHome()
                     })
                     return
                   }

@@ -1,20 +1,17 @@
 <template>
   <view class="container">
-    <use-list-title title="个人资料" iconfont=" " @goto="toProfile"></use-list-title>
-    <use-list-title title="账号设置" iconfont=" " @goto="toAccount"></use-list-title>
-    <use-list-title v-if="aboutData && aboutData._id" title="关于益盟" iconfont=" " @goto="toabout"></use-list-title>
+    <use-list-title title="个人资料" iconfont=" " @goto="toUrl('/pages/user/setting/personal')"></use-list-title>
+    <use-list-title title="账号设置" iconfont=" " @goto="toUrl('/pages/user/setting/account')"></use-list-title>
+    <use-list-title title="关于益盟" iconfont=" " @goto="toabout"></use-list-title>
 
-    <!-- #ifdef MP-ALIPAY -->
-    <view class="use-item padding-left">
-      <button class="no-border wh-full tal" open-type="feedback" @click="tofeedback">意见反馈</button>
+    <!-- #ifdef MP-WEIXIN -->
+    <view class="use-item">
+      <button class="wh-full padding-lr no-border tal" open-type="feedback" @click="tofeedback">意见反馈</button>
     </view>
     <!-- #endif -->
 
-    <!-- #ifndef MP-ALIPAY -->
-    <view class="use-item"><button class="no-border wh-full tal" open-type="feedback" @click="tofeedback">意见反馈</button></view>
-    <!-- #endif -->
-
     <use-list-title title="艺心益盟" iconfont=" " :tip="version"></use-list-title>
+    <use-list-title title="注销账号" iconfont=" "></use-list-title>
     <view class="use-item margin-tb-sm log-out-btn tac" @click="tologout"><text>退出登录</text></view>
   </view>
 </template>
@@ -46,17 +43,9 @@ export default {
   },
   methods: {
     ...mapMutations(['logout']),
-    // 个人资料
-    toProfile() {
-      uni.navigateTo({
-        url: '/pages/user/setting/personal',
-      })
-    },
-    // 跳转账号
-    toAccount(url) {
-      uni.navigateTo({
-        url: '/pages/user/setting/account',
-      })
+    toUrl() {
+      let arr = [].concat.apply([], arguments)
+      this.$api.toUrl(...arr)
     },
     // 关于用云
     toabout() {
@@ -79,10 +68,6 @@ export default {
     tofeedback() {
       this.$api.msg('打开右上角-反馈功能')
     },
-    // 切换账号
-    tologin() {
-      this.$api.tologin()
-    },
     // 退出登录
     tologout() {
       uni.showModal({
@@ -93,7 +78,7 @@ export default {
             this.logout()
 
             this.$api.timerout(() => {
-              this.$api.tohome()
+              this.$api.toHome()
             }, 200)
           }
         },
@@ -118,7 +103,7 @@ page {
   }
 
   button {
-    font-size: 15px;
+    font-size: 28rpx;
     line-height: 100rpx;
     background: #fff;
   }

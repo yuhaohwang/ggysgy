@@ -1,3 +1,7 @@
+## 1.9.3.5（2022-06-29）
+- feat: justifyContent 增加 `space-around`、`space-between`
+- feat: canvas 2d 也使用`getImageInfo`
+- fix: 修复 `text`的 `text-decoration`错位
 ## 1.9.3.4（2022-06-20）
 - fix: 修复 因创建节点速度问题导致顺序出错。 
 - fix: 修复 微信小程序 PC 无法显示本地图片 

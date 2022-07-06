@@ -175,7 +175,7 @@
             this.$api.msg(res.msg)
           })
       },
-      tologin() {
+      toLogin() {
         // 登录页
         uni.navigateBack({})
       },
@@ -241,7 +241,7 @@
                       return
                     }
                     // 登录页
-                    this.$api.tologin()
+                    this.$api.toLogin()
                     return
                   })
 

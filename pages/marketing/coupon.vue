@@ -3,7 +3,7 @@
     <!-- 空白页 -->
     <use-empty v-if="empty" e-style="round" tip="无优惠券"></use-empty>
 
-    <view v-else class="padding-lr" v-for="(item, index) in couponDatas" :key="index" @click="togoods(item)">
+    <view v-else class="padding-lr" v-for="(item, index) in couponDatas" :key="index" @click="toGood(item)">
       <view class="coupon-area border-radius margin-top-sm bg-main">
         <view class="dflex-b">
           <view class="left pos-a h-full dflex-c dflex-flow-c">
@@ -109,9 +109,9 @@
           },
         })
       },
-      togoods(item) {
+      toGood(item) {
         return
-        this.$api.togoods({
+        this.$api.toGood({
           id: item.goods_id,
         })
       },

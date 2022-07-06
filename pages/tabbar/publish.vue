@@ -1,61 +1,74 @@
 <template>
-  <view class="padding-lr" v-if="islogin">
-    <u-toast ref="uToast"></u-toast>
-    <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
-    <u--form labelPosition="top" labelWidth="auto" :model="publishData" :rules="rules" ref="form1">
-      <u-form-item required label="作品名称" prop="name" borderBottom>
-        <u-input v-model="publishData.name" border="none"></u-input>
-      </u-form-item>
-      <u-form-item label="作品简介" prop="content" borderBottom>
-        <u-input v-model="publishData.content" border="none"></u-input>
-      </u-form-item>
-      <u-form-item required label="图片上传" prop="imgs" borderBottom>
-        <!-- <use-upload class="w-full" v-model="publishData.imgs" @upload="uploadImgs" :limit="9"></use-upload> -->
-        <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" />
-      </u-form-item>
-      <u-form-item required label="作品分类" prop="fdata" borderBottom>
-        <u-radio-group class="x-s-c-w x-3" v-model="publishData.fdata" @change="fdataChange">
-          <u-radio class="padding-xs" v-for="(item, index) in fdatas" :key="index" :label="item.name" :name="item._id"></u-radio>
-        </u-radio-group>
-      </u-form-item>
-      <u-form-item required label="子分类" prop="sdata" borderBottom>
-        <u-radio-group class="x-s-c-w x-4" @change="sdataChange">
-          <block v-for="(item, index) in sdatas" :key="index">
-            <u-radio class="padding-xs" v-if="item.pid == publishData.fdata" :label="item.name" :name="item._id"></u-radio>
-          </block>
-        </u-radio-group>
-      </u-form-item>
-      <u-form-item required label="规格" prop="authType">
-        <view class="y-c-c text-center">
-          <view class="x-a-c x-3 w-full">
-            <view></view>
-            <view><text>价格</text></view>
-            <view><text>库存</text></view>
-          </view>
+  <view class="h-full bg-dark">
+    <!-- 00. 未授权登录 -->
+    <use-empty
+      v-if="!islogin"
+      e-style="round"
+      e-type="unauthorized"
+      tip="当前未授权"
+      btn-tip="去登录"
+      :auto="false"
+      @goto="toLogin"
+    ></use-empty>
 
-          <view class="x-a-c x-3 w-full" v-for="(item, index) in publishData.spec" :key="index">
-            <view>
-              <text>{{ item }}</text>
+    <scroll-view scroll-y class="h-full padding-lr bg-main" v-else>
+      <u-toast ref="uToast"></u-toast>
+      <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
+      <u--form labelPosition="top" labelWidth="auto" :model="publishData" :rules="rules" ref="form1">
+        <u-form-item required label="作品名称" prop="name" borderBottom>
+          <u-input v-model="publishData.name" border="none"></u-input>
+        </u-form-item>
+        <u-form-item label="作品简介" prop="content" borderBottom>
+          <u-input v-model="publishData.content" border="none"></u-input>
+        </u-form-item>
+        <u-form-item required label="图片上传" prop="imgs" borderBottom>
+          <!-- <use-upload class="w-full" v-model="publishData.imgs" @upload="uploadImgs" :limit="9"></use-upload> -->
+          <uni-file-picker v-model="publishData.imgs" fileMediatype="image" mode="grid" :image-styles="imageStyle" @delete="imgDelete" />
+        </u-form-item>
+        <u-form-item required label="作品分类" prop="fdata" borderBottom>
+          <u-radio-group class="x-s-c-w x-3" v-model="publishData.fdata" @change="fdataChange">
+            <u-radio class="padding-xs" v-for="(item, index) in fdatas" :key="index" :label="item.name" :name="item._id"></u-radio>
+          </u-radio-group>
+        </u-form-item>
+        <u-form-item required label="子分类" prop="sdata" borderBottom>
+          <u-radio-group class="x-s-c-w x-4" @change="sdataChange">
+            <block v-for="(item, index) in sdatas" :key="index">
+              <u-radio class="padding-xs" v-if="item.pid == publishData.fdata" :label="item.name" :name="item._id"></u-radio>
+            </block>
+          </u-radio-group>
+        </u-form-item>
+        <u-form-item required label="规格" prop="authType">
+          <view class="y-c-c text-center">
+            <view class="x-a-c x-3 w-full">
+              <view></view>
+              <view><text>价格</text></view>
+              <view><text>库存</text></view>
             </view>
-            <view>
-              <u-input v-model="publishData.skus[index].price" type="digit" inputAlign="right">
-                <u--text text="￥" slot="prefix" type="tips"></u--text>
-              </u-input>
+
+            <view class="x-a-c x-3 w-full" v-for="(item, index) in publishData.spec" :key="index">
+              <view>
+                <text>{{ item }}</text>
+              </view>
+              <view>
+                <u-input v-model="publishData.skus[index].price" type="digit" inputAlign="right">
+                  <u--text text="￥" slot="prefix" type="tips"></u--text>
+                </u-input>
+              </view>
+              <view><u-input v-model="publishData.skus[index].stock_num" type="number" inputAlign="right"></u-input></view>
             </view>
-            <view><u-input v-model="publishData.skus[index].stock_num" type="number" inputAlign="right"></u-input></view>
           </view>
+        </u-form-item>
+      </u--form>
+
+      <u-checkbox-group @change="agreementChecked = !agreementChecked">
+        <u-checkbox></u-checkbox>
+        <view class="">
+          <text>我已阅读</text>
+          <text style="color: #3c9cff;" @click="toUrl('/pages/service/agreement', 0)">《全国艺术院校公益助学平台发布作品协议》</text>
         </view>
-      </u-form-item>
-    </u--form>
-
-    <u-checkbox-group @change="agreementChecked = !agreementChecked">
-      <u-checkbox></u-checkbox>
-      <view class="">
-        <text>我已阅读</text>
-        <text style="color: #3c9cff;" @click="toUrl('/pages/service/agreement', 0)">《全国艺术院校公益助学平台发布作品协议》</text>
-      </view>
-    </u-checkbox-group>
-    <view class="padding"><u-button type="primary" text="提交" @click="submitData" :disabled="!agreementChecked"></u-button></view>
+      </u-checkbox-group>
+      <view class="padding"><u-button type="primary" text="提交" @click="submitData" :disabled="!agreementChecked"></u-button></view>
+    </scroll-view>
   </view>
 </template>
 
@@ -135,11 +148,8 @@ export default {
     // #endif
   },
   onShow() {
-    if (!this.islogin) {
-      this.tologin()
-      return
-    }
-    if (!this.isInit) {
+    console.log(uniCloud.getCurrentUserInfo())
+    if (this.islogin && !this.isInit) {
       this.init(this.affirm)
       this.$nextTick(function() {
         this.loadData()
@@ -158,9 +168,12 @@ export default {
     this.loadData()
   },
   methods: {
+    toLogin() {
+      this.$api.toLogin()
+    },
     toUrl() {
       let arr = [].concat.apply([], arguments)
-      this.$toUrl(...arr)
+      this.$api.toUrl(...arr)
     },
     async loadData() {
       this.$refs.uToast.show({
@@ -349,10 +362,6 @@ export default {
         })
     },
 
-    // 跳转登录页
-    tologin() {
-      this.$api.tologin()
-    },
     fdataChange(e) {
       this.publishData.fdata = e
     },
@@ -364,6 +373,9 @@ export default {
 </script>
 
 <style lang="scss">
+page {
+  height: 100%;
+}
 .u-radio-group {
   display: flex;
   flex-direction: row;

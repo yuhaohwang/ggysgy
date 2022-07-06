@@ -110,17 +110,17 @@
       search(type, res) {
         switch (type) {
           case 'history':
-            this.$api.togoodslist({
+            this.$api.toGoodList({
               keyword: res.keyword,
             })
             break
           case 'hot':
-            this.$api.togoodslist({
+            this.$api.toGoodList({
               sid: res._id,
             })
             break
           default:
-            this.$api.togoodslist({
+            this.$api.toGoodList({
               keyword: this.keyword,
             })
             break

@@ -62,7 +62,8 @@
     {
       "path": "pages/goods/goods",
       "style": {
-        "navigationBarTitleText": "商品详情"
+        "navigationBarTitleText": "商品详情",
+        "needLogin": true
       }
     },
     {
@@ -300,22 +301,94 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    }, {
+    },
+    {
       "path": "pages/service/agreement",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
-    }, {
+    },
+    {
       "path": "pages/user/setting/account",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
     }
   ],
+  "subPackages": [{
+    "root": "pages/uni-id-pages",
+    "pages": [{
+        "path": "userinfo/deactivate/deactivate",
+        "style": {
+          "navigationBarTitleText": "注销账号"
+        }
+      },
+      {
+        "path": "userinfo/userinfo",
+        "style": {
+          "navigationBarTitleText": "个人资料"
+        }
+      },
+      {
+        "path": "userinfo/bind-mobile/bind-mobile",
+        "style": {
+          "navigationBarTitleText": "绑定手机号码"
+        }
+      },
+      {
+        "path": "userinfo/cropImage/cropImage",
+        "style": {
+          "navigationBarTitleText": ""
+        }
+      },
+      {
+        "path": "login/login-withoutpwd",
+        "style": {
+          "navigationBarTitleText": ""
+        }
+      },
+      {
+        "path": "login/login-withpwd",
+        "style": {
+          "navigationBarTitleText": ""
+        }
+      },
+      {
+        "path": "login/login-smscode",
+        "style": {
+          "navigationBarTitleText": "手机验证码登录"
+        }
+      },
+      {
+        "path": "register/register",
+        "style": {
+          "navigationBarTitleText": "注册"
+        }
+      },
+      {
+        "path": "retrieve/retrieve",
+        "style": {
+          "navigationBarTitleText": "重置密码"
+        }
+      },
+      {
+        "path": "common/webview/webview",
+        "style": {
+          "navigationBarTitleText": "",
+          "enablePullDownRefresh": false
+        }
+      },
+      {
+        "path": "userinfo/change_pwd/change_pwd",
+        "style": {
+          "navigationBarTitleText": "修改密码",
+          "enablePullDownRefresh": false
+        }
+      }
+    ]
+  }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "艺心益盟",
@@ -375,5 +448,10 @@
       "path": "",
       "query": ""
     }]
+  },
+  "uniIdRouter": {
+    "loginPage": "pages/uni-id-pages/login/login-smscode",
+    "needLogin": [],
+    "restoLogin": true
   }
 }

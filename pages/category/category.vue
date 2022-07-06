@@ -29,7 +29,7 @@
         <view v-if="mode == 1" class="">
           <view class="dflex-s dflex-wrap-w bg-main">
             <block v-for="item in sdatas" :key="item._id">
-              <view class="item padding-bottom-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="togoodslist(item)">
+              <view class="item padding-bottom-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="toGoodList(item)">
                 <image :lazy-load="true" :src="item.img || '/static/images/user/default.png'"></image>
                 <text class="tac clamp margin-top-sm">{{ item.name }}</text>
               </view>
@@ -43,7 +43,7 @@
           <use-empty v-if="empty" e-style="round" tip="无商品数据"></use-empty>
 
           <view v-else class="x-s-s-w x-2 padding-lr-xs">
-            <view class="y-s-c padding-xs" v-for="(item, index) in goodsDatas" :key="index" @click="togoods(item)">
+            <view class="y-s-c padding-xs" v-for="(item, index) in goodsDatas" :key="index" @click="toGood(item)">
               <view class="w-full border-radius-sm bg-main">
                 <view class="" style="height: 300rpx">
                   <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%"></image>
@@ -227,14 +227,14 @@ export default {
       this.loadGoodsDatas()
     },
     // 跳转商品详情
-    togoods(item) {
-      this.$api.togoods({
+    toGood(item) {
+      this.$api.toGood({
         id: item._id,
       })
     },
     // 跳转商品列表
-    togoodslist(item) {
-      this.$api.togoodslist({
+    toGoodList(item) {
+      this.$api.toGoodList({
         cid: item._id,
       })
     },

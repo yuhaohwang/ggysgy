@@ -26,7 +26,7 @@
     methods: {
       toOrder() {
         if (this.order_id) {
-          this.$api.toorder()
+          this.$api.toOrder()
           return
         }
       },

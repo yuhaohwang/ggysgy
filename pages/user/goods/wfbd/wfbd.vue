@@ -8,7 +8,7 @@
             <!-- <use-empty v-if="sdata.empty" e-style="round" tip="无商品数据"></use-empty> -->
             <!--            <block v-for="(item, index) in [1, 2, 3, 4]" :key="index"> -->
             <view class="padding-xs">
-              <view @click="togoods({ _id: '1651133440341913010' })"><user-goods></user-goods></view>
+              <view @click="toGood({ _id: '1651133440341913010' })"><user-goods></user-goods></view>
               <view class="x-b-c">
                 <view class="padding-xs"><u--text mode="text" text="更多" :size="12" color="#8D9299"></u--text></view>
                 <view class="x-c-c" style="white-space: nowrap">
@@ -53,9 +53,9 @@ export default {
   },
   methods: {
     // 商品详情
-    togoods(options) {
+    toGood(options) {
       console.log(options._id)
-      this.$api.togoods({
+      this.$api.toGood({
         id: options._id,
       })
     },

@@ -227,7 +227,7 @@
                 return
               }
               // 登录页
-              _this.$api.tologin()
+              _this.$api.toLogin()
               return
             })
 

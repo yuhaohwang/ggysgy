@@ -171,7 +171,7 @@ export default {
         })
       } else {
         if (item.id)
-          this.$api.togoods({
+          this.$api.toGood({
             id: item._id,
           })
       }

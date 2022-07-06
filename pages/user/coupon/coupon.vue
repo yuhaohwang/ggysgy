@@ -214,7 +214,7 @@
       // 去使用
       use(options) {
         if (options.state == '已领取')
-          this.$api.togoodslist({
+          this.$api.toGoodList({
             coupon_id: options.coupon_id,
           })
       },

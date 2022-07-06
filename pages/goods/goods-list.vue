@@ -9,7 +9,7 @@
       btn-tip="重新搜索"
       height="70vh"
       :auto="false"
-      @goto="tosearch"
+      @goto="toSearch"
     ></use-empty>
 
     <!-- 列表区 -->
@@ -34,7 +34,7 @@
             class="item bg-main border-radius-sm padding-bottom-sm"
             v-for="(item, index) in goodsDatas"
             :key="index"
-            @click="togoods(item)"
+            @click="toGood(item)"
           >
             <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
             <text class="title clamp padding-sm">{{ item.name }}</text>
@@ -233,16 +233,16 @@
         })
       },
       // 搜索页
-      tosearch() {
+      toSearch() {
         if (this.$api.pages().length > 1) {
           uni.navigateBack()
           return
         }
-        this.$api.tosearch()
+        this.$api.toSearch()
       },
       // 商品详情
-      togoods(options) {
-        this.$api.togoods({
+      toGood(options) {
+        this.$api.toGood({
           id: options._id,
         })
       },

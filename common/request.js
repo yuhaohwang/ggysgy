@@ -148,7 +148,7 @@ class Request {
     return this.request(options)
   }
 
-  _success = function (that, config, res, resolve, reject) {
+  _success = function(that, config, res, resolve, reject) {
     if (config.debug) {
       console.log('response success res: ', res)
     }
@@ -181,7 +181,7 @@ class Request {
     that._fail(that, config, res, resolve, reject)
   }
 
-  _fail = function (that, config, res, resolve, reject) {
+  _fail = function(that, config, res, resolve, reject) {
     if (config.debug) {
       console.error('response failure: ', res)
     }
@@ -197,7 +197,7 @@ class Request {
     config.fail ? config.fail(res) : reject(res)
   }
 
-  _prepare = function (that, config, obj = {}) {
+  _prepare = function(that, config, obj = {}) {
     obj.startTime = Date.now()
     if (config.loading) {
       if (config.loading === 'nav-bar') {
@@ -221,7 +221,7 @@ class Request {
     }
   }
 
-  _complete = function (that, config, res, obj = {}) {
+  _complete = function(that, config, res, obj = {}) {
     obj.endTime = Date.now()
     let diff = obj.endTime - obj.startTime
     if (config.debug) {
@@ -235,7 +235,7 @@ class Request {
         diff = 0
       }
 
-      let __timer = setTimeout(function () {
+      let __timer = setTimeout(function() {
         if (config.loading === 'nav-bar') {
           uni.hideNavigationBarLoading()
         } else {
@@ -247,7 +247,7 @@ class Request {
     }
   }
 
-  _set_req_config = function (config) {
+  _set_req_config = function(config) {
     for (let key in this.req_config) {
       if (config.hasOwnProperty(key)) {
         this.req_config[key] = config[key]

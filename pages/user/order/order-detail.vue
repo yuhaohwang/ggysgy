@@ -183,7 +183,7 @@
     <!-- 底部操作区 -->
     <view class="oper-area dflex-b padding-right padding-left-sm">
       <view class="dflex">
-        <view class="btn-area dflex dflex-flow-c" @click="tohome">
+        <view class="btn-area dflex dflex-flow-c" @click="toHome">
           <text class="iconfont iconshouye-1"></text>
           <text>首页</text>
         </view>
@@ -258,8 +258,8 @@
       this.loadData()
     },
     methods: {
-      tohome() {
-        this.$api.tohome()
+      toHome() {
+        this.$api.toHome()
       },
       async loadData() {
         let _this = this
@@ -299,7 +299,7 @@
           return
         }
 
-        this.$api.topay({
+        this.$api.toPay({
           order_id: this.order_data.order_id,
           money: this.order_data.order_actural_paid,
         })

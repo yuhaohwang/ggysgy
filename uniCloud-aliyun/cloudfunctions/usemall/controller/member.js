@@ -1,13 +1,25 @@
 'use strict'
 
 const uidObj = require('uni-id')
-const { Controller } = require('uni-cloud-router')
+const uniIdCo = uniCloud.importObject('uni-id-co')
+const {
+  Controller
+} = require('uni-cloud-router')
 
 module.exports = class MemberController extends Controller {
   // 注册
   async register() {
-    let response = { code: 1, msg: '账号注册失败', datas: {} }
-    const { username, password, code, user } = this.ctx.data
+    let response = {
+      code: 1,
+      msg: '账号注册失败',
+      datas: {}
+    }
+    const {
+      username,
+      password,
+      code,
+      user
+    } = this.ctx.data
 
     // 验证验证码有效性
     const vcRes = await this.validateSmsCode({
@@ -48,7 +60,9 @@ module.exports = class MemberController extends Controller {
 
       const vcid = vcRes.data[0]._id
       // 验证码已验证
-      await this.db.collection('opendb-verify-codes').doc(vcid).update({ state: 1 })
+      await this.db.collection('opendb-verify-codes').doc(vcid).update({
+        state: 1
+      })
 
       response.datas.user = res
       response.datas.member = await this.memberLogin(res, member)
@@ -73,13 +87,15 @@ module.exports = class MemberController extends Controller {
       msg: null,
     }
 
-    const { username, password } = this.ctx.data
+    const {
+      username,
+      password
+    } = this.ctx.data
 
     try {
       const res = await uidObj.login({
         username,
         password,
-        needPermission: true,
       })
       console.log(res)
 
@@ -114,7 +130,10 @@ module.exports = class MemberController extends Controller {
 
   // 验证码
   async sendSmsCode() {
-    const { mobile, type } = this.ctx.data
+    const {
+      mobile,
+      type
+    } = this.ctx.data
 
     // 如果验证码类型为 注册，验证手机账号是否已存在
     // 如果验证码类型为 忘记密码，验证手机账号是否存在
@@ -133,7 +152,10 @@ module.exports = class MemberController extends Controller {
           .get()
         // console.log('userRes', userRes);
         if (userRes && userRes.data.length === 1) {
-          return { code: 1, msg: '手机号已存在' }
+          return {
+            code: 1,
+            msg: '手机号已存在'
+          }
         }
         break
       case 'forgot-password': // 忘记密码
@@ -149,7 +171,10 @@ module.exports = class MemberController extends Controller {
           .get()
         // console.log('userRes', userRes);
         if (!(userRes && userRes.data.length === 1)) {
-          return { code: 1, msg: '手机号不存在' }
+          return {
+            code: 1,
+            msg: '手机号不存在'
+          }
         }
         break
       default:
@@ -261,9 +286,16 @@ module.exports = class MemberController extends Controller {
   }
   // 忘记密码
   async forgotPassword() {
-    let response = { code: 1, msg: '账号不存在' }
+    let response = {
+      code: 1,
+      msg: '账号不存在'
+    }
 
-    const { mobile, password, code } = this.ctx.data
+    const {
+      mobile,
+      password,
+      code
+    } = this.ctx.data
 
     // 验证验证码有效性
     const vcRes = await this.validateSmsCode({
@@ -297,7 +329,9 @@ module.exports = class MemberController extends Controller {
     if (response.datas.updated === 1) {
       const vcid = vcRes.data[0]._id
       // 验证码已验证
-      await this.db.collection('opendb-verify-codes').doc(vcid).update({ state: 1 })
+      await this.db.collection('opendb-verify-codes').doc(vcid).update({
+        state: 1
+      })
 
       response.code = 0
       response.msg = '密码修改成功'
@@ -385,7 +419,12 @@ module.exports = class MemberController extends Controller {
   async update() {
     const user = await uidObj.checkToken(this.ctx.event.uniIdToken)
     if (user && user.code == 0) {
-      const { nickname, gender, avatar, comment } = this.ctx.data
+      const {
+        nickname,
+        gender,
+        avatar,
+        comment
+      } = this.ctx.data
       await this.db.collection('uni-id-users').doc(user.uid).update(this.ctx.data)
       await this.db.collection('usemall-member').doc(user.uid).update({
         member_nickname: nickname,
@@ -404,7 +443,10 @@ module.exports = class MemberController extends Controller {
     const user = await uidObj.checkToken(this.ctx.event.uniIdToken)
     if (user && user.code == 0) {
       //
-      const { goods_id, state } = this.ctx.data
+      const {
+        goods_id,
+        state
+      } = this.ctx.data
 
       let obj_id = user.uid + goods_id
       return await this.db.collection('usemall-member-collect').doc(obj_id).set({
@@ -494,14 +536,12 @@ module.exports = class MemberController extends Controller {
 
     Object.assign(
       data,
-      res.code === 0
-        ? {
-            user_id: res.uid,
-            state: 1,
-          }
-        : {
-            state: 0,
-          }
+      res.code === 0 ? {
+        user_id: res.uid,
+        state: 1,
+      } : {
+        state: 0,
+      }
     )
 
     return this.db.collection('uni-id-log').add(data)
@@ -518,10 +558,13 @@ module.exports = class MemberController extends Controller {
     // 请求参数
     const req = this.ctx.data
 
-    let { page, rows, state } = req
+    let {
+      page,
+      rows,
+      state
+    } = req
 
-    response.datas = [
-      {
+    response.datas = [{
         state,
         type: '满减',
         name: '满100减9.9',
