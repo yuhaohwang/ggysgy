@@ -54,11 +54,17 @@
                       <view class="x-b-c padding-lr-sm margin-tb-sm">
                         <view class="x-c-c">
                           <image
-                            src="/static/images/user/default.png"
+                            :src="
+                              l_item.create_uid[0].avatar_file.url
+                                ? l_item.create_uid[0].avatar_file.url
+                                : '/static/images/user/default.png'
+                            "
                             class="border-radius-c headimg"
                             style="width: 50rpx; height: 50rpx"
                           ></image>
-                          <view class="ft-dark margin-left-xs fs-xxs">广东工业大学</view>
+                          <view class="ft-dark margin-left-xs fs-xxs">
+                            {{ l_item.create_uid[0].nickname ? l_item.create_uid[0].nickname : '艺心益盟' }}
+                          </view>
                         </view>
                         <view class="x-c-c">
                           <!--                          <view class="iconfont iconaixin"></view>
@@ -87,11 +93,17 @@
                       <view class="x-b-c padding-lr-sm margin-tb-sm">
                         <view class="x-c-c">
                           <image
-                            src="/static/images/user/default.png"
+                            :src="
+                              r_item.create_uid[0].avatar_file.url
+                                ? r_item.create_uid[0].avatar_file.url
+                                : '/static/images/user/default.png'
+                            "
                             class="border-radius-c headimg"
                             style="width: 50rpx; height: 50rpx"
                           ></image>
-                          <view class="ft-dark margin-left-xs fs-xxs">广东工业大学</view>
+                          <view class="ft-dark margin-left-xs fs-xxs">
+                            {{ r_item.create_uid[0].nickname ? r_item.create_uid[0].nickname : '艺心益盟' }}
+                          </view>
                         </view>
                         <view class="x-c-c">
                           <!--                          <view class="iconfont iconaixin"></view>
@@ -237,7 +249,7 @@ export default {
                 // 商品请求数据
                 item.reqdata = {
                   rows: 8,
-                  page: 1,
+                  page: 0,
                 }
                 item.scrollTop = 0
                 item.scrollTopTemp = 0
@@ -258,52 +270,39 @@ export default {
       const cidx = this.current
 
       // 防止重复加载
-      if (this.sdatas[cidx].loadmoreType === 'loading') {
-        return
-      }
+      if (this.sdatas[cidx].loadmoreType === 'loading') return
 
       // 没有更多直接返回
-      if (type === 'add' && this.sdatas[cidx].loadmoreType === 'nomore') {
-        return
-      } else if (type === 'add') {
-        this.sdatas[cidx].loadmoreType = 'loading'
-      }
+      if (type === 'add' && this.sdatas[cidx].loadmoreType === 'nomore') return
+      else if (type === 'add') this.sdatas[cidx].loadmoreType = 'loading'
 
       if (type === 'refresh') {
         this.sdatas[cidx].goodsDatas = []
         // 从首页开始加载
-        this.sdatas[cidx].reqdata.page = 1
+        this.sdatas[cidx].reqdata.page = 0
       }
 
       // 根据当前 cid 加载商品数据列表
       this.sdatas[cidx].reqdata.cid = this.cid
 
-      // this.$db['usemall-goods, usemall-goods']
-      //   .collection()
-      //   .where('create_uid == $env.uid')
-      //   .field('visit_cnt, last_modify_time, goods._id as goods_id, goods.img as goods_img, goods.state as goods_state')
-      //   .orderBy('last_modify_time desc')
-      //   .get()
-      //   .then(res => {
-      //     if (res && res.result && res.result.code === 0) {
-      //       let _historyDatas = []
-      //       res.result.data.forEach(x => {
-      //         x._id = x.goods_id[0]
-      //         x.img = x.goods_img[0]
-      //         x.state = x.goods_state[0]
-      //         _historyDatas.push(x)
-      //       })
-      //       this.historyDatas = _historyDatas
-      //     }
-      //   })
-
-      let res = await this.$db[_goods]
+      const db = uniCloud.database()
+      const goodList = db
+        .collection('usemall-goods')
         .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids && state == '销售中'`)
-        .tolist({ ...this.sdatas[cidx].reqdata, orderby: 'create_time desc' })
+        .field('img, create_time, name, create_uid')
+        .orderBy('create_time desc')
+        .skip(this.sdatas[cidx].reqdata.rows * this.sdatas[cidx].reqdata.page)
+        .limit(this.sdatas[cidx].reqdata.rows)
+        .getTemp()
+      const user = db
+        .collection('uni-id-users')
+        .field('_id, nickname, avatar_file')
+        .getTemp()
+      let res = await db.collection(goodList, user).get() // 将获取的goods表的临时表和user表进行联表查询
 
-      if (res.datas) {
-        this.sdatas[cidx].goodsDatas = [...this.sdatas[cidx].goodsDatas, ...res.datas]
-        if (res.datas.length >= this.sdatas[cidx].reqdata.rows) {
+      if (res.result.data.length) {
+        this.sdatas[cidx].goodsDatas = [...this.sdatas[cidx].goodsDatas, ...res.result.data]
+        if (res.result.data.length >= this.sdatas[cidx].reqdata.rows) {
           this.sdatas[cidx].reqdata.page++
           this.sdatas[cidx].loadmoreType = 'more'
         } else {

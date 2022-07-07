@@ -1,9 +1,11 @@
 const uniIdCommon = require('uni-id-common')
 const uniCaptcha = require('uni-captcha')
 const {
-  checkClientInfo,
   getType
 } = require('./common/utils')
+const {
+  checkClientInfo
+} = require('./common/validator')
 const ConfigUtils = require('./lib/utils/config')
 const {
   isUniIdError
@@ -69,9 +71,15 @@ const {
 module.exports = {
   async _before () {
     const clientInfo = this.getClientInfo()
-    // 检查clientInfo，无appId和platform时本云对象无法正常运行
+    /**
+     * 检查clientInfo，无appId和uniPlatform时本云对象无法正常运行
+     * 此外需要保证用到的clientInfo字段均经过类型检查
+     * clientInfo由客户端上传并非完全可信，clientInfo内除clientIP、userAgent、source外均为客户端上传参数
+     * 否则可能会出现一些意料外的情况
+     */
     checkClientInfo(clientInfo)
-    let clientPlatform = clientInfo.platform
+    let clientPlatform = clientInfo.uniPlatform
+    // 统一platform名称
     switch (clientPlatform) {
       case 'app':
       case 'app-plus':
@@ -79,7 +87,7 @@ module.exports = {
         break
       case 'web':
       case 'h5':
-        clientPlatform = 'h5'
+        clientPlatform = 'web'
         break
       default:
         break

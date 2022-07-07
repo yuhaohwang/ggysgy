@@ -247,8 +247,12 @@ export default {
       this.$api.msg('账号未登录')
       return
     }
-
     this.loadData()
+  },
+  onPullDownRefresh() {
+    if (this.islogin) {
+      this.$api.getUserInfo()
+    }
   },
   methods: {
     ...mapMutations(['logout', 'putMember']),

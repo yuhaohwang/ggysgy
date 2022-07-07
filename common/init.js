@@ -1,5 +1,5 @@
 // 导入配置
-import config from '@/common/config.js';
+import config from '@/uni_modules/uni-id-pages/config.js';
 // uni-id的云对象
 const uniIdCo = uniCloud.importObject("uni-id-co", {
   customUI: true
@@ -13,7 +13,7 @@ const {
 export default async function() {
 
   // 有打开调试模式的情况下
-  if (debug) {
+  if (0) {
     // 1. 检查本地uni-id-pages中配置的登录方式，服务器端是否已经配置正确。否则提醒并引导去配置
     //调用云对象，获取服务端已正确配置的登录方式
     let {
@@ -72,4 +72,27 @@ export default async function() {
   }
   // 解绑clientDB错误事件
   //db.off('error', onDBError)
+
+  //4. 同步客户端push_clientid至device表
+  if (uniCloud.onRefreshToken) {
+    uniCloud.onRefreshToken(() => {
+      console.log('onRefreshToken');
+      if (uni.getPushClientId) {
+        uni.getPushClientId({
+          success: async function(e) {
+            console.log(e)
+            let pushClientId = e.cid
+            console.log(pushClientId);
+            let res = await uniIdCo.setPushCid({
+              pushClientId
+            })
+            console.log('getPushClientId', res);
+          },
+          fail(e) {
+            console.log(e)
+          }
+        })
+      }
+    })
+  }
 }

@@ -35,6 +35,29 @@ const store = new Vuex.Store({
       })
     },
 
+    // 注销
+    logout(state) {
+      if (state.token) {
+        const uniIdCo = uniCloud.importObject('uni-id-co')
+        uniIdCo.logout().then(res => {
+          state.islogin = false
+          state.member = {}
+          state.token = ''
+          state.token_expired = 0
+
+          uni.removeStorage({
+            key: state.__key_member,
+          })
+          uni.removeStorage({
+            key: state.__key_token,
+          })
+          uni.removeStorage({
+            key: state.__key_token_expired,
+          })
+        })
+      }
+    },
+
     // 加载 Token
     loadToken(state) {
       let member = uni.getStorageSync(state.__key_member)
@@ -44,28 +67,9 @@ const store = new Vuex.Store({
 
       if (state.token_expired > new Date().getTime()) {
         state.islogin = true
+      } else {
+        store.commit('logout')
       }
-    },
-
-    // 注销
-    logout(state) {
-      const uniIdCo = uniCloud.importObject('uni-id-co')
-      uniIdCo.logout().then(res => {
-        state.islogin = false
-        state.member = {}
-        state.token = ''
-        state.token_expired = 0
-
-        uni.removeStorage({
-          key: state.__key_member,
-        })
-        uni.removeStorage({
-          key: state.__key_token,
-        })
-        uni.removeStorage({
-          key: state.__key_token_expired,
-        })
-      })
     },
 
     // token 令牌

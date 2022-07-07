@@ -57,6 +57,7 @@ module.exports = async function (params = {}) {
   try {
     getWeixinAccountResult = await weixinApi[apiName](code)
   } catch (error) {
+    console.error(error)
     await this.middleware.uniIdLog({
       success: false,
       type: LOG_TYPE.LOGIN

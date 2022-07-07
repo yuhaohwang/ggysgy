@@ -1,6 +1,6 @@
 import $api from '@/common/common.js'
 import $store from '@/common/store.js'
-export default function(e = {}) {
+export default async function(e = {}) {
   const {
     errCode = 0, showToast = true, toastText = '登录成功', autoBack = true
   } = e
@@ -13,7 +13,12 @@ export default function(e = {}) {
 
   if (!errCode) {
     $store.commit('login', e)
-    $api.getUserInfo()
+    uni.showLoading({
+      title: "请求中",
+      mask: true
+    })
+    await $api.getUserInfo()
+    uni.hideLoading()
   } else {
     $store.commit('logout')
   }

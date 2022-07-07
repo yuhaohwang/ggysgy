@@ -44,6 +44,7 @@ module.exports = async function (params = {}) {
   try {
     verifyResult = await appleApi.verifyIdentityToken(identityToken)
   } catch (error) {
+    console.error(error)
     await this.middleware.uniIdLog({
       success: false,
       type: LOG_TYPE.LOGIN

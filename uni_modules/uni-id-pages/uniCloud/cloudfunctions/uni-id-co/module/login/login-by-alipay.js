@@ -38,6 +38,7 @@ module.exports = async function (params = {}) {
   try {
     getAlipayAccountResult = await alipayApi().code2Session(code)
   } catch (error) {
+    console.error(error)
     await this.middleware.uniIdLog({
       success: false,
       type: LOG_TYPE.LOGIN

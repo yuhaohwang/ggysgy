@@ -38,16 +38,6 @@ function isFn (fn) {
   return typeof fn === 'function'
 }
 
-function checkClientInfo (clientInfo) {
-  const requiredParams = ['appId', 'platform']
-  for (let i = 0; i < requiredParams.length; i++) {
-    if (!clientInfo[requiredParams[i]]) {
-      console.warn('- 如果使用HBuilderX运行本地云函数/云对象功能时出现此提示，请改为使用客户端调用本地云函数方式调试，或更新HBuilderX到3.4.12及以上版本。\n- 如果是缺少clientInfo.appId，请检查项目manifest.json内是否配置了DCloud AppId')
-      throw new Error(`"clientInfo.${requiredParams[i]}" is required.`)
-    }
-  }
-}
-
 // 获取文件后缀，只添加几种图片类型供客服消息接口使用
 const mime2ext = {
   'image/png': 'png',
@@ -196,7 +186,6 @@ module.exports = {
   getType,
   isValidString,
   batchFindObjctValue,
-  checkClientInfo,
   isPlainObject,
   isFn,
   getDistinctArray,

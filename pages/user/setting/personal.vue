@@ -1,16 +1,14 @@
 <template>
   <view class="container">
-    <view class="dflex-c pos-r margin-bottom margin-top">
-      <view class="portrait-box">
-        <view class="border-radius-c"><uni-id-pages-avatar width="130rpx" height="130rpx"></uni-id-pages-avatar></view>
-        <!-- <image class="border-radius-c" :src="member.avatar_file ? member.avatar_file.url : '/static/images/user/default.png'"></image> -->
-      </view>
+    <view class="x-c-c padding-tb">
+      <view class="border-radius-c"><uni-id-pages-avatar width="130rpx" height="130rpx"></uni-id-pages-avatar></view>
+      <!-- <image class="border-radius-c" :src="member.avatar_file ? member.avatar_file.url : '/static/images/user/default.png'"></image> -->
 
       <view class="margin-left-sm">
         <view>
           <text class="username">{{ member.nickname ? member.nickname : '艺心益盟' }}</text>
         </view>
-        <!--        <view v-if="member.member_city">
+        <!--              <view v-if="member.member_city">
           <text>{{ member.member_city }}</text>
         </view> -->
       </view>

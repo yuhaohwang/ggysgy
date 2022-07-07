@@ -217,7 +217,7 @@
 			},
 			// 兼容老版本表单组件
 			setValue() {
-				console.log('setValue 方法已经弃用，请使用最新版本的 uni-forms 表单组件以及其他关联组件。');
+				// console.log('setValue 方法已经弃用，请使用最新版本的 uni-forms 表单组件以及其他关联组件。');
 			},
 			/**
 			 * 外部调用方法
@@ -479,6 +479,7 @@
 			padding: 0 12px 0 0;
 			/* #ifndef APP-NVUE */
 			vertical-align: middle;
+			flex-shrink: 0;
 			/* #endif */
 
 			/* #ifndef APP-NVUE */
@@ -492,8 +493,8 @@
 
 		&__content {
 			/* #ifndef MP-TOUTIAO */
-			display: flex;
-			align-items: center;
+			// display: flex;
+			// align-items: center;
 			/* #endif */
 			position: relative;
 			font-size: 14px;

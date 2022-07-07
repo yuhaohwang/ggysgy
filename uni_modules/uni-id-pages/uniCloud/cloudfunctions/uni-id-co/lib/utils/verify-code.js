@@ -23,7 +23,7 @@ async function setVerifyCode ({
     scene,
     code: code || getVerifyCode(),
     state: 0,
-    ip: this.getClientInfo().CLIENTIP,
+    ip: this.getClientInfo().clientIP,
     created_date: now,
     expired_date: now + expiresIn * 1000
   }

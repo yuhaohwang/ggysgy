@@ -14,7 +14,7 @@ const {
  * @param {object} param.templateId   可选，短信模板id
  * @returns
  */
-async function sendSmsCode({
+async function sendSmsCode ({
   mobile,
   code,
   scene,

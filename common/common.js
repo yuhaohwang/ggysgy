@@ -284,10 +284,10 @@ class Common {
   /**
    * @description 获取用户信息
    * */
-  getUserInfo(e) {
+  async getUserInfo(e) {
     const db = uniCloud.database()
     const usersTable = db.collection('uni-id-users')
-    usersTable
+    await usersTable
       .where("'_id' == $cloudEnv_uid")
       .field('nickname,mobile,avatar_file')
       .get()
@@ -298,6 +298,9 @@ class Common {
       })
       .catch(e => {
         console.log(e.message, e.errCode)
+      })
+      .finally(() => {
+        uni.stopPullDownRefresh()
       })
   }
 

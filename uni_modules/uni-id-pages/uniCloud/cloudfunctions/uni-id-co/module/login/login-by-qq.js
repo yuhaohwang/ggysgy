@@ -73,6 +73,7 @@ module.exports = async function (params = {}) {
       accessToken
     })
   } catch (error) {
+    console.error(error)
     await this.middleware.uniIdLog({
       success: false,
       type: LOG_TYPE.LOGIN

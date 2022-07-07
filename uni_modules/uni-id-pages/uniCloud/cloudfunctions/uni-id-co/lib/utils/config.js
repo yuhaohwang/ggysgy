@@ -28,6 +28,9 @@ class ConfigUtils {
 
   getPlatformConfig () {
     const appConfig = this.getAppConfig()
+    if (!appConfig) {
+      throw new Error(`Config for current app (${this.appId}) was not found, please check your config file or client appId`)
+    }
     const platform = this.platform
     if (
       (this.platform === 'app' && appConfig['app-plus']) ||
