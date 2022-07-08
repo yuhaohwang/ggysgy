@@ -8,84 +8,19 @@
 // 数据库查询有最大返回条数限制，详见：https://uniapp.dcloud.net.cn/uniCloud/cf-database?id=limit
 // 详细JQL语法，请参考 https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=jsquery
 
-// 下面示例查询uni-id-users表的所有数据
-const dbCmd = db.command
-db.collection('uni-id-users').update({
-  wx_openid: {
-    'app-plus': dbCmd.rename('wx_openid.app'), // app端微信openid
-    'mp-weixin': dbCmd.rename('wx_openid.mp'), // 小程序端微信openid
-    'h5-weixin': dbCmd.rename('wx_openid.h5'), // 微信公众号端微信openid
-    'h5-web': dbCmd.rename('wx_openid.web') // web端微信openid
-  },
-  qq_openid: {
-    'app-plus': dbCmd.rename('qq_openid.app'), // app端QQ openid
-    'mp-qq': dbCmd.rename('qq_openid.mp') // 小程序端QQ openid
-  }
-})
-db.collection("usemall-goods-category").where(
-  dbCmd.or({
-    _id: id,
-  }, {
-    pid: id,
-  })
-).get();
-
-db.collection("usemall-app-category").update({
-  ctype: 1
+db.collection("usemall-goods").update({
+  create_uid: '62c51fc6f792990001ad4e36'
 })
 
-db.collection("usemall-app-category").get()
-
-db.collection("usemall-goods").where({
-  cid: '628cb47fd3209100019a55c4'
-}).remove()
-
-db.collection("uni-id-users").remove()
-
-'use strict';
-const db = uniCloud.database()
-const dbCmd = db.command
-exports.main = async (event, context) => {
-  await db.collection('uni-id-users').update({
-    wx_openid: {
-      'app-plus': dbCmd.rename('wx_openid.app'), // app端微信openid
-      'mp-weixin': dbCmd.rename('wx_openid.mp'), // 小程序端微信openid
-      'h5-weixin': dbCmd.rename('wx_openid.h5'), // 微信公众号端微信openid
-      'h5-web': dbCmd.rename('wx_openid.web') // web端微信openid
-    },
-    qq_openid: {
-      'app-plus': dbCmd.rename('qq_openid.app'), // app端QQ openid
-      'mp-qq': dbCmd.rename('qq_openid.mp') // 小程序端QQ openid
-    }
-  })
-  return {}
-};
-
-db.collection('usemall-goods, uni-id-users')
-  .field('cid, img, create_time, name, create_uid.nickname as user_nickname, create_uid.avatar_file.url as user_avatar_url')
-  .orderBy('create_time desc')
-  .get()
-
-const goodList = db
-  .collection('usemall-goods')
+let res1 = db.collection('usemall-goods-cart')
   .getTemp()
-db
-  .collection(goodList, 'uni-id-users')
-  .field(
-    'cid, img, create_time, name, create_uid.nickname, create_uid.avatar_file.url'
-  )
-  .get() // 将获取的goods表的临时表和user表进行联表查询
 
-const goodList = db
-  .collection('usemall-goods')
-  .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids && state == '销售中'`)
-  .getTemp() // 注意结尾的方法是getTemp，对order表过滤得到临时表
+let res2 = db.collection('usemall-goods')
+  .getTemp()
 
-var res1 = await db
-  .collection(goodList, 'uni-id-users')
-  .field(
-    'cid, img, create_time, name, create_uid.nickname as user_nickname, create_uid.avatar_file.url as user_avatar_url'
-  )
-  .get() // 将获取的goods表的临时表和user表进行联表查询
+let res3 = db.collection('usemall-goods-sku')
+  .getTemp()
+
+db.collection(res1, res2, res3).get()
 
 console.log(res1)

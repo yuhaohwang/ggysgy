@@ -40,27 +40,7 @@ Vue.prototype.$dbcmd = uniCloud.database().command
 Vue.prototype.$func = $func
 Vue.prototype.$store = $store
 
-Vue.prototype.$toUrl = (url, type = 0) => {
-    switch (type) {
-      case 0:
-        uni.navigateTo({
-          url,
-        })
-        break
-      case 1:
-        uni.switchTab({
-          url,
-        })
-        break
-      default:
-        uni.navigateTo({
-          url: `/pages/content/web?url=${url}`,
-        })
-        break
-    }
-  },
-
-  App.mpType = 'app'
+App.mpType = 'app'
 
 const app = new Vue({
   ...App,

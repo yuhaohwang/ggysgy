@@ -503,41 +503,75 @@ class Common {
   /**
    * @description 防抖函数
    */
-  debounce(fn, delay) {
-    var timer // 维护一个 timer
-    return function() {
-      var _this = this // 取debounce执行作用域的this
-      var args = arguments
-      if (timer) {
-        clearTimeout(timer)
+  debounce(func, wait, immediate) {
+    var timeout, result;
+    var debounced = function() {
+      var context = this;
+      var args = arguments;
+      if (timeout) clearTimeout(timeout);
+      if (immediate) {
+        // 如果已经执行过，不再执行
+        var callNow = !timeout;
+        timeout = setTimeout(function() {
+          timeout = null;
+        }, wait)
+        if (callNow) result = func.apply(context, args)
+      } else {
+        timeout = setTimeout(function() {
+          func.apply(context, args)
+        }, wait);
       }
-      timer = setTimeout(function() {
-        fn.apply(_this, args) // 用apply指向调用debounce的对象，相当于_this.fn(args);
-      }, delay)
-    }
+      return result;
+    };
+    debounced.cancel = function() {
+      clearTimeout(timeout);
+      timeout = null;
+    };
+    return debounced;
   }
 
   /**
    * @description 节流函数
    */
-  throttle(func, delay) {
-    let timer = null
-    let starttime = Date.now()
-    return function() {
-      let curTime = Date.now() // 当前时间
-      let remaining = delay - (curTime - starttime) // 从上一次到现在，还剩下多少多余时间
-      let context = this
-      let args = arguments
-      clearTimeout(timer)
-      if (remaining <= 0) {
-        func.apply(context, args)
-        starttime = Date.now()
-      } else {
-        timer = setTimeout(func, remaining)
+  throttle(func, wait, options) {
+    var timeout, context, args, result;
+    var previous = 0;
+    if (!options) options = {};
+
+    var later = function() {
+      previous = options.leading === false ? 0 : new Date().getTime();
+      timeout = null;
+      func.apply(context, args);
+      if (!timeout) context = args = null;
+    };
+
+    var throttled = function() {
+      var now = new Date().getTime();
+      if (!previous && options.leading === false) previous = now;
+      var remaining = wait - (now - previous);
+      context = this;
+      args = arguments;
+      if (remaining <= 0 || remaining > wait) {
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = null;
+        }
+        previous = now;
+        func.apply(context, args);
+        if (!timeout) context = args = null;
+      } else if (!timeout && options.trailing !== false) {
+        timeout = setTimeout(later, remaining);
       }
-    }
+    };
+
+    throttled.cancel = function() {
+      clearTimeout(timeout);
+      previous = 0;
+      timeout = null;
+    };
+
+    return throttled;
   }
 
 }
-
 export default new Common()

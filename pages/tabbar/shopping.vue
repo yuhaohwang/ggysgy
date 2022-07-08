@@ -128,42 +128,9 @@
 </template>
 
 <script>
-const debounce = (fn, delay) => {
-  var timer // 维护一个 timer
-  return function() {
-    var _this = this // 取debounce执行作用域的this
-    var args = arguments
-    if (timer) {
-      clearTimeout(timer)
-    }
-    timer = setTimeout(function() {
-      fn.apply(_this, args) // 用apply指向调用debounce的对象，相当于_this.fn(args);
-    }, delay)
-  }
-}
-
-const throttle = (func, delay) => {
-  let timer = null
-  let starttime = Date.now()
-  return function() {
-    let curTime = Date.now() // 当前时间
-    let remaining = delay - (curTime - starttime) // 从上一次到现在，还剩下多少多余时间
-    let context = this
-    let args = arguments
-    clearTimeout(timer)
-    if (remaining <= 0) {
-      func.apply(context, args)
-      starttime = Date.now()
-    } else {
-      timer = setTimeout(func, remaining)
-    }
-  }
-}
-
-import api from '@/common/common.js'
-
 const _goodscategory = 'usemall-goods-category'
 const _goods = 'usemall-goods'
+import $api from '@/common/common.js'
 export default {
   data() {
     return {
@@ -371,14 +338,14 @@ export default {
       })
     },
 
-    toTopShow: api.debounce(function(e) {
+    toTopShow: $api.throttle(function(e) {
       if (typeof e != 'undefined') {
         const top = e.detail.scrollTop
         const cidx = this.current
         this.sdatas[cidx].scrollTopTemp = top
         this.scrollTop = top
       }
-    }, 100),
+    }, 50),
 
     toTop() {
       const cidx = this.current
@@ -411,13 +378,12 @@ export default {
     // 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
     // swiper滑动结束，分别设置tabs和swiper的状态
     animationfinish(e) {
-      let current = e.detail.current
-      this.tabCurrent = current
-
       // 切换tab之前先更新scrollTop位置
       this.sdatas[this.current].scrollTop = this.sdatas[this.current].scrollTopTemp
-      let top = this.sdatas[current].scrollTop
-      this.scrollTop = top
+
+      let current = e.detail.current
+      this.scrollTop = this.sdatas[current].scrollTop
+      this.tabCurrent = current
     },
 
     // 跳转个人
