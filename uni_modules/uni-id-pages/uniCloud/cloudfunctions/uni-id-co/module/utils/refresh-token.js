@@ -3,12 +3,17 @@
  * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#refresh-token
  */
 module.exports = async function () {
+  const refreshTokenRes = await this.uniIdCommon.refreshToken({
+    token: this.getUniversalUniIdToken()
+  })
   const {
+    errCode,
     token,
     tokenExpired
-  } = await this.uniIdCommon.refreshToken({
-    token: this.getUniIdToken()
-  })
+  } = refreshTokenRes
+  if (errCode) {
+    throw refreshTokenRes
+  }
   return {
     errCode: 0,
     newToken: {

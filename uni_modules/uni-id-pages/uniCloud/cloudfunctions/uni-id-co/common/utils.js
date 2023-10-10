@@ -163,23 +163,87 @@ function coverMobile (mobile) {
   return mobile.slice(0, 3) + '****' + mobile.slice(7)
 }
 
-function getOauthConfig (params = {}) {
-  const {
-    config,
-    oatuhProivder,
-    clientPlatform,
-    requiredItem = []
-  } = params
-  if (!config.oauth || !config.oauth[oatuhProivder]) {
-    throw new Error(`Missing config param: ${clientPlatform}.${oatuhProivder}`)
+function getNonceStr (length = 16) {
+  let str = ''
+  while (str.length < length) {
+    str += Math.random().toString(32).substring(2)
   }
-  const oauthConfig = config.oauth[oatuhProivder]
-  requiredItem.forEach((item) => {
-    if (!oauthConfig[item]) {
-      throw new Error(`Missing config param: ${clientPlatform}.${oatuhProivder}.${item}`)
+  return str.substring(0, length)
+}
+
+try {
+  require('lodash.merge')
+} catch (error) {
+  console.error('uni-id-co缺少依赖，请在uniCloud/cloudfunctions/uni-id-co目录执行 npm install 安装依赖')
+  throw error
+}
+
+function isMatchUserApp (userAppList, matchAppList) {
+  if (userAppList === undefined || userAppList === null) {
+    return true
+  }
+  if (getType(userAppList) !== 'array') {
+    return false
+  }
+  if (userAppList.includes('*')) {
+    return true
+  }
+  if (getType(matchAppList) === 'string') {
+    matchAppList = [matchAppList]
+  }
+  return userAppList.some(item => matchAppList.includes(item))
+}
+
+function checkIdCard (idCardNumber) {
+  if (!idCardNumber || typeof idCardNumber !== 'string' || idCardNumber.length !== 18) return false
+
+  const coefficient = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+  const checkCode = [1, 0, 'x', 9, 8, 7, 6, 5, 4, 3, 2]
+  const code = idCardNumber.substring(17)
+
+  let sum = 0
+  for (let i = 0; i < 17; i++) {
+    sum += Number(idCardNumber.charAt(i)) * coefficient[i]
+  }
+
+  return checkCode[sum % 11].toString() === code.toLowerCase()
+}
+
+function catchAwait (fn, finallyFn) {
+  if (!fn) return [new Error('no function')]
+
+  if (Promise.prototype.finally === undefined) {
+    // eslint-disable-next-line no-extend-native
+    Promise.prototype.finally = function (finallyFn) {
+      return this.then(
+        res => Promise.resolve(finallyFn()).then(() => res),
+        error => Promise.resolve(finallyFn()).then(() => { throw error })
+      )
     }
-  })
-  return oauthConfig
+  }
+
+  return fn
+    .then((data) => [undefined, data])
+    .catch((error) => [error])
+    .finally(() => typeof finallyFn === 'function' && finallyFn())
+}
+
+function dataDesensitization (value = '', options = {}) {
+  const { onlyLast = false } = options
+  const [firstIndex, middleIndex, lastIndex] = onlyLast ? [0, 0, -1] : [0, 1, -1]
+
+  if (!value) return value
+  const first = value.slice(firstIndex, middleIndex)
+  const middle = value.slice(middleIndex, lastIndex)
+  const last = value.slice(lastIndex)
+  const star = Array.from(new Array(middle.length), (v) => '*').join('')
+
+  return first + star + last
+}
+
+function getCurrentDateTimestamp (date = Date.now(), targetTimezone = 8) {
+  const oneHour = 60 * 60 * 1000
+  return parseInt((date + targetTimezone * oneHour) / (24 * oneHour)) * (24 * oneHour) - targetTimezone * oneHour
 }
 
 module.exports = {
@@ -197,5 +261,10 @@ module.exports = {
   getExtension,
   getVerifyCode,
   coverMobile,
-  getOauthConfig
+  getNonceStr,
+  isMatchUserApp,
+  checkIdCard,
+  catchAwait,
+  dataDesensitization,
+  getCurrentDateTimestamp
 }

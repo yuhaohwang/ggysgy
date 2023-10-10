@@ -13,7 +13,8 @@ const {
 } = require('../../common/constants')
 const {
   getQQPlatform,
-  generateQQCache
+  generateQQCache,
+  saveQQUserKey
 } = require('../../lib/utils/qq')
 const url = require('url')
 
@@ -23,7 +24,7 @@ const url = require('url')
  * @param {Object} params
  * @param {String} params.code                  QQ小程序登录返回的code参数
  * @param {String} params.accessToken           App端QQ登录返回的accessToken参数
- * @param {String} params.accessTokenExpired    由App端QQ登录返回的expires_in参数计算而来
+ * @param {String} params.accessTokenExpired    accessToken过期时间，由App端QQ登录返回的expires_in参数计算而来，单位：毫秒
  * @param {String} params.inviteCode            邀请码
  * @returns
  */
@@ -53,6 +54,9 @@ module.exports = async function (params = {}) {
     accessTokenExpired,
     inviteCode
   } = params
+  const {
+    appId
+  } = this.getUniversalClientInfo()
   const qqApi = initQQ.call(this)
   const qqPlatform = getQQPlatform.call(this)
   let apiName
@@ -101,7 +105,12 @@ module.exports = async function (params = {}) {
       qq_unionid: unionid
     }
   })
-  const extraData = {}
+  const extraData = {
+    qq_openid: {
+      [`${qqPlatform}_${appId}`]: openid
+    },
+    qq_unionid: unionid
+  }
   if (type === 'register' && qqPlatform !== 'mp') {
     const {
       nickname,
@@ -110,33 +119,42 @@ module.exports = async function (params = {}) {
       accessToken,
       openid
     })
-    // eslint-disable-next-line n/no-deprecated-api
-    const extName = url.parse(avatar).pathname.split('.').pop()
-    const cloudPath = `user/avatar/${openid.slice(-8) + Date.now()}-avatar.${extName}`
-    const getAvatarRes = await uniCloud.httpclient.request(avatar)
-    if (getAvatarRes.status >= 400) {
-      throw {
-        errCode: ERROR.GET_THIRD_PARTY_USER_INFO_FAILED
+    if (avatar) {
+      // eslint-disable-next-line n/no-deprecated-api
+      const extName = url.parse(avatar).pathname.split('.').pop()
+      const cloudPath = `user/avatar/${openid.slice(-8) + Date.now()}-avatar.${extName}`
+      const getAvatarRes = await uniCloud.httpclient.request(avatar)
+      if (getAvatarRes.status >= 400) {
+        throw {
+          errCode: ERROR.GET_THIRD_PARTY_USER_INFO_FAILED
+        }
+      }
+      const {
+        fileID
+      } = await uniCloud.uploadFile({
+        cloudPath,
+        fileContent: getAvatarRes.data
+      })
+      extraData.avatar_file = {
+        name: cloudPath,
+        extname: extName,
+        url: fileID
       }
     }
-    const {
-      fileID
-    } = await uniCloud.uploadFile({
-      cloudPath,
-      fileContent: getAvatarRes.data
-    })
     extraData.nickname = nickname
-    extraData.avatar_file = {
-      name: cloudPath,
-      extname: extName,
-      url: fileID
-    }
   }
+  await saveQQUserKey.call(this, {
+    openid,
+    sessionKey,
+    accessToken,
+    accessTokenExpired
+  })
   return postUnifiedLogin.call(this, {
     user,
     extraData: {
       ...extraData,
       ...generateQQCache.call(this, {
+        openid,
         sessionKey, // QQ小程序用户sessionKey
         accessToken, // App端QQ用户accessToken
         accessTokenExpired // App端QQ用户accessToken过期时间

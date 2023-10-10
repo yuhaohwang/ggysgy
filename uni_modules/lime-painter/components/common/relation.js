@@ -18,6 +18,7 @@ export function parent(parent) {
 		data() {
 			return {
 				el: {
+					id: null,
 					css: {},
 					views: []
 				},
@@ -98,7 +99,9 @@ export function children(parent, options = {}) {
 				},
 			});
 			this.el.type = this.type
-			
+			if(this.uid) {
+				this.el.uid = this.uid
+			}
 			this.bindRelation()
 		},
 		// #ifdef VUE3

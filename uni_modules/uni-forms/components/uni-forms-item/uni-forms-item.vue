@@ -2,9 +2,9 @@
 	<view class="uni-forms-item"
 		:class="['is-direction-' + localLabelPos ,border?'uni-forms-item--border':'' ,border && isFirstBorder?'is-first-border':'']">
 		<slot name="label">
-			<view class="uni-forms-item__label" :class="{'no-label':!label && !isRequired}"
+			<view class="uni-forms-item__label" :class="{'no-label':!label && !required}"
 				:style="{width:localLabelWidth,justifyContent: localLabelAlign}">
-				<text v-if="isRequired" class="is-required">*</text>
+				<text v-if="required" class="is-required">*</text>
 				<text>{{label}}</text>
 			</view>
 		</slot>
@@ -126,7 +126,6 @@
 		data() {
 			return {
 				errMsg: '',
-				isRequired: false,
 				userRules: null,
 				localLabelAlign: 'left',
 				localLabelWidth: '65px',
@@ -181,8 +180,9 @@
 					(value, oldVal) => {
 						const isEqual = this.form._isEqual(value, oldVal)
 						// 简单判断前后值的变化，只有发生变化才会发生校验
-						// TODO 如果 oldVal = undefined ，那么大概率是源数据里没有值导致 ，这个情况不哦校验 ,可能不严谨 ，需要在做观察
-						if (!isEqual && oldVal !== undefined) {
+						// TODO  如果 oldVal = undefined ，那么大概率是源数据里没有值导致 ，这个情况不哦校验 ,可能不严谨 ，需要在做观察
+						// fix by mehaotian 暂时取消 && oldVal !== undefined ，如果formData 中不存在，可能会不校验
+						if (!isEqual) {
 							const val = this.itemSetValue(value)
 							this.onFieldChange(val, false)
 						}
@@ -314,7 +314,6 @@
 				this.localLabelWidth = this._labelWidthUnit(labelWidth)
 				// 标签位置
 				this.localLabelPos = this._labelPosition()
-				this.isRequired = this.required
 				// 将需要校验的子组件加入form 队列
 				this.form && type && childrens.push(this)
 
@@ -350,8 +349,6 @@
 				this.validator = validator
 				// 默认值赋予
 				this.itemSetValue(_getDataValue(this.name, localData))
-				this.isRequired = this._isRequired()
-
 			},
 			unInit() {
 				if (this.form) {
@@ -386,9 +383,13 @@
 
 			// 是否显示星号
 			_isRequired() {
-				if (this.form) {
-					return this.required || this.form._isRequiredField(this.itemRules.rules || [])
-				}
+				// TODO 不根据规则显示 星号，考虑后续兼容
+				// if (this.form) {
+				// 	if (this.form._isRequiredField(this.itemRules.rules || []) && this.required) {
+				// 		return true
+				// 	}
+				// 	return false
+				// }
 				return this.required
 			},
 

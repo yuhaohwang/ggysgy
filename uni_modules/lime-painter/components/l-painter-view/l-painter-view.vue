@@ -8,6 +8,7 @@
 		name: 'lime-painter-view',
 		mixins:[children('painter'), parent('painter')],
 		props: {
+			id: String,
 			css: [String, Object],
 		},
 		data() {

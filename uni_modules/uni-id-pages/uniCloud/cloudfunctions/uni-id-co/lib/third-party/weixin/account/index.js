@@ -56,7 +56,7 @@ module.exports = class Auth {
       }
     })
     if (result.expiresIn) {
-      result.expired = Date.now() + result.expiresIn
+      result.expired = Date.now() + result.expiresIn * 1000
       // delete result.expiresIn
     }
     return result
@@ -84,6 +84,28 @@ module.exports = class Auth {
     return {
       nickname,
       avatar
+    }
+  }
+
+  async getPhoneNumber (accessToken, code) {
+    const url = `/wxa/business/getuserphonenumber?access_token=${accessToken}`
+    const { phoneInfo } = await this._requestWxOpenapi({
+      name: 'getPhoneNumber',
+      url,
+      data: {
+        code
+      },
+      options: {
+        method: 'POST',
+        dataAsQueryString: false,
+        headers: {
+          'content-type': 'application/json'
+        }
+      }
+    })
+
+    return {
+      purePhoneNumber: phoneInfo.purePhoneNumber
     }
   }
 }

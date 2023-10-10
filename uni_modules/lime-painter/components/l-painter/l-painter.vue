@@ -4,12 +4,12 @@
 			<!-- #ifndef APP-NVUE -->
 			<canvas class="lime-painter__canvas" v-if="use2dCanvas" :id="canvasId" type="2d" :style="size"></canvas>
 			<canvas class="lime-painter__canvas" v-else :canvas-id="canvasId" :style="size" :id="canvasId"
-				:width="boardWidth * dpr" :height="boardHeight * dpr"></canvas>
+				:width="boardWidth * dpr" :height="boardHeight * dpr" :hidpi="hidpi"></canvas>
 
 			<!-- #endif -->
 			<!-- #ifdef APP-NVUE -->
 			<web-view :style="size" ref="webview"
-				src="/uni_modules/lime-painter/static/index.html"
+				src="/uni_modules/lime-painter/hybrid/html/index.html"
 				class="lime-painter__canvas" @pagefinish="onPageFinish" @error="onError" @onPostMessage="onMessage">
 			</web-view>
 			<!-- #endif -->
@@ -18,15 +18,14 @@
 	</view>
 </template>
 
-
 <script>
 	import { parent } from '../common/relation'
 	import props from './props'
-	import {toPx, base64ToPath, pathToBase64, isBase64, sleep, getImageInfo}from './utils';
+	import {toPx, base64ToPath, pathToBase64, isBase64, sleep, getImageInfo }from './utils';
 	//  #ifndef APP-NVUE
-	import { compareVersion } from './utils';
-	import Painter from './painter'
-	// import Painter from '@lime/'
+	import { canIUseCanvas2d, isPC} from './utils';
+	import Painter from './painter';
+	// import Painter from '@painter'
 	const nvue = {}
 	//  #endif
 	//  #ifdef APP-NVUE
@@ -37,27 +36,22 @@
 		mixins: [props, parent('painter'), nvue],
 		data() {
 			return {
-				// #ifdef MP-WEIXIN || MP-TOUTIAO || MP-ALIPAY
-				use2dCanvas: true,
-				// #endif
-				// #ifndef MP-WEIXIN || MP-TOUTIAO || MP-ALIPAY
 				use2dCanvas: false,
-				// #endif
 				canvasHeight: 150,
 				canvasWidth: null,
 				parentWidth: 0,
 				inited: false,
 				progress: 0,
 				firstRender: 0,
-				done: false
+				done: false,
 			};
 		},
 		computed: {
 			styles() {
-				return `${this.size}${this.customStyle||''};`
+				return `${this.size}${this.customStyle||''};` + (this.hidden && 'position: fixed; left: 1500rpx;')
 			},
 			canvasId() {
-				return `l-painter${this._uid || this._.uid}`
+				return `l-painter${this._ && this._.uid || this._uid}`
 			},
 			size() {
 				if (this.boardWidth && this.boardHeight) {
@@ -84,31 +78,8 @@
 				return this.hasBoard ? this.board : JSON.parse(JSON.stringify(this.el))
 			}
 		},
-		watch: {
-			// #ifdef MP-WEIXIN ||  MP-ALIPAY
-			size(v) {
-				// #ifdef MP-WEIXIN
-				if (this.use2dCanvas) {
-					this.inited = false;
-				}
-				// #endif
-				// #ifdef MP-ALIPAY
-				this.inited = false;
-				// #endif
-			},
-			// #endif
-		},
 		created() {
-			const { SDKVersion, version, platform } = uni.getSystemInfoSync();
-			// #ifdef MP-WEIXIN
-			this.use2dCanvas = this.type === '2d' && compareVersion(SDKVersion, '2.9.2') >= 0  && !this.isPC;
-			// #endif
-			// #ifdef MP-TOUTIAO
-			this.use2dCanvas = this.type === '2d' && compareVersion(SDKVersion, '1.78.0') >= 0;
-			// #endif
-			// #ifdef MP-ALIPAY
-			this.use2dCanvas = this.type === '2d' && compareVersion(my.SDKVersion, '2.7.15') >= 0;
-			// #endif
+			this.use2dCanvas = this.type === '2d' && canIUseCanvas2d() && !isPC
 		},
 		async mounted() {
 			await sleep(30)
@@ -122,10 +93,32 @@
 				}, 30)
 			})
 		},
+		// #ifdef VUE3
+		unmounted() {
+			this.done = false
+			this.inited = false
+			this.firstRender = 0
+			this.progress = 0
+			this.painter = null
+			clearTimeout(this.rendertimer)
+		},
+		// #endif
+		// #ifdef VUE2
+		destroyed() {
+			this.done = false
+			this.inited = false
+			this.firstRender = 0
+			this.progress = 0
+			this.painter = null
+			clearTimeout(this.rendertimer)
+		},
+		// #endif
 		methods: {
 			async watchRender(val, old) {
 				if (!val || !val.views || (!this.firstRender ? !val.views.length : !this.firstRender) || !Object.keys(val).length || JSON.stringify(val) == JSON.stringify(old)) return;
 				this.firstRender = 1
+				this.progress = 0
+				this.done = false
 				clearTimeout(this.rendertimer)
 				this.rendertimer = setTimeout(() => {
 					this.render(val);
@@ -158,6 +151,7 @@
 				}
 			},
 			canvasToTempFilePathSync(args) {
+				this.stopWatch && this.stopWatch()
 				this.stopWatch = this.$watch('done', (v) => {
 					if (v) {
 						this.canvasToTempFilePath(args)
@@ -190,6 +184,9 @@
 				}
 				this.progress = 0
 				this.done = false
+				// #ifdef APP-NVUE
+				this.tempFilePath.length = 0
+				// #endif
 				await this.getSize(args)
 				const ctx = await this.getContext();
 				let {
@@ -200,7 +197,7 @@
 					afterDelay
 				} = this;
 				if (use2dCanvas && !canvas) {
-					return Promise.reject(new Error('render: fail canvas has not been created'));
+					return Promise.reject(new Error('canvas 没创建'));
 				}
 				this.boundary = {
 					top: 0,
@@ -223,6 +220,7 @@
 						pixelRatio: this.dpr,
 						useCORS: this.useCORS,
 						createImage: getImageInfo.bind(this),
+						performance: this.performance,
 						listen: {
 							onProgress: (v) => {
 								this.progress = v
@@ -241,8 +239,6 @@
 				this.boundary.height = this.canvasHeight = height
 				this.boundary.width = this.canvasWidth = width
 				await sleep(this.sleep);
-				// 可能会因为尺寸改变影响绘制上下文
-				this.painter.setContext(this.ctx)
 				await this.painter.render()
 				await new Promise(resolve => this.$nextTick(resolve));
 				if (!use2dCanvas) {
@@ -275,7 +271,7 @@
 			async getContext() {
 				if (!this.canvasWidth) {
 					this.$emit('fail', 'painter no size')
-					console.error('painter no size: 请给画板或父级设置尺寸')
+					console.error('[lime-painter]: 给画板或父级设置尺寸')
 					return Promise.reject();
 				}
 				if (this.ctx && this.inited) {
@@ -296,11 +292,40 @@
 										this.use2dCanvas = false;
 										this.canvas = res;
 									}
+									
+									// 钉钉小程序框架不支持 measureText 方法，用此方法 mock
+									if (!ctx.measureText) {
+										function strLen(str) {
+											let len = 0;
+											for (let i = 0; i < str.length; i++) {
+												if (str.charCodeAt(i) > 0 && str.charCodeAt(i) < 128) {
+													len++;
+												} else {
+													len += 2;
+												}
+											}
+											return len;
+										}
+										ctx.measureText = text => {
+											let fontSize = ctx.state && ctx.state.fontSize || 12;
+											const font = ctx.__font
+											if (font && fontSize == 12) {
+												fontSize = parseInt(font.split(' ')[3], 10);
+											}
+											fontSize /= 2;
+											return {
+												width: strLen(text) * fontSize
+											};
+										}
+									}
+									
 									// #ifdef MP-ALIPAY
 									ctx.scale(dpr, dpr);
 									// #endif
 									this.ctx = ctx
 									resolve(this.ctx);
+								} else {
+									console.error('[lime-painter] no node')
 								}
 							});
 					});
@@ -314,64 +339,71 @@
 						.select(`#${this.canvasId}`)
 						.node()
 						.exec(res => {
-							let {node: canvas} = res[0];
-							if (!canvas) {
-								this.use2dCanvas = false;
-								resolve(this.getContext());
+							let {node: canvas} = res && res[0]||{};
+							if(canvas) {
+								const ctx = canvas.getContext(type);
+								if (!this.inited) {
+									this.inited = true;
+									this.use2dCanvas = true;
+									this.canvas = canvas;
+								}
+								this.ctx = ctx
+								resolve(this.ctx);
+							} else {
+								console.error('[lime-painter]: no size')
 							}
-							const ctx = canvas.getContext(type);
-							if (!this.inited) {
-								this.inited = true;
-								this.use2dCanvas = true;
-								this.canvas = canvas;
-							}
-							this.ctx = ctx
-							resolve(this.ctx);
 						});
 				});
 			},
 			canvasToTempFilePath(args = {}) {
 				return new Promise(async (resolve, reject) => {
 					const { use2dCanvas, canvasId, dpr, fileType, quality } = this;
-					
 					const success = async (res) => {
 						try {
-							const tempFilePath = await this.setFilePath(res.tempFilePath || res)
-							resolve(Object.assign(res, {tempFilePath}))
+							const tempFilePath = await this.setFilePath(res.tempFilePath || res, args)
+							const result = Object.assign(res, {tempFilePath})
+							args.success && args.success(result)
+							resolve(result)
 						} catch (e) {
 							this.$emit('fail', e)
 						}
 					}
 					
 					let { top: y = 0, left: x = 0, width, height } = this.boundary || this;
-					let destWidth = width * dpr;
-					let destHeight = height * dpr;
+					// let destWidth = width * dpr;
+					// let destHeight = height * dpr;
 					// #ifdef MP-ALIPAY
-					width = destWidth;
-					height = destHeight;
+					// width = destWidth;
+					// height = destHeight;
 					// #endif
 					
 					const copyArgs = Object.assign({
-						x,
-						y,
-						width,
-						height,
-						destWidth,
-						destHeight,
+						// x,
+						// y,
+						// width,
+						// height,
+						// destWidth,
+						// destHeight,
 						canvasId,
+						id: canvasId,
 						fileType,
 						quality,
-						success,
-						fail: reject
-					}, args);
-					
+					}, args, {success});
+					// if(this.isPC || use2dCanvas) {
+					// 	copyArgs.canvas = this.canvas
+					// }
 					if (use2dCanvas) {
+						copyArgs.canvas = this.canvas
 						try{
 							// #ifndef MP-ALIPAY
-							if(!args.pathType && !this.pathType) {args.pathType = 'url'}
-							const tempFilePath = await this.setFilePath(this.canvas.toDataURL(`image/${args.fileType||fileType}`.replace(/pg/, 'peg'), args.quality||quality), args)
-							args.success && args.success({tempFilePath})
-							resolve({tempFilePath})
+							const oFilePath = this.canvas.toDataURL(`image/${args.fileType||fileType}`.replace(/pg/, 'peg'), args.quality||quality)
+							if(/data:,/.test(oFilePath)) {
+								uni.canvasToTempFilePath(copyArgs, this);
+							} else {
+								const tempFilePath = await this.setFilePath(oFilePath, args)
+								args.success && args.success({tempFilePath})
+								resolve({tempFilePath})
+							}
 							// #endif
 							// #ifdef MP-ALIPAY
 							this.canvas.toTempFilePath(copyArgs)
@@ -382,7 +414,13 @@
 						}
 					} else {
 						// #ifdef MP-ALIPAY
-						uni.canvasToTempFilePath(copyArgs);
+						if(this.ctx.toTempFilePath) {
+							// 钉钉
+							const ctx = uni.createCanvasContext(canvasId);
+							ctx.toTempFilePath(copyArgs);
+						} else {
+							my.canvasToTempFilePath(copyArgs);
+						}
 						// #endif
 						// #ifndef MP-ALIPAY
 						uni.canvasToTempFilePath(copyArgs, this);

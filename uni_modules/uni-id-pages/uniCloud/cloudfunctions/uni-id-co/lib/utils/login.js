@@ -8,18 +8,29 @@ const {
 const {
   ERROR
 } = require('../../common/error')
+const {
+  logout
+} = require('./logout')
 const PasswordUtils = require('./password')
 
 async function realPreLogin (params = {}) {
   const {
     user
   } = params
-  const appId = this.getClientInfo().appId
-  const userMatched = await findUser({
+  const appId = this.getUniversalClientInfo().appId
+  const {
+    total,
+    userMatched
+  } = await findUser({
     userQuery: user,
     authorizedApp: appId
   })
   if (userMatched.length === 0) {
+    if (total > 0) {
+      throw {
+        errCode: ERROR.ACCOUNT_NOT_EXISTS_IN_CURRENT_APP
+      }
+    }
     throw {
       errCode: ERROR.ACCOUNT_NOT_EXISTS
     }
@@ -63,7 +74,7 @@ async function preLoginWithPassword (params = {}) {
     } = this.config
     const {
       clientIP
-    } = this.getClientInfo()
+    } = this.getUniversalClientInfo()
     // 根据ip地址，密码错误次数过多，锁定登录
     let loginIPLimit = userRecord.login_ip_limit || []
     // 清理无用记录
@@ -75,6 +86,8 @@ async function preLoginWithPassword (params = {}) {
       }
     }
     const passwordUtils = new PasswordUtils({
+      userRecord,
+      clientInfo: this.getUniversalClientInfo(),
       passwordSecret: this.config.passwordSecret
     })
 
@@ -82,9 +95,7 @@ async function preLoginWithPassword (params = {}) {
       success: checkPasswordSuccess,
       refreshPasswordInfo
     } = passwordUtils.checkUserPassword({
-      password,
-      passwordHash: userRecord.password,
-      passwordSecretVersion: userRecord.password_secret_version
+      password
     })
     if (!checkPasswordSuccess) {
       // 更新用户ip对应的密码错误记录
@@ -162,8 +173,8 @@ async function thirdPartyLogin (params = {}) {
     user
   } = params
   return {
-    mobileComfirmd: user.mobile_comfirmd,
-    emailComfirmd: user.email_comfirmd
+    mobileConfirmed: !!user.mobile_confirmed,
+    emailConfirmed: !!user.email_confirmed
   }
 }
 
@@ -173,18 +184,35 @@ async function postLogin (params = {}) {
     extraData,
     isThirdParty = false
   } = params
+  const {
+    clientIP
+  } = this.getUniversalClientInfo()
+  const uniIdToken = this.getUniversalUniIdToken()
   const uid = user._id
   const updateData = {
     last_login_date: Date.now(),
-    last_login_ip: this.getClientInfo().clientIP,
+    last_login_ip: clientIP,
     ...extraData
   }
-  const {
-    token,
-    tokenExpired
-  } = await this.uniIdCommon.createToken({
+  const createTokenRes = await this.uniIdCommon.createToken({
     uid
   })
+
+  const {
+    errCode,
+    token,
+    tokenExpired
+  } = createTokenRes
+  if (errCode) {
+    throw createTokenRes
+  }
+
+  if (uniIdToken) {
+    try {
+      await logout.call(this)
+    } catch (error) {}
+  }
+
   await userCollection.doc(uid).update(updateData)
   await this.middleware.uniIdLog({
     data: {
@@ -205,7 +233,8 @@ async function postLogin (params = {}) {
           user
         })
         : {}
-    )
+    ),
+    passwordConfirmed: !!user.password
   }
 }
 

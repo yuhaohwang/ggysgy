@@ -3,7 +3,7 @@
 > uniapp 海报画板，更优雅的海报生成方案  
 > [查看更多 站点 1](https://limeui.qcoon.cn/#/painter)  
 > [查看更多 站点 2](http://liangei.gitee.io/limeui/#/painter)  
-> Q 群：806744170
+> Q 群：1169785031
 
 ## 平台兼容
 
@@ -16,19 +16,28 @@
 
 ## 代码演示
 
+### 插件demo
+- lime-painter 为 demo
+- 位于 uni_modules/lime-painter/components/lime-painter
+- 导入插件后直接使用可查看demo
+```vue
+<lime-painter />
+```
+
+
 ### 基本用法
 
-- 插件提供 JSON 及 XML 的方式绘制海报
+- 插件提供 JSON 及 Template 的方式绘制海报
 - 参考 css 块状流布局模拟 css schema。
+- 另外flex布局还不是成完善，请谨慎使用，普通的流布局我觉得已经够用了。
 
-
-#### 方式一 XML
+#### 方式一 Template
 
 - 提供`l-painter-view`、`l-painter-text`、`l-painter-image`、`l-painter-qrcode`四种类型组件
 - 通过 `css` 属性绘制样式，与 style 使用方式保持一致。
 ```html
 <l-painter>
-	//如果使用XML出现顺序错乱，可使用`template` 等所有变量完成再显示
+	//如果使用Template出现顺序错乱，可使用`template` 等所有变量完成再显示
 	<template v-if="show">
 		<l-painter-view
 			css="background: #07c160; height: 120rpx; width: 120rpx; display: inline-block"
@@ -106,7 +115,7 @@ data() {
 - 类似于 `div` 可以嵌套承载更多的 view、text、image，qrcode 共同构建一颗完整的节点树
 - 在 JSON 里具有 `views` 的数组字段，用于嵌套承载节点。
 
-#### 方式一 XML
+#### 方式一 Template
 
 ```html
 <l-painter>
@@ -166,7 +175,7 @@ data() {
 - 支持省略号，使用 css 的`line-clamp`设置行数，当文字内容超过会显示省略号。
 - 支持`text-decoration`
 
-#### 方式一 XML
+#### 方式一 Template
 
 ```html
 <l-painter>
@@ -232,13 +241,13 @@ data() {
 ### Image 图片
 
 - 通过 `src` 属性填写图片路径。
-- 图片路径支持：网络图片，本地 static 里的图片路径，缓存路径
+- 图片路径支持：网络图片，本地 static 里的图片路径，缓存路径，**字节的static目录是写相对路径**
 - 通过 `css` 的 `object-fit`属性可以设置图片的填充方式，可选值见下方 CSS 表格。
 - 通过 `css` 的 `object-position`配合 `object-fit` 可以设置图片的对齐方式，类似于`background-position`，详情见下方 CSS 表格。
 - 使用网络图片时：小程序需要去公众平台配置 [downloadFile](https://mp.weixin.qq.com/) 域名
 - 使用网络图片时：**H5 和 Nvue 需要决跨域问题**
 
-#### 方式一 XML
+#### 方式一 Template
 
 ```html
 <l-painter>
@@ -304,7 +313,7 @@ data() {
 - 通过 `css` 里的 `background`可设置背景色。
 - 通过 `css `里的 `width`、`height`设置尺寸。
 
-#### 方式一 XML
+#### 方式一 Template
 
 ```html
 <l-painter>
@@ -328,10 +337,23 @@ data() {
 }
 ```
 
+### 富文本
+- 这是一个有限支持的测试能力，只能通过JSON方式，不要抱太大希望!
+- 首先需要把富文本转成JSON,这需要引入`parser`这个包，如果你不使用是不会进入主包
+
+```html
+<l-painter ref="painter"/>
+```
+```js
+import parseHtml from '@/uni_modules/lime-painter/parser'
+const json = parseHtml(`<p><span>测试测试</span><img src="/static/logo.png"/></p>`)
+this.$refs.painter.render(json)
+```
+
 ### 生成图片
 
-- 1、通过设置`isCanvasToTempFilePath`自动生成图片并在 `@success` 事件里接收海报临时路径
-- 2、通过调用内部方法生成图片：
+- 方式1、通过设置`isCanvasToTempFilePath`自动生成图片并在 `@success` 事件里接收海报临时路径
+- 方式2、通过调用内部方法生成图片：
 
 ```html
 <l-painter ref="painter">...code</l-painter>
@@ -418,21 +440,20 @@ access-control-allow-origin:*
 
 - 提供一份示例，只把插件当成生成图片的工具，非必要不要在弹窗里使用。
 - 通过设置`isCanvasToTempFilePath`主动生成图片，再由 `@success` 事件接收海报临时路径
-- 设置`custom-style="position: fixed; left: 200%"`样式把画板移到屏幕之外，达到隐藏画板的效果。
-- **注意**：受平台影响海报画板最好不要隐藏，可能会无法生成图片。
-
-#### 方式一 XML
+- 设置`hidden`隐藏画板。
+请注意，示例用到了图片，海报的渲染是包括下载图片的时间，也许在某天图片会失效或访问超级慢，请更换为你的图片再查看，另外如果你是小程序请在使用示例时把**不校验合法域名**勾上！！！！！不然不显示还以为是插件的锅，求求了大佬们！
+#### 方式一 Template
 
 ```html
 <image :src="path" mode="widthFix"></image>
 <l-painter
   isCanvasToTempFilePath
   @success="path = $event"
-  custom-style="position: fixed; left: 200%"
+  hidden
   css="width: 750rpx; padding-bottom: 40rpx; background: linear-gradient(,#ff971b 0%, #ff5000 100%)"
 >
   <l-painter-image
-    src="https://cdn.jsdelivr.net/gh/liangei/image@latest/avatar-1.jpeg"
+    src="https://m.360buyimg.com/babel/jfs/t1/196317/32/13733/288158/60f4ea39E6fb378ed/d69205b1a8ed3c97.jpg"
     css="margin-left: 40rpx; margin-top: 40rpx; width: 84rpx;  height: 84rpx; border-radius: 50%;"
   />
   <l-painter-view
@@ -513,7 +534,7 @@ data() {
   :board="poster"
   isCanvasToTempFilePath
   @success="path = $event"
-  custom-style="position: fixed; left: 200%"
+  hidden
 />
 ```
 
@@ -529,7 +550,7 @@ data() {
 		    },
 		    views: [
 		        {
-		            src: "https://fastly.jsdelivr.net/gh/liangei/image@latest/avatar-1.jpeg",
+		            src: "https://m.360buyimg.com/babel/jfs/t1/196317/32/13733/288158/60f4ea39E6fb378ed/d69205b1a8ed3c97.jpg",
 		            type: "image",
 		            css: {
 		                background: "#fff",
@@ -708,6 +729,28 @@ data() {
 }
 ```
 
+
+### 自定义字体
+- 需要平台的支持，已知微信小程序支持，其它的没试过，如果可行请告之
+
+```
+// 需要在app.vue中下载字体
+uni.loadFontFace({
+	global:true,
+	scopes: ['native'],
+	family: '自定义字体名称',
+	source: 'url("https://sungd.github.io/Pacifico.ttf")',
+  
+	success() {
+	  console.log('success')
+  }
+})
+
+
+// 然后就可以在插件的css中写font-family: '自定义字体名称'
+```
+
+
 ### Nvue
 - 必须为HBX 3.4.11及以上
 
@@ -781,7 +824,7 @@ page({
     await painter.render();
   },
   // 获取canvas 2d
-  // 非2d也可以使用这里只是举个例子
+  // 非2d 需要传一个 createImage 方法用于获取图片信息 即把 getImageInfo 的 success 通过 promise resolve 返回
   getCentext() {
     return new Promise((resolve) => {
       wx.createSelectorQuery()
@@ -794,6 +837,7 @@ page({
             context: canvas.getContext("2d"),
             width: canvas.width,
             height: canvas.height,
+			// createImage: getImageInfo()
             pixelRatio: 2,
           });
         });
@@ -806,7 +850,7 @@ page({
 
 - 由于 1.8.x 版放弃了以定位的方式，所以 1.6.x 版更新之后要每个样式都加上`position: absolute`
 - 旧版的 `image` mode 模式被放弃，使用`object-fit`
-- 旧版的 `isRenderImage` 改成 `is-canvas-to-temp-filePath`
+- 旧版的 `isRenderImage` 改成 `is-canvas-to-temp-file-path`
 - 旧版的 `maxLines` 改成 `line-clamp`
 
 ## API
@@ -816,14 +860,16 @@ page({
 | 参数                       | 说明                                                         | 类型             | 默认值       |
 | -------------------------- | ------------------------------------------------------------ | ---------------- | ------------ |
 | board                      | JSON 方式的海报元素对象集                                    | <em>object</em>  | -            |
-| css                        | 海报最外层的样式，可以理解为`body`                           | <em>object</em>  | 参数请向下看 |
-| custom-style               | canvas 自定义样式                                            | <em>string</em>  |              |
-| is-canvas-to-temp-filePath | 是否生成图片，在`@success`事件接收图片地址                   | <em>boolean</em> | `false`      |
+| css                        | 海报内容最外层的样式，可以理解为`body`                           | <em>object</em>  | 参数请向下看 |
+| custom-style               | canvas 元素的样式                                            | <em>string</em>  |              |
+| hidden               		 | 隐藏画板                                                    | <em>boolean</em>  |   `false`    |
+| is-canvas-to-temp-file-path | 是否生成图片，在`@success`事件接收图片地址                   | <em>boolean</em> | `false`      |
 | after-delay                | 生成图片错乱，可延时生成图片                                 | <em>number</em>  | `100`        |
 | type                       | canvas 类型，对微信头条支付宝小程序可有效,可选值：`2d`，`''` | <em>string</em>  | `2d`         |
 | file-type                  | 生成图片的后缀类型, 可选值：`png`、`jpg`                     | <em>string</em>  | `png`        |
 | path-type                  | 生成图片路径类型，可选值`url`、`base64`                      | <em>string</em>  | `-`          |
 | pixel-ratio                | 生成图片的像素密度，默认为对应手机的像素密度，`nvue`无效     | <em>number</em>  | `-`          |
+| hidpi                | H5和APP是否使用高清处理     | <em>boolean</em>  | `true`          |
 | width                      | **废弃** 画板的宽度，一般只用于通过内部方法时加上            | <em>number</em>  | ``           |
 | height                     | **废弃** 画板的高度 ，同上                                   | <em>number</em>  | ``           |
 
@@ -844,6 +890,7 @@ page({
 | font-weight                                                                         | 文字粗细，可选值：`normal`、`bold`                                                                                                                                                   | `normal` |
 | font-size                                                                           | 文字大小，`string`，支持`rpx`、`px`                                                                                                                                                  | `14px`   |
 | text-decoration                                                                     | 文本修饰，可选值：`underline` 、`line-through`、`overline`                                                                                                                           | -        |
+| text-stroke                                                                         | 文字描边，可简写或各个值分开写，如：`text-stroke-color`, `text-stroke-width`                                                                                                              | -        |
 | text-align                                                                          | 文本水平对齐，可选值：`right` 、`center`                                                                                                                                             | `left`   |
 | display                                                                             | 框类型，可选值：`block`、`inline-block`、`flex`、`none`，当为`none`时是不渲染该段, `flex`功能简陋。                                                                                                            | -        |
 | flex                                                                                | 配合 display: flex; 属性定义了在分配多余空间,目前只用为数值如： flex: 1                                                                                                           | -        |
@@ -878,7 +925,7 @@ page({
 | done     | 绘制成功                                                         |        |
 | progress | 绘制进度                                                         | number |
 
-### 内部函数 Ref
+### 暴露函数 Expose
 | 事件名   | 说明                                                             | 返回值 |
 | -------- | ---------------------------------------------------------------- | ------ |
 | render(object)   |  渲染器，传入JSON 绘制海报 | promise   |
@@ -894,18 +941,23 @@ page({
 - 4、发生保存图片倾斜变形或提示 native buffer exceed size limit 时，使用 pixel-ratio="2"参数，降分辨率。
 - 5、h5 保存图片不需要调接口，提示用户长按图片保存。
 - 6、画板不能隐藏，包括`v-if`，`v-show`、`display:none`、`opacity:0`，另外也不要把画板放在弹窗里。如果需要隐藏画板请设置 `custom-style="position: fixed; left: 200%"`
-- 7、微信小程序 canvas 2d **不支持真机调试**，请使用真机预览方式。
+- 7、微信小程序真机调试请使用 **真机调试2.0**，不支持1.0。
 - 8、微信小程序打开调试时可以生但并闭无法生成时，这种情况一般是没有在公众号配置download域名
 - 9、HBX 3.4.5之前的版本不支持vue3
 - 10、在微信开发工具上 canvas 层级最高无法zindex，并不影响真机
 - 11、请不要导入非uni_modules插件
+- 12、关于QQ小程序 报 Propertyor method"toJSON"is not defined 请把基础库调到 1.50.3
+- 13、支付宝小程序 IDE 不支持 生成图片 请以真机调试结果为准
+- 14、返回值为字符串 `data:,` 大概是尺寸超过限制，设置 pixel-ratio="2"
 - 华为手机 APP 上无法生成图片，请使用 HBX2.9.11++（已过时，忽略这条）
 - IOS APP 请勿使用 HBX2.9.3.20201014 的版本！这个版本无法生成图片。（已过时，忽略这条）
 - 苹果微信 7.0.20 存在闪退和图片无法 onload 为微信 bug（已过时，忽略这条）
+- 微信小程序 IOS 旧接口 如父级设置圆角，子级也设会导致子级的失效，为旧接口BUG。
+- 微信小程序 安卓 旧接口 如使用图片必须加背景色，为旧接口BUG。
 
 ## 打赏
 
 如果你觉得本插件，解决了你的问题，赠人玫瑰，手留余香。
 
-![输入图片说明](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/image/222521_bb543f96_518581.jpeg "微信图片编辑_20201122220352.jpg")
-![输入图片说明](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/image/wxplay.jpg "wxplay.jpg")
+![](https://testingcf.jsdelivr.net/gh/liangei/image@1.9/alipay.png)
+![](https://testingcf.jsdelivr.net/gh/liangei/image@1.9/wpay.png)

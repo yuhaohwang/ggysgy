@@ -8,6 +8,7 @@
 		name: 'lime-painter-text',
 		mixins:[children('painter')],
 		props: {
+			uid: String,
 			css: [String, Object],
 			text: [String, Number],
 			replace: Object,

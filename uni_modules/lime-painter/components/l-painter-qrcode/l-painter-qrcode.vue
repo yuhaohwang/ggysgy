@@ -7,6 +7,7 @@
 		name: 'lime-painter-qrcode',
 		mixins:[children('painter')],
 		props: {
+			id: String,
 			css: [String, Object],
 			text: String
 		},

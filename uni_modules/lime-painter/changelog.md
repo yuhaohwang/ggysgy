@@ -1,3 +1,49 @@
+## 1.9.5.7（2023-07-27）
+- fix: 去掉多余的方法
+- chore: 更新文档，增加自定义字体说明
+## 1.9.5.6（2023-07-21）
+- feat: 有限的支持富文本
+- feat: H5和APP 增加 `hidpi` prop，主要用于大尺寸无法生成图片时用
+- fix: 修复 钉钉小程序 缺少 `measureText` 方法
+- chore: 由于微信小程序 pc 端的 canvas 2d 时不时抽风，故不使用canvas 2d
+## 1.9.5.5（2023-06-27）
+- fix: 修复把`emoji`表情字符拆分成多个字符的情况
+## 1.9.5.4（2023-06-05）
+- fix: 修复因`canvasToTempFilePathSync`监听导致重复调用
+## 1.9.5.3（2023-05-23）
+- fix: 因isPc错写成了isPC导致小程序PC不能生成图片
+## 1.9.5.2（2023-05-22）
+- feat: 删除多余文件
+## 1.9.5.1（2023-05-22）
+- fix: 修复 文字行数与`line-clamp`相同但不满一行时也加了省略号的问题
+## 1.9.5（2023-05-14）
+- feat: 增加 `text-indent` 和 `calc` 方法
+- feat: 优化 布局时间
+## 1.9.4.4（2023-04-15）
+- fix: 修复无法匹配负值
+- fix: 修复 Nvue IOS getImageInfo `useCORS` 为 undefined
+## 1.9.4.3（2023-04-01）
+- feat: 增加支持文字描边 `text-stroke: '5rpx #fff'`
+## 1.9.4.2（2023-03-30）
+- fix: 修复 支付宝小程序 isPC 在手机也为true的问题
+- feat: 由 微信开发工具 3060 版 无法获取图片尺寸，现 微信开发工具 3220 版 修复该问题，故还原上一版的获取图片方式。
+## 1.9.4.1（2023-03-28）
+- fix: 修复固定高度不正确问题
+## 1.9.4（2023-03-17）
+- fix: nvue ios getImageInfo缺少this报错
+- fix: pathType 非2d无效问题
+- fix: 修复 小米9se 可能会存在多次init 导致画面多次放大
+- fix: 修复 border 分开写 width style无效问题
+- fix: 修复 支付宝小程序IOS 再次进入不渲染的问题
+- fix: 修复 支付宝小程序安卓Zindex排序错乱问题
+- fix: 修复 微信开发工具 3060 版 无法获取图片的问题
+- feat: 把 for in 改为 forEach
+- feat: 增加 hidden
+- feat: 根节点 box-sizing 默认 `border-box`
+- feat: 增加支持 `vw` `wh`
+- chore: pathType 取消 默认值，因为字节开发工具不能显示
+- chore: 支付宝小程序开发工具不支持 生成图片 请以真机调试为准
+- bug: 企业微信 2.20.3无法使用
 ## 1.9.3.5（2022-06-29）
 - feat: justifyContent 增加 `space-around`、`space-between`
 - feat: canvas 2d 也使用`getImageInfo`

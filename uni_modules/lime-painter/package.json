@@ -1,11 +1,11 @@
 {
   "id": "lime-painter",
   "displayName": "海报画板",
-  "version": "1.9.3.5",
-  "description": "一款canvas海报组件，更优雅的海报生成方案",
+  "version": "1.9.5.7",
+  "description": "一款canvas海报组件，更优雅的海报生成方案，有限的支持富文本",
   "keywords": [
     "海报",
-    "canvas",
+    "富文本",
     "生成海报",
     "生成二维码",
     "JSON"
@@ -14,11 +14,7 @@
   "engines": {
     "HBuilderX": "^3.4.14"
   },
-  "dcloudext": {
-    "category": [
-      "前端组件",
-      "通用组件"
-    ],
+"dcloudext": {
     "sale": {
       "regular": {
         "price": "0.00"
@@ -35,7 +31,8 @@
       "data": "无",
       "permissions": "无"
     },
-    "npmurl": ""
+    "npmurl": "",
+    "type": "component-vue"
   },
   "uni_modules": {
     "dependencies": [],

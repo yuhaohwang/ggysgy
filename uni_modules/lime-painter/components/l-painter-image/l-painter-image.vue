@@ -8,6 +8,7 @@
 		name: 'lime-painter-image',
 		mixins:[children('painter')],
 		props: {
+			id: String,
 			css: [String, Object],
 			src: String
 		},

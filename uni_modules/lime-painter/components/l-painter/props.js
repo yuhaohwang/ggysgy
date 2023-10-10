@@ -6,6 +6,7 @@ export default {
 			type: String,
 			default: 'png'
 		},
+		hidden: Boolean,
 		quality: {
 			type: Number,
 			default: 1
@@ -30,6 +31,7 @@ export default {
 			type: Number,
 			default: 100
 		},
+		performance: Boolean,
 		// #ifdef MP-WEIXIN || MP-TOUTIAO || MP-ALIPAY
 		type: {
 			type: String,
@@ -43,8 +45,12 @@ export default {
 			default: 2000
 		},
 		// #endif
-		// #ifdef H5
-		useCORS: Boolean
+		// #ifdef H5 || APP-PLUS
+		useCORS: Boolean,
+		hidpi: {
+			type: Boolean,
+			default: true
+		}
 		// #endif
 	}
 }

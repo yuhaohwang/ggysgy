@@ -10,7 +10,9 @@ const {
 } = require('../../lib/utils/unified-login')
 const {
   generateWeixinCache,
-  getWeixinPlatform
+  getWeixinPlatform,
+  saveWeixinUserKey,
+  saveSecureNetworkCache
 } = require('../../lib/utils/weixin')
 const {
   LOG_TYPE
@@ -36,8 +38,13 @@ module.exports = async function (params = {}) {
   this.middleware.validate(params, schema)
   const {
     code,
-    inviteCode
+    inviteCode,
+    // 内部参数，暂不暴露
+    secureNetworkCache = false
   } = params
+  const {
+    appId
+  } = this.getUniversalClientInfo()
   const weixinApi = initWeixin.call(this)
   const weixinPlatform = getWeixinPlatform.call(this)
   let apiName
@@ -77,6 +84,18 @@ module.exports = async function (params = {}) {
     expired: accessTokenExpired // App端微信用户accessToken过期时间
   } = getWeixinAccountResult
 
+  if (secureNetworkCache) {
+    if (weixinPlatform !== 'mp') {
+      throw new Error('Unsupported weixin platform, expect mp-weixin')
+    }
+    await saveSecureNetworkCache.call(this, {
+      code,
+      openid,
+      unionid,
+      sessionKey
+    })
+  }
+
   const {
     type,
     user
@@ -88,7 +107,12 @@ module.exports = async function (params = {}) {
       wx_unionid: unionid
     }
   })
-  const extraData = {}
+  const extraData = {
+    wx_openid: {
+      [`${weixinPlatform}_${appId}`]: openid
+    },
+    wx_unionid: unionid
+  }
   if (type === 'register' && weixinPlatform !== 'mp') {
     const {
       nickname,
@@ -97,33 +121,48 @@ module.exports = async function (params = {}) {
       accessToken,
       openid
     })
-    // eslint-disable-next-line n/no-deprecated-api
-    const extName = url.parse(avatar).pathname.split('.').pop()
-    const cloudPath = `user/avatar/${openid.slice(-8) + Date.now()}-avatar.${extName}`
-    const getAvatarRes = await uniCloud.httpclient.request(avatar)
-    if (getAvatarRes.status >= 400) {
-      throw {
-        errCode: ERROR.GET_THIRD_PARTY_USER_INFO_FAILED
+
+    if (avatar) {
+      // eslint-disable-next-line n/no-deprecated-api
+      const avatarPath = url.parse(avatar).pathname
+      const extName = avatarPath.indexOf('.') > -1 ? url.parse(avatar).pathname.split('.').pop() : 'jpg'
+      const cloudPath = `user/avatar/${openid.slice(-8) + Date.now()}-avatar.${extName}`
+      const getAvatarRes = await uniCloud.httpclient.request(avatar)
+      if (getAvatarRes.status >= 400) {
+        throw {
+          errCode: ERROR.GET_THIRD_PARTY_USER_INFO_FAILED
+        }
+      }
+
+      const {
+        fileID
+      } = await uniCloud.uploadFile({
+        cloudPath,
+        fileContent: getAvatarRes.data
+      })
+
+      extraData.avatar_file = {
+        name: cloudPath,
+        extname: extName,
+        url: fileID
       }
     }
-    const {
-      fileID
-    } = await uniCloud.uploadFile({
-      cloudPath,
-      fileContent: getAvatarRes.data
-    })
+
     extraData.nickname = nickname
-    extraData.avatar_file = {
-      name: cloudPath,
-      extname: extName,
-      url: fileID
-    }
   }
+  await saveWeixinUserKey.call(this, {
+    openid,
+    sessionKey,
+    accessToken,
+    refreshToken,
+    accessTokenExpired
+  })
   return postUnifiedLogin.call(this, {
     user,
     extraData: {
       ...extraData,
       ...generateWeixinCache.call(this, {
+        openid,
         sessionKey, // 微信小程序用户sessionKey
         accessToken, // App端微信用户accessToken
         refreshToken, // App端微信用户refreshToken

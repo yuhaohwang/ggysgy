@@ -3,7 +3,8 @@ export const isBase64 = (path) => /^data:image\/(\w+);base64/.test(path);
 export function sleep(delay) {
 	return new Promise(resolve => setTimeout(resolve, delay))
 }
-const isDev = ['devtools'].includes(uni.getSystemInfoSync().platform)
+let {platform, SDKVersion} = uni.getSystemInfoSync() 
+export const isPC = /windows|mac/.test(platform)
 // 缓存图片
 let cache = {}
 export function isNumber(value) {
@@ -65,6 +66,26 @@ export function compareVersion(v1, v2) {
 	}
 	return 0
 }
+
+function gte(version) {
+  // #ifdef MP-ALIPAY
+  SDKVersion = my.SDKVersion
+  // #endif
+  return compareVersion(SDKVersion, version) >= 0;
+}
+export function canIUseCanvas2d() {
+	// #ifdef MP-WEIXIN
+	return gte('2.9.2');
+	// #endif
+	// #ifdef MP-ALIPAY
+	return gte('2.7.15');
+	// #endif
+	// #ifdef MP-TOUTIAO
+	return gte('1.78.0');
+	// #endif
+	return false
+}
+
 // #ifdef MP
 export const prefix = () => {
 	// #ifdef MP-TOUTIAO
@@ -89,73 +110,6 @@ export const prefix = () => {
 // #endif
 
 
-const base64ToArrayBuffer = (data) => {
-	// #ifndef MP-WEIXIN || APP-PLUS
-	/**
-	 * Base64Binary.decode(base64_string);  
-	 * Base64Binary.decodeArrayBuffer(base64_string); 
-	 */
-	const Base64Binary = {
-		_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-		/* will return a  Uint8Array type */
-		decodeArrayBuffer(input) {
-			const bytes = (input.length / 4) * 3;
-			const ab = new ArrayBuffer(bytes);
-			this.decode(input, ab);
-			return ab;
-		},
-		removePaddingChars(input) {
-			const lkey = this._keyStr.indexOf(input.charAt(input.length - 1));
-			if (lkey == 64) {
-				return input.substring(0, input.length - 1);
-			}
-			return input;
-		},
-		decode(input, arrayBuffer) {
-			//get last chars to see if are valid
-			input = this.removePaddingChars(input);
-			input = this.removePaddingChars(input);
-
-			const bytes = parseInt((input.length / 4) * 3, 10);
-
-			let uarray;
-			let chr1, chr2, chr3;
-			let enc1, enc2, enc3, enc4;
-			let i = 0;
-			let j = 0;
-
-			if (arrayBuffer)
-				uarray = new Uint8Array(arrayBuffer);
-			else
-				uarray = new Uint8Array(bytes);
-
-			input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-
-			for (i = 0; i < bytes; i += 3) {
-				//get the 3 octects in 4 ascii chars
-				enc1 = this._keyStr.indexOf(input.charAt(j++));
-				enc2 = this._keyStr.indexOf(input.charAt(j++));
-				enc3 = this._keyStr.indexOf(input.charAt(j++));
-				enc4 = this._keyStr.indexOf(input.charAt(j++));
-
-				chr1 = (enc1 << 2) | (enc2 >> 4);
-				chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-				chr3 = ((enc3 & 3) << 6) | enc4;
-
-				uarray[i] = chr1;
-				if (enc3 != 64) uarray[i + 1] = chr2;
-				if (enc4 != 64) uarray[i + 2] = chr3;
-			}
-			return uarray;
-		}
-	}
-	return Base64Binary.decodeArrayBuffer(data)
-	// #endif
-	// #ifdef MP-WEIXIN || APP-PLUS
-	return uni.base64ToArrayBuffer(data)
-	// #endif
-}
-
 
 /**
  * base64转路径
@@ -174,17 +128,15 @@ export function base64ToPath(base64) {
 		const time = new Date().getTime();
 		let pre = prefix()
 		const filePath = `${pre.env.USER_DATA_PATH}/${time}.${format}`
-		//let buffer = base64ToArrayBuffer(bodyData)
 		fs.writeFile({
 			filePath,
-			data: base64.split(',')[1], //base64.replace(/^data:\S+\/\S+;base64,/, ''),
+			data: base64.split(',')[1],
 			encoding: 'base64',
-			// data: buffer,
-			// encoding: 'binary',
 			success() {
 				resolve(filePath)
 			},
 			fail(err) {
+				console.error(err)
 				reject(err)
 			}
 		})
@@ -266,6 +218,7 @@ export function pathToBase64(path) {
 					resolve('data:image/png;base64,' + res.data)
 				},
 				fail: (error) => {
+					console.error({error, path})
 					reject(error)
 				}
 			})
@@ -292,17 +245,16 @@ export function pathToBase64(path) {
 
 
 export function getImageInfo(path, useCORS) {
+	const isCanvas2D = this && this.canvas && this.canvas.createImage
 	return new Promise(async (resolve, reject) => {
-		let src = path
+		// let time = +new Date()
+		let src = path.replace(/^@\//,'/')
 		if (cache[path] && cache[path].errMsg) {
 			resolve(cache[path])
 		} else {
 			try {
-				// if (!isBase64 && PLATFORM == UNI_PLATFORM.PLUS && !/^\/?(static|_doc)\//.test(src)) {
-				// 	src = await downloadFile(path) as string
-				// } else 
 				// #ifdef MP || APP-PLUS
-				if (isBase64(path)) {
+				if (isBase64(path) && (isCanvas2D ? isPC : true)) {
 					src = await base64ToPath(path)
 				}
 				// #endif
@@ -311,13 +263,31 @@ export function getImageInfo(path, useCORS) {
 					src = await pathToBase64(path)
 				}
 				// #endif
-				
 			} catch (error) {
 				reject({
 					...error,
 					src
 				})
 			}
+			// #ifndef APP-NVUE
+			if(isCanvas2D && !isPC) {
+				const img = this.canvas.createImage()
+				img.onload = function() {
+					const image = {
+						path: img,
+						width:  img.width,
+						height:  img.height
+					}
+					cache[path] = image
+					resolve(cache[path])
+				}
+				img.onerror = function(err) {
+					reject({err,path})
+				}
+				img.src = src
+				return
+			}
+			// #endif
 			uni.getImageInfo({
 				src,
 				success: (image) => {
@@ -325,13 +295,8 @@ export function getImageInfo(path, useCORS) {
 					// #ifdef MP-WEIXIN || MP-BAIDU || MP-QQ || MP-TOUTIAO
 					image.path = localReg.test(src) ?  `/${image.path}` : image.path;
 					// #endif
-					// #ifdef H5
-					image.path = image.path.replace(/^\./, window.location.origin)
-					// #endif
-					
-					if(this.canvas.createImage) {
+					if(isCanvas2D) {
 						const img = this.canvas.createImage()
-						img.src = image.path
 						img.onload = function() {
 							image.path = img
 							cache[path] = image
@@ -340,12 +305,26 @@ export function getImageInfo(path, useCORS) {
 						img.onerror = function(err) {
 							reject({err,path})
 						}
-					} else if (isDev) {
-						resolve(image)
-					} else {
-						cache[path] = image
-						resolve(cache[path])
+						img.src = src
+						return
 					}
+					// #ifdef APP-PLUS
+					// console.log('getImageInfo', +new Date() - time)
+					// ios 比较严格 可能需要设置跨域
+					if(uni.getSystemInfoSync().osName == 'ios' && useCORS) {
+						pathToBase64(image.path).then(base64 => {
+							image.path = base64
+							cache[path] = image
+							resolve(cache[path])
+						}).catch(err => {
+							console.error({err, path})
+							reject({err,path})
+						})
+						return
+					}
+					// #endif
+					cache[path] = image
+					resolve(cache[path])
 				},
 				fail(err) {
 					console.error({err, path})
@@ -356,26 +335,6 @@ export function getImageInfo(path, useCORS) {
 	})
 }
 
-export function downloadFile(url) {
-	if (!url) return Promise.reject({
-		err: 'no url'
-	})
-	return new Promise((resolve, reject) => {
-		if (cache[url]) {
-			return reject()
-		}
-		cache[url] = 1
-		uni.downloadFile({
-			url,
-			success(res) {
-				resolve(res)
-			},
-			fail(err) {
-				reject(err)
-			}
-		})
-	})
-}
 
 // #ifdef APP-PLUS
 const getLocalFilePath = (path) => {
@@ -399,81 +358,6 @@ const getLocalFilePath = (path) => {
 	}
 	return '_www/' + path
 }
-const getFile = (url) => {
-	return new Promise((resolve, rejcet) => {
-		plus.io.resolveLocalFileSystemURL(url, resolve, (err) => {
-			resolve(false)
-		})
-	})
-}
-const createFile = ({
-	fs,
-	url,
-	target,
-	name
-}) => {
-	return new Promise((resolve, reject) => {
-		plus.io.resolveLocalFileSystemURL(url, res1 => {
-			fs.root.getDirectory(target, {
-				create: true
-			}, fileEntry => {
-				const success = () => {
-					res1.remove()
-					resolve()
-				}
-				getFile(target + name).then(res => {
-					if (res) {
-						res.remove((res2) => {
-							res1.moveTo(fileEntry, name, success, reject)
-						})
-					}
-					res1.moveTo(fileEntry, name, success, reject)
-				})
-			})
-		}, reject)
-	})
-}
-export function useNvue(target, version, timeout) {
-	return new Promise((resolve, reject) => {
-		plus.io.requestFileSystem(plus.io.PRIVATE_DOC, async (fs) => {
-			try {
-				cache['lime-painter'] = 0
-				let names = ['uni.webview.1.5.3.js', 'painter.js', 'index.html']
-				let urls = ['https://gitee.com/dcloud/uni-app/raw/dev/dist/',
-					'https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/lime-painter/'
-				]
-				const oldVersion = plus.storage.getItem('lime-painter')
-				const isFile = await getFile(`${target}${names[1]}`)
-				if (isFile && oldVersion && compareVersion(oldVersion, version) >= 0) {
-					resolve()
-				} else {
-					for (var i = 0; i < names.length; i++) {
-						const name = names[i]
-						const file = await downloadFile(urls[i >= 1 ? 1 : 0] + name)
-						await createFile({
-							fs,
-							url: file.tempFilePath,
-							target,
-							name: name.includes('uni.webview') ? 'uni.webview.js' : name
-						})
-					}
-					plus.storage.setItem('lime-painter', version)
-					cache['lime-painter'] = version
-					resolve()
-				}
-			} catch (e) {
-				let index = parseInt(timeout / 20)
-				while (!cache['lime-painter'] && index) {
-					await sleep(20)
-					index--
-				}
-				if (cache['lime-painter']) {
-					resolve()
-				} else {
-					reject(e)
-				}
-			}
-		}, reject)
-	})
-}
 // #endif
+
+

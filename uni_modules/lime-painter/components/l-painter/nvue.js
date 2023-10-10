@@ -1,7 +1,7 @@
 // #ifdef APP-NVUE
 import { sleep, getImageInfo, isBase64, useNvue, networkReg } from './utils';
 const dom = weex.requireModule('dom')
-import {version } from '../../package.json'
+import { version } from '../../package.json'
 
 export default {
 	data() {
@@ -10,12 +10,6 @@ export default {
 			isInitFile: false,
 			osName: uni.getSystemInfoSync().osName
 		}
-	},
-	created() {
-		// if (this.hybrid) return
-		// useNvue('_doc/uni_modules/lime-painter/', version, this.timeout).then(res => {
-		// 	this.isInitFile = true
-		// })
 	},
 	methods: {
 		getParentWeith() {
@@ -146,25 +140,6 @@ export default {
 				this.$emit('fail', e)
 			}
 		},
-		getfile(e){
-			let url = plus.io.convertLocalFileSystemURL( e )
-			return new Promise((resolve,reject)=>{
-				plus.io.resolveLocalFileSystemURL(url, entry => {
-					var reader = null;
-					entry.file( file => {
-						reader = new plus.io.FileReader();
-						reader.onloadend =  ( read )=> {
-							resolve(read.target.result)
-						};
-						reader.readAsDataURL( file );
-					}, function ( error ) {
-						alert( error.message );
-					} );
-				},err=>{
-					resolve(e)
-				})
-			})
-		},
 		async calcImage(args) {
 			let node = JSON.parse(JSON.stringify(args))
 			const urlReg = /url\((.+)\)/
@@ -174,11 +149,8 @@ export default {
 			if(['text', 'qrcode'].includes(node.type)) {
 				return node
 			}
-			if ((node.type === "image" || isBG) && url && !isBase64(url) && (this.osName == 'ios' ? true : !networkReg.test(url))) {
-				let {path} = await getImageInfo(url)
-				if(this.osName == 'ios') {
-					path = await this.getfile(path)
-				}
+			if ((node.type === "image" || isBG) && url && !isBase64(url) && (this.osName == 'ios' || !networkReg.test(url))) {
+				let {path} = await getImageInfo(url, true)
 				if (isBG) {
 					node.css.backgroundImage = `url(${path})`
 				} else {
@@ -202,7 +174,7 @@ export default {
 			this.webview.evalJS(`save(${JSON.stringify(args)})`)
 			try {
 				let tempFilePath = await this.getTempFilePath()
-				tempFilePath = await this.setFilePath(tempFilePath)
+				tempFilePath = await this.setFilePath(tempFilePath, args)
 				args.success({
 					errMsg: "canvasToTempFilePath:ok",
 					tempFilePath
