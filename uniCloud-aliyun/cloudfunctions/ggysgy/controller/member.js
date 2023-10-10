@@ -364,7 +364,7 @@ module.exports = class MemberController extends Controller {
     const $ = this.db.command.aggregate
     // 我的订单
     const orderRes = await this.db
-      .collection('usemall-order')
+      .collection('ggysgy-order')
       .aggregate()
       .match({
         create_uid: $.eq(uid),
@@ -377,14 +377,14 @@ module.exports = class MemberController extends Controller {
 
     // 我的足迹
     const browsing = await this.db
-      .collection('usemall-goods-history')
+      .collection('ggysgy-goods-history')
       .where({
         create_uid: uid,
       })
       .count()
     // 我的收藏
     const collect = await this.db
-      .collection('usemall-member-collect')
+      .collection('ggysgy-member-collect')
       .where({
         create_uid: uid,
       })
@@ -392,7 +392,7 @@ module.exports = class MemberController extends Controller {
     // todo: 优惠券
 
     const memberRes = await this.db
-      .collection('usemall-member')
+      .collection('ggysgy-member')
       .doc(uid)
       .field({
         member_session_key: false,
@@ -426,7 +426,7 @@ module.exports = class MemberController extends Controller {
         comment
       } = this.ctx.data
       await this.db.collection('uni-id-users').doc(user.uid).update(this.ctx.data)
-      await this.db.collection('usemall-member').doc(user.uid).update({
+      await this.db.collection('ggysgy-member').doc(user.uid).update({
         member_nickname: nickname,
         member_gender: gender,
         member_headimg: avatar,
@@ -449,7 +449,7 @@ module.exports = class MemberController extends Controller {
       } = this.ctx.data
 
       let obj_id = user.uid + goods_id
-      return await this.db.collection('usemall-member-collect').doc(obj_id).set({
+      return await this.db.collection('ggysgy-member-collect').doc(obj_id).set({
         goods: goods_id,
         state,
         create_uid: user.uid,
@@ -467,7 +467,7 @@ module.exports = class MemberController extends Controller {
       let obj_id = res.uid
 
       this.db
-        .collection('usemall-member')
+        .collection('ggysgy-member')
         .doc(obj_id)
         .update({
           ...member,
@@ -481,7 +481,7 @@ module.exports = class MemberController extends Controller {
         .then(res => {
           if (res && res.updated <= 0) {
             this.db
-              .collection('usemall-member')
+              .collection('ggysgy-member')
               .doc(obj_id)
               .set({
                 ...member,
@@ -508,7 +508,7 @@ module.exports = class MemberController extends Controller {
     this.uidlog(res)
 
     const memberRes = await this.db
-      .collection('usemall-member')
+      .collection('ggysgy-member')
       .doc(res.uid)
       .field({
         member_session_key: false,

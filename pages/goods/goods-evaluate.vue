@@ -69,7 +69,7 @@
     methods: {
       loadData() {
         const $ = this.$dbcmd.aggregate
-        this.$db['usemall-goods-comment']
+        this.$db['ggysgy-goods-comment']
           .collection()
           .aggregate()
           .match({
@@ -91,7 +91,7 @@
             this.stateDatas = [{ name: '全部', cnt: total }, ...__stateDatas]
           })
 
-        this.$db['usemall-goods-comment']
+        this.$db['ggysgy-goods-comment']
           .whereif(this.state != '全部', { review_type: this.state })
           .where({ goods_id: this.goods_id })
           .tolist({ rows: 30, orderby: 'create_time desc' })

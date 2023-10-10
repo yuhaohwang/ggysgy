@@ -33,7 +33,7 @@
 </template>
 
 <script>
-const _collect = 'usemall-member-collect'
+const _collect = 'ggysgy-member-collect'
 import { mapState } from 'vuex'
 export default {
   computed: {
@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     loadData() {
-      this.$db['usemall-member-collect, usemall-goods']
+      this.$db['ggysgy-member-collect, ggysgy-goods']
         .collection()
         .where('create_uid == $env.uid')
         .field(

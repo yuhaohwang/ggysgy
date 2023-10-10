@@ -67,7 +67,7 @@
     onShow() {},
     methods: {
       loadData() {
-        this.$func.usemall.call('order/express', { order_id: this.order_id }).then(res => {
+        this.$func.ggysgy.call('order/express', { order_id: this.order_id }).then(res => {
           if (res.code == 200) {
             this.expressData = res.datas
           }

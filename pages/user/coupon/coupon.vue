@@ -152,7 +152,7 @@
           cur_nav.loadingType = 'more'
         }
 
-        this.$func.usemall.call('member/coupon', this.reqdata).then(res => {
+        this.$func.ggysgy.call('member/coupon', this.reqdata).then(res => {
           cur_nav.loaded = true
 
           if (res.code === 200) {

@@ -370,7 +370,7 @@ export default {
 
   methods: {
     async loadData() {
-      await this.$func.usemall
+      await this.$func.ggysgy
         .call('goods/detail', {
           goods_id: this.id,
           share_mid: this.mid,
@@ -496,12 +496,12 @@ export default {
 
       // #ifdef MP
       // 此处的二维码内容，需自己在小程序端配置普通二维码规则
-      this.posterQRcode = `https://usemall.use-cloud.com/wxmp-product/${this.goods._id}_${this.member._id}`
+      this.posterQRcode = `https://ggysgy.use-cloud.com/wxmp-product/${this.goods._id}_${this.member._id}`
       // #endif
 
       // #ifdef H5
       // 如果为 h5，二维码内容需配置为线上版本产品详情路径
-      this.posterQRcode = `https://usemall-h5.use-cloud.com/#/pages/goods/goods?id=${this.goods._id}&mid=${this.member._id}`
+      this.posterQRcode = `https://ggysgy-h5.use-cloud.com/#/pages/goods/goods?id=${this.goods._id}&mid=${this.member._id}`
       // #endif
     },
     // 海报二维码生成成功
@@ -571,7 +571,7 @@ export default {
         goods_id: this.id,
         state: !this.favorite ? '已取消' : '已收藏',
       }
-      this.$func.usemall.call('member/collect', _data).then(res => {
+      this.$func.ggysgy.call('member/collect', _data).then(res => {
         if (res.datas) {
           !this.favorite ? this.$api.msg('取消成功') : this.$api.msg('收藏成功')
           return
@@ -584,7 +584,7 @@ export default {
     tocart(params) {
       if (!this.loginCheck()) return
 
-      this.$func.usemall
+      this.$func.ggysgy
         .call('goods/addcart', {
           goods_id: params._id,
           goods_num: 1,

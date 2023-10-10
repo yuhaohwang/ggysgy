@@ -151,7 +151,7 @@
           // 更多
           this.loadmoreType = 'more'
         }
-        this.$func.usemall.call('goods/list', this.reqdata).then(res => {
+        this.$func.ggysgy.call('goods/list', this.reqdata).then(res => {
           if (res.code === 200) {
             if (res.datas && res.datas.goods.length > 0) {
               if (loading == 1 || type == 'refresh') {

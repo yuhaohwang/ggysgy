@@ -160,7 +160,7 @@ export default {
   methods: {
     // 加载数据
     async loadData(callback) {
-      await this.$func.usemall
+      await this.$func.ggysgy
         .call('app/mp/home', {
           rows: 8,
         })

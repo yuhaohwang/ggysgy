@@ -180,7 +180,7 @@
       qrcode_rs(res) {},
       loadData() {
         let _this = this
-        _this.$func.usemall
+        _this.$func.ggysgy
           .call('order/detail', {
             order_id: _this.order_id,
           })
@@ -241,7 +241,7 @@
                 pay_original: _this.pay_original,
                 pay_trade_type: _this.pay_trade_type,
               }
-              _this.$func.usemall.call('order/pay', obj).then(res => {
+              _this.$func.ggysgy.call('order/pay', obj).then(res => {
                 console.log('支付接口', obj, res)
 
                 if (res.code === 200) {
@@ -291,7 +291,7 @@
 
                         return new Promise(function (resolve, reject) {
                           // 商户前端根据 out_order_no 请求商户后端查询微信支付订单状态
-                          _this.$func.usemall
+                          _this.$func.ggysgy
                             .call('order/paystate', {
                               order_id: out_order_no,
                             })
@@ -441,7 +441,7 @@
       check() {
         let _this = this
 
-        _this.$func.usemall
+        _this.$func.ggysgy
           .call('order/paystate', {
             order_id: _this.order_id,
           })
@@ -509,7 +509,7 @@
           title: '请求中',
         })
         // this.$api.alert('二维码支付开发中');
-        _this.$func.usemall.call('order/pay', obj).then(res => {
+        _this.$func.ggysgy.call('order/pay', obj).then(res => {
           console.log('支付接口', obj)
           uni.hideLoading()
 

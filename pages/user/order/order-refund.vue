@@ -122,7 +122,7 @@
     methods: {
       async loadData() {
         let _this = this
-        await this.$func.usemall
+        await this.$func.ggysgy
           .call('order/detail', {
             order_id: _this.order_id,
           })
@@ -171,7 +171,7 @@
           content: '申请退款',
           success: function (res) {
             if (res.confirm) {
-              _this.$func.usemall.call('order/refund', _this.postData).then(res => {
+              _this.$func.ggysgy.call('order/refund', _this.postData).then(res => {
                 if (res.code === 200) {
                   _this.$api.msg('提交成功')
                   //setTimeout(() => {

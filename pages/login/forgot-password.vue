@@ -147,7 +147,7 @@
         this.code_time = 30
         this.is_send = true
 
-        this.$func.usemall
+        this.$func.ggysgy
           .call('member/sendSmsCode', {
             mobile: this.mobile,
             type: 'forgot-password',
@@ -213,7 +213,7 @@
 
         _this.is_submit = true
 
-        this.$func.usemall.call('member/forgotPassword', data).then(res => {
+        this.$func.ggysgy.call('member/forgotPassword', data).then(res => {
           _this.is_submit = false
           if (res.code == 200) {
             _this.$api.alert('密码已修改', () => {

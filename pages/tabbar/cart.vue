@@ -100,7 +100,7 @@
 </template>
 
 <script>
-  const _cart = 'usemall-goods-cart'
+  const _cart = 'ggysgy-goods-cart'
   import { mapState } from 'vuex'
   export default {
     computed: {
@@ -141,7 +141,7 @@
     methods: {
       //请求数据
       async loadData(callback) {
-        this.$db['usemall-goods-cart,usemall-goods,usemall-goods-sku']
+        this.$db['ggysgy-goods-cart,ggysgy-goods,ggysgy-goods-sku']
           .collection()
           .where('create_uid == $env.uid')
           .field(

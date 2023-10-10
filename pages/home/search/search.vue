@@ -61,8 +61,8 @@
 </template>
 
 <script>
-  const _history = 'usemall-search-history'
-  const _hot = 'usemall-search-hot'
+  const _history = 'ggysgy-search-history'
+  const _hot = 'ggysgy-search-hot'
   import { mapState } from 'vuex'
   export default {
     computed: {

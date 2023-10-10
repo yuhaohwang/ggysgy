@@ -73,7 +73,7 @@
 </template>
 
 <script>
-const _goodscategory = 'usemall-goods-category'
+const _goodscategory = 'ggysgy-goods-category'
 import { mapState } from 'vuex'
 export default {
   computed: {

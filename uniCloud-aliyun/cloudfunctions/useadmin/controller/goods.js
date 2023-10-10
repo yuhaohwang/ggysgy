@@ -45,7 +45,7 @@ module.exports = class GoodsController extends Controller {
     goods.create_uid = this.ctx.auth.uid
     goods.create_uname = this.ctx.auth.userInfo.username || this.ctx.auth.userInfo.nickname
     // 写入商品数据
-    const goodsRes = await this.db.collection('usemall-goods').add(goods)
+    const goodsRes = await this.db.collection('ggysgy-goods').add(goods)
 
     // 商品详情默认值
     detail.goods_id = goods_id
@@ -71,10 +71,10 @@ module.exports = class GoodsController extends Controller {
     })
 
     // 写入商品详情数据
-    await this.db.collection('usemall-goods-detail').add(detail)
+    await this.db.collection('ggysgy-goods-detail').add(detail)
     if (skus.length > 0) {
       // 写入商品SKU数据
-      await this.db.collection('usemall-goods-sku').add(skus)
+      await this.db.collection('ggysgy-goods-sku').add(skus)
     }
 
     response.code = 0
@@ -107,7 +107,7 @@ module.exports = class GoodsController extends Controller {
     } = this.ctx.data
 
     // 产品数据
-    let goods = await this.db.collection('usemall-goods').doc(goods_id).get()
+    let goods = await this.db.collection('ggysgy-goods').doc(goods_id).get()
 
     if (!goods || goods.data.length <= 0) {
       response.msg = `当前产品不存在`
@@ -115,13 +115,13 @@ module.exports = class GoodsController extends Controller {
     }
 
     const detail = await this.db
-      .collection('usemall-goods-detail')
+      .collection('ggysgy-goods-detail')
       .where({
         goods_id: goods_id,
       })
       .get()
     const skus = await this.db
-      .collection('usemall-goods-sku')
+      .collection('ggysgy-goods-sku')
       .where({
         goods_id: goods_id,
       })
@@ -156,7 +156,7 @@ module.exports = class GoodsController extends Controller {
     console.log('this.ctx.data', this.ctx.data)
     try {
       // 产品数据
-      let __goods = await this.db.collection('usemall-goods').doc(goods_id).get()
+      let __goods = await this.db.collection('ggysgy-goods').doc(goods_id).get()
 
       if (!__goods || __goods.data.length <= 0) {
         response.msg = `当前产品不存在`
@@ -183,7 +183,7 @@ module.exports = class GoodsController extends Controller {
 
       delete goods._id
       // 写入商品数据
-      const goodsRes = await this.db.collection('usemall-goods').doc(goods_id).set(goods)
+      const goodsRes = await this.db.collection('ggysgy-goods').doc(goods_id).set(goods)
 
       // 商品详情默认值
       detail.version = this.db.command.inc(1)
@@ -208,7 +208,7 @@ module.exports = class GoodsController extends Controller {
 
       // 写入商品详情数据
       await this.db
-        .collection('usemall-goods-detail')
+        .collection('ggysgy-goods-detail')
         .where({
           goods_id: goods_id,
         })
@@ -216,14 +216,14 @@ module.exports = class GoodsController extends Controller {
 
       // 删除商品SKU数据
       await this.db
-        .collection('usemall-goods-sku')
+        .collection('ggysgy-goods-sku')
         .where({
           goods_id: goods_id,
         })
         .remove()
       if (skus && skus.length > 0) {
         // 写入商品SKU数据
-        await this.db.collection('usemall-goods-sku').add(skus)
+        await this.db.collection('ggysgy-goods-sku').add(skus)
       }
 
       response.code = 0
@@ -264,12 +264,12 @@ module.exports = class GoodsController extends Controller {
 
     if (sid) {
       // 通过热门搜索
-      const hot = await this.db.collection('usemall-search-hot').doc(sid).get()
+      const hot = await this.db.collection('ggysgy-search-hot').doc(sid).get()
       if (hot && hot.data.length > 0) {
         keyword = hot.data[0].keyword
         // 修改搜索记录次数
         this.db
-          .collection('usemall-search-hot')
+          .collection('ggysgy-search-hot')
           .doc(sid)
           .update({
             last_modify_time: new Date().getTime(),
@@ -284,7 +284,7 @@ module.exports = class GoodsController extends Controller {
     if (keyword && uid) {
       // 记录搜索历史
       this.db
-        .collection('usemall-search-history')
+        .collection('ggysgy-search-history')
         .where({
           create_uid: uid,
           keyword: keyword,
@@ -297,7 +297,7 @@ module.exports = class GoodsController extends Controller {
         })
         .then(res => {
           if (res && res.updated <= 0) {
-            this.db.collection('usemall-search-history').add({
+            this.db.collection('ggysgy-search-history').add({
               keyword,
               search_cnt: 1,
               version: 1,
@@ -311,7 +311,7 @@ module.exports = class GoodsController extends Controller {
     }
 
     const goods = await this.db
-      .collection('usemall-goods')
+      .collection('ggysgy-goods')
       .where({
         name: new RegExp(keyword),
       })

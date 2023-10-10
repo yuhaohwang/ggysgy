@@ -31,9 +31,9 @@
 ```
 	"passwordSecret": [{
 		"version": 1,
-		"value": "usemall.unicloud.password.secret"
+		"value": "ggysgy.unicloud.password.secret"
 	}],
-	"tokenSecret": "usemall.unicloud.token.secret",
+	"tokenSecret": "ggysgy.unicloud.token.secret",
 	"tokenExpiresIn": 259200,
 	"tokenExpiresThreshold": 600,
 	"passwordErrorLimit": 6,
@@ -120,6 +120,6 @@
    2. 运行到小程序模拟器(微信开发者工具[体验微信小程序版本])。
 8. **注意点（重要）**
    > 1. 连接本地云函数（右键 uniCloud -> database 下载所有 DB Schema 及扩展校验函数）[注意事项](https://uniapp.dcloud.io/uniCloud/quickstart?id=%e8%b0%83%e7%94%a8%e6%9c%ac%e5%9c%b0%e4%ba%91%e5%87%bd%e6%95%b0%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9) 。
-   > 2. 连接本地云函数运行出错，则需右键云函数 usemall -> 管理公共模块依赖 -> 更新选中依赖。
+   > 2. 连接本地云函数运行出错，则需右键云函数 ggysgy -> 管理公共模块依赖 -> 更新选中依赖。
    > 3. 连接云端云函数，注意小程序开发工具（校验|不校验合法域名、web-view（业务域名）、TLS 版本以及 HTTPS 证书）。
    > 4. 小程序中使用 uniCloud [白名单配置](https://uniapp.dcloud.io/uniCloud/quickstart?id=%e5%b0%8f%e7%a8%8b%e5%ba%8f%e4%b8%ad%e4%bd%bf%e7%94%a8unicloud%e7%9a%84%e7%99%bd%e5%90%8d%e5%8d%95%e9%85%8d%e7%bd%ae)。

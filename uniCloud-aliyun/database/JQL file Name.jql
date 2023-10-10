@@ -8,17 +8,17 @@
 // 数据库查询有最大返回条数限制，详见：https://uniapp.dcloud.net.cn/uniCloud/cf-database?id=limit
 // 详细JQL语法，请参考 https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=jsquery
 
-db.collection("usemall-goods").update({
+db.collection("ggysgy-goods").update({
   create_uid: '62c51fc6f792990001ad4e36'
 })
 
-let res1 = db.collection('usemall-goods-cart')
+let res1 = db.collection('ggysgy-goods-cart')
   .getTemp()
 
-let res2 = db.collection('usemall-goods')
+let res2 = db.collection('ggysgy-goods')
   .getTemp()
 
-let res3 = db.collection('usemall-goods-sku')
+let res3 = db.collection('ggysgy-goods-sku')
   .getTemp()
 
 db.collection(res1, res2, res3).get()

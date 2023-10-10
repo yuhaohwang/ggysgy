@@ -49,7 +49,7 @@
     "goods": {
       "bsonType": "string",
       "description": "商品ID",
-      "foreignKey": "usemall-goods._id"
+      "foreignKey": "ggysgy-goods._id"
     },
     "goods_sku": {
       "bsonType": "string",

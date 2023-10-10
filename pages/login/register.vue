@@ -146,7 +146,7 @@
         this.code_time = 30
         this.is_send = true
 
-        this.$func.usemall
+        this.$func.ggysgy
           .call('member/sendSmsCode', {
             mobile: this.mobile,
             type: 'register',
@@ -220,7 +220,7 @@
           success: res => {
             // console.log('getUserProfile', res);
             this.is_register = true
-            this.$func.usemall
+            this.$func.ggysgy
               .call('member/register', {
                 username: this.mobile,
                 password: this.password,

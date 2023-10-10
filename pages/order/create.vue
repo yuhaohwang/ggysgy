@@ -134,7 +134,7 @@
 
 <script>
   // 收获人地址
-  const _address = 'usemall-member-address'
+  const _address = 'ggysgy-member-address'
   export default {
     data() {
       return {
@@ -214,7 +214,7 @@
     methods: {
       // 加载数据
       loadData() {
-        this.$func.usemall
+        this.$func.ggysgy
           .call('goods/detail2order', {
             cart_ids: this.cart_ids,
             goods_id: this.goods_id,
@@ -315,7 +315,7 @@
           order_desc: _this.order_desc,
         }
 
-        this.$func.usemall.call('order/create', obj).then(res => {
+        this.$func.ggysgy.call('order/create', obj).then(res => {
           if (res.code === 200) {
             // 跳转支付页
             _this.$api.toPay({

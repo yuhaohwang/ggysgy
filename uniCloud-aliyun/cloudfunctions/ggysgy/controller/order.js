@@ -59,7 +59,7 @@ module.exports = class OrderController extends Controller {
 
     const { cart_ids, goods_id, goods_num, goods_sku_id, addr_id, order_from, order_desc } = this.ctx.data
 
-    const addrRes = await this.db.collection('usemall-member-address').doc(addr_id).get()
+    const addrRes = await this.db.collection('ggysgy-member-address').doc(addr_id).get()
     if (!(addrRes && addrRes.data.length === 1)) {
       response.msg = '请选择收货人'
       return response
@@ -77,7 +77,7 @@ module.exports = class OrderController extends Controller {
     let goodsCartIds = []
     if (goods_id) {
       // 从商品详情页下单
-      let goodsRes = await this.db.collection('usemall-goods').doc(goods_id).get()
+      let goodsRes = await this.db.collection('ggysgy-goods').doc(goods_id).get()
       if (!(goodsRes && goodsRes.data.length == 1)) {
         response.msg = '当前下单商品不存在'
         return response
@@ -102,7 +102,7 @@ module.exports = class OrderController extends Controller {
 
       if (goods_sku_id) {
         // 商品存在 sku
-        let skuRes = await this.db.collection('usemall-goods-sku').doc(goods_sku_id).get()
+        let skuRes = await this.db.collection('ggysgy-goods-sku').doc(goods_sku_id).get()
         if (skuRes && skuRes.data.length == 1) {
           goods_sku = skuRes.data[0]
           // 存在 sku 修改商品价格、库存
@@ -127,7 +127,7 @@ module.exports = class OrderController extends Controller {
     } else if (cart_ids && cart_ids.length > 0) {
       // 从购物车下单
       let goodsCartRes = await this.db
-        .collection('usemall-goods-cart')
+        .collection('ggysgy-goods-cart')
         .where({
           create_uid: uid,
           _id: this.db.command.in(cart_ids),
@@ -143,7 +143,7 @@ module.exports = class OrderController extends Controller {
       let goodsSkuIds = goodsCarts.map(x => x.goods_sku)
 
       let goodsRes = await this.db
-        .collection('usemall-goods')
+        .collection('ggysgy-goods')
         .where({
           _id: this.db.command.in(goodsIds),
           state: '销售中',
@@ -157,7 +157,7 @@ module.exports = class OrderController extends Controller {
       let goodsDatas = goodsRes.data
       let goodsSkus = []
       let skuRes = await this.db
-        .collection('usemall-goods-sku')
+        .collection('ggysgy-goods-sku')
         .where({
           goods_sku: this.db.command.in(goodsSkuIds),
         })
@@ -258,7 +258,7 @@ module.exports = class OrderController extends Controller {
     // todo: 开启事务
 
     try {
-      const orderRes = await this.db.collection('usemall-order').add(order)
+      const orderRes = await this.db.collection('ggysgy-order').add(order)
       console.log('orderRes', orderRes)
 
       if (!(orderRes && orderRes.id)) {
@@ -279,13 +279,13 @@ module.exports = class OrderController extends Controller {
         create_time: new Date().getTime(),
       }
 
-      await this.db.collection('usemall-order-detail').add(order_details)
-      this.db.collection('usemall-order-log').add(order_log)
+      await this.db.collection('ggysgy-order-detail').add(order_details)
+      this.db.collection('ggysgy-order-log').add(order_log)
 
       // 删除购物车数据
       if (goodsCartIds.length > 0) {
         await this.db
-          .collection('usemall-goods-cart')
+          .collection('ggysgy-goods-cart')
           .where({
             _id: this.db.command.in(goodsCartIds),
           })
@@ -336,7 +336,7 @@ module.exports = class OrderController extends Controller {
       return response
     }
     const order = this.db
-      .collection('usemall-order')
+      .collection('ggysgy-order')
       .where({
         is_delete: 0,
         order_id: order_id,
@@ -344,7 +344,7 @@ module.exports = class OrderController extends Controller {
       })
       .get()
     const order_detail = this.db
-      .collection('usemall-order-detail')
+      .collection('ggysgy-order-detail')
       .where({
         order_id: order_id,
       })
@@ -361,7 +361,7 @@ module.exports = class OrderController extends Controller {
       response.time_remaining = parseInt(unpay_overdue_minute - (new Date().getTime() - response.order.create_time) / 1000)
       if (response.time_remaining <= 0) {
         // 自动取消订单
-        let orderRes = await this.db.collection('usemall-order').doc(response.order._id).update({
+        let orderRes = await this.db.collection('ggysgy-order').doc(response.order._id).update({
           state: '已取消',
 
           last_modify_time: new Date().getTime(),
@@ -380,7 +380,7 @@ module.exports = class OrderController extends Controller {
             create_uid: uid,
             create_time: new Date().getTime(),
           }
-          this.db.collection('usemall-order-log').add(order_log)
+          this.db.collection('ggysgy-order-log').add(order_log)
         }
       }
     }
@@ -422,7 +422,7 @@ module.exports = class OrderController extends Controller {
     }
 
     let orderRes = await this.db
-      .collection('usemall-order')
+      .collection('ggysgy-order')
       .where(where_obj)
       .skip((page - 1) * rows)
       .limit(rows)
@@ -433,7 +433,7 @@ module.exports = class OrderController extends Controller {
     const ids = orderRes.data.map(x => x.order_id)
 
     let orderDetailsRes = await this.db
-      .collection('usemall-order-detail')
+      .collection('ggysgy-order-detail')
       .where({
         order_id: this.db.command.in(ids),
       })
@@ -474,7 +474,7 @@ module.exports = class OrderController extends Controller {
       order_id: order_id,
     }
 
-    let orderRes = await this.db.collection('usemall-order').where(where_obj).update({
+    let orderRes = await this.db.collection('ggysgy-order').where(where_obj).update({
       state: state,
 
       last_modify_time: new Date().getTime(),
@@ -492,7 +492,7 @@ module.exports = class OrderController extends Controller {
         create_uid: uid,
         create_time: new Date().getTime(),
       }
-      this.db.collection('usemall-order-log').add(order_log)
+      this.db.collection('ggysgy-order-log').add(order_log)
     }
 
     response.datas = orderRes
@@ -525,7 +525,7 @@ module.exports = class OrderController extends Controller {
       order_id: order_id,
     }
 
-    let orderRes = await this.db.collection('usemall-order').where(where_obj).update({
+    let orderRes = await this.db.collection('ggysgy-order').where(where_obj).update({
       state: state,
 
       last_modify_time: new Date().getTime(),
@@ -543,7 +543,7 @@ module.exports = class OrderController extends Controller {
         create_uid: uid,
         create_time: new Date().getTime(),
       }
-      this.db.collection('usemall-order-log').add(order_log)
+      this.db.collection('ggysgy-order-log').add(order_log)
     }
 
     response.datas = orderRes
@@ -577,7 +577,7 @@ module.exports = class OrderController extends Controller {
       state: '已取消',
     }
 
-    let orderRes = await this.db.collection('usemall-order').where(where_obj).update({
+    let orderRes = await this.db.collection('ggysgy-order').where(where_obj).update({
       state: state,
 
       is_delete: 1,
@@ -596,7 +596,7 @@ module.exports = class OrderController extends Controller {
         create_uid: uid,
         create_time: new Date().getTime(),
       }
-      this.db.collection('usemall-order-log').add(order_log)
+      this.db.collection('ggysgy-order-log').add(order_log)
     }
 
     response.datas = orderRes
@@ -635,11 +635,11 @@ module.exports = class OrderController extends Controller {
       create_uid: uid,
     }
 
-    let orderRes = await this.db.collection('usemall-order').where(where_obj).get()
+    let orderRes = await this.db.collection('ggysgy-order').where(where_obj).get()
 
     if (orderRes.data && orderRes.data.length == 1) {
       const orderDetailRes = await this.db
-        .collection('usemall-order-detail')
+        .collection('ggysgy-order-detail')
         .where({
           order_id: order_id,
         })
@@ -656,9 +656,9 @@ module.exports = class OrderController extends Controller {
         create_uid: uid,
         create_time: new Date().getTime(),
       }
-      this.db.collection('usemall-order-log').add(order_log)
+      this.db.collection('ggysgy-order-log').add(order_log)
       // 修改订单状态 已完成
-      await this.db.collection('usemall-order').doc(order._id).update({
+      await this.db.collection('ggysgy-order').doc(order._id).update({
         state: '已完成',
 
         last_modify_time: new Date().getTime(),
@@ -667,7 +667,7 @@ module.exports = class OrderController extends Controller {
 
       if (orderDetailRes.data) {
         orderDetailRes.data.forEach(x => {
-          this.db.collection('usemall-goods-comment').add({
+          this.db.collection('ggysgy-goods-comment').add({
             goods_id: x.goods_id,
             goods_sku: x.goods_sku,
             goods_type: x.goods_type,
@@ -747,7 +747,7 @@ module.exports = class OrderController extends Controller {
       create_uid: uid,
     }
 
-    let orderRes = await this.db.collection('usemall-order').where(where_obj).get()
+    let orderRes = await this.db.collection('ggysgy-order').where(where_obj).get()
 
     if (!(orderRes.data && orderRes.data.length == 1)) {
       response.msg = '申请退款订单号不存在'
@@ -771,9 +771,9 @@ module.exports = class OrderController extends Controller {
     // todo 开启事务
 
     // 写入订单日志
-    await this.db.collection('usemall-order-log').add(order_log)
+    await this.db.collection('ggysgy-order-log').add(order_log)
     // 修改订单申请退款数据
-    await this.db.collection('usemall-order').doc(order._id).update({
+    await this.db.collection('ggysgy-order').doc(order._id).update({
       order_refund_state: '处理中',
       order_refund_reason: reason,
       order_refund_desc: desc,
@@ -785,7 +785,7 @@ module.exports = class OrderController extends Controller {
       last_modify_uname: user.name,
     })
     // 写入申请退款数据
-    await this.db.collection('usemall-order-refund').add({
+    await this.db.collection('ggysgy-order-refund').add({
       order_id,
       refund_money,
       member_guid: uid,
@@ -955,9 +955,9 @@ module.exports = class OrderController extends Controller {
     }
 
     if (pay && pay._id) {
-      // 修改 usemall-order-pay 数据
+      // 修改 ggysgy-order-pay 数据
       await this.db
-        .collection('usemall-order-pay')
+        .collection('ggysgy-order-pay')
         .doc(pay._id)
         .update({
           pay_way: pay_way,
@@ -984,7 +984,7 @@ module.exports = class OrderController extends Controller {
         create_uid: uid,
         create_time: new Date().getTime(),
       }
-      await this.db.collection('usemall-order-pay').add(order_pay)
+      await this.db.collection('ggysgy-order-pay').add(order_pay)
     }
 
     // 返回下单数据
@@ -1021,7 +1021,7 @@ module.exports = class OrderController extends Controller {
     }
     // 1. 查询当前订单是否存在，是否已支付待核实状态
     const orderRes = await this.db
-      .collection('usemall-order')
+      .collection('ggysgy-order')
       .where({
         order_id,
       })
@@ -1051,7 +1051,7 @@ module.exports = class OrderController extends Controller {
 
     // 订单详情
     const orderDetailRes = await this.db
-      .collection('usemall-order-detail')
+      .collection('ggysgy-order-detail')
       .where({
         order_id,
       })
@@ -1070,7 +1070,7 @@ module.exports = class OrderController extends Controller {
 
     // 2. 查询当前订单支付状态是否为已付款
     const payRes = await this.db
-      .collection('usemall-order-pay')
+      .collection('ggysgy-order-pay')
       .where({
         order_id,
       })
@@ -1091,7 +1091,7 @@ module.exports = class OrderController extends Controller {
     }
 
     const goodsRes = await this.db
-      .collection('usemall-goods')
+      .collection('ggysgy-goods')
       .where({
         _id: this.db.command.in(orderDetails.map(x => x.goods_id)),
       })
@@ -1150,7 +1150,7 @@ module.exports = class OrderController extends Controller {
 
     // 查询订单支付状态
     const payRes = await this.db
-      .collection('usemall-order-pay')
+      .collection('ggysgy-order-pay')
       .where({
         order_id,
       })
@@ -1218,7 +1218,7 @@ module.exports = class OrderController extends Controller {
 
     // 查询订单数据
     const orderRes = await this.db
-      .collection('usemall-order')
+      .collection('ggysgy-order')
       .where({
         order_id,
       })
@@ -1284,7 +1284,7 @@ module.exports = class OrderController extends Controller {
         response.datas.company = order.order_express
         // 签收 退签 拒签
         // 写入订单物流轨迹数据
-        await this.db.collection('usemall-order').doc(order._id).update({
+        await this.db.collection('ggysgy-order').doc(order._id).update({
           order_express_datas: response.datas,
         })
       }

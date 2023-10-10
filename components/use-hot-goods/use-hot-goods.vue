@@ -68,11 +68,11 @@ export default {
   },
   methods: {
     loadData() {
-      this.$db['usemall-goods']
+      this.$db['ggysgy-goods']
         .where('state == "销售中" && hot == 1')
         .tolist({ rows: 8, orderby: 'sort asc' })
         .then(res => {
-          // console.log('usemall-goods',res);
+          // console.log('ggysgy-goods',res);
           if (res.code === 200) {
             this.hotDatas = res.datas || []
           }

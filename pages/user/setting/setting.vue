@@ -18,7 +18,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-const _about = 'usemall-app-about'
+const _about = 'ggysgy-app-about'
 export default {
   data() {
     return {

@@ -78,8 +78,8 @@
 </template>
 
 <script>
-const _goods = 'usemall-goods'
-const _goodscategory = 'usemall-goods-category'
+const _goods = 'ggysgy-goods'
+const _goodscategory = 'ggysgy-goods-category'
 export default {
   data() {
     return {

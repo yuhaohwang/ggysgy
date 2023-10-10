@@ -21,21 +21,21 @@ module.exports = class MpController extends Controller {
     }
     let start = new Date().getTime()
 
-    const carousel = this.db.collection('usemall-app-carousel').where({
+    const carousel = this.db.collection('ggysgy-app-carousel').where({
       state: '启用'
     }).orderBy('sort', 'asc').get()
-    const graphicCategory = this.db.collection('usemall-app-category').where({
+    const graphicCategory = this.db.collection('ggysgy-app-category').where({
       ctype: 0,
       state: '启用'
     }).orderBy('sort', 'asc').get()
-    const cardCategory = this.db.collection('usemall-app-category').where({
+    const cardCategory = this.db.collection('ggysgy-app-category').where({
       ctype: 1,
       state: '启用'
     }).orderBy('sort', 'asc').get()
-    const limited = this.db.collection('usemall-goods').where({
+    const limited = this.db.collection('ggysgy-goods').where({
       limited: 1
     }).limit(rows).orderBy('sort', 'asc').get()
-    const hot = this.db.collection('usemall-goods').where({
+    const hot = this.db.collection('ggysgy-goods').where({
       hot: 1
     }).limit(rows).orderBy('sort', 'asc').get()
 

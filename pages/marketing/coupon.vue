@@ -70,7 +70,7 @@
     methods: {
       loadData() {
         // 获取数据
-        this.$func.usemall.call('marketing/coupon/list', this.reqdata).then(res => {
+        this.$func.ggysgy.call('marketing/coupon/list', this.reqdata).then(res => {
           if (res.code === 200) {
             this.couponDatas = [...this.couponDatas, ...res.datas]
 
@@ -91,7 +91,7 @@
           content: '领取优惠券',
           success: function (res) {
             if (res.confirm) {
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('marketing/coupon/receive', {
                   coupon_id: id,
                 })

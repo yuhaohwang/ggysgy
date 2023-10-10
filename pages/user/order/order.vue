@@ -265,7 +265,7 @@
 </template>
 
 <script>
-  const _order = 'usemall-order'
+  const _order = 'ggysgy-order'
   import { mapState } from 'vuex'
 
   export default {
@@ -404,7 +404,7 @@
           cur_nav.loadingType = 'more'
         }
 
-        await this.$func.usemall.call('order/list', this.reqdata).then(res => {
+        await this.$func.ggysgy.call('order/list', this.reqdata).then(res => {
           if (res.code === 200) {
             cur_nav.loaded = true
 
@@ -486,7 +486,7 @@
               uni.showLoading({
                 title: '请稍后',
               })
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('order/deleted', {
                   order_id: item.order.order_id,
                 })
@@ -516,7 +516,7 @@
               uni.showLoading({
                 title: '请稍后',
               })
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('order/cancel', {
                   order_id: item.order.order_id,
                   state: '已取消',
@@ -554,7 +554,7 @@
               uni.showLoading({
                 title: '请稍后',
               })
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('order/received', {
                   order_id: item.order.order_id,
                   state: '待评价',

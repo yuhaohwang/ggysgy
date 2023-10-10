@@ -24,7 +24,7 @@ module.exports = class OrderController extends Controller {
 
     // 1. 获取订单数据
     let orderRes = await this.db
-      .collection('usemall-order')
+      .collection('ggysgy-order')
       .where(where_obj)
       .field({
         order_actural_paid: true,
@@ -50,7 +50,7 @@ module.exports = class OrderController extends Controller {
     const order = orderRes.data[0]
 
     // 2. 修改订单数据
-    const orderUpdateRes = await this.db.collection('usemall-order').doc(order._id).update({
+    const orderUpdateRes = await this.db.collection('ggysgy-order').doc(order._id).update({
       state: '售后结束',
       order_refund_state: state,
       order_pay_state: state,
@@ -62,7 +62,7 @@ module.exports = class OrderController extends Controller {
 
     if (orderUpdateRes && orderUpdateRes.updated == 1) {
       // 3. 修改退款申请数据
-      const refundUpdateRes = await this.db.collection('usemall-order-refund').doc(id).update({
+      const refundUpdateRes = await this.db.collection('ggysgy-order-refund').doc(id).update({
         state: state,
         remark: remark,
         last_modify_time: nowdate,
@@ -71,7 +71,7 @@ module.exports = class OrderController extends Controller {
       })
 
       // 4. 插入订单日志
-      await this.db.collection('usemall-order-log').add({
+      await this.db.collection('ggysgy-order-log').add({
         order_id: order.order_id,
         log_type: '退款处理',
         current_state: '售后结束',
@@ -84,7 +84,7 @@ module.exports = class OrderController extends Controller {
       })
       // 5. 修改用户消费金额
       const memberRes = await this.db
-        .collection('usemall-member')
+        .collection('ggysgy-member')
         .doc(order.create_uid)
         .update({
           member_monetary: this.db.command.inc(-order.order_actural_paid),
@@ -120,7 +120,7 @@ module.exports = class OrderController extends Controller {
 
     // 1. 获取订单数据
     let orderRes = await this.db
-      .collection('usemall-order')
+      .collection('ggysgy-order')
       .where(where_obj)
       .field({
         order_actural_paid: true,
@@ -146,7 +146,7 @@ module.exports = class OrderController extends Controller {
     const order = orderRes.data[0]
 
     // 2. 修改订单数据
-    const orderUpdateRes = await this.db.collection('usemall-order').doc(order._id).update({
+    const orderUpdateRes = await this.db.collection('ggysgy-order').doc(order._id).update({
       state: '售后结束',
       order_refund_state: state,
       order_refund_remark: remark,
@@ -157,7 +157,7 @@ module.exports = class OrderController extends Controller {
 
     if (orderUpdateRes && orderUpdateRes.updated == 1) {
       // 3. 修改退款申请数据
-      const refundUpdateRes = await this.db.collection('usemall-order-refund').doc(id).update({
+      const refundUpdateRes = await this.db.collection('ggysgy-order-refund').doc(id).update({
         state: state,
         remark: remark,
         last_modify_time: nowdate,
@@ -166,7 +166,7 @@ module.exports = class OrderController extends Controller {
       })
 
       // 4. 插入订单日志
-      await this.db.collection('usemall-order-log').add({
+      await this.db.collection('ggysgy-order-log').add({
         order_id: order.order_id,
         log_type: '退款处理',
         current_state: '售后结束',

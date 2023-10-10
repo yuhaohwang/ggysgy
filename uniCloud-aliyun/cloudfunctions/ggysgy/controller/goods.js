@@ -21,7 +21,7 @@ module.exports = class GoodsController extends Controller {
 
     // 产品状态
     let goods_state = ''
-    let goods = await this.db.collection('usemall-goods').doc(goods_id).get()
+    let goods = await this.db.collection('ggysgy-goods').doc(goods_id).get()
 
     if (!goods || goods.data.length <= 0) {
       response.msg = `当前产品不存在`
@@ -49,7 +49,7 @@ module.exports = class GoodsController extends Controller {
       const user = await uidObj.checkToken(this.ctx.event.uniIdToken)
       if (user.code == 0) {
         const collect = await this.db
-          .collection('usemall-member-collect')
+          .collection('ggysgy-member-collect')
           .where({
             create_uid: user.uid,
             goods: goods_id,
@@ -63,7 +63,7 @@ module.exports = class GoodsController extends Controller {
         // 记录足迹（异步记录，提高响应时间）
         let obj_id = user.uid + goods_id
         this.db
-          .collection('usemall-goods-history')
+          .collection('ggysgy-goods-history')
           .doc(obj_id)
           .update({
             visit_cnt: this.db.command.inc(1),
@@ -74,7 +74,7 @@ module.exports = class GoodsController extends Controller {
           })
           .then(res => {
             if (res && res.updated <= 0) {
-              this.db.collection('usemall-goods-history').doc(obj_id).set({
+              this.db.collection('ggysgy-goods-history').doc(obj_id).set({
                 goods: goods_id,
                 sort: 0,
                 visit_cnt: 1,
@@ -98,19 +98,19 @@ module.exports = class GoodsController extends Controller {
     )
 
     const detail = await this.db
-      .collection('usemall-goods-detail')
+      .collection('ggysgy-goods-detail')
       .where({
         goods_id,
       })
       .get()
     const sku = await this.db
-      .collection('usemall-goods-sku')
+      .collection('ggysgy-goods-sku')
       .where({
         goods_id,
       })
       .get()
     const evaluate = await this.db
-      .collection('usemall-goods-comment')
+      .collection('ggysgy-goods-comment')
       .where({
         goods_id: goods_id,
         state: '显示',
@@ -119,7 +119,7 @@ module.exports = class GoodsController extends Controller {
       .orderBy('create_time', 'desc')
       .get()
     const evaluateCountRes = await this.db
-      .collection('usemall-goods-comment')
+      .collection('ggysgy-goods-comment')
       .where({
         goods_id: goods_id,
         state: '显示',
@@ -170,12 +170,12 @@ module.exports = class GoodsController extends Controller {
 
     if (sid) {
       // 通过热门搜索
-      const hot = await this.db.collection('usemall-search-hot').doc(sid).get()
+      const hot = await this.db.collection('ggysgy-search-hot').doc(sid).get()
       if (hot && hot.data.length > 0) {
         keyword = hot.data[0].keyword
         // 修改搜索记录次数
         this.db
-          .collection('usemall-search-hot')
+          .collection('ggysgy-search-hot')
           .doc(sid)
           .update({
             last_modify_time: new Date().getTime(),
@@ -190,7 +190,7 @@ module.exports = class GoodsController extends Controller {
     if (keyword && uid) {
       // 记录搜索历史
       this.db
-        .collection('usemall-search-history')
+        .collection('ggysgy-search-history')
         .where({
           create_uid: uid,
           keyword: keyword,
@@ -203,7 +203,7 @@ module.exports = class GoodsController extends Controller {
         })
         .then(res => {
           if (res && res.updated <= 0) {
-            this.db.collection('usemall-search-history').add({
+            this.db.collection('ggysgy-search-history').add({
               keyword,
               search_cnt: 1,
               version: 1,
@@ -223,7 +223,7 @@ module.exports = class GoodsController extends Controller {
     if (cid) whereObj.cids = cid
 
     const goods = await this.db
-      .collection('usemall-goods')
+      .collection('ggysgy-goods')
       .where(whereObj)
       .skip((req.page - 1) * req.rows)
       .limit(req.rows)
@@ -261,7 +261,7 @@ module.exports = class GoodsController extends Controller {
     let { goods_id, goods_num, goods_sku } = this.ctx.data
     let obj_id = uid + goods_id + (goods_sku || '')
     let cart = await this.db
-      .collection('usemall-goods-cart')
+      .collection('ggysgy-goods-cart')
       .doc(obj_id)
       .update({
         goods_num: this.db.command.inc(goods_num),
@@ -270,7 +270,7 @@ module.exports = class GoodsController extends Controller {
         last_modify_time: new Date().getTime(),
       })
     if (cart && cart.updated <= 0) {
-      cart = await this.db.collection('usemall-goods-cart').doc(obj_id).set({
+      cart = await this.db.collection('ggysgy-goods-cart').doc(obj_id).set({
         goods: goods_id,
         goods_num,
         goods_sku,
@@ -317,7 +317,7 @@ module.exports = class GoodsController extends Controller {
 
     if (goods_id) {
       // 从商品详情页下单
-      goodsRes = await this.db.collection('usemall-goods').doc(goods_id).get()
+      goodsRes = await this.db.collection('ggysgy-goods').doc(goods_id).get()
       console.log('goodsRes', goodsRes)
       if (!(goodsRes && goodsRes.data.length == 1)) {
         response.msg = '当前下单商品不存在'
@@ -344,7 +344,7 @@ module.exports = class GoodsController extends Controller {
       let goods_sku = {}
       if (goods_sku_id) {
         // 商品存在 sku
-        skuRes = await this.db.collection('usemall-goods-sku').doc(goods_sku_id).get()
+        skuRes = await this.db.collection('ggysgy-goods-sku').doc(goods_sku_id).get()
         if (skuRes && skuRes.data.length === 1) {
           goods_sku = skuRes.data[0]
         }
@@ -356,7 +356,7 @@ module.exports = class GoodsController extends Controller {
     } else if (cart_ids && cart_ids.length > 0) {
       // 从购物车下单
       let goodsCartRes = await this.db
-        .collection('usemall-goods-cart')
+        .collection('ggysgy-goods-cart')
         .where({
           create_uid: uid,
           _id: this.db.command.in(cart_ids),
@@ -371,7 +371,7 @@ module.exports = class GoodsController extends Controller {
       let goodsSkuIds = goodsCarts.map(x => x.goods_sku)
 
       goodsRes = await this.db
-        .collection('usemall-goods')
+        .collection('ggysgy-goods')
         .where({
           _id: this.db.command.in(goodsIds),
         })
@@ -383,7 +383,7 @@ module.exports = class GoodsController extends Controller {
       let goodsDatas = goodsRes.data
       let goodsSkus = []
       skuRes = await this.db
-        .collection('usemall-goods-sku')
+        .collection('ggysgy-goods-sku')
         .where({
           goods_sku: this.db.command.in(goodsSkuIds),
         })

@@ -128,8 +128,8 @@
 </template>
 
 <script>
-const _goodscategory = 'usemall-goods-category'
-const _goods = 'usemall-goods'
+const _goodscategory = 'ggysgy-goods-category'
+const _goods = 'ggysgy-goods'
 import $api from '@/common/common.js'
 export default {
   data() {
@@ -254,7 +254,7 @@ export default {
 
       const db = uniCloud.database()
       const goodList = db
-        .collection('usemall-goods')
+        .collection('ggysgy-goods')
         .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids && state == '销售中'`)
         .field('img, create_time, name, create_uid')
         .orderBy('create_time desc')

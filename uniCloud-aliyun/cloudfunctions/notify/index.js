@@ -51,7 +51,7 @@ exports.main = async (event, context) => {
   if (res && (res.returnCode == 'SUCCESS' || res.resultCode == 'SUCCESS')) {
     const { outTradeNo, totalFee, transactionId, openid } = res
 
-    let orderRes = await db.collection('usemall-order').where({ is_delete: 0, order_id: outTradeNo }).get()
+    let orderRes = await db.collection('ggysgy-order').where({ is_delete: 0, order_id: outTradeNo }).get()
 
     if (!(orderRes && orderRes.data && orderRes.data.length == 1)) {
       uniCloud.logger.info(`订单[${outTradeNo}]不存在`)
@@ -69,7 +69,7 @@ exports.main = async (event, context) => {
 
     // 更改订单状态
     await db
-      .collection('usemall-order')
+      .collection('ggysgy-order')
       .doc(order._id)
       .update({
         last_modify_time: new Date().getTime(),
@@ -85,7 +85,7 @@ exports.main = async (event, context) => {
 
     // 修改订单支付数据
     await db
-      .collection('usemall-order-pay')
+      .collection('ggysgy-order-pay')
       .where({ order_id: order.order_id })
       .update({
         version: db.command.inc(1),
@@ -97,13 +97,13 @@ exports.main = async (event, context) => {
       })
 
     // 订单详情
-    const orderDetailRes = await db.collection('usemall-order-detail').where({ order_id: order.order_id }).get()
+    const orderDetailRes = await db.collection('ggysgy-order-detail').where({ order_id: order.order_id }).get()
     if (orderDetailRes && orderDetailRes.data) {
       orderDetailRes.data.forEach(async x => {
         // 扣减库存
         // todo 扣减SKU库存
         await db
-          .collection('usemall-goods')
+          .collection('ggysgy-goods')
           .where({ _id: x.goods_id, stock_num: db.command.gte(x.goods_num) })
           .update({
             stock_num: db.command.inc(-x.goods_num),
@@ -114,7 +114,7 @@ exports.main = async (event, context) => {
 
     // 修改下单人 累计消费
     const memberRes = await db
-      .collection('usemall-member')
+      .collection('ggysgy-member')
       .doc(uid)
       .update({
         member_monetary: db.command.inc(totalFee),
@@ -131,7 +131,7 @@ exports.main = async (event, context) => {
       create_uid: uid,
       create_time: new Date().getTime(),
     }
-    await db.collection('usemall-order-log').add(order_log)
+    await db.collection('ggysgy-order-log').add(order_log)
 
     if (payObj.way == 'wxpay') {
       response.body = `<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>`

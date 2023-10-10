@@ -43,7 +43,7 @@
 </template>
 
 <script>
-  const __name = 'usemall-member-address'
+  const __name = 'ggysgy-member-address'
   export default {
     data() {
       return {

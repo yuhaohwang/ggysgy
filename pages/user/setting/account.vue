@@ -15,7 +15,7 @@ const db = uniCloud.database()
 const usersTable = db.collection('uni-id-users')
 const uniIdCo = uniCloud.importObject('uni-id-co')
 import { mapState, mapMutations } from 'vuex'
-const _about = 'usemall-app-about'
+const _about = 'ggysgy-app-about'
 export default {
   computed: {
     ...mapState(['member']),

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-const _history = 'usemall-goods-history'
+const _history = 'ggysgy-goods-history'
 export default {
   data() {
     return {
@@ -70,7 +70,7 @@ export default {
   methods: {
     // 加载数据
     loadData() {
-      this.$db['usemall-goods-history, usemall-goods']
+      this.$db['ggysgy-goods-history, ggysgy-goods']
         .collection()
         .where('create_uid == $env.uid')
         .field(

@@ -95,7 +95,7 @@
       }
     ]
   },
-  "usemall-app-about": {
+  "ggysgy-app-about": {
     "data": [
       {
         "_id": "6083cf39ce8d7d000103a4d4",
@@ -205,7 +205,7 @@
       }
     }
   },
-  "usemall-app-carousel": {
+  "ggysgy-app-carousel": {
     "data": [
       {
         "_id": {
@@ -369,7 +369,7 @@
       }
     }
   },
-  "usemall-app-category": {
+  "ggysgy-app-category": {
     "data": [
       {
         "_id": {
@@ -643,7 +643,7 @@
       }
     }
   },
-  "usemall-app-share": {
+  "ggysgy-app-share": {
     "data": [
       {
         "_id": "6083b595c0e66500010d8202",
@@ -753,7 +753,7 @@
       }
     }
   },
-  "usemall-app-wxmini": {
+  "ggysgy-app-wxmini": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -876,7 +876,7 @@
       }
     }
   },
-  "usemall-app-wxmini-page": {
+  "ggysgy-app-wxmini-page": {
     "data": [
       {
         "_id": {
@@ -1045,7 +1045,7 @@
       }
     }
   },
-  "usemall-goods": {
+  "ggysgy-goods": {
     "data": [
       {
         "_id": "1621943534289483682",
@@ -2925,7 +2925,7 @@
       }
     }
   },
-  "usemall-goods-detail": {
+  "ggysgy-goods-detail": {
     "data": [
       {
         "_id": {
@@ -3408,7 +3408,7 @@
       }
     }
   },
-  "usemall-goods-cart": {
+  "ggysgy-goods-cart": {
     "data": [
       {
         "_id": "60aa5fa09056cd0001a5f4ed16217588337527852941621758833752785294_0",
@@ -3439,12 +3439,12 @@
         "goods": {
           "bsonType": "string",
           "description": "商品ID",
-          "foreignKey": "usemall-goods._id"
+          "foreignKey": "ggysgy-goods._id"
         },
         "goods_sku": {
           "bsonType": "string",
           "description": "商品SKU",
-          "foreignKey": "usemall-goods-sku._id"
+          "foreignKey": "ggysgy-goods-sku._id"
         },
         "goods_num": {
           "bsonType": "int",
@@ -3520,7 +3520,7 @@
       }
     }
   },
-  "usemall-goods-category": {
+  "ggysgy-goods-category": {
     "data": [
       {
         "_id": {
@@ -4004,7 +4004,7 @@
       }
     }
   },
-  "usemall-goods-comment": {
+  "ggysgy-goods-comment": {
     "data": [
       {
         "_id": {
@@ -4416,7 +4416,7 @@
       }
     }
   },
-  "usemall-goods-history": {
+  "ggysgy-goods-history": {
     "data": [
       {
         "_id": "607fdedeed8e0300015855cd1621339508681873831",
@@ -4453,7 +4453,7 @@
         "goods": {
           "bsonType": "string",
           "description": "商品ID",
-          "foreignKey": "usemall-goods._id"
+          "foreignKey": "ggysgy-goods._id"
         },
         "visit_cnt": {
           "bsonType": "int",
@@ -4534,7 +4534,7 @@
       }
     }
   },
-  "usemall-goods-sku": {
+  "ggysgy-goods-sku": {
     "data": [
       {
         "_id": {
@@ -5527,7 +5527,7 @@
       }
     }
   },
-  "usemall-goods-tag": {
+  "ggysgy-goods-tag": {
     "data": [
       {
         "_id": {
@@ -5814,7 +5814,7 @@
       }
     }
   },
-  "usemall-member": {
+  "ggysgy-member": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -6080,7 +6080,7 @@
       }
     }
   },
-  "usemall-member-address": {
+  "ggysgy-member-address": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -6246,7 +6246,7 @@
       }
     }
   },
-  "usemall-member-collect": {
+  "ggysgy-member-collect": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -6266,7 +6266,7 @@
         "goods": {
           "bsonType": "string",
           "description": "商品ID",
-          "foreignKey": "usemall-goods._id"
+          "foreignKey": "ggysgy-goods._id"
         },
         "goods_sku": {
           "bsonType": "string",
@@ -6344,7 +6344,7 @@
       }
     }
   },
-  "usemall-member-share": {
+  "ggysgy-member-share": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -6449,7 +6449,7 @@
       }
     }
   },
-  "usemall-member-share-detail": {
+  "ggysgy-member-share-detail": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -6555,7 +6555,7 @@
       }
     }
   },
-  "usemall-order": {
+  "ggysgy-order": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -6918,7 +6918,7 @@
       }
     }
   },
-  "usemall-order-detail": {
+  "ggysgy-order-detail": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -7042,7 +7042,7 @@
       }
     }
   },
-  "usemall-order-log": {
+  "ggysgy-order-log": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -7125,7 +7125,7 @@
       }
     }
   },
-  "usemall-order-parameter": {
+  "ggysgy-order-parameter": {
     "data": [
       {
         "_id": "608553128f0fb30001e2aa2b",
@@ -7226,7 +7226,7 @@
       }
     }
   },
-  "usemall-order-pay": {
+  "ggysgy-order-pay": {
     "data": [
       {
         "_id": "608ab293e4fb000001d0c0d3",
@@ -7369,7 +7369,7 @@
       }
     }
   },
-  "usemall-order-refund": {
+  "ggysgy-order-refund": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -7486,7 +7486,7 @@
       }
     }
   },
-  "usemall-order-reminder": {
+  "ggysgy-order-reminder": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -7602,7 +7602,7 @@
       }
     }
   },
-  "usemall-search-history": {
+  "ggysgy-search-history": {
     "data": [],
     "schema": {
       "bsonType": "object",
@@ -7670,7 +7670,7 @@
       }
     }
   },
-  "usemall-search-hot": {
+  "ggysgy-search-hot": {
     "data": [
       {
         "_id": {

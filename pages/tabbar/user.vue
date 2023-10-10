@@ -162,7 +162,7 @@
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
-const _history = 'usemall-goods-history'
+const _history = 'ggysgy-goods-history'
 export default {
   computed: {
     ...mapState(['islogin', 'member']),
@@ -258,7 +258,7 @@ export default {
     ...mapMutations(['logout', 'putMember']),
     // 加载数据
     loadData() {
-      this.$func.usemall.call('member/data').then(res => {
+      this.$func.ggysgy.call('member/data').then(res => {
         if (res.code == 200) {
           this.putMember(res.datas.member)
           console.log('member/data', res)
@@ -272,7 +272,7 @@ export default {
       })
 
       // 浏览历史
-      this.$db['usemall-goods-history, usemall-goods']
+      this.$db['ggysgy-goods-history, ggysgy-goods']
         .collection()
         .where('create_uid == $env.uid')
         .field('visit_cnt, last_modify_time, goods._id as goods_id, goods.img as goods_img, goods.state as goods_state')
@@ -338,7 +338,7 @@ export default {
         desc: '更新会员信息',
         lang: 'zh_CN',
         success(res) {
-          _this.$func.usemall
+          _this.$func.ggysgy
             .call('member/update', {
               nickname: res.userInfo.nickName,
               gender: res.userInfo.gender,

@@ -258,7 +258,7 @@
           return
         }
 
-        this.$func.usemall
+        this.$func.ggysgy
           .call('member/login', {
             username: this.mobile,
             password: this.password,
@@ -336,7 +336,7 @@
           success(mpres) {
             console.log('uni.login', mpres)
             if (mpres.errMsg == 'login:ok') {
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('member/loginByAlipay', {
                   code: mpres.code,
                 })
@@ -408,7 +408,7 @@
           success(mpres) {
             console.log('uni.login', mpres)
             if (mpres.errMsg == 'login:ok') {
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('member/loginByWeixin', {
                   code: mpres.code,
                 })

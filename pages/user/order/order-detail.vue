@@ -263,7 +263,7 @@
       },
       async loadData() {
         let _this = this
-        await this.$func.usemall
+        await this.$func.ggysgy
           .call('order/detail', {
             order_id: _this.order_id,
           })
@@ -323,7 +323,7 @@
               uni.showLoading({
                 title: '请稍后',
               })
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('order/received', {
                   order_id: _this.order_id,
                   state: '待评价',
@@ -352,7 +352,7 @@
               uni.showLoading({
                 title: '请稍后',
               })
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('order/deleted', {
                   order_id: _this.order_id,
                 })
@@ -382,7 +382,7 @@
               uni.showLoading({
                 title: '请稍后',
               })
-              _this.$func.usemall
+              _this.$func.ggysgy
                 .call('order/cancel', {
                   order_id: _this.order_id,
                   state: '已取消',

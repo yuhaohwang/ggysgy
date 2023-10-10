@@ -1,6 +1,6 @@
 {
   "bsonType": "object",
-  "description": "产品浏览历史表",
+  "description": "购物车",
   "permission": {
     "count": "doc.create_uid == auth.uid",
     "create": true,
@@ -49,7 +49,20 @@
     "goods": {
       "bsonType": "string",
       "description": "商品ID",
-      "foreignKey": "usemall-goods._id"
+      "foreignKey": "ggysgy-goods._id"
+    },
+    "goods_cart_price": {
+      "bsonType": "double",
+      "description": "购物车单价"
+    },
+    "goods_num": {
+      "bsonType": "int",
+      "description": "商品数量"
+    },
+    "goods_sku": {
+      "bsonType": "string",
+      "description": "商品SKU",
+      "foreignKey": "ggysgy-goods-sku._id"
     },
     "is_delete": {
       "bsonType": "int",
@@ -75,24 +88,11 @@
       "description": "备注",
       "trim": "both"
     },
-    "sort": {
-      "bsonType": "int",
-      "description": "排序"
-    },
-    "state": {
-      "bsonType": "string",
-      "description": "状态 待审核|销售中|已下架",
-      "trim": "both"
-    },
     "version": {
       "bsonType": "int",
       "defaultValue": 1,
       "description": "数据版本"
-    },
-    "visit_cnt": {
-      "bsonType": "int",
-      "description": "访问数"
     }
   },
-  "required": ["goods_id", "visit_cnt", "state", "version", "is_delete", "create_uid"]
+  "required": ["goods_id", "version", "is_delete", "create_uid"]
 }
