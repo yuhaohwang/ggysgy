@@ -30,7 +30,7 @@
           <view class="dflex-s dflex-wrap-w bg-main">
             <block v-for="item in sdatas" :key="item._id">
               <view class="item padding-bottom-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="toGoodList(item)">
-                <image :lazy-load="true" :src="item.img || '/static/images/user/default.png'"></image>
+                <image :lazy-load="true" :src="item.img || $getOssFileByPath('/static/logo/logo.png')"></image>
                 <text class="tac clamp margin-top-sm">{{ item.name }}</text>
               </view>
             </block>

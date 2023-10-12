@@ -4,7 +4,7 @@
       <view class="dflex-b">
         <view class="dflex">
           <image
-            src="/static/images/user/default.png"
+            :src="$getOssFileByPath('/static/logo/logo.png')"
             class="border-radius-lg margin-right-sm headimg"
             style="width: 70rpx; height: 70rpx"
             mode="aspectFill"
@@ -20,7 +20,9 @@
 <script>
   export default {
     data() {
-      return {}
+      return {
+		  static: this.$staticPaths,
+	  }
     },
   }
 </script>

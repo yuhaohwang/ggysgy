@@ -2,7 +2,7 @@
   <view class="container">
     <view class="x-c-c padding-tb">
       <view class="border-radius-c"><uni-id-pages-avatar width="130rpx" height="130rpx"></uni-id-pages-avatar></view>
-      <!-- <image class="border-radius-c" :src="member.avatar_file ? member.avatar_file.url : '/static/images/user/default.png'"></image> -->
+      <!-- <image class="border-radius-c" :src="member.avatar_file ? member.avatar_file.url : ':src="$getOssFileByPath('/static/logo/logo.png')"/images/user/default.png'"></image> -->
 
       <view class="margin-left-sm">
         <view>
@@ -44,7 +44,9 @@ export default {
     ...mapState(['islogin', 'member']),
   },
   data() {
-    return {}
+    return {
+		static: this.$staticPaths,
+	}
   },
   onShow() {
     if (!this.islogin) {

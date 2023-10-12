@@ -87,7 +87,7 @@
 					},
 					...passwordMod.getPwdRules()
 				},
-				logo: "/static/logo.png"
+				logo: this.$getOssFileByPath("/static/logo.png")
 			}
 		},
 		computed: {

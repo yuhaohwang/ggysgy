@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
 let config = {
   version: '1.0.9.211112',
 
   route: {
     home: '/pages/tabbar/home',
-    login: '/pages/uni-id-pages/login/login-withpwd',
+    login: '/uni_modules/uni-id-pages/pages/login/login-withpwd',
     order: '/pages/user/order/order',
     pay: '/pages/pay/pay',
     search: '/pages/home/search/search',
@@ -44,24 +44,24 @@ let config = {
     // "douyin",
 
     // #ifdef APP
-    "univerify",
+    'univerify',
     // #endif
     // #ifndef H5
-    "weixin",
+    'weixin',
     // #endif
-    "username",
+    'username',
     // #ifdef APP
-    "apple",
+    'apple',
     // #endif
-    "smsCode"
+    'smsCode',
   ],
   //政策协议
   agreements: {
-    serviceUrl: "https://baidu.com", //用户服务协议链接
-    privacyUrl: "https://baidu.com", //隐私政策条款链接
+    serviceUrl: 'https://baidu.com', //用户服务协议链接
+    privacyUrl: 'https://baidu.com', //隐私政策条款链接
     // 哪些场景下显示，1.注册（包括登录并注册，如：微信登录、苹果登录、短信验证码登录）、2.登录（如：用户名密码登录）
-    scope: ['register', 'login']
-  }
-}
+    scope: ['register', 'login'],
+  },
+};
 
-export default config
+export default config;

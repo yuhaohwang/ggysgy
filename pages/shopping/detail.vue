@@ -38,7 +38,7 @@
     <view class="goods-area bg-main padding">
       <view class="dflex-b margin-tb-sm">
         <view class="dflex">
-          <image src="/static/images/user/default.png" class="headimg border-radius-c" style="width: 70rpx; height: 70rpx"></image>
+          <image :src="$getOssFileByPath('/static/logo/logo.png')" class="headimg border-radius-c" style="width: 70rpx; height: 70rpx"></image>
           <view class="margin-left-xs fs-xxs">Usecloud</view>
         </view>
         <view class="bg-dark border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
@@ -86,6 +86,8 @@
       return {
         id: '',
         follow: true,
+		
+		static: this.$staticPaths,
       }
     },
     onShareAppMessage: function (ops) {

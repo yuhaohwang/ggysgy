@@ -43,7 +43,7 @@
 				type: "", //快捷登录方式
 				phone: "", //手机号码
 				focusPhone: false,
-				logo: "/static/logo.png"
+				logo: this.$getOssFileByPath("/static/logo.png")
 			}
 		},
 		computed: {
@@ -54,8 +54,8 @@
 				return /^1\d{10}$/.test(this.phone);
 			},
 			imgSrc() { //大快捷登录按钮图
-				return this.type == 'weixin' ? '/uni_modules/uni-id-pages/static/login/weixin.png' :
-					'/uni_modules/uni-id-pages/static/app-plus/apple.png'
+				return this.type == 'weixin' ? this.$getOssFileByPath('/static/login/weixin.png') :
+					this.$getOssFileByPath('/static/app-plus/apple.png')
 			}
 		},
 		async onLoad(e) {

@@ -4,7 +4,7 @@
       <view class="dflex-a">
         <view class="dflex" @click="popUp = true">
           <image
-            src="/static/images/user/default.png"
+            :src="$getOssFileByPath('/static/logo/logo.png')"
             mode="aspectFill"
             class="border-radius-c margin-right-sm"
             style="width: 110rpx; height: 110rpx; border: 2px solid #fff"
@@ -61,7 +61,7 @@
               <view class="padding-lr-sm margin-top-sm clamp-2">阿吉豆耳钉女日韩可爱甜美气质猫咪耳环人造猫眼石文艺钩坠耳饰品</view>
               <view class="dflex-b padding-lr-sm margin-tb-sm">
                 <view class="dflex" style="width: 60%">
-                  <image src="/static/images/user/default.png" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx"></image>
+                  <image :src="$getOssFileByPath('/static/logo/logo.png')" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx"></image>
                   <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
                 </view>
                 <view class="dflex">
@@ -86,7 +86,7 @@
               <view class="padding-lr-sm margin-top-sm clamp-2">小包包女新款潮2020法国小众质感高级感洋气小ck小香风链条斜挎包</view>
               <view class="dflex-b padding-lr-sm margin-tb-sm">
                 <view class="dflex" style="width: 60%">
-                  <image src="/static/images/user/default.png" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx"></image>
+                  <image :src="$getOssFileByPath('/static/logo/logo.png')" class="border-radius-c headimg" style="width: 50rpx; height: 50rpx"></image>
                   <view class="ft-dark margin-left-xs fs-xxs">Usecloud</view>
                 </view>
                 <view class="dflex">
@@ -140,6 +140,8 @@
       return {
         pitch_id: 0,
         popUp: false,
+		
+		static: this.$staticPaths,
       }
     },
     onPageScroll(e) {

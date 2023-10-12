@@ -354,8 +354,10 @@ class Common {
       uni.navigateBack({})
       return
     }
-
-    this.toHome()
+		
+		uni.switchTab({
+			url: $config.route.home,
+		})
   }
 
   /**
@@ -422,7 +424,9 @@ class Common {
     let pages = getCurrentPages()
     switch (errCode) {
       case 0:
-        pages.length ? uni.navigateBack() : this.toHome()
+        pages.length ? uni.navigateBack() : uni.switchTab({
+					url: $config.route.home,
+				})
         break
     }
   }
@@ -572,6 +576,5 @@ class Common {
 
     return throttled;
   }
-
 }
 export default new Common()

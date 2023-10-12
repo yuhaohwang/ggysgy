@@ -136,7 +136,7 @@ let uposter = {
   // 产品海报数据
   getGoodsData: function(member, goods, qrcode) {
     // 会员头像
-    this.goods.views[1].src = member.member_headimg ? member.member_headimg : '/static/images/logo.png'
+    this.goods.views[1].src = member.member_headimg ? member.member_headimg : '/static/logo.png'
     // 会员名称
     this.goods.views[2].text = member.member_nickname ? member.member_nickname : '艺心益盟'
     // 产品图

@@ -7,7 +7,7 @@
         <text>{{ title }}</text>
       </view>
       <view class="dflex dflex-flow-c margin-top">
-        <image class="image-sm" mode="aspectFill" src="../../static/images/user/default.png"></image>
+        <image class="image-sm" mode="aspectFill" src="../../static/user/default.png"></image>
         <text class="">微信授权</text>
       </view>
       <view class="btn-contaer margin-top-lg">

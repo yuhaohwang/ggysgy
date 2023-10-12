@@ -6,25 +6,18 @@
           <view>
             <image
               class="headimg border-radius-c"
-              :src="member.avatar_file ? member.avatar_file.url : '/static/images/user/default.png'"
+              :src="member.avatar_file ? member.avatar_file.url : $getOssFileByPath('/static/logo/logo.png')"
             ></image>
           </view>
           <view class="margin-left-sm">
             <view class="info-box">
               <text class="fs-lg">{{ member.nickname ? member.nickname : '艺心益盟' }}</text>
             </view>
-            <!--            <view v-if="member.member_city">
-              <text class="fs-xxs">{{ member.member_city }}</text>
-            </view> -->
           </view>
           <view v-if="islogin && is_mp" class="padding" @click.stop="updateMember">
             <view :class="{ rotate: isreq }" class="animated iconfont">&#xe6ff;</view>
           </view>
         </view>
-        <!--        <view class="border-radius-big bg-base dflex-c padding-lr" @click="to('/pages/user/integral/sign')">
-          <view class="iconfont fs-xl iconqiandao margin-right-xs"></view>
-          <view>签到</view>
-        </view> -->
       </view>
 
       <!-- 03. 分类区1 -->
@@ -161,330 +154,333 @@
   </view>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
-const _history = 'ggysgy-goods-history'
-export default {
-  computed: {
-    ...mapState(['islogin', 'member']),
-  },
-  data() {
-    return {
-      // 金刚区分类
-      categoryDatas: [
-        {
-          _id: '6083a669ff01b00001bb591e',
-          cid: 0,
-          create_time: 1619240553775,
-          create_uid: '607e63e021576100016eded3',
-          img: '../../static/images/user-category/wfbd.png',
-          is_delete: 0,
-          name: '我发布的',
-          remark: '',
-          sort: 1,
-          state: '启用',
-          type: '页面',
-          url: '/pages/user/goods/wfbd/wfbd',
-          version: 1,
-        },
-        {
-          _id: '6083a6f6ff01b00001bb5a26',
-          cid: '',
-          create_time: 1619240694262,
-          create_uid: '607e63e021576100016eded3',
-          img: '../../static/images/user-category/wmcd.png',
-          is_delete: 0,
-          name: '我卖出的',
-          remark: '',
-          sort: 2,
-          state: '启用',
-          type: '页面',
-          url: '/pages/user/goods/wmcd/wmcd',
-          version: 1,
-        },
-        {
-          _id: '6083a8fcff01b00001bb5e22',
-          cid: null,
-          create_time: 1619241212782,
-          create_uid: '607e63e021576100016eded3',
-          img: '../../static/images/user-category/wmdd.png',
-          is_delete: 0,
-          name: '我买到的',
-          remark: '',
-          sort: 3,
-          state: '启用',
-          type: '页面',
-          url: '/pages/user/goods/wmdd/wmdd',
-          version: 1,
-        },
-      ],
-      isreq: false,
-      // 浏览历史
-      historyDatas: {},
-      // 统计数据
-      stats: {},
+  import { mapState, mapMutations } from 'vuex';
+  import { Static } from 'vue';
+  const _history = 'ggysgy-goods-history';
+  export default {
+    computed: {
+      ...mapState(['islogin', 'member']),
+    },
+    data() {
+      return {
+        // 金刚区分类
+        categoryDatas: [
+          {
+            _id: '6083a669ff01b00001bb591e',
+            cid: 0,
+            create_time: 1619240553775,
+            create_uid: '607e63e021576100016eded3',
+            img: this.$getOssFileByPath('/static/user-category/wfbd.png'),
+            is_delete: 0,
+            name: '我发布的',
+            remark: '',
+            sort: 1,
+            state: '启用',
+            type: '页面',
+            url: '/pages/user/goods/wfbd/wfbd',
+            version: 1,
+          },
+          {
+            _id: '6083a6f6ff01b00001bb5a26',
+            cid: '',
+            create_time: 1619240694262,
+            create_uid: '607e63e021576100016eded3',
+            img: this.$getOssFileByPath('/static/user-category/wmcd.png'),
+            is_delete: 0,
+            name: '我卖出的',
+            remark: '',
+            sort: 2,
+            state: '启用',
+            type: '页面',
+            url: '/pages/user/goods/wmcd/wmcd',
+            version: 1,
+          },
+          {
+            _id: '6083a8fcff01b00001bb5e22',
+            cid: null,
+            create_time: 1619241212782,
+            create_uid: '607e63e021576100016eded3',
+            img: this.$getOssFileByPath('/static/user-category/wmdd.png'),
+            is_delete: 0,
+            name: '我买到的',
+            remark: '',
+            sort: 3,
+            state: '启用',
+            type: '页面',
+            url: '/pages/user/goods/wmdd/wmdd',
+            version: 1,
+          },
+        ],
+        isreq: false,
+        // 浏览历史
+        historyDatas: {},
+        // 统计数据
+        stats: {},
 
-      actionSheetShow: false,
-      actionSheetList: [],
-      actionSheetTips: {
-        text: '',
-        color: '#9a9a9a',
-        size: 24,
+        actionSheetShow: false,
+        actionSheetList: [],
+        actionSheetTips: {
+          text: '',
+          color: '#9a9a9a',
+          size: 24,
+        },
+
+        is_mp: false,
+        is_alipay: false,
+      };
+    },
+    onLoad() {
+      this.$nextTick(() => {
+        this.is_mp = this.$env.is_mp;
+        this.is_alipay = this.$env.platform == 'alipay';
+      });
+
+      console.log(this.static);
+    },
+    onShow() {
+      let _this = this;
+      if (!this.islogin) {
+        this.$api.msg('账号未登录');
+        return;
+      }
+      this.loadData();
+    },
+    onPullDownRefresh() {
+      if (this.islogin) {
+        this.$api.getUserInfo();
+      }
+    },
+    methods: {
+      ...mapMutations(['logout', 'putMember']),
+      // 加载数据
+      loadData() {
+        this.$func.ggysgy.call('member/data').then(res => {
+          if (res.code == 200) {
+            this.putMember(res.datas.member);
+            console.log('member/data', res);
+
+            this.stats = res.datas.stats;
+            this.stats.order_state = {};
+            this.stats.order.forEach(_order => {
+              this.stats.order_state[_order._id] = _order.num;
+            });
+          }
+        });
+
+        // 浏览历史
+        this.$db['ggysgy-goods-history, ggysgy-goods']
+          .collection()
+          .where('create_uid == $env.uid')
+          .field('visit_cnt, last_modify_time, goods._id as goods_id, goods.img as goods_img, goods.state as goods_state')
+          .orderBy('last_modify_time desc')
+          .get()
+          .then(res => {
+            if (res && res.result && res.result.code === 0) {
+              let _historyDatas = [];
+              res.result.data.forEach(x => {
+                x._id = x.goods_id[0];
+                x.img = x.goods_img[0];
+                x.state = x.goods_state[0];
+                _historyDatas.push(x);
+              });
+              this.historyDatas = _historyDatas;
+            }
+          });
       },
 
-      is_mp: false,
-      is_alipay: false,
-    }
-  },
-  onLoad() {
-    this.$nextTick(() => {
-      this.is_mp = this.$env.is_mp
-      this.is_alipay = this.$env.platform == 'alipay'
-    })
-  },
-  onShow() {
-    let _this = this
-    if (!this.islogin) {
-      this.$api.msg('账号未登录')
-      return
-    }
-    this.loadData()
-  },
-  onPullDownRefresh() {
-    if (this.islogin) {
-      this.$api.getUserInfo()
-    }
-  },
-  methods: {
-    ...mapMutations(['logout', 'putMember']),
-    // 加载数据
-    loadData() {
-      this.$func.ggysgy.call('member/data').then(res => {
-        if (res.code == 200) {
-          this.putMember(res.datas.member)
-          console.log('member/data', res)
+      // 打开操作菜单
+      openActionSheet() {
+        this.actionSheetShow = true;
 
-          this.stats = res.datas.stats
-          this.stats.order_state = {}
-          this.stats.order.forEach(_order => {
-            this.stats.order_state[_order._id] = _order.num
-          })
+        this.$api.timerout(() => {
+          this.actionSheetList = [
+            {
+              text: '退出登录',
+              color: '#333',
+            },
+            {
+              text: '切换账号',
+              color: '#333',
+            },
+          ];
+        }, 0);
+      },
+      // 关闭操作菜单
+      actionSheetClose() {
+        console.log(this.actionSheetShow);
+      },
+      // 点击操作菜单
+      actionSheetClick(index) {
+        switch (index) {
+          case 0:
+            this.$api.msg('退出成功');
+            this.logout();
+            this.$api.timerout(() => {
+              this.$api.toHome();
+            }, 200);
+            break;
+          case 1:
+            this.$api.toLogin();
+            break;
         }
-      })
+      },
 
-      // 浏览历史
-      this.$db['ggysgy-goods-history, ggysgy-goods']
-        .collection()
-        .where('create_uid == $env.uid')
-        .field('visit_cnt, last_modify_time, goods._id as goods_id, goods.img as goods_img, goods.state as goods_state')
-        .orderBy('last_modify_time desc')
-        .get()
-        .then(res => {
-          if (res && res.result && res.result.code === 0) {
-            let _historyDatas = []
-            res.result.data.forEach(x => {
-              x._id = x.goods_id[0]
-              x.img = x.goods_img[0]
-              x.state = x.goods_state[0]
-              _historyDatas.push(x)
-            })
-            this.historyDatas = _historyDatas
-          }
-        })
-    },
+      updateMember() {
+        if (this.isreq) return;
+        this.isreq = true;
+        let _this = this;
 
-    // 打开操作菜单
-    openActionSheet() {
-      this.actionSheetShow = true
+        uni.getUserProfile({
+          desc: '更新会员信息',
+          lang: 'zh_CN',
+          success(res) {
+            _this.$func.ggysgy
+              .call('member/update', {
+                nickname: res.userInfo.nickName,
+                gender: res.userInfo.gender,
+                avatar: res.userInfo.avatarUrl,
+                comment: [res.userInfo.country, res.userInfo.province, res.userInfo.city].filter(x => x).join('-'),
+              })
+              .then(res => {
+                _this.isreq = false;
 
-      this.$api.timerout(() => {
-        this.actionSheetList = [
-          {
-            text: '退出登录',
-            color: '#333',
+                if (res.code == 200) {
+                  _this.loadData();
+                  return;
+                }
+
+                _this.$api.msg(res.msg);
+              });
           },
-          {
-            text: '切换账号',
-            color: '#333',
+          fail(err) {
+            console.log(err);
+            _this.isreq = false;
           },
-        ]
-      }, 0)
+        });
+      },
+
+      // 统一跳转接口，拦截未登录路由
+      to(url) {
+        if (!this.islogin) {
+          this.$api.toLogin();
+          return;
+        }
+
+        uni.navigateTo({
+          url,
+        });
+      },
+      // 跳转到 订单
+      toOrder(url, state) {
+        if (!this.islogin) {
+          this.$api.toLogin();
+          return;
+        }
+
+        uni.setStorage({
+          key: '__order_state',
+          data: state,
+          success(res) {
+            console.log(res);
+          },
+          complete() {
+            uni.navigateTo({
+              url,
+            });
+          },
+        });
+      },
+
+      // 跳转商品详情
+      toGood(item) {
+        this.$api.toGood({
+          id: item._id,
+        });
+      },
     },
-    // 关闭操作菜单
-    actionSheetClose() {
-      console.log(this.actionSheetShow)
-    },
-    // 点击操作菜单
-    actionSheetClick(index) {
-      switch (index) {
-        case 0:
-          this.$api.msg('退出成功')
-          this.logout()
-          this.$api.timerout(() => {
-            this.$api.toHome()
-          }, 200)
-          break
-        case 1:
-          this.$api.toLogin()
-          break
-      }
-    },
-
-    updateMember() {
-      if (this.isreq) return
-      this.isreq = true
-      let _this = this
-
-      uni.getUserProfile({
-        desc: '更新会员信息',
-        lang: 'zh_CN',
-        success(res) {
-          _this.$func.ggysgy
-            .call('member/update', {
-              nickname: res.userInfo.nickName,
-              gender: res.userInfo.gender,
-              avatar: res.userInfo.avatarUrl,
-              comment: [res.userInfo.country, res.userInfo.province, res.userInfo.city].filter(x => x).join('-'),
-            })
-            .then(res => {
-              _this.isreq = false
-
-              if (res.code == 200) {
-                _this.loadData()
-                return
-              }
-
-              _this.$api.msg(res.msg)
-            })
-        },
-        fail(err) {
-          console.log(err)
-          _this.isreq = false
-        },
-      })
-    },
-
-    // 统一跳转接口，拦截未登录路由
-    to(url) {
-      if (!this.islogin) {
-        this.$api.toLogin()
-        return
-      }
-
-      uni.navigateTo({
-        url,
-      })
-    },
-    // 跳转到 订单
-    toOrder(url, state) {
-      if (!this.islogin) {
-        this.$api.toLogin()
-        return
-      }
-
-      uni.setStorage({
-        key: '__order_state',
-        data: state,
-        success(res) {
-          console.log(res)
-        },
-        complete() {
-          uni.navigateTo({
-            url,
-          })
-        },
-      })
-    },
-
-    // 跳转商品详情
-    toGood(item) {
-      this.$api.toGood({
-        id: item._id,
-      })
-    },
-  },
-}
+  };
 </script>
 <style lang="scss">
-page {
-  min-height: 100%;
-  background: $page-color-base;
-}
-
-.member-area {
-  image {
-    width: 130rpx;
-    height: 130rpx;
-    border: 5rpx solid #fff;
-  }
-}
-
-/* 分类区1 */
-.category-item {
-  margin: auto;
-
-  // padding: 6rpx;
-  font-size: $font-sm + 2upx;
-  color: $font-color-dark;
-
-  image {
-    width: 60%;
-  }
-}
-
-.vip-card-area {
-  color: #f7d680;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
-}
-
-.stats-area {
-  .item {
-    padding: 30rpx 0;
+  page {
+    min-height: 100%;
+    background: $page-color-base;
   }
 
-  .num {
-    margin-bottom: 6rpx;
-    font-size: $font-lg;
-    color: $font-color-dark;
-  }
-}
-
-.order-area {
-  .item {
-  }
-
-  .iconfont {
-    position: relative;
-    font-size: $font-lg + 8upx;
-
-    .badge {
-      right: initial;
+  .member-area {
+    image {
+      width: 130rpx;
+      height: 130rpx;
+      border: 5rpx solid #fff;
     }
   }
-}
 
-.stats-area .item,
-.order-area .item {
-  position: relative;
-  font-size: $font-sm;
-  color: $font-color-base;
-  flex: 1;
-}
+  /* 分类区1 */
+  .category-item {
+    margin: auto;
 
-.browsing-area {
-  image {
-    width: 160rpx;
-    height: 160rpx;
+    // padding: 6rpx;
+    font-size: $font-sm + 2upx;
+    color: $font-color-dark;
+
+    image {
+      width: 60%;
+    }
   }
-}
 
-::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-  color: transparent;
-}
+  .vip-card-area {
+    color: #f7d680;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
+  }
 
-.log-out-btn {
-  color: $font-color-base;
-}
+  .stats-area {
+    .item {
+      padding: 30rpx 0;
+    }
+
+    .num {
+      margin-bottom: 6rpx;
+      font-size: $font-lg;
+      color: $font-color-dark;
+    }
+  }
+
+  .order-area {
+    .item {
+    }
+
+    .iconfont {
+      position: relative;
+      font-size: $font-lg + 8upx;
+
+      .badge {
+        right: initial;
+      }
+    }
+  }
+
+  .stats-area .item,
+  .order-area .item {
+    position: relative;
+    font-size: $font-sm;
+    color: $font-color-base;
+    flex: 1;
+  }
+
+  .browsing-area {
+    image {
+      width: 160rpx;
+      height: 160rpx;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    color: transparent;
+  }
+
+  .log-out-btn {
+    color: $font-color-base;
+  }
 </style>

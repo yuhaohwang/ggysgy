@@ -29,6 +29,7 @@
 export default {
   data() {
     return {
+			
       // 头部参数
       searchAuto: !0,
       searchTip: '请输入搜索关键字',
@@ -42,8 +43,8 @@ export default {
       gykDatas: [
         {
           title: '手绘',
-          avatar: '/static/images/user/default.png',
-          url: '/static/images/user/default.png',
+          avatar: this.$staticPaths.user.default,
+          url: this.$staticPaths.user.default,
           danmuList: [
             {
               text: '第 1s 出现的弹幕',
@@ -59,8 +60,8 @@ export default {
         },
         {
           title: '手绘',
-          avatar: '/static/images/user/default.png',
-          url: '/static/images/user/default.png',
+          avatar: this.$staticPaths.user.default,
+          url: this.$staticPaths.user.default,
           danmuList: [
             {
               text: '第 1s 出现的弹幕',
@@ -76,8 +77,8 @@ export default {
         },
         {
           title: '手绘',
-          avatar: '/static/images/user/default.png',
-          url: '/static/images/user/default.png',
+          avatar: this.$staticPaths.user.default,
+          url: this.$staticPaths.user.default,
           danmuList: [
             {
               text: '第 1s 出现的弹幕',
@@ -93,8 +94,8 @@ export default {
         },
         {
           title: '手绘',
-          avatar: '/static/images/user/default.png',
-          url: '/static/images/user/default.png',
+          avatar: this.$staticPaths.user.default,
+          url: this.$staticPaths.user.default,
           danmuList: [
             {
               text: '第 1s 出现的弹幕',

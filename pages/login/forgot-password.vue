@@ -2,7 +2,7 @@
   <view class="container bg-main pos-r">
     <view class="padding-xl dflex-c dflex-flow-c">
       <view class="portrait-box margin-bottom">
-        <image class="headimg border-radius-c" :src="(member && member.member_headimg) || '/static/images/user/default.png'"></image>
+        <image class="headimg border-radius-c" :src="(member && member.member_headimg) || $getOssFileByPath('/static/logo/logo.png')"></image>
       </view>
 
       <view class="w-full dflex padding-bottom-sm">

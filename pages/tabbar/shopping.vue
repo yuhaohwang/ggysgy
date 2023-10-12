@@ -4,7 +4,7 @@
 
     <view class="x-b-c w-full bg-main padding-lr-sm">
       <image
-        src="/static/images/user/default.png"
+        :src="$getOssFileByPath('/static/logo/logo.png')"
         class="border-radius-lg headimg"
         style="width: 66rpx; height: 66rpx"
         mode=""
@@ -13,13 +13,6 @@
       <view class="margin-left-xs flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
       <view class="margin-left-xs" @click="topage(categoryAll)">分类</view>
     </view>
-
-    <!--    <view class="flex1 margin-left-sm">
-      <view class="bg-dark border-radius-lg dflex" style="height: 76rpx; line-height: 76rpx">
-        <input type="text" placeholder="输入关键词" class="w-full padding-lr" />
-        <view class="iconfont iconsousuo-01 bg-base border-radius-lg h-full padding-lr-xl" @click="search"></view>
-      </view>
-    </view> -->
 
     <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="tabCurrent" @tab-change="tabChange"></top-tab>
 
@@ -38,37 +31,29 @@
 
             <view v-show="!sdata.empty" class="x-c-s x-2 padding-xs border-radius">
               <view class="y-s-c waterfall_left">
-                <block v-for="(l_item, l_index) in sdata.goodsLeftList" :key="l_index">
-                  <view v-if="l_item" class="padding-xs w-full" @click="toGood(l_item)">
+                <block v-for="(item, index) in sdata.goodsLeftList" :key="index">
+                  <view v-if="item" class="padding-xs w-full" @click="toGood(item)">
                     <view class="bg-main border-radius">
                       <image
-                        :src="l_item.img"
+                        :src="item.img"
                         style="width: 100%; max-height: 350rpx"
                         mode="widthFix"
                         :lazy-load="true"
                         @load="considerPush"
                       ></image>
 
-                      <view class="padding-lr-sm margin-top-sm clamp-2">{{ l_item.name }}</view>
+                      <view class="padding-lr-sm margin-top-sm clamp-2">{{ item.name }}</view>
 
                       <view class="x-b-c padding-lr-sm margin-tb-sm">
                         <view class="x-c-c">
                           <image
-                            :src="
-                              l_item.create_uid[0].avatar_file.url
-                                ? l_item.create_uid[0].avatar_file.url
-                                : '/static/images/user/default.png'
-                            "
+														:src="getUserAvatar(item.create_uid[0])"
                             class="border-radius-c headimg"
                             style="width: 50rpx; height: 50rpx"
                           ></image>
                           <view class="ft-dark margin-left-xs fs-xxs">
-                            {{ l_item.create_uid[0].nickname ? l_item.create_uid[0].nickname : '艺心益盟' }}
+                            {{ getUserName(item.create_uid[0]) }}
                           </view>
-                        </view>
-                        <view class="x-c-c">
-                          <!--                          <view class="iconfont iconaixin"></view>
-                          <view class="clamp ft-dark margin-left-xs fs-xxs">355</view> -->
                         </view>
                       </view>
                     </view>
@@ -77,37 +62,31 @@
               </view>
 
               <view class="y-s-c waterfall_right">
-                <block v-for="(r_item, r_index) in sdata.goodsRightList" :key="r_index">
-                  <view v-if="r_item" class="padding-xs w-full" @click="toGood(r_item)">
+                <block v-for="(item, index) in sdata.goodsRightList" :key="index">
+                  <view v-if="item" class="padding-xs w-full" @click="toGood(item)">
                     <view class="bg-main border-radius">
                       <image
-                        :src="r_item.img"
+                        :src="item.img"
                         style="width: 100%; max-height: 350rpx"
                         mode="widthFix"
                         :lazy-load="true"
                         @load="considerPush"
                       ></image>
 
-                      <view class="padding-lr-sm margin-top-sm clamp-2">{{ r_item.name }}</view>
+                      <view class="padding-lr-sm margin-top-sm clamp-2">{{ item.name }}</view>
 
                       <view class="x-b-c padding-lr-sm margin-tb-sm">
                         <view class="x-c-c">
                           <image
-                            :src="
-                              r_item.create_uid[0].avatar_file.url
-                                ? r_item.create_uid[0].avatar_file.url
-                                : '/static/images/user/default.png'
-                            "
+														:src="item.create_uid[0] && item.create_uid[0].avatar_file
+															? item.create_uid[0].avatar_file.url
+															: $getOssFileByPath('/static/logo/logo.png')"
                             class="border-radius-c headimg"
                             style="width: 50rpx; height: 50rpx"
                           ></image>
                           <view class="ft-dark margin-left-xs fs-xxs">
-                            {{ r_item.create_uid[0].nickname ? r_item.create_uid[0].nickname : '艺心益盟' }}
+                            {{ getUserName(item.create_uid[0]) }}
                           </view>
-                        </view>
-                        <view class="x-c-c">
-                          <!--                          <view class="iconfont iconaixin"></view>
-                          <view class="clamp ft-dark margin-left-xs fs-xxs">355</view> -->
                         </view>
                       </view>
                     </view>
@@ -154,6 +133,8 @@ export default {
       cid: 0,
       // 二级数据
       sdatas: [],
+	  
+	  static: this.$staticPaths,
     }
   },
   onLoad() {
@@ -289,6 +270,13 @@ export default {
       }
 
       uni.hideLoading()
+    },
+		
+    getUserAvatar(user) {
+      return user && user.avatar_file ? user.avatar_file.url : this.$getOssFileByPath('/static/logo/logo.png');
+    },
+    getUserName(user) {
+      return user && user.nickname ? user.nickname : '艺心益盟';
     },
 
     // 触发重新排列
