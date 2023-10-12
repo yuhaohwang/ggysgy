@@ -17,95 +17,95 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-const _about = 'ggysgy-app-about'
-export default {
-  data() {
-    return {
-      version: '1.0.0',
-      aboutData: {},
-    }
-  },
-  onLoad(options) {
-    this.$db[_about].tofirst().then(res => {
-      if (res.code === 200) {
-        this.aboutData = res.datas
-        // console.log('this.aboutData', this.aboutData);
-        return
-      }
-    })
-  },
-  onShow() {
-    this.version = '版本 ' + this.$config.version
-  },
-  computed: {
-    ...mapState(['member']),
-  },
-  methods: {
-    ...mapMutations(['logout']),
-    toUrl() {
-      let arr = [].concat.apply([], arguments)
-      this.$api.toUrl(...arr)
+  import { mapState, mapMutations } from 'vuex';
+  const _about = 'ggysgy-app-about';
+  export default {
+    data() {
+      return {
+        version: '1.0.0',
+        aboutData: {},
+      };
     },
-    // 关于用云
-    toabout() {
-      if (this.aboutData.type == '网页') {
-        uni.navigateTo({
-          url: `/pages/content/web?url=${this.aboutData.url}`,
-        })
-      } else if (this.aboutData.type == '内容') {
-        uni.setStorage({
-          key: '__rich_text',
-          data: this.aboutData.content,
-          success() {
-            uni.navigateTo({
-              url: '/pages/content/rich-text',
-            })
-          },
-        })
-      }
+    onLoad(options) {
+      this.$db[_about].tofirst().then(res => {
+        if (res.code === 200) {
+          this.aboutData = res.datas;
+          // console.log('this.aboutData', this.aboutData);
+          return;
+        }
+      });
     },
-    tofeedback() {
-      this.$api.msg('打开右上角-反馈功能')
+    onShow() {
+      this.version = '版本 ' + this.$config.version;
     },
-    // 退出登录
-    tologout() {
-      uni.showModal({
-        content: '退出登录',
-        success: e => {
-          if (e.confirm) {
-            this.$api.msg('退出成功')
-            this.logout()
+    computed: {
+      ...mapState(['member']),
+    },
+    methods: {
+      ...mapMutations(['logout']),
+      toUrl() {
+        let arr = [].concat.apply([], arguments);
+        this.$api.toUrl(...arr);
+      },
+      // 关于用云
+      toabout() {
+        if (this.aboutData.type == '网页') {
+          uni.navigateTo({
+            url: `/pages/content/web?url=${this.aboutData.url}`,
+          });
+        } else if (this.aboutData.type == '内容') {
+          uni.setStorage({
+            key: '__rich_text',
+            data: this.aboutData.content,
+            success() {
+              uni.navigateTo({
+                url: '/pages/content/rich-text',
+              });
+            },
+          });
+        }
+      },
+      tofeedback() {
+        this.$api.msg('打开右上角-反馈功能');
+      },
+      // 退出登录
+      tologout() {
+        uni.showModal({
+          content: '退出登录',
+          success: e => {
+            if (e.confirm) {
+              this.$api.msg('退出成功');
+              this.logout();
 
-            this.$api.timerout(() => {
-              this.$api.toHome()
-            }, 200)
-          }
-        },
-      })
+              this.$api.timerout(() => {
+                this.$api.toHome();
+              }, 200);
+            }
+          },
+        });
+      },
     },
-  },
-}
+  };
 </script>
 
 <style lang="scss">
-page {
-  background: $page-color-base;
-}
-
-.use-item {
-  height: 100rpx;
-  line-height: 100rpx;
-  background: #fff;
-
-  switch {
-    transform: translateX(16rpx) scale(0.84);
+  page {
+    background: $page-color-base;
   }
 
-  button {
-    font-size: 28rpx;
+  .use-item {
+    height: 100rpx;
     line-height: 100rpx;
     background: #fff;
+
+    switch {
+      transform: translateX(16rpx) scale(0.84);
+    }
+
+    button {
+      font-size: 28rpx;
+      line-height: 100rpx;
+      background: #fff;
+    }
   }
-}
 </style>

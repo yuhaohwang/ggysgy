@@ -1,32 +1,30 @@
-import $api from '@/common/common.js'
-import $store from '@/common/store.js'
-export default async function(e = {}) {
-  const {
-    errCode = 0, showToast = true, toastText = '登录成功', autoBack = true
-  } = e
+import $api from '@/common/common.js';
+import $store from '@/common/store.js';
+export default async function (e = {}) {
+  const { errCode = 0, showToast = true, toastText = '登录成功', autoBack = true } = e;
 
   console.log({
     errCode,
     toastText,
-    autoBack
+    autoBack,
   });
 
   if (!errCode) {
-    $store.commit('login', e)
+    $store.commit('login', e);
     uni.showLoading({
-      title: "请求中",
-      mask: true
-    })
-    await $api.getUserInfo()
-    uni.hideLoading()
+      title: '请求中',
+      mask: true,
+    });
+    await $api.getUserInfo();
+    uni.hideLoading();
   } else {
-    $store.commit('logout')
+    $store.commit('logout');
   }
 
   if (showToast) {
     uni.showToast({
       title: toastText,
-      icon: 'none'
+      icon: 'none',
     });
   }
   if (autoBack) {
@@ -35,12 +33,12 @@ export default async function(e = {}) {
     // console.log(pages);
     pages.forEach((page, index) => {
       if (pages[pages.length - index - 1].route.split('/')[2] == 'login') {
-        delta++
+        delta++;
       }
-    })
+    });
     console.log('判断需要返回几层:', delta);
     uni.navigateBack({
-      delta
-    })
+      delta,
+    });
   }
 }

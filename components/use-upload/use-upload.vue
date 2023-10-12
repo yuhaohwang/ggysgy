@@ -25,11 +25,11 @@
       },
     },
     data() {
-      return {}
+      return {};
     },
     methods: {
       chooseImage() {
-        let _this = this
+        let _this = this;
 
         uni.chooseImage({
           count: _this.limit,
@@ -39,7 +39,7 @@
             uni.showLoading({
               title: '上传中',
               mask: true,
-            })
+            });
 
             for (var i = 0; i < res.tempFilePaths.length; i++) {
               const result = await uniCloud
@@ -47,64 +47,64 @@
                   filePath: res.tempFilePaths[i],
                   cloudPath: _this.$api.getFileName(res.tempFilePaths[i]),
                   onUploadProgress: function (progressEvent) {
-                    var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                    var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                   },
                 })
                 .then(uRes => {
-                  console.log(uRes, res.tempFiles[i])
-                  uRes.url = uRes.fileID
-                  uRes.type = res.tempFiles[i].type || ''
-                  uRes.size = res.tempFiles[i].size
+                  console.log(uRes, res.tempFiles[i]);
+                  uRes.url = uRes.fileID;
+                  uRes.type = res.tempFiles[i].type || '';
+                  uRes.size = res.tempFiles[i].size;
 
-                  _this.value.push(uRes)
-                  _this.sendData()
+                  _this.value.push(uRes);
+                  _this.sendData();
                 })
                 .catch(err => {
-                  console.log('use-upload', err)
-                })
+                  console.log('use-upload', err);
+                });
             }
 
-            uni.hideLoading()
+            uni.hideLoading();
           },
-        })
+        });
       },
       preImage(item, urls) {
         if (item.type.indexOf('video/') !== -1) {
-          return
+          return;
         }
 
         let _urls = urls
           .filter(x => x.type.indexOf('image/') !== -1)
           .map(ele => {
-            return ele.url
-          })
+            return ele.url;
+          });
 
-        console.log(item, urls)
+        console.log(item, urls);
         uni.previewImage({
           current: item.url,
           urls: _urls,
           longPressActions: {
             itemList: ['发送给朋友', '保存图片', '收藏'],
             success: function (data) {
-              console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片')
+              console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
             },
             fail: function (err) {
-              console.log(err.errMsg)
+              console.log(err.errMsg);
             },
           },
-        })
+        });
       },
 
       delImage(idx) {
-        this.value.splice(idx, 1)
-        this.sendData()
+        this.value.splice(idx, 1);
+        this.sendData();
       },
 
       sendData() {
-        this.$emit('upload', this.value)
+        this.$emit('upload', this.value);
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -115,8 +115,7 @@
       margin-right: 2%;
       border: 1px solid #f0f0f0;
 
-      image,
-      video {
+      image, video {
         width: 100%;
         height: 100%;
       }

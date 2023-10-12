@@ -13,8 +13,8 @@
 </template>
 
 <script>
-  import QRCode from './qrcode.js'
-  let qrcode
+  import QRCode from './qrcode.js';
+  let qrcode;
   export default {
     name: 'use-qrcode',
     props: {
@@ -86,18 +86,18 @@
     data() {
       return {
         result: '',
-      }
+      };
     },
     methods: {
       _makeCode() {
-        let that = this
+        let that = this;
         if (this._empty(this.val)) {
           uni.showToast({
             title: '二维码内容不能为空',
             icon: 'none',
             duration: 2000,
-          })
-          return
+          });
+          return;
         }
 
         qrcode = new QRCode({
@@ -116,18 +116,18 @@
           imageSize: that.iconSize, // 二维码图标大小
           cbResult: function (res) {
             // 生成二维码的回调
-            that._result(res)
+            that._result(res);
           },
-        })
+        });
       },
       _clearCode() {
-        this._result('')
-        qrcode.clear()
+        this._result('');
+        qrcode.clear();
       },
       _saveCode() {
-        let that = this
+        let that = this;
         if (!this.result) {
-          return
+          return;
         }
 
         uni.saveImageToPhotosAlbum({
@@ -137,39 +137,39 @@
               title: '二维码保存成功',
               icon: 'success',
               duration: 2000,
-            })
+            });
           },
-        })
+        });
       },
       _result(res) {
-        this.result = res
-        this.$emit('result', res)
+        this.result = res;
+        this.$emit('result', res);
       },
       _empty(v) {
         let tp = typeof v,
-          rt = false
+          rt = false;
         if (tp == 'number' && String(v) == '') {
-          rt = true
+          rt = true;
         } else if (tp == 'undefined') {
-          rt = true
+          rt = true;
         } else if (tp == 'object') {
-          if (JSON.stringify(v) == '{}' || JSON.stringify(v) == '[]' || v == null) rt = true
+          if (JSON.stringify(v) == '{}' || JSON.stringify(v) == '[]' || v == null) rt = true;
         } else if (tp == 'string') {
-          if (v == '' || v == 'undefined' || v == 'null' || v == '{}' || v == '[]') rt = true
+          if (v == '' || v == 'undefined' || v == 'null' || v == '{}' || v == '[]') rt = true;
         } else if (tp == 'function') {
-          rt = false
+          rt = false;
         }
-        return rt
+        return rt;
       },
     },
     watch: {
       size: function (n, o) {
         if (n != o && !this._empty(n)) {
-          this.cSize = n
+          this.cSize = n;
           if (!this._empty(this.val)) {
             setTimeout(() => {
-              this._makeCode()
-            }, 100)
+              this._makeCode();
+            }, 100);
           }
         }
       },
@@ -177,8 +177,8 @@
         if (this.onval) {
           if (n != o && !this._empty(n)) {
             setTimeout(() => {
-              this._makeCode()
-            }, 0)
+              this._makeCode();
+            }, 0);
           }
         }
       },
@@ -187,12 +187,12 @@
       if (this.loadMake) {
         if (!this._empty(this.val)) {
           setTimeout(() => {
-            this._makeCode()
-          }, 0)
+            this._makeCode();
+          }, 0);
         }
       }
     },
-  }
+  };
 </script>
 
 <style>

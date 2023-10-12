@@ -145,7 +145,7 @@
 			 */
 			logo:{
 				Type: String,
-				default: this.$getOssFileByPath("/static/logo.png")
+				default: this.$getOssFileByPath("/static/logo/logo.png")
 			},
 			/**
 			 * 收银台高度（默认70vh）

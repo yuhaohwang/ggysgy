@@ -4,7 +4,8 @@ let uposter = {
     width: '750rpx',
     height: '1114rpx',
     background: '#feaa30',
-    views: [{
+    views: [
+      {
         type: 'view',
         css: {
           position: 'fixed',
@@ -134,26 +135,26 @@ let uposter = {
     ],
   },
   // 产品海报数据
-  getGoodsData: function(member, goods, qrcode) {
+  getGoodsData: function (member, goods, qrcode) {
     // 会员头像
-    this.goods.views[1].src = member.member_headimg ? member.member_headimg : '/static/logo.png'
+    this.goods.views[1].src = member.member_headimg ? member.member_headimg : this.$getOssFileByPath('/static/logo.png');
     // 会员名称
-    this.goods.views[2].text = member.member_nickname ? member.member_nickname : '艺心益盟'
+    this.goods.views[2].text = member.member_nickname ? member.member_nickname : '艺心益盟';
     // 产品图
-    this.goods.views[4].src = goods.img
+    this.goods.views[4].src = goods.img;
     // 产品价格
-    this.goods.views[6].text = '' + goods.price / 100
+    this.goods.views[6].text = '' + goods.price / 100;
     // 产品名称
-    this.goods.views[7].text = goods.name
+    this.goods.views[7].text = goods.name;
     // 二维码
-    this.goods.views[8].src = qrcode
-    return this.goods
+    this.goods.views[8].src = qrcode;
+    return this.goods;
   },
 
   // 会员海报
   member: {},
   // 分销商海报
   fxs: {},
-}
+};
 
-export default uposter
+export default uposter;

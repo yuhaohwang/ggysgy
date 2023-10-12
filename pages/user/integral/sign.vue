@@ -1,7 +1,7 @@
 <template>
   <view class="sign-area">
     <view class="sign-top pos-r bg-base dflex dflex-flow-c">
-      <view class="ft-white margin-top-sm fwb" style="font-size: 70rpx">{{ data.member_integral || 750 }}</view>
+      <view class="ft-white margin-top-sm fwb" style="font-size: 70rpx;">{{ data.member_integral || 750 }}</view>
       <view class="btn-line ft-black fs-xs border-radius-big" @click="toDetail">积分明细</view>
     </view>
     <view class="sign-content margin pos-a">
@@ -46,38 +46,38 @@
         weeks: [],
         data: {},
         signed: false,
-      }
+      };
     },
     onShow() {
-      this.loadData()
+      this.loadData();
     },
     methods: {
       loadData() {
-        this.weeks = []
-        this.weeks.push({ name: '周一', sign: true })
-        this.weeks.push({ name: '周二', sign: true })
-        this.weeks.push({ name: '周三', sign: true })
-        this.weeks.push({ name: '周四', sign: true })
-        this.weeks.push({ name: '周五', sign: false })
-        this.weeks.push({ name: '周六', sign: false })
-        this.weeks.push({ name: '周日', sign: false })
+        this.weeks = [];
+        this.weeks.push({ name: '周一', sign: true });
+        this.weeks.push({ name: '周二', sign: true });
+        this.weeks.push({ name: '周三', sign: true });
+        this.weeks.push({ name: '周四', sign: true });
+        this.weeks.push({ name: '周五', sign: false });
+        this.weeks.push({ name: '周六', sign: false });
+        this.weeks.push({ name: '周日', sign: false });
       },
       toDetail() {
         uni.navigateTo({
           url: '/pages/user/integral/detail',
-        })
+        });
       },
       toSign() {
         if (this.signed) {
-          this.$api.msg('已签到，明天再来吧')
-          return
+          this.$api.msg('已签到，明天再来吧');
+          return;
         }
 
-        this.signed = true
-        this.$api.msg('恭喜签到成功')
+        this.signed = true;
+        this.$api.msg('恭喜签到成功');
       },
     },
-  }
+  };
 </script>
 
 <style lang="less">

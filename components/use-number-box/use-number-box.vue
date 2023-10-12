@@ -54,11 +54,11 @@
         inputValue: this.value,
         minDisabled: false,
         maxDisabled: false,
-      }
+      };
     },
     created() {
-      this.maxDisabled = this.isMax
-      this.minDisabled = this.isMin
+      this.maxDisabled = this.isMax;
+      this.minDisabled = this.isMin;
     },
     computed: {},
     watch: {
@@ -66,70 +66,70 @@
         const data = {
           number: number,
           index: this.index,
-        }
-        this.$emit('eventChange', data)
+        };
+        this.$emit('eventChange', data);
       },
     },
     methods: {
       _calcValue(type) {
-        const scale = this._getDecimalScale()
-        let value = this.inputValue * scale
-        let newValue = 0
-        let step = this.step * scale
+        const scale = this._getDecimalScale();
+        let value = this.inputValue * scale;
+        let newValue = 0;
+        let step = this.step * scale;
 
         if (type === 'subtract') {
-          newValue = value - step
+          newValue = value - step;
           if (newValue <= this.min) {
-            this.minDisabled = true
+            this.minDisabled = true;
           }
           if (newValue < this.min) {
-            newValue = this.min
+            newValue = this.min;
           }
           if (newValue < this.max && this.maxDisabled === true) {
-            this.maxDisabled = false
+            this.maxDisabled = false;
           }
         } else if (type === 'add') {
-          newValue = value + step
+          newValue = value + step;
           if (newValue >= this.max) {
-            this.maxDisabled = true
+            this.maxDisabled = true;
           }
           if (newValue > this.max) {
-            newValue = this.max
+            newValue = this.max;
           }
           if (newValue > this.min && this.minDisabled === true) {
-            this.minDisabled = false
+            this.minDisabled = false;
           }
         }
         if (newValue === value) {
-          return
+          return;
         }
-        this.inputValue = newValue / scale
+        this.inputValue = newValue / scale;
       },
       _getDecimalScale() {
-        let scale = 1
+        let scale = 1;
         // 浮点型
         if (~~this.step !== this.step) {
-          scale = Math.pow(10, (this.step + '').split('.')[1].length)
+          scale = Math.pow(10, (this.step + '').split('.')[1].length);
         }
-        return scale
+        return scale;
       },
       _onBlur(event) {
-        let value = event.detail.value
+        let value = event.detail.value;
         if (!value) {
-          this.inputValue = 0
-          return
+          this.inputValue = 0;
+          return;
         }
-        value = +value
+        value = +value;
         if (value > this.max) {
-          value = this.max
+          value = this.max;
         } else if (value < this.min) {
-          value = this.min
+          value = this.min;
         }
 
-        this.inputValue = value
+        this.inputValue = value;
       },
     },
-  }
+  };
 </script>
 <style>
   .use-numbox {
@@ -147,15 +147,13 @@
     bottom: 0;
   }
 
-  .use-numbox-minus,
-  .use-numbox-plus {
+  .use-numbox-minus, .use-numbox-plus {
     padding: 12rpx 20rpx;
     margin: 0;
     background-color: #f5f5f5;
   }
 
-  .use-numbox-minus .iconfont,
-  .use-numbox-plus .iconfont {
+  .use-numbox-minus .iconfont, .use-numbox-plus .iconfont {
     font-weight: 700;
     color: #555;
   }

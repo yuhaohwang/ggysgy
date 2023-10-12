@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
-const uidObj = require('uni-id')
-const { Controller } = require('uni-cloud-router')
-const dbcmd = uniCloud.database().command
+const uidObj = require('uni-id');
+const { Controller } = require('uni-cloud-router');
+const dbcmd = uniCloud.database().command;
 
 module.exports = class CouponController extends Controller {
   // 领取优惠券
@@ -11,9 +11,9 @@ module.exports = class CouponController extends Controller {
       code: 1,
       datas: [],
       msg: '开发中',
-    }
+    };
 
-    return response
+    return response;
   }
 
   // 列表
@@ -21,13 +21,13 @@ module.exports = class CouponController extends Controller {
     let response = {
       code: 1,
       datas: [],
-    }
+    };
 
-    let start = new Date().getTime()
+    let start = new Date().getTime();
     // 请求参数
-    const req = this.ctx.data
+    const req = this.ctx.data;
 
-    let { page, rows } = req
+    let { page, rows } = req;
 
     response.datas = [
       {
@@ -108,12 +108,12 @@ module.exports = class CouponController extends Controller {
         sort: 0,
         create_time: '2021-06-10 07:46:19',
       },
-    ]
+    ];
 
-    let end = new Date().getTime()
-    console.log(`耗时：${end - start}ms`)
-    response.code = 0
-    response.msg = `耗时：${end - start}ms`
-    return response
+    let end = new Date().getTime();
+    console.log(`耗时：${end - start}ms`);
+    response.code = 0;
+    response.msg = `耗时：${end - start}ms`;
+    return response;
   }
-}
+};

@@ -1542,5 +1542,5 @@ var cityData = [
       value: '6901',
     },
   ],
-]
-export default cityData
+];
+export default cityData;

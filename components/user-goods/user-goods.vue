@@ -1,6 +1,6 @@
 <template>
   <view>
-    <view class="x-s-c" style="height:300rpx">
+    <view class="x-s-c" style="height: 300rpx;">
       <view class=""><u--image :src="img" width="200rpx" height="300rpx" mode="scaleToFill" radius="5" :fade="false"></u--image></view>
 
       <view class="flex1 padding-lr-xs h-full y-b-s">
@@ -35,54 +35,54 @@
 </template>
 
 <script>
-export default {
-  name: 'user-goods',
-  props: {
-    img: {
-      require: true,
-      default: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/d1888b99-0dbd-47dc-937f-c0717f366f62.jpg',
+  export default {
+    name: 'user-goods',
+    props: {
+      img: {
+        require: true,
+        default: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f034dbfa-a6f0-4bce-912d-5425bd5fbadf/d1888b99-0dbd-47dc-937f-c0717f366f62.jpg',
+      },
+      title: {
+        require: true,
+        default: '标题',
+      },
+      sdata: {
+        require: false,
+        default: '分类',
+      },
+      description: {
+        require: true,
+        default: '请输入描述',
+      },
+      remark: {
+        require: false,
+        default: '备注',
+      },
+      price: {
+        require: true,
+        default: 0,
+      },
+      collectCnt: {
+        require: false,
+        default: 0,
+      },
+      likeCnt: {
+        require: false,
+        default: 0,
+      },
+      rewardTotal: {
+        require: false,
+        default: 0,
+      },
+      createDate: {
+        require: true,
+        default: '2022.01.01',
+      },
     },
-    title: {
-      require: true,
-      default: '标题',
+    data() {
+      return {};
     },
-    sdata: {
-      require: false,
-      default: '分类',
-    },
-    description: {
-      require: true,
-      default: '请输入描述',
-    },
-    remark: {
-      require: false,
-      default: '备注',
-    },
-    price: {
-      require: true,
-      default: 0,
-    },
-    collectCnt: {
-      require: false,
-      default: 0,
-    },
-    likeCnt: {
-      require: false,
-      default: 0,
-    },
-    rewardTotal: {
-      require: false,
-      default: 0,
-    },
-    createDate: {
-      require: true,
-      default: '2022.01.01',
-    },
-  },
-  data() {
-    return {}
-  },
-}
+  };
 </script>
 
 <style lang="scss"></style>

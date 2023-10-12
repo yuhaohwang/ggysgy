@@ -1,15 +1,15 @@
 import loginSuccess from './loginSuccess.js';
-import config from '@/common/config.js'
+import config from '@/common/config.js';
 let mixin = {
   data() {
     return {
       config,
-      isMounted: false
-    }
+      isMounted: false,
+    };
   },
   onUnload() {
     // #ifdef H5
-    document.onkeydown = false
+    document.onkeydown = false;
     // #endif
   },
   mounted() {
@@ -19,9 +19,9 @@ let mixin = {
     needAgreements() {
       if (this.isMounted) {
         if (this.$refs.agreements) {
-          return this.$refs.agreements.needAgreements
+          return this.$refs.agreements.needAgreements;
         } else {
-          return false
+          return false;
         }
       }
     },
@@ -29,25 +29,25 @@ let mixin = {
       get() {
         if (this.isMounted) {
           if (this.$refs.agreements) {
-            return this.$refs.agreements.isAgree
+            return this.$refs.agreements.isAgree;
           } else {
-            return true
+            return true;
           }
         }
       },
       set(agree) {
         if (this.$refs.agreements) {
-          this.$refs.agreements.isAgree = agree
+          this.$refs.agreements.isAgree = agree;
         } else {
           console.log('不存在 隐私政策协议组件');
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     loginSuccess(e) {
-      loginSuccess(e)
-    }
-  }
-}
-export default mixin
+      loginSuccess(e);
+    },
+  },
+};
+export default mixin;

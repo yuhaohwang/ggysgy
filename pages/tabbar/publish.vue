@@ -73,318 +73,319 @@
 </template>
 
 <script>
-const _goodscategory = 'ggysgy-goods-category'
-import { mapState } from 'vuex'
-export default {
-  computed: {
-    ...mapState(['islogin']),
-  },
-  data() {
-    return {
-      isInit: false,
+  const _goodscategory = 'ggysgy-goods-category';
+  import { mapState } from 'vuex';
+  export default {
+    computed: {
+      ...mapState(['islogin']),
+    },
+    data() {
+      return {
+        isInit: false,
 
-      agreementChecked: false,
+        agreementChecked: false,
 
-      imageStyle: {
-        height: '200rpx',
-        width: '200rpx',
-      },
-
-      // 一级数据
-      fdatas: [],
-      // 二级数据
-      sdatas: [],
-
-      goods: {
-        cid: '',
-        cids: [],
-        sort: 0,
-        name: '',
-        name_pw: '',
-        limited: 0,
-        hot: 0,
-        tags: [],
-        price: 0,
-        market_price: 0,
-        limit: 0,
-        stock_num: 999,
-        sale_cnt: 0,
-        sale: 0,
-        visit_cnt: 0,
-        visit: 0,
-        collect_cnt: 0,
-        collect: 0,
-        share_cnt: 0,
-        share: 0,
-        state: '待审核',
-      },
-      detail: { desc_mobile: '' },
-      skus: [],
-
-      publishData: {
-        name: '',
-        content: '',
-        imgs: [],
-        fdata: '',
-        sdata: '',
-        spec_s: '规格',
-        spec: ['电子版(个人授权)', '纸质版(个人授权)', '电子版(商业授权)', '纸质版(商业授权)'],
-        skus: [],
-      },
-      rules: {
-        name: {
-          type: 'string',
-          required: true,
-          message: '请填写作品名称',
-          trigger: ['blur', 'change'],
+        imageStyle: {
+          height: '200rpx',
+          width: '200rpx',
         },
-      },
-    }
-  },
-  onLoad() {},
-  mounted() {
-    // #ifdef H5 || MP-360
-    this.navHeight = 50
-    // #endif
-  },
-  onShow() {
-    console.log(uniCloud.getCurrentUserInfo())
-    if (this.islogin && !this.isInit) {
-      this.init(this.affirm)
-      this.$nextTick(function() {
-        this.loadData()
-      })
-    }
-  },
-  onReady() {},
-  mounted() {
-    // #ifdef H5 || MP-360
-    this.navHeight = 50
-    // #endif
-  },
-  //下拉刷新
-  onPullDownRefresh() {
-    this.init(this.affirm)
-    this.loadData()
-  },
-  methods: {
-    toLogin() {
-      this.$api.toLogin()
-    },
-    toUrl() {
-      let arr = [].concat.apply([], arguments)
-      this.$api.toUrl(...arr)
-    },
-    async loadData() {
-      this.$refs.uToast.show({
-        type: 'loading',
-      })
 
-      this.$db[_goodscategory]
-        .where(`'state'=='启用'`)
-        .tolist({
-          rows: 500,
-          page: 1,
-        })
-        .then(res => {
-          if (res.code === 200) {
-            this.fdatas = []
-            this.sdatas = []
+        // 一级数据
+        fdatas: [],
+        // 二级数据
+        sdatas: [],
 
-            res.datas.forEach(item => {
-              if (!item.pid) {
-                // pid为父级id, 不存在 pid || pid=0 为一级分类
-                this.fdatas.push(item)
-              } else {
-                // 二级分类
-                this.sdatas.push(item)
-              }
-            })
-
-            if (this.fdatas.length > 0) {
-              this.publishData.fdata = this.fdatas[0]._id
-            }
-
-            this.$refs.uToast.show({
-              type: 'loading',
-              duration: 0,
-            })
-            uni.stopPullDownRefresh()
-
-            this.isInit = true
-          }
-        })
-    },
-
-    init(callback) {
-      this.publishData = {
-        name: '',
-        content: '',
-        imgs: [],
-        fdata: '',
-        sdata: '',
-        spec_s: '规格',
-        spec: ['电子版(个人授权)', '纸质版(个人授权)', '电子版(商业授权)', '纸质版(商业授权)'],
+        goods: {
+          cid: '',
+          cids: [],
+          sort: 0,
+          name: '',
+          name_pw: '',
+          limited: 0,
+          hot: 0,
+          tags: [],
+          price: 0,
+          market_price: 0,
+          limit: 0,
+          stock_num: 999,
+          sale_cnt: 0,
+          sale: 0,
+          visit_cnt: 0,
+          visit: 0,
+          collect_cnt: 0,
+          collect: 0,
+          share_cnt: 0,
+          share: 0,
+          state: '待审核',
+        },
+        detail: { desc_mobile: '' },
         skus: [],
-      }
-      callback()
+
+        publishData: {
+          name: '',
+          content: '',
+          imgs: [],
+          fdata: '',
+          sdata: '',
+          spec_s: '规格',
+          spec: ['电子版(个人授权)', '纸质版(个人授权)', '电子版(商业授权)', '纸质版(商业授权)'],
+          skus: [],
+        },
+        rules: {
+          name: {
+            type: 'string',
+            required: true,
+            message: '请填写作品名称',
+            trigger: ['blur', 'change'],
+          },
+        },
+      };
     },
-
-    affirm() {
-      // 规格
-      if (this.publishData.spec.length > 0) {
-        this.publishData.spec.forEach((spec, spec_idx) => {
-          if (!this.publishData.skus.find(x => x.spec == spec))
-            this.publishData.skus.push({
-              price: null,
-              stock_num: null,
-              spec: spec,
-              spec_s: spec_idx,
-            })
-        })
-        this.publishData.skus = this.publishData.skus.filter(x => this.publishData.spec.find(s => s == x.spec))
+    onLoad() {},
+    mounted() {
+      // #ifdef H5 || MP-360
+      this.navHeight = 50;
+      // #endif
+    },
+    onShow() {
+      console.log(uniCloud.getCurrentUserInfo());
+      if (this.islogin && !this.isInit) {
+        this.init(this.affirm);
+        this.$nextTick(function () {
+          this.loadData();
+        });
       }
     },
-
-    uploadImgs(options) {
-      if (options.length > 0) this.publishData.imgs = options
-      console.log('uploadImgs', this.publishData.imgs)
+    onReady() {},
+    mounted() {
+      // #ifdef H5 || MP-360
+      this.navHeight = 50;
+      // #endif
     },
-
-    submitData() {
-      if (!this.publishData.name) {
+    //下拉刷新
+    onPullDownRefresh() {
+      this.init(this.affirm);
+      this.loadData();
+    },
+    methods: {
+      toLogin() {
+        this.$api.toLogin();
+      },
+      toUrl() {
+        let arr = [].concat.apply([], arguments);
+        this.$api.toUrl(...arr);
+      },
+      async loadData() {
         this.$refs.uToast.show({
-          type: 'error',
-          message: '请输入作品名称',
-        })
-        return
-      }
+          type: 'loading',
+        });
 
-      // if (!this.publishData.content) {
-      //   this.$refs.uToast.show({
-      //     type: 'error',
-      //     message: '请输入作品简介',
-      //   })
-      //   return
-      // }
+        this.$db[_goodscategory]
+          .where(`'state'=='启用'`)
+          .tolist({
+            rows: 500,
+            page: 1,
+          })
+          .then(res => {
+            if (res.code === 200) {
+              this.fdatas = [];
+              this.sdatas = [];
 
-      if (this.publishData.imgs.length < 1) {
-        this.$refs.uToast.show({
-          type: 'error',
-          message: '请上传图片',
-        })
-        return
-      }
+              res.datas.forEach(item => {
+                if (!item.pid) {
+                  // pid为父级id, 不存在 pid || pid=0 为一级分类
+                  this.fdatas.push(item);
+                } else {
+                  // 二级分类
+                  this.sdatas.push(item);
+                }
+              });
 
-      if (!this.publishData.sdata) {
-        this.$refs.uToast.show({
-          type: 'error',
-          message: '请选择子分类',
-        })
-        return
-      }
+              if (this.fdatas.length > 0) {
+                this.publishData.fdata = this.fdatas[0]._id;
+              }
 
-      for (let row of this.publishData.skus) {
-        if (!row.price || !row.stock_num) {
+              this.$refs.uToast.show({
+                type: 'loading',
+                duration: 0,
+              });
+              uni.stopPullDownRefresh();
+
+              this.isInit = true;
+            }
+          });
+      },
+
+      init(callback) {
+        this.publishData = {
+          name: '',
+          content: '',
+          imgs: [],
+          fdata: '',
+          sdata: '',
+          spec_s: '规格',
+          spec: ['电子版(个人授权)', '纸质版(个人授权)', '电子版(商业授权)', '纸质版(商业授权)'],
+          skus: [],
+        };
+        callback();
+      },
+
+      affirm() {
+        // 规格
+        if (this.publishData.spec.length > 0) {
+          this.publishData.spec.forEach((spec, spec_idx) => {
+            if (!this.publishData.skus.find(x => x.spec == spec))
+              this.publishData.skus.push({
+                price: null,
+                stock_num: null,
+                spec: spec,
+                spec_s: spec_idx,
+              });
+          });
+          this.publishData.skus = this.publishData.skus.filter(x => this.publishData.spec.find(s => s == x.spec));
+        }
+      },
+
+      uploadImgs(options) {
+        if (options.length > 0) this.publishData.imgs = options;
+        console.log('uploadImgs', this.publishData.imgs);
+      },
+
+      submitData() {
+        if (!this.publishData.name) {
           this.$refs.uToast.show({
             type: 'error',
-            message: '请输入价格库存',
-          })
-          return
+            message: '请输入作品名称',
+          });
+          return;
         }
-      }
 
-      this.$refs.uToast.show({
-        type: 'loading',
-        message: '正在提交',
-      })
+        // if (!this.publishData.content) {
+        //   this.$refs.uToast.show({
+        //     type: 'error',
+        //     message: '请输入作品简介',
+        //   })
+        //   return
+        // }
 
-      this.goods.name = this.publishData.name
-      this.goods.cid = this.publishData.sdata
-      this.goods.cids = []
-      this.goods.cids.push(this.publishData.fdata, this.publishData.sdata)
-      this.goods.price = this.publishData.skus[0].price * 100
-      this.goods.market_price = this.publishData.skus[3].price * 100
-      this.goods.skus = JSON.stringify({
-        spec_s: this.publishData.spec_s,
-        spec: this.publishData.spec,
-      })
-      this.goods.imgs = this.publishData.imgs
-      this.goods.img = this.publishData.imgs[0].url
-      for (const key in this.goods) {
-        if (this.goods.hasOwnProperty(key)) {
-          if (typeof this.goods[key] === 'string') {
-            if (/^[0-9]*$/.test(this.goods[key])) {
-              this.goods[key] = parseInt(this.goods[key])
-            } else if (/^[0-9]+(.[0-9]{1,3})?$/.test(this.goods[key])) {
-              this.goods[key] = parseFloat(this.goods[key])
+        if (this.publishData.imgs.length < 1) {
+          this.$refs.uToast.show({
+            type: 'error',
+            message: '请上传图片',
+          });
+          return;
+        }
+
+        if (!this.publishData.sdata) {
+          this.$refs.uToast.show({
+            type: 'error',
+            message: '请选择子分类',
+          });
+          return;
+        }
+
+        for (let row of this.publishData.skus) {
+          if (!row.price || !row.stock_num) {
+            this.$refs.uToast.show({
+              type: 'error',
+              message: '请输入价格库存',
+            });
+            return;
+          }
+        }
+
+        this.$refs.uToast.show({
+          type: 'loading',
+          message: '正在提交',
+        });
+
+        this.goods.name = this.publishData.name;
+        this.goods.cid = this.publishData.sdata;
+        this.goods.cids = [];
+        this.goods.cids.push(this.publishData.fdata, this.publishData.sdata);
+        this.goods.price = this.publishData.skus[0].price * 100;
+        this.goods.market_price = this.publishData.skus[3].price * 100;
+        this.goods.skus = JSON.stringify({
+          spec_s: this.publishData.spec_s,
+          spec: this.publishData.spec,
+        });
+        this.goods.imgs = this.publishData.imgs;
+        this.goods.img = this.publishData.imgs[0].url;
+        for (const key in this.goods) {
+          if (this.goods.hasOwnProperty(key)) {
+            if (typeof this.goods[key] === 'string') {
+              if (/^[0-9]*$/.test(this.goods[key])) {
+                this.goods[key] = parseInt(this.goods[key]);
+              } else if (/^[0-9]+(.[0-9]{1,3})?$/.test(this.goods[key])) {
+                this.goods[key] = parseFloat(this.goods[key]);
+              }
             }
           }
         }
-      }
 
-      let obj = this.publishData.skus
-      let copy = JSON.parse(JSON.stringify(obj))
-      copy.forEach(row => {
-        row.price = row.price * 100
-      })
-      this.skus = copy
+        let obj = this.publishData.skus;
+        let copy = JSON.parse(JSON.stringify(obj));
+        copy.forEach(row => {
+          row.price = row.price * 100;
+        });
+        this.skus = copy;
 
-      this.publishData.imgs.forEach(img => {
-        this.detail.desc_mobile += `<p><img style="max-width:100%;display:block;" src="${img.url}" ></p>`
-      })
+        this.publishData.imgs.forEach(img => {
+          this.detail.desc_mobile += `<p><img style="max-width:100%;display:block;" src="${img.url}" ></p>`;
+        });
 
-      console.log(this.goods)
+        console.log(this.goods);
 
-      let goods = this.goods
-      let detail = this.detail
-      let skus = this.skus
-      this.$func.useadmin
-        .call('goods/add', {
-          goods,
-          detail,
-          skus,
-        })
-        .then(res => {
-          console.log('res', res)
-          if (res.code == 200) {
-            this.init(this.affirm)
-            this.$refs.uToast.show({
-              type: 'success',
-              message: '发布成功(待审核)',
-            })
-          } else {
-            this.$refs.uToast.show({
-              type: 'error',
-              message: res.msg,
-            })
-          }
-        })
+        let goods = this.goods;
+        let detail = this.detail;
+        let skus = this.skus;
+        this.$func.useadmin
+          .call('goods/add', {
+            goods,
+            detail,
+            skus,
+          })
+          .then(res => {
+            console.log('res', res);
+            if (res.code == 200) {
+              this.init(this.affirm);
+              this.$refs.uToast.show({
+                type: 'success',
+                message: '发布成功(待审核)',
+              });
+            } else {
+              this.$refs.uToast.show({
+                type: 'error',
+                message: res.msg,
+              });
+            }
+          });
+      },
+
+      fdataChange(e) {
+        this.publishData.fdata = e;
+      },
+      sdataChange(e) {
+        this.publishData.sdata = e;
+      },
     },
-
-    fdataChange(e) {
-      this.publishData.fdata = e
-    },
-    sdataChange(e) {
-      this.publishData.sdata = e
-    },
-  },
-}
+  };
 </script>
 
 <style lang="scss">
-page {
-  height: 100%;
-}
-.u-radio-group {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-
-  > view {
-    width: 33.3%;
-    padding: 10rpx;
+  page {
+    height: 100%;
   }
-}
+
+  .u-radio-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    > view {
+      width: 33.3%;
+      padding: 10rpx;
+    }
+  }
 </style>

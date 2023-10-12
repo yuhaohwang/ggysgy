@@ -10,63 +10,63 @@
 </template>
 
 <script>
-export default {
-  props: {
-    top: {
-      type: Number,
-      default: 100,
-    },
+  export default {
+    props: {
+      top: {
+        type: Number,
+        default: 100,
+      },
 
-    right: {
-      type: String,
-      default: '30',
-    },
-    bottom: {
-      type: String,
-      default: '30',
-    },
+      right: {
+        type: String,
+        default: '30',
+      },
+      bottom: {
+        type: String,
+        default: '30',
+      },
 
-    duration: {
-      type: Number,
-      default: 120,
+      duration: {
+        type: Number,
+        default: 120,
+      },
+      scrollTop: {
+        type: Number,
+        default: 0,
+      },
     },
-    scrollTop: {
-      type: Number,
-      default: 0,
+    data() {
+      return {
+        visible: false,
+      };
     },
-  },
-  data() {
-    return {
-      visible: false,
-    }
-  },
-  watch: {
-    scrollTop(nv, ov) {
-      if (nv >= this.top) {
-        this.visible = true
-      } else {
-        this.visible = false
-      }
+    watch: {
+      scrollTop(nv, ov) {
+        if (nv >= this.top) {
+          this.visible = true;
+        } else {
+          this.visible = false;
+        }
+      },
     },
-  },
-  methods: {
-    totop: function() {
-      uni.pageScrollTo({
-        scrollTop: 0,
-        duration: this.duration,
-      })
+    methods: {
+      totop: function () {
+        uni.pageScrollTo({
+          scrollTop: 0,
+          duration: this.duration,
+        });
 
-      this.$emit('toTop')
+        this.$emit('toTop');
+      },
+      change(scrollTop) {
+        if (scrollTop >= this.top) {
+          this.visible = true;
+        } else {
+          this.visible = false;
+        }
+      },
     },
-    change(scrollTop) {
-      if (scrollTop >= this.top) {
-        this.visible = true
-      } else {
-        this.visible = false
-      }
-    },
-  },
-}
+  };
 </script>
 
 <style lang="scss"></style>

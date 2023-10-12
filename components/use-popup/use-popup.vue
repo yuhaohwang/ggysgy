@@ -92,7 +92,7 @@
       customStyle: {
         type: Object,
         default() {
-          return {}
+          return {};
         },
       },
       value: {
@@ -119,121 +119,121 @@
       return {
         visibleSync: false,
         showPopup: false,
-      }
+      };
     },
     watch: {
       value(val) {
         if (val) {
-          this.open()
+          this.open();
         } else {
-          if (this.showPopup) this.close()
+          if (this.showPopup) this.close();
         }
       },
     },
     computed: {
       // 根据mode的位置，设定其弹窗的宽度(mode = left|right)，或者高度(mode = top|bottom)
       style() {
-        let style = {}
-        let translate = '100%'
+        let style = {};
+        let translate = '100%';
         // 判断是否是否百分比或者auto值，是的话，直接使用该值，否则默认为rpx单位的数值
-        let length = /%$/.test(this.length) || this.length == 'auto' ? this.length : uni.upx2px(this.length) + 'px'
+        let length = /%$/.test(this.length) || this.length == 'auto' ? this.length : uni.upx2px(this.length) + 'px';
         // 如果是左边或者上边弹出时，需要给translate设置为负值，用于隐藏
         if (this.mode == 'left' || this.mode == 'top') {
-          translate = length == 'auto' ? '-100%' : '-' + length
+          translate = length == 'auto' ? '-100%' : '-' + length;
         }
         if (this.mode == 'left' || this.mode == 'right') {
           style = {
             width: length,
             height: '100%',
             transform: `translate3D(${translate},0px,0px)`,
-          }
+          };
         } else if (this.mode == 'top' || this.mode == 'bottom') {
           style = {
             width: '100%',
             height: length,
             transform: `translate3D(0px,${translate},0px)`,
-          }
+          };
         }
-        style.zIndex = this.zIndex
+        style.zIndex = this.zIndex;
 
         // 如果用户设置了borderRadius值，添加弹窗的圆角
         if (this.borderRadius) {
           switch (this.mode) {
             case 'top':
-              style.borderRadius = `0 0 ${this.borderRadius}rpx ${this.borderRadius}rpx`
-              break
+              style.borderRadius = `0 0 ${this.borderRadius}rpx ${this.borderRadius}rpx`;
+              break;
             case 'right':
-              style.borderRadius = `${this.borderRadius}rpx 0 0 ${this.borderRadius}rpx`
-              break
+              style.borderRadius = `${this.borderRadius}rpx 0 0 ${this.borderRadius}rpx`;
+              break;
             case 'bottom':
-              style.borderRadius = `${this.borderRadius}rpx ${this.borderRadius}rpx 0 0`
-              break
+              style.borderRadius = `${this.borderRadius}rpx ${this.borderRadius}rpx 0 0`;
+              break;
             case 'left':
-              style.borderRadius = `0 ${this.borderRadius}rpx ${this.borderRadius}rpx 0`
-              break
+              style.borderRadius = `0 ${this.borderRadius}rpx ${this.borderRadius}rpx 0`;
+              break;
             default:
-              break
+              break;
           }
           // 不加可能圆角无效
-          style.overflow = 'hidden'
+          style.overflow = 'hidden';
         }
-        return style
+        return style;
       },
       // 中部弹窗的特有样式
       centerStyle() {
-        let style = {}
-        let length = /%$/.test(this.length) || this.length == 'auto' ? this.length : uni.upx2px(this.length) + 'px'
-        style.width = length
-        style.zIndex = this.zIndex
+        let style = {};
+        let length = /%$/.test(this.length) || this.length == 'auto' ? this.length : uni.upx2px(this.length) + 'px';
+        style.width = length;
+        style.zIndex = this.zIndex;
         if (this.borderRadius) {
-          style.borderRadius = `${this.borderRadius}rpx`
+          style.borderRadius = `${this.borderRadius}rpx`;
           // 不加可能圆角无效
-          style.overflow = 'hidden'
+          style.overflow = 'hidden';
         }
-        return style
+        return style;
       },
     },
     created() {
       // 先让弹窗组件渲染，再改变遮罩和抽屉元素的样式，让其动画其起作用(必须要有延时，才会有效果)
-      this.visibleSync = this.value
+      this.visibleSync = this.value;
       this.$api.timerout(() => {
-        this.showPopup = this.value
-      }, 30)
+        this.showPopup = this.value;
+      }, 30);
     },
     methods: {
       open() {
-        this.change('visibleSync', 'showPopup', true)
+        this.change('visibleSync', 'showPopup', true);
       },
       close() {
-        this.change('showPopup', 'visibleSync', false)
+        this.change('showPopup', 'visibleSync', false);
       },
       // 遮罩被点击
       maskClick() {
-        this.close()
+        this.close();
       },
       // 中部弹出时，需要.use-popup-content将居中内容，此元素会铺满屏幕，点击需要关闭弹窗
       // 让其只在mode=center时起作用
       modeCenterClose(mode) {
-        if (mode != 'center' || !this.maskCloseAble) return
-        this.close()
+        if (mode != 'center' || !this.maskCloseAble) return;
+        this.close();
       },
       // 此处的原理是，关闭时先通过动画隐藏弹窗和遮罩，再移除整个组件
       // 打开时，先渲染组件，延时一定时间再让遮罩和弹窗的动画起作用
       change(param1, param2, state) {
         // 如果this.popup为false，以为着为picker，actionsheet等组件调用了popup组件
-        if (this.popup) this.$emit('input', state)
-        this[param1] = state
+        if (this.popup) this.$emit('input', state);
+        this[param1] = state;
 
         this.$api.timerout(
           () => {
-            this[param2] = state
-            this.$emit(state ? 'open' : 'close')
+            this[param2] = state;
+            this.$emit(state ? 'open' : 'close');
           },
           state ? 30 : 100
-        )
+        );
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">

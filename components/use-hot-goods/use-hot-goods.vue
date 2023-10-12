@@ -32,95 +32,95 @@
 </template>
 
 <script>
-export default {
-  props: {
-    title: {
-      type: String,
-      default: '热卖产品',
+  export default {
+    props: {
+      title: {
+        type: String,
+        default: '热卖产品',
+      },
+      titleType: {
+        type: String,
+        default: 'square',
+      },
+      autoload: {
+        type: String,
+        default: 'auto',
+      },
+      datas: {
+        type: Array,
+        default: () => [],
+      },
     },
-    titleType: {
-      type: String,
-      default: 'square',
+    data() {
+      return {
+        hotDatas: [],
+      };
     },
-    autoload: {
-      type: String,
-      default: 'auto',
+    watch: {
+      datas() {
+        this.hotDatas = this.datas;
+      },
     },
-    datas: {
-      type: Array,
-      default: () => [],
+    created() {
+      if (this.autoload === 'auto') {
+        this.loadData();
+      }
     },
-  },
-  data() {
-    return {
-      hotDatas: [],
-    }
-  },
-  watch: {
-    datas() {
-      this.hotDatas = this.datas
+    methods: {
+      loadData() {
+        this.$db['ggysgy-goods']
+          .where('state == "销售中" && hot == 1')
+          .tolist({ rows: 8, orderby: 'sort asc' })
+          .then(res => {
+            // console.log('ggysgy-goods',res);
+            if (res.code === 200) {
+              this.hotDatas = res.datas || [];
+            }
+          });
+      },
+      goto() {
+        console.log('goto');
+        this.$emit('goto', {
+          type: 'goto',
+        });
+      },
+      hot() {
+        this.$api.toGoodList({ hot: 1 });
+      },
+      to_detail(options) {
+        this.$api.toGood({ id: options._id });
+      },
     },
-  },
-  created() {
-    if (this.autoload === 'auto') {
-      this.loadData()
-    }
-  },
-  methods: {
-    loadData() {
-      this.$db['ggysgy-goods']
-        .where('state == "销售中" && hot == 1')
-        .tolist({ rows: 8, orderby: 'sort asc' })
-        .then(res => {
-          // console.log('ggysgy-goods',res);
-          if (res.code === 200) {
-            this.hotDatas = res.datas || []
-          }
-        })
-    },
-    goto() {
-      console.log('goto')
-      this.$emit('goto', {
-        type: 'goto',
-      })
-    },
-    hot() {
-      this.$api.toGoodList({ hot: 1 })
-    },
-    to_detail(options) {
-      this.$api.toGood({ id: options._id })
-    },
-  },
-}
+  };
 </script>
 
 <style lang="scss">
-.use-hot-goods {
-  background-color: #f3f4f6;
+  .use-hot-goods {
+    background-color: #f3f4f6;
 
-  .item {
-    overflow: hidden;
-    background: #fff;
+    .item {
+      overflow: hidden;
+      background: #fff;
 
-    &:nth-child(2n) {
-      margin-left: 1vw;
+      &:nth-child(2n) {
+        margin-left: 1vw;
+      }
+
+      &:nth-child(2n + 1) {
+        margin-right: 1vw;
+      }
     }
 
-    &:nth-child(2n + 1) {
-      margin-right: 1vw;
-    }
-  }
-
-  .image-wrapper {
-    width: 100%;
-    height: 300rpx;
-    overflow: hidden;
-
-    image {
+    .image-wrapper {
       width: 100%;
-      height: 100%;
-      opacity: 1;
+      height: 300rpx;
+      overflow: hidden;
+
+      image {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+      }
     }
   }
-}
 </style>

@@ -1,31 +1,31 @@
-const uidObj = require('uni-id')
-const kd100Url = 'https://poll.kuaidi100.com/poll/query.do'
+const uidObj = require('uni-id');
+const kd100Url = 'https://poll.kuaidi100.com/poll/query.do';
 
-const { Service } = require('uni-cloud-router')
+const { Service } = require('uni-cloud-router');
 
 module.exports = class ExpressService extends Service {
   constructor(ctx) {
-    super(ctx)
+    super(ctx);
   }
 
   // 快递100 实时快递查询
   async kd100Query({ com, num }) {
     try {
-      const kd100Config = uidObj.pluginConfig.defaultConfig['kd100']
+      const kd100Config = uidObj.pluginConfig.defaultConfig['kd100'];
       let data = {
         customer: kd100Config.customer,
         param: {
           com: com,
           num: num,
         },
-      }
+      };
 
-      data.param = JSON.stringify(data.param)
+      data.param = JSON.stringify(data.param);
 
-      const str = data.param + kd100Config.key + data.customer
-      const sign = this.service.md5.hex(str).toUpperCase()
+      const str = data.param + kd100Config.key + data.customer;
+      const sign = this.service.md5.hex(str).toUpperCase();
 
-      data.sign = sign
+      data.sign = sign;
 
       const res = await this.curl(kd100Url, {
         nestedQuerystring: true,
@@ -35,41 +35,41 @@ module.exports = class ExpressService extends Service {
         },
         dataType: 'json',
         data: data,
-      })
+      });
 
-      return res.data
+      return res.data;
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
 
-    return {}
+    return {};
   }
 
   // 获取快递100 对应的快递公司编码
   getKd100Com(name) {
     switch (name) {
       case '圆通速递':
-        return 'yuantong'
+        return 'yuantong';
       case '韵达快递':
-        return 'yunda'
+        return 'yunda';
       case '中通快递':
-        return 'zhongtong'
+        return 'zhongtong';
       case '顺丰速运':
-        return 'shunfeng'
+        return 'shunfeng';
       case '申通快递':
-        return 'shentong'
+        return 'shentong';
       case '百世快递':
-        return 'huitongkuaidi'
+        return 'huitongkuaidi';
       case '邮政快递':
-        return 'youzhengguonei'
+        return 'youzhengguonei';
       case '京东物流':
-        return 'jd'
+        return 'jd';
       case '众邮快递':
-        return 'zhongyouex'
+        return 'zhongyouex';
       case '德邦快递':
-        return 'debangkuaidi'
+        return 'debangkuaidi';
       default:
-        this.throw('快递公司未入驻')
+        this.throw('快递公司未入驻');
     }
   }
-}
+};

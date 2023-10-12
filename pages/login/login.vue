@@ -2,7 +2,10 @@
   <view class="container bg-main pos-r">
     <view class="padding-xl dflex-c dflex-flow-c">
       <view class="portrait-box margin-bottom">
-        <image class="headimg border-radius-c" :src="(member && member.member_headimg) || $getOssFileByPath('/static/logo/logo.png')"></image>
+        <image
+          class="headimg border-radius-c"
+          :src="(member && member.member_headimg) || $getOssFileByPath('/static/logo/logo.png')"
+        ></image>
       </view>
 
       <view class="w-full dflex padding-bottom-sm">
@@ -101,7 +104,7 @@
     </view>
 
     <!-- 以艺自强版权 -->
-    <use-copyright class="pos-f w-full" style="bottom: -30rpx"></use-copyright>
+    <use-copyright class="pos-f w-full" style="bottom: -30rpx;"></use-copyright>
 
     <!-- 弹出框 -->
     <view v-if="isshow" class="l-mask"></view>
@@ -116,7 +119,7 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations } from 'vuex';
 
   export default {
     data() {
@@ -133,68 +136,68 @@
         password: '',
 
         authorize: 0,
-		
-		static: this.$staticPaths,
-      }
+
+        static: this.$staticPaths,
+      };
     },
     computed: {
       ...mapState(['member']),
     },
 
     onShow() {
-      console.log('login Show')
+      console.log('login Show');
       // #ifdef MP-WEIXIN
-      let lopts = uni.getLaunchOptionsSync()
-      console.log(lopts)
+      let lopts = uni.getLaunchOptionsSync();
+      console.log(lopts);
       // #endif
-      let _this = this
+      let _this = this;
 
       uni.getStorage({
         key: '__mobile',
         success(res) {
-          _this.mobile = res.data
+          _this.mobile = res.data;
         },
-      })
+      });
 
       // 查看用户是否已授权获取用户数据
       if (uni.canIUse('getSetting')) {
         uni.getSetting({
           success(res) {
-            console.log('getSetting ', res)
-            _this.authorize = res.authSetting['scope.userInfo']
-            console.log('getSetting scope.userInfo authorize ', _this.authorize)
+            console.log('getSetting ', res);
+            _this.authorize = res.authSetting['scope.userInfo'];
+            console.log('getSetting scope.userInfo authorize ', _this.authorize);
           },
-        })
+        });
       }
     },
     onLoad() {
-      let _this = this
+      let _this = this;
 
       this.$api.get_env(res => {
-        this.env = res
-        console.log('this.env', this.env)
-        this.ismp = this.env.is_mp
-        this.platform = this.env.platform
-        this.platform_icon = this.env.platform_icon
-        this.platform_name = this.env.platform_name
-      })
+        this.env = res;
+        console.log('this.env', this.env);
+        this.ismp = this.env.is_mp;
+        this.platform = this.env.platform;
+        this.platform_icon = this.env.platform_icon;
+        this.platform_name = this.env.platform_name;
+      });
     },
     methods: {
       ...mapMutations(['login', 'logout', 'token']),
       openAuthSetting() {
-        let _this = this
+        let _this = this;
 
         uni.authorize({
           scope: 'scope.userInfo',
           success() {
-            console.log('scope.userInfo success')
+            console.log('scope.userInfo success');
           },
           fail() {
             uni.getSetting({
               success(res) {
-                console.log('getSetting ', res)
-                _this.authorize = res.authSetting['scope.userInfo']
-                console.log('getSetting scope.userInfo authorize ', _this.authorize)
+                console.log('getSetting ', res);
+                _this.authorize = res.authSetting['scope.userInfo'];
+                console.log('getSetting scope.userInfo authorize ', _this.authorize);
 
                 if (!_this.authorize) {
                   uni.showModal({
@@ -204,60 +207,60 @@
                       if (res.confirm) {
                         uni.openSetting({
                           success(res) {
-                            console.log('openSetting', res.authSetting)
-                            _this.authorize = res.authSetting['scope.userInfo']
+                            console.log('openSetting', res.authSetting);
+                            _this.authorize = res.authSetting['scope.userInfo'];
                           },
                           fail() {
-                            _this.$api.msg('打开当前设置失败', 5000)
+                            _this.$api.msg('打开当前设置失败', 5000);
                           },
-                        })
+                        });
                       } else if (res.cancel) {
-                        console.log('用户点击取消')
+                        console.log('用户点击取消');
                       }
                     },
-                  })
+                  });
                 }
               },
               fail() {
-                _this.$api.msg('获取当前设置失败', 5000)
+                _this.$api.msg('获取当前设置失败', 5000);
               },
-            })
+            });
           },
-        })
+        });
       },
       inputChange(e) {
-        const key = e.currentTarget.dataset.key
-        this[key] = e.detail.value
+        const key = e.currentTarget.dataset.key;
+        this[key] = e.detail.value;
       },
       toforget() {
         // 忘记密码
         uni.navigateTo({
           url: '/pages/login/forgot-password',
-        })
+        });
       },
       toregister() {
         // 注册页
         uni.navigateTo({
           url: '/pages/login/register',
-        })
+        });
       },
 
       toLogin() {
-        let _this = this
-        if (_this.is_login) return
+        let _this = this;
+        if (_this.is_login) return;
 
         if (!this.mobile) {
-          this.$api.msg('请输入手机号')
-          return
+          this.$api.msg('请输入手机号');
+          return;
         }
 
         if (!this.password) {
-          this.$api.msg('请输入密码')
-          return
+          this.$api.msg('请输入密码');
+          return;
         }
         if (this.$api.trim(this.password).length < 4) {
-          this.$api.msg('密码长度不能小于4位')
-          return
+          this.$api.msg('密码长度不能小于4位');
+          return;
         }
 
         this.$func.ggysgy
@@ -268,75 +271,75 @@
           .then(res => {
             if (res.code == 200) {
               // 调用 store login
-              _this.login(res.datas)
+              _this.login(res.datas);
 
               _this.$api.alert('登录成功', () => {
                 if (_this.$api.pages().length > 1) {
                   // 返回上一页
-                  uni.navigateBack({})
-                  return
+                  uni.navigateBack({});
+                  return;
                 }
                 // 首页
-                _this.$api.toHome()
-              })
-              return
+                _this.$api.toHome();
+              });
+              return;
             }
 
-            this.$api.msg(res.msg)
-          })
+            this.$api.msg(res.msg);
+          });
       },
 
       cancel() {
-        this.isshow = false
-        uni.navigateBack()
+        this.isshow = false;
+        uni.navigateBack();
       },
 
       mpPhoneNumber(mp_phonenumber) {
-        this.$api.msg('处理中')
+        this.$api.msg('处理中');
 
         if (!mp_phonenumber.detail.encryptedData) {
           if (mp_phonenumber.detail.errMsg === 'getPhoneNumber:fail no permission' && this.platform === 'qq') {
             uni.showToast({
               title: 'QQ暂无法获取手机号',
               icon: 'none',
-            })
+            });
           } else {
             uni.showToast({
               title: '您取消了授权，操作失败',
               icon: 'none',
-            })
+            });
           }
 
-          this.isshow = false
-          uni.navigateBack()
-          return false
+          this.isshow = false;
+          uni.navigateBack();
+          return false;
         }
-        console.log('------- mpPhoneNumber 用户授权，并获取用户基本信息和加密数据------')
-        console.log(mp_phonenumber.detail)
+        console.log('------- mpPhoneNumber 用户授权，并获取用户基本信息和加密数据------');
+        console.log(mp_phonenumber.detail);
       },
 
       // 微信授权登录，获取用户信息
       mpGetUserInfo(userinfo) {
-        this.$api.msg('处理中')
-        this.logout()
+        this.$api.msg('处理中');
+        this.logout();
 
-        this.$api.msg('请使用手机号+密码的方式登录')
+        this.$api.msg('请使用手机号+密码的方式登录');
         if (this.platform !== 'weixin' && this.platform !== 'baidu' && this.platform !== 'qq' && this.platform !== 'toutiao') {
-          this.$api.msg('请使用手机号+密码的方式登录')
-          return
+          this.$api.msg('请使用手机号+密码的方式登录');
+          return;
         }
       },
       // #ifdef MP-ALIPAY
       onGetAuthorize() {
-        let _this = this
-        this.$api.msg('处理中')
+        let _this = this;
+        this.$api.msg('处理中');
 
-        console.log('------- onGetAuthorize 用户授权，并获取用户基本信息 ------')
+        console.log('------- onGetAuthorize 用户授权，并获取用户基本信息 ------');
 
         uni.login({
           scopes: ['auth_base'],
           success(mpres) {
-            console.log('uni.login', mpres)
+            console.log('uni.login', mpres);
             if (mpres.errMsg == 'login:ok') {
               _this.$func.ggysgy
                 .call('member/loginByAlipay', {
@@ -344,30 +347,30 @@
                 })
                 .then(res => {
                   if (res.code == 200) {
-                    console.log('member/loginByAlipay', res)
+                    console.log('member/loginByAlipay', res);
                     // 调用 store login
-                    _this.login(res.datas)
+                    _this.login(res.datas);
 
                     _this.$api.alert('登录成功', () => {
                       if (_this.$api.pages().length > 1) {
                         // 返回上一页
-                        uni.navigateBack({})
-                        return
+                        uni.navigateBack({});
+                        return;
                       }
                       // 首页
-                      _this.$api.toHome()
-                    })
-                    return
+                      _this.$api.toHome();
+                    });
+                    return;
                   }
 
-                  this.$api.msg(res.msg)
-                })
+                  this.$api.msg(res.msg);
+                });
             }
           },
           fail(err) {
-            console.log('uni.login', err)
+            console.log('uni.login', err);
           },
-        })
+        });
 
         // 调用 store mp_login
         // _this.mp_login({
@@ -390,25 +393,25 @@
         // });
       },
       onAuthError(res) {
-        console.log('onAuthError', arguments)
-        this.$api.msg(res.detail.errorMessage)
+        console.log('onAuthError', arguments);
+        this.$api.msg(res.detail.errorMessage);
       },
       // #endif
       getUserInfo() {
-        let _this = this
-        this.$api.msg('处理中')
-        console.log('------- getUserInfo 用户授权，并获取用户基本信息和加密数据------')
+        let _this = this;
+        this.$api.msg('处理中');
+        console.log('------- getUserInfo 用户授权，并获取用户基本信息和加密数据------');
       },
       getUserProfile() {
-        uni.getUserProfile()
+        uni.getUserProfile();
       },
       // #ifdef MP-WEIXIN
       mpWeixintoLogin() {
-        let _this = this
+        let _this = this;
         uni.login({
           provider: 'weixin',
           success(mpres) {
-            console.log('uni.login', mpres)
+            console.log('uni.login', mpres);
             if (mpres.errMsg == 'login:ok') {
               _this.$func.ggysgy
                 .call('member/loginByWeixin', {
@@ -416,34 +419,34 @@
                 })
                 .then(res => {
                   if (res.code == 200) {
-                    console.log('member/loginByWeixin', res)
+                    console.log('member/loginByWeixin', res);
                     // 调用 store login
-                    _this.login(res.datas)
+                    _this.login(res.datas);
 
                     _this.$api.alert('登录成功', () => {
                       if (_this.$api.pages().length > 1) {
                         // 返回上一页
-                        uni.navigateBack({})
-                        return
+                        uni.navigateBack({});
+                        return;
                       }
                       // 首页
-                      _this.$api.toHome()
-                    })
-                    return
+                      _this.$api.toHome();
+                    });
+                    return;
                   }
 
-                  _this.$api.msg(res.msg)
-                })
+                  _this.$api.msg(res.msg);
+                });
             }
           },
           fail(err) {
-            console.log('uni.login', err)
+            console.log('uni.login', err);
           },
-        })
+        });
       },
       // #endif
     },
-  }
+  };
 </script>
 
 <style lang="scss">

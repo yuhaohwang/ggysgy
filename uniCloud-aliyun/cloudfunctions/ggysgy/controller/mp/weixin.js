@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 
-const uidPay = require('uni-pay')
-const { Controller } = require('uni-cloud-router')
-const fs = require('fs')
-const path = require('path')
+const uidPay = require('uni-pay');
+const { Controller } = require('uni-cloud-router');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = class WeixinController extends Controller {
   // 微信支付回调
@@ -13,9 +13,9 @@ module.exports = class WeixinController extends Controller {
       mchId: '1626500351',
       key: 'DvU1Knb2fVKsV0wfiSduoiaWNimCQvHB',
       pfx: fs.readFileSync(path.resolve(__dirname, 'cert/yxym.p12')),
-    })
+    });
 
-    let res = await uniPayIns.verifyPaymentNotify(this.ctx.event)
+    let res = await uniPayIns.verifyPaymentNotify(this.ctx.event);
 
     // 根据商户订单号,判断支付金额是否一致
     // 根据商户订单号
@@ -34,7 +34,7 @@ module.exports = class WeixinController extends Controller {
           'content-type': 'text/xml;charset=utf-8',
         },
         body: `<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>`,
-      }
+      };
     }
 
     return {
@@ -43,6 +43,6 @@ module.exports = class WeixinController extends Controller {
         'content-type': 'text/xml;charset=utf-8',
       },
       body: `<xml><return_code><![CDATA[FAILD]]></return_code><return_msg><![CDATA[异常回调]]></return_msg></xml>`,
-    }
+    };
   }
-}
+};

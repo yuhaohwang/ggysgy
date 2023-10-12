@@ -5,4 +5,4 @@ module.exports = {
   '*.vue': ['prettier --write', 'stylelint --fix --allow-empty-input'],
   '*.{scss,less,styl,css,html}': ['stylelint --fix --allow-empty-input', 'prettier --write'],
   '*.md': ['prettier --write'],
-}
+};

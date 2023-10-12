@@ -17,10 +17,10 @@
     data() {
       return {
         datas: [],
-      }
+      };
     },
     onShow() {
-      this.loadData()
+      this.loadData();
     },
     methods: {
       loadData() {
@@ -35,10 +35,10 @@
           { time: '2021.06.17 12:00', integral: 10, symbol: '+', type: '签到' },
           { time: '2021.06.18 12:00', integral: 10, symbol: '-', type: '消费' },
           { time: '2021.06.18 12:00', integral: 10, symbol: '+', type: '注册' },
-        ]
+        ];
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">

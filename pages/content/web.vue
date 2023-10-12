@@ -12,16 +12,16 @@
         },
         // 路径地址
         weburl: '',
-      }
+      };
     },
     onLoad(res) {
-      this.weburl = res.url
+      this.weburl = res.url;
 
       uni.setNavigationBarTitle({
         title: '艺心益盟 ' + (res.title || ''),
-      })
+      });
     },
-  }
+  };
 </script>
 
 <style lang="scss"></style>

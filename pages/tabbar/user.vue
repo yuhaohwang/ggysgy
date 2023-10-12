@@ -458,8 +458,7 @@
     }
   }
 
-  .stats-area .item,
-  .order-area .item {
+  .stats-area .item, .order-area .item {
     position: relative;
     font-size: $font-sm;
     color: $font-color-base;

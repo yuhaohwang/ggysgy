@@ -61,7 +61,7 @@
 					},
           ...passwordMod.getPwdRules('newPassword', 'newPassword2')
         },
-				logo: this.$getOssFileByPath("/static/logo.png")
+				logo: this.$getOssFileByPath("/static/logo/logo.png")
 			}
 		},
 		onReady() {

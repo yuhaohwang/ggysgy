@@ -469,8 +469,7 @@
 
 <style lang="scss">
   /* #ifndef APP-NVUE */
-  .fab-login-box,
-  .item {
+  .fab-login-box, .item {
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
@@ -479,13 +478,13 @@
   /* #endif */
 
   .fab-login-box {
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 750rpx;
-    justify-content: space-around;
     position: fixed;
     bottom: 10rpx;
     left: 0;
+    width: 750rpx;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
 
   /* #ifndef APP-NVUE */
@@ -511,15 +510,15 @@
     height: 60rpx;
     max-width: 40px;
     max-height: 40px;
-    border-radius: 100%;
     border: solid 1px #f6f6f6;
+    border-radius: 100%;
   }
 
   .login-title {
-    text-align: center;
-    margin-top: 6px;
-    color: #999;
-    font-size: 10px;
     width: 70px;
+    margin-top: 6px;
+    font-size: 10px;
+    color: #999;
+    text-align: center;
   }
 </style>

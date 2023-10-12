@@ -2,7 +2,10 @@
   <view class="container bg-main pos-r">
     <view class="padding-xl dflex-c dflex-flow-c">
       <view class="portrait-box margin-bottom">
-        <image class="headimg border-radius-c" :src="(member && member.member_headimg) || $getOssFileByPath('/static/logo/logo.png')"></image>
+        <image
+          class="headimg border-radius-c"
+          :src="(member && member.member_headimg) || $getOssFileByPath('/static/logo/logo.png')"
+        ></image>
       </view>
 
       <view class="w-full dflex padding-bottom-sm">
@@ -74,12 +77,12 @@
     </view>
 
     <!-- 以艺自强版权 -->
-    <use-copyright class="pos-f w-full" style="bottom: -30rpx"></use-copyright>
+    <use-copyright class="pos-f w-full" style="bottom: -30rpx;"></use-copyright>
   </view>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
 
   export default {
     data() {
@@ -95,9 +98,9 @@
         is_send: false,
         code_time: 30,
         timer: 0,
-		
-		static: this.$staticPaths,
-      }
+
+        static: this.$staticPaths,
+      };
     },
     computed: {
       ...mapState(['member']),
@@ -105,48 +108,48 @@
 
     // 页面加载获取 wx.login code
     onShow() {
-      console.log('login Show')
+      console.log('login Show');
       // #ifdef MP-WEIXIN
-      let lopts = uni.getLaunchOptionsSync()
+      let lopts = uni.getLaunchOptionsSync();
       // #endif
     },
     onLoad() {
       this.$api.get_env(res => {
-        this.env = res
+        this.env = res;
         // console.log(this.env);
-        this.is_mp = this.env.is_mp
-        this.platform = this.env.platform
-        this.platform_icon = this.env.platform_icon
-        this.platform_name = this.env.platform_name
-      })
+        this.is_mp = this.env.is_mp;
+        this.platform = this.env.platform;
+        this.platform_icon = this.env.platform_icon;
+        this.platform_name = this.env.platform_name;
+      });
     },
     methods: {
       inputChange(e) {
-        const key = e.currentTarget.dataset.key
-        this[key] = e.detail.value
+        const key = e.currentTarget.dataset.key;
+        this[key] = e.detail.value;
       },
 
       // 发送验证码
       sendCode() {
-        let _this = this
+        let _this = this;
 
         if (!this.mobile) {
-          this.$api.msg('请输入手机号')
-          return
+          this.$api.msg('请输入手机号');
+          return;
         }
         if (!/(^1[3|4|5|7|8|9][0-9]{9}$)/.test(this.mobile)) {
-          this.$api.msg('请输入正确的手机号码')
-          return
+          this.$api.msg('请输入正确的手机号码');
+          return;
         }
 
-        if (this.is_send) return
+        if (this.is_send) return;
 
         uni.showLoading({
           title: '发送中',
-        })
+        });
 
-        this.code_time = 30
-        this.is_send = true
+        this.code_time = 30;
+        this.is_send = true;
 
         this.$func.ggysgy
           .call('member/sendSmsCode', {
@@ -154,66 +157,66 @@
             type: 'register',
           })
           .then(res => {
-            uni.hideLoading()
+            uni.hideLoading();
             if (res.code == 200) {
               this.$api.alert('验证码已发送', () => {
                 this.timer = setInterval(() => {
-                  --this.code_time
+                  --this.code_time;
 
                   if (this.code_time <= 0) {
-                    clearInterval(this.timer)
-                    this.is_send = false
-                    this.code_time = 30
-                    return
+                    clearInterval(this.timer);
+                    this.is_send = false;
+                    this.code_time = 30;
+                    return;
                   }
-                }, 1000)
-              })
+                }, 1000);
+              });
 
-              return
+              return;
             }
 
-            this.is_send = false
-            this.code_time = 30
-            this.$api.msg(res.msg)
-          })
+            this.is_send = false;
+            this.code_time = 30;
+            this.$api.msg(res.msg);
+          });
       },
       toLogin() {
         // 登录页
-        uni.navigateBack({})
+        uni.navigateBack({});
       },
       register() {
-        let _this = this
+        let _this = this;
 
-        if (_this.is_register) return
+        if (_this.is_register) return;
 
         if (!this.mobile) {
-          this.$api.msg('请输入手机号')
-          return
+          this.$api.msg('请输入手机号');
+          return;
         }
         if (!/(^1[3|4|5|7|8|9][0-9]{9}$)/.test(this.mobile)) {
-          this.$api.msg('请输入正确的手机号码')
-          return
+          this.$api.msg('请输入正确的手机号码');
+          return;
         }
 
         if (!this.password) {
-          this.$api.msg('请输入密码')
-          return
+          this.$api.msg('请输入密码');
+          return;
         }
         if (this.$api.trim(this.password).length < 4) {
-          this.$api.msg('密码长度不能小于4位')
-          return
+          this.$api.msg('密码长度不能小于4位');
+          return;
         }
         if (!this.code) {
-          this.$api.msg('请输入验证码')
-          return
+          this.$api.msg('请输入验证码');
+          return;
         }
 
         // #ifdef H5 || MP-360 || APP-PLUS
         uni.getUserProfile = x => {
           if (typeof x.success === 'function') {
-            x.success({ userInfo: {} })
+            x.success({ userInfo: {} });
           }
-        }
+        };
         // #endif
 
         uni.getUserProfile({
@@ -221,7 +224,7 @@
           lang: 'zh_CN',
           success: res => {
             // console.log('getUserProfile', res);
-            this.is_register = true
+            this.is_register = true;
             this.$func.ggysgy
               .call('member/register', {
                 username: this.mobile,
@@ -230,33 +233,33 @@
                 user: res.userInfo,
               })
               .then(res => {
-                this.is_register = false
+                this.is_register = false;
                 if (res.code == 200) {
                   this.$api.alert('注册成功', () => {
                     if (this.$api.pages().length > 1) {
                       uni.setStorage({
                         key: '__mobile',
                         data: this.mobile,
-                      })
+                      });
                       // 跳转登录
-                      uni.navigateBack()
-                      return
+                      uni.navigateBack();
+                      return;
                     }
                     // 登录页
-                    this.$api.toLogin()
-                    return
-                  })
+                    this.$api.toLogin();
+                    return;
+                  });
 
-                  return
+                  return;
                 }
 
-                this.$api.msg(res.msg)
-              })
+                this.$api.msg(res.msg);
+              });
           },
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">

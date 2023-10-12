@@ -221,4 +221,4 @@ module.exports = {
       'speak',
     ],
   },
-}
+};

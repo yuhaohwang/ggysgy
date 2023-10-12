@@ -41,24 +41,24 @@
           'https://cdn.uviewui.com/uview/album/9.jpg',
           'https://cdn.uviewui.com/uview/album/10.jpg',
         ],
-      }
+      };
     },
     onLoad() {
-      this.loadmore()
+      this.loadmore();
     },
     methods: {
       scrolltolower() {
-        this.loadmore()
+        this.loadmore();
       },
       loadmore() {
         for (let i = 0; i < 30; i++) {
           this.indexList.push({
             url: this.urls[uni.$u.random(0, this.urls.length - 1)],
-          })
+          });
         }
       },
     },
-  }
+  };
 </script>
 <style lang="scss">
   .index {

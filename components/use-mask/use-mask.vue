@@ -44,28 +44,28 @@
         let style = {
           transition: `all ${this.duration / 1000}s ease-in-out`,
           zIndex: this.zIndex,
-        }
+        };
         if (this.show) {
-          style.zIndex = this.zIndex
+          style.zIndex = this.zIndex;
         } else {
-          style.zIndex = -1
+          style.zIndex = -1;
         }
         // 缩放
         if (this.zoom) {
-          style.transform = 'scale(1.2, 1.2)'
+          style.transform = 'scale(1.2, 1.2)';
         }
 
-        return style
+        return style;
       },
     },
     methods: {
       click() {
         if (this.maskClickAble) {
-          this.$emit('click')
+          this.$emit('click');
         }
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">

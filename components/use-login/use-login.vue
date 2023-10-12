@@ -55,9 +55,9 @@
     computed: {
       __show: {
         get() {
-          console.log('is_show', this.show)
-          this.is_show = this.show
-          return this.show
+          console.log('is_show', this.show);
+          this.is_show = this.show;
+          return this.show;
         },
         set() {},
       },
@@ -65,45 +65,45 @@
     data() {
       return {
         is_show: this.show,
-      }
+      };
     },
     methods: {
       cancel() {
-        this.is_show = false
+        this.is_show = false;
         this.$emit('cancel', {
           type: 'cancel',
-        })
+        });
       },
       getUserInfo(wx_userinfo) {
-        this.is_show = false
-        let _this = this
+        this.is_show = false;
+        let _this = this;
         if (!wx_userinfo.detail.iv) {
           this.$emit('auth', {
             type: 'userinfo',
             result: 'cancel',
-          })
-          return false
+          });
+          return false;
         }
-        console.log('-------用户授权，并获取用户基本信息和加密数据------')
+        console.log('-------用户授权，并获取用户基本信息和加密数据------');
       },
       getPhoneNumber(wx_phonenumber) {
-        this.is_show = false
+        this.is_show = false;
         uni.showLoading({
           title: '加载中',
-        })
+        });
         if (!wx_phonenumber.detail.iv) {
           this.$emit('auth', {
             type: 'phonenumber',
             result: 'cancel',
-          })
-          return false
+          });
+          return false;
         }
 
-        console.log('-------用户授权，并获取用户基本信息和加密数据------')
-        console.log(wx_phonenumber.detail)
+        console.log('-------用户授权，并获取用户基本信息和加密数据------');
+        console.log(wx_phonenumber.detail);
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">

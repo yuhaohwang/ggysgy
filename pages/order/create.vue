@@ -104,7 +104,7 @@
       <view class="dflex-b padding-lr padding-tb-sm">
         <view class="flex1">总金额</view>
         <view class="">
-          <text style="font-size: 24rpx">￥</text>
+          <text style="font-size: 24rpx;">￥</text>
           {{ goods_money }}
         </view>
       </view>
@@ -134,7 +134,7 @@
 
 <script>
   // 收获人地址
-  const _address = 'ggysgy-member-address'
+  const _address = 'ggysgy-member-address';
   export default {
     data() {
       return {
@@ -174,42 +174,42 @@
         is_submit: 1,
         platform: '',
         platform_name: '',
-      }
+      };
     },
     onLoad(options) {
-      let _this = this
+      let _this = this;
       this.$api.get_env(res => {
-        this.platform = res.platform
-        this.platform_name = res.platform_name
-      })
+        this.platform = res.platform;
+        this.platform_name = res.platform_name;
+      });
 
       // 商品 ids
-      this.goods_id = options.goods_id || ''
+      this.goods_id = options.goods_id || '';
       // 商品 sku
-      this.goods_sku_id = options.sku_id || ''
+      this.goods_sku_id = options.sku_id || '';
 
       // 购物车 ids
       if (options.cart_ids) {
-        this.cart_ids = options.cart_ids.split(',')
+        this.cart_ids = options.cart_ids.split(',');
       }
       // 加载商品数据
-      this.loadData()
+      this.loadData();
 
       uni.$on('__event_choice_address', data => {
-        this.addrData = data
-      })
+        this.addrData = data;
+      });
     },
     onShow() {
-      if (this.addrData && this.addrData._id) return
+      if (this.addrData && this.addrData._id) return;
       this.$db[_address]
         .where('create_uid == $env.uid')
         .tofirst()
         .then(res => {
-          console.log('res', res)
+          console.log('res', res);
           if (res && res.code === 200) {
-            this.addrData = res.datas
+            this.addrData = res.datas;
           }
-        })
+        });
     },
     methods: {
       // 加载数据
@@ -222,83 +222,83 @@
           })
           .then(res => {
             if (res.code === 200) {
-              this.goodsDatas = res.datas
-              this.calcTotalMoney()
-              this.is_submit = 0
-              return
+              this.goodsDatas = res.datas;
+              this.calcTotalMoney();
+              this.is_submit = 0;
+              return;
             }
 
-            this.$api.msg(res.msg)
-          })
+            this.$api.msg(res.msg);
+          });
       },
       // 计算实际支付 总金额
       calcTotalMoney() {
         // 服务项总金额
-        let service_money = 0
+        let service_money = 0;
 
-        this.goods_money = 0
+        this.goods_money = 0;
         this.goodsDatas.forEach(x => {
           if (x.goods_sku && x.goods_sku.price) {
-            x.goods.price = x.goods_sku.price
-            x.goods.stock_num = x.goods_sku.stock_num
+            x.goods.price = x.goods_sku.price;
+            x.goods.stock_num = x.goods_sku.stock_num;
           }
           if (x.cart && x.cart.goods_num) {
-            x.goods.goods_num = x.cart.goods_num
+            x.goods.goods_num = x.cart.goods_num;
           }
 
-          this.goods_money += (x.goods.price / 100) * x.goods.goods_num
-        })
+          this.goods_money += (x.goods.price / 100) * x.goods.goods_num;
+        });
 
         // 商品金额 + 服务金额 - 优惠金额
         if (this.coupon_type == '满减') {
-          this.total_coupon_money = this.coupon_money
-          this.total_money = (this.goods_money + service_money - this.coupon_money).toFixed(2)
+          this.total_coupon_money = this.coupon_money;
+          this.total_money = (this.goods_money + service_money - this.coupon_money).toFixed(2);
         } else if (this.coupon_type == '折扣') {
-          this.total_coupon_money = this.goods_money + service_money - ((this.goods_money + service_money) * this.coupon_money).toFixed(2)
-          this.total_money = ((this.goods_money + service_money) * this.coupon_money).toFixed(2)
+          this.total_coupon_money = this.goods_money + service_money - ((this.goods_money + service_money) * this.coupon_money).toFixed(2);
+          this.total_money = ((this.goods_money + service_money) * this.coupon_money).toFixed(2);
         }
       },
       // +- 下单数量
       numberChange(options) {
-        let data = this.goodsDatas[options.index]
-        data.goods.goods_num = options.number
+        let data = this.goodsDatas[options.index];
+        data.goods.goods_num = options.number;
 
-        if (this.goods_id) this.goods_num = options.number
+        if (this.goods_id) this.goods_num = options.number;
 
-        this.calcTotalMoney()
+        this.calcTotalMoney();
       },
       // 打开优惠券
       couponOpen() {
-        let _this = this
+        let _this = this;
         // 加载可使用优惠券数据 couponDatas
       },
       // 使用优惠券
       couponUse(coupon) {
-        let _this = this
+        let _this = this;
 
-        _this.order_coupon_id = coupon._id
-        _this.coupon_money = coupon.price
-        _this.coupon_type = coupon.type
-        _this.couponName = coupon.name
+        _this.order_coupon_id = coupon._id;
+        _this.coupon_money = coupon.price;
+        _this.coupon_type = coupon.type;
+        _this.couponName = coupon.name;
 
-        _this.calcTotalMoney()
+        _this.calcTotalMoney();
 
-        _this.couponShow = false
+        _this.couponShow = false;
       },
       // 提交订单
       submit() {
         if (!(this.addrData && this.addrData._id)) {
-          this.$api.msg('请选择收货人')
-          return
+          this.$api.msg('请选择收货人');
+          return;
         }
 
         if (this.is_submit) {
-          this.$api.msg('提交中')
-          return
+          this.$api.msg('提交中');
+          return;
         }
-        this.is_submit = 1
+        this.is_submit = 1;
 
-        let _this = this
+        let _this = this;
 
         let obj = {
           cart_ids: _this.cart_ids,
@@ -313,7 +313,7 @@
           addr_id: _this.addrData._id,
           order_from: _this.platform_name,
           order_desc: _this.order_desc,
-        }
+        };
 
         this.$func.ggysgy.call('order/create', obj).then(res => {
           if (res.code === 200) {
@@ -322,25 +322,25 @@
               order_id: res.datas.order_id,
               money: res.datas.money,
               type: 'redirect',
-            })
-            return
+            });
+            return;
           }
 
-          _this.$api.msg(res.msg)
+          _this.$api.msg(res.msg);
           _this.$api.timerout(() => {
-            _this.is_submit = 0
-          }, 800)
-        })
+            _this.is_submit = 0;
+          }, 800);
+        });
       },
       // 选择收货人
       toaddr() {
         uni.navigateTo({
           url: '/pages/user/address/address?source=1',
           complete() {},
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -400,7 +400,7 @@
           width: 100%;
           height: 0;
           border-bottom: 1px dashed #f3f3f3;
-          content: '';
+          content: "";
           transform: scaleY(50%);
         }
       }

@@ -150,8 +150,8 @@
       // 监听时间戳的变化
       timestamp(newVal, oldVal) {
         // 如果倒计时间发生变化，清除定时器，重新开始倒计时
-        clearInterval(this.timer)
-        this.start()
+        clearInterval(this.timer);
+        this.start();
       },
     },
     data() {
@@ -162,94 +162,94 @@
         s: '00', // 秒的默认值
         timer: null, // 定时器
         seconds: 0, // 记录不停倒计过程中变化的秒数
-      }
+      };
     },
     computed: {
       // 倒计时item的样式，item为分别的时分秒部分的数字
       itemStyle() {
-        let style = {}
+        let style = {};
         if (this.height) {
-          style.height = this.height + 'rpx'
-          style.width = this.height + 'rpx'
+          style.height = this.height + 'rpx';
+          style.width = this.height + 'rpx';
         }
         if (this.showBorder) {
-          style.borderStyle = 'solid'
-          style.borderColor = this.borderColor
-          style.borderWidth = '1px'
+          style.borderStyle = 'solid';
+          style.borderColor = this.borderColor;
+          style.borderWidth = '1px';
         }
         if (this.bgColor) {
-          style.backgroundColor = this.bgColor
+          style.backgroundColor = this.bgColor;
         }
-        return style
+        return style;
       },
       // 倒计时数字的样式
       letterStyle() {
-        let style = {}
-        if (this.fontSize) style.fontSize = this.fontSize + 'rpx'
-        if (this.color) style.color = this.color
-        return style
+        let style = {};
+        if (this.fontSize) style.fontSize = this.fontSize + 'rpx';
+        if (this.color) style.color = this.color;
+        return style;
       },
     },
     mounted() {
       // 如果自动倒计时
-      this.autoplay && this.timestamp && this.start()
+      this.autoplay && this.timestamp && this.start();
     },
     methods: {
       // 倒计时
       start() {
-        if (this.timestamp <= 0) return
-        this.seconds = Number(this.timestamp)
-        this.formatTime(this.seconds)
+        if (this.timestamp <= 0) return;
+        this.seconds = Number(this.timestamp);
+        this.formatTime(this.seconds);
         this.timer = setInterval(() => {
-          this.seconds--
+          this.seconds--;
           // 发出change事件
-          this.$emit('change', this.seconds)
+          this.$emit('change', this.seconds);
           if (this.seconds < 0) {
-            return this.end()
+            return this.end();
           }
-          this.formatTime(this.seconds)
-        }, 1000)
+          this.formatTime(this.seconds);
+        }, 1000);
       },
       // 格式化时间
       formatTime(seconds) {
         // 小于等于0的话，结束倒计时
-        seconds <= 0 && this.end()
-        let [day, hour, minute, second] = [0, 0, 0, 0]
-        day = Math.floor(seconds / (60 * 60 * 24))
+        seconds <= 0 && this.end();
+        let [day, hour, minute, second] = [0, 0, 0, 0];
+        day = Math.floor(seconds / (60 * 60 * 24));
         // 判断是否显示“天”参数，如果不显示，将天部分的值，加入到小时中
         // hour为给后面计算秒和分等用的(基于显示天的前提下计算)
-        hour = Math.floor(seconds / (60 * 60)) - day * 24
+        hour = Math.floor(seconds / (60 * 60)) - day * 24;
         // showHour为需要显示的小时
-        let showHour = null
+        let showHour = null;
         if (this.showDays) {
-          showHour = hour
+          showHour = hour;
         } else {
-          showHour = Math.floor(seconds / (60 * 60))
+          showHour = Math.floor(seconds / (60 * 60));
         }
-        minute = Math.floor(seconds / 60) - hour * 60 - day * 24 * 60
-        second = Math.floor(seconds) - day * 24 * 60 * 60 - hour * 60 * 60 - minute * 60
+        minute = Math.floor(seconds / 60) - hour * 60 - day * 24 * 60;
+        second = Math.floor(seconds) - day * 24 * 60 * 60 - hour * 60 * 60 - minute * 60;
         // 如果小于10，在前面补上一个"0"
-        hour = hour < 10 ? '0' + hour : hour
-        minute = minute < 10 ? '0' + minute : minute
-        second = second < 10 ? '0' + second : second
-        this.d = day
-        this.h = showHour
-        this.i = minute
-        this.s = second
+        hour = hour < 10 ? '0' + hour : hour;
+        minute = minute < 10 ? '0' + minute : minute;
+        second = second < 10 ? '0' + second : second;
+        this.d = day;
+        this.h = showHour;
+        this.i = minute;
+        this.s = second;
       },
       // 停止倒计时
       end() {
         // 清除定时器
-        clearInterval(this.timer)
-        this.timer = null
-        this.$emit('end', {})
+        clearInterval(this.timer);
+        this.timer = null;
+        this.$emit('end', {});
       },
     },
     beforeDestroy() {
-      clearInterval(this.timer)
-      this.timer = null
+      clearInterval(this.timer);
+      this.timer = null;
     },
-  }
+  };
 </script>
 
 <style lang="scss">

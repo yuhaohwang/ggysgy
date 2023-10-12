@@ -48,7 +48,7 @@ export default {
     return {
       uniIdRedirectUrl: '',
       loginType: '',
-      logo: this.$getOssFileByPath('/static/logo.png'),
+      logo: this.$getOssFileByPath('/static/logo/logo.png'),
       focusNewPassword: false,
       focusNewPassword2: false,
       allowSkip: false,

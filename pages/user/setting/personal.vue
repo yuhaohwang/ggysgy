@@ -35,74 +35,74 @@
 </template>
 
 <script>
-const db = uniCloud.database()
-const usersTable = db.collection('uni-id-users')
-const uniIdCo = uniCloud.importObject('uni-id-co')
-import { mapState, mapMutations } from 'vuex'
-export default {
-  computed: {
-    ...mapState(['islogin', 'member']),
-  },
-  data() {
-    return {
-		static: this.$staticPaths,
-	}
-  },
-  onShow() {
-    if (!this.islogin) {
-      this.$api.msg('账号未登录')
-      return
-    }
-  },
-  onLoad() {},
-  methods: {
-    ...mapMutations(['putMember']),
-    setNickname(nickname) {
-      console.log(nickname)
-      if (nickname) {
-        uni.showLoading({
-          title: '请求中',
-          mask: true,
-        })
-        usersTable
-          .where('_id==$env.uid')
-          .update({
-            nickname,
-          })
-          .then(e => {
-            uni.hideLoading()
-            if (e.result.updated) {
-              this.$api.msg('更新成功')
-              let temp = this.member
-              temp.nickname = nickname
-              this.putMember(temp)
-            } else {
-              this.$api.msg('没有改变')
-            }
-          })
-        this.$refs.dialog.close()
-      } else {
-        this.$refs.dialog.open()
+  const db = uniCloud.database();
+  const usersTable = db.collection('uni-id-users');
+  const uniIdCo = uniCloud.importObject('uni-id-co');
+  import { mapState, mapMutations } from 'vuex';
+  export default {
+    computed: {
+      ...mapState(['islogin', 'member']),
+    },
+    data() {
+      return {
+        static: this.$staticPaths,
+      };
+    },
+    onShow() {
+      if (!this.islogin) {
+        this.$api.msg('账号未登录');
+        return;
       }
     },
-  },
-}
+    onLoad() {},
+    methods: {
+      ...mapMutations(['putMember']),
+      setNickname(nickname) {
+        console.log(nickname);
+        if (nickname) {
+          uni.showLoading({
+            title: '请求中',
+            mask: true,
+          });
+          usersTable
+            .where('_id==$env.uid')
+            .update({
+              nickname,
+            })
+            .then(e => {
+              uni.hideLoading();
+              if (e.result.updated) {
+                this.$api.msg('更新成功');
+                let temp = this.member;
+                temp.nickname = nickname;
+                this.putMember(temp);
+              } else {
+                this.$api.msg('没有改变');
+              }
+            });
+          this.$refs.dialog.close();
+        } else {
+          this.$refs.dialog.open();
+        }
+      },
+    },
+  };
 </script>
 
 <style lang="scss">
-page {
-  background: $page-color-base;
-}
+  page {
+    background: $page-color-base;
+  }
 
-image {
-  width: 130rpx;
-  height: 130rpx;
-}
+  image {
+    width: 130rpx;
+    height: 130rpx;
+  }
 
-.use-item {
-  position: relative;
-  height: 100rpx;
-  line-height: 100rpx;
-  background: #fff;
-}
+  .use-item {
+    position: relative;
+    height: 100rpx;
+    line-height: 100rpx;
+    background: #fff;
+  }
 </style>

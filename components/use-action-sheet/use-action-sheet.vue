@@ -58,7 +58,7 @@
           // 	color: '',
           // 	fontSize: ''
           // }]
-          return []
+          return [];
         },
       },
       // 顶部的提示文字
@@ -69,7 +69,7 @@
             text: '',
             color: '',
             fontSize: '26',
-          }
+          };
         },
       },
       // 底部的取消按钮
@@ -100,50 +100,50 @@
     },
     watch: {
       list(nv, ov) {
-        console.log('use-action-sheet', { nv: nv, ov: ov })
-        this.datas = nv
+        console.log('use-action-sheet', { nv: nv, ov: ov });
+        this.datas = nv;
       },
     },
     data() {
       return {
         datas: [],
-      }
+      };
     },
     computed: {
       // 顶部提示的样式
       tipsStyle() {
-        let style = {}
-        if (this.tips.color) style.color = this.tips.color
-        if (this.tips.fontSize) style.fontSize = this.tips.fontSize + 'rpx'
-        return style
+        let style = {};
+        if (this.tips.color) style.color = this.tips.color;
+        if (this.tips.fontSize) style.fontSize = this.tips.fontSize + 'rpx';
+        return style;
       },
       // 操作项目的样式
       itemStyle(index) {
         return index => {
-          let style = {}
-          if (this.list[index].color) style.color = this.list[index].color
-          if (this.list[index].fontSize) style.fontSize = this.list[index].fontSize + 'rpx'
-          return style
-        }
+          let style = {};
+          if (this.list[index].color) style.color = this.list[index].color;
+          if (this.list[index].fontSize) style.fontSize = this.list[index].fontSize + 'rpx';
+          return style;
+        };
       },
     },
     methods: {
       // 弹窗关闭回执事件
       popupClose() {
-        this.$emit('input', false)
-        this.$emit('close')
+        this.$emit('input', false);
+        this.$emit('close');
       },
       // 手动点击取消按钮
       closeClick() {
-        this.$emit('input', false)
+        this.$emit('input', false);
       },
       // 操作菜单 item 点击事件
       itemClick(index) {
-        this.$emit('click', index)
-        this.$emit('input', false)
+        this.$emit('click', index);
+        this.$emit('input', false);
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss"></style>

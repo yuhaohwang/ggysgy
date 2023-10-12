@@ -6,31 +6,31 @@
 
 <script>
   // #ifdef MP-ALIPAY
-  import aliParse from 'mini-html-parser2'
+  import aliParse from 'mini-html-parser2';
   // #endif
 
   export default {
     data() {
       return {
         content: '',
-      }
+      };
     },
     onShow() {
-      let richtext = uni.getStorageSync('__rich_text')
+      let richtext = uni.getStorageSync('__rich_text');
       // console.log('richtext', richtext);
       // #ifdef MP-ALIPAY
       aliParse(richtext.replace(/"><*/gi, '"/><'), (err, nodes) => {
         if (!err) {
-          this.content = nodes
+          this.content = nodes;
         }
-      })
+      });
       // #endif
 
       // #ifndef MP-ALIPAY
-      this.content = richtext
+      this.content = richtext;
       // #endif
     },
-  }
+  };
 </script>
 
 <style lang="scss">

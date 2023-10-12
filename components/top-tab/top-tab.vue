@@ -28,51 +28,52 @@
 </template>
 
 <script>
-export default {
-  name: 'top-tab',
-  props: {
-    fixed: {
-      require: false,
-      default: true,
-    },
-    tabList: {
-      require: true,
-    },
-    scrollable: {
-      require: false,
-      default: false,
-    },
-    current: {
-      require: false,
-      default: 0,
-    },
-  },
-  data() {
-    return {
-      lineBg:
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAOCAYAAABdC15GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHgBzZNRTsJAEIb/WTW+lpiY+FZPIDew3ABP4GJ8hxsI9zBpOYHeQDwBPQI+mRiRvpLojtPdYhCorQqF/6GdbGd2vvwzBXZcNAt4oj1ANeUoAT5iqkUjbEFLHNmhD1YPEvpZ3ghkGlVDCkc94/BmHMq998I5ONiY1ZBfpKAyuOtgAc5yOEDmYEWNh32BHF91sGHZHmwW4azciN9aQwnz3SJEgOmte+R2tdLprTYoa50mvuomlLpD4Y3oQZnov6D2RzCqI93bWOHaEmAGqQUyRBlZR1WfarcD/EJ2z8DtzDGvsMCwpm8XOCfDUsVOCYhiqRxI/CTQo4UOvjzO7Pow18vfywneuUHHUUxLn55lLw5JFpZ8bEUcY8oXdOLWiHLTxvoGpLqoUmy6dBT15o/ox3znpoycAmxUsiJTbs1cmxeVKp+0zmFIS7bGWiVghC7Vwse8jFKAX9eljh4ggKLLv7uaQvG9/F59Oo2SouxPu7OTCxN/s8wAAAAASUVORK5CYII=',
-    }
-  },
-  watch: {
-    current: {
-      handler(newValue, oldValue) {
-        this.$refs.uTabs.clickHandler(this.tabList[newValue], newValue)
+  export default {
+    name: 'top-tab',
+    props: {
+      fixed: {
+        require: false,
+        default: true,
+      },
+      tabList: {
+        require: true,
+      },
+      scrollable: {
+        require: false,
+        default: false,
+      },
+      current: {
+        require: false,
+        default: 0,
       },
     },
-  },
-  methods: {
-    tabchange(e) {
-      this.$emit('tab-change', e)
+    data() {
+      return {
+        lineBg:
+          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAOCAYAAABdC15GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHgBzZNRTsJAEIb/WTW+lpiY+FZPIDew3ABP4GJ8hxsI9zBpOYHeQDwBPQI+mRiRvpLojtPdYhCorQqF/6GdbGd2vvwzBXZcNAt4oj1ANeUoAT5iqkUjbEFLHNmhD1YPEvpZ3ghkGlVDCkc94/BmHMq998I5ONiY1ZBfpKAyuOtgAc5yOEDmYEWNh32BHF91sGHZHmwW4azciN9aQwnz3SJEgOmte+R2tdLprTYoa50mvuomlLpD4Y3oQZnov6D2RzCqI93bWOHaEmAGqQUyRBlZR1WfarcD/EJ2z8DtzDGvsMCwpm8XOCfDUsVOCYhiqRxI/CTQo4UOvjzO7Pow18vfywneuUHHUUxLn55lLw5JFpZ8bEUcY8oXdOLWiHLTxvoGpLqoUmy6dBT15o/ox3znpoycAmxUsiJTbs1cmxeVKp+0zmFIS7bGWiVghC7Vwse8jFKAX9eljh4ggKLLv7uaQvG9/F59Oo2SouxPu7OTCxN/s8wAAAAASUVORK5CYII=',
+      };
     },
-  },
-}
+    watch: {
+      current: {
+        handler(newValue, oldValue) {
+          this.$refs.uTabs.clickHandler(this.tabList[newValue], newValue);
+        },
+      },
+    },
+    methods: {
+      tabchange(e) {
+        this.$emit('tab-change', e);
+      },
+    },
+  };
 </script>
 
 <style lang="scss">
-.tab-offset {
-  padding-bottom: 70rpx;
-}
-.fixed {
-  position: fixed;
-}
+  .tab-offset {
+    padding-bottom: 70rpx;
+  }
+
+  .fixed {
+    position: fixed;
+  }
 </style>

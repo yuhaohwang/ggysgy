@@ -63,7 +63,7 @@
 				focusNickname:false,
 				focusPassword:false,
 				focusPassword2:false,
-				logo: this.$getOssFileByPath("/static/logo.png")
+				logo: this.$getOssFileByPath("/static/logo/logo.png")
 			}
 		},
 		onReady() {

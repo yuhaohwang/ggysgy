@@ -12,159 +12,159 @@
 </template>
 
 <script>
-const db = uniCloud.database()
-const usersTable = db.collection('uni-id-users')
-const uniIdCo = uniCloud.importObject('uni-id-co')
-export default {
-  emits: ['success'],
-  computed: {},
-  data() {
-    return {}
-  },
-  methods: {
-    async beforeGetphonenumber() {
-      return await new Promise((resolve, reject) => {
-        uni.showLoading({ mask: true })
-        wx.checkSession({
-          success() {
-            console.log('session_key 未过期')
-            resolve()
-            uni.hideLoading()
-          },
-          fail() {
-            console.log('session_key 已经失效，正在执行更新')
-            wx.login({
-              success({ code }) {
-                uniCloud
-                  .importObject('uni-id-co', {
-                    customUI: true,
-                  })
-                  .loginByWeixin({ code })
-                  .then(e => {
-                    console.log(e)
-                    resolve()
-                  })
-                  .catch(e => {
-                    console.log(e)
-                    reject()
-                  })
-                  .finally(e => {
-                    console.log(e)
-                    uni.hideLoading()
-                  })
-              },
-              fail: err => {
-                console.error(err)
-                reject()
-              },
+  const db = uniCloud.database();
+  const usersTable = db.collection('uni-id-users');
+  const uniIdCo = uniCloud.importObject('uni-id-co');
+  export default {
+    emits: ['success'],
+    computed: {},
+    data() {
+      return {};
+    },
+    methods: {
+      async beforeGetphonenumber() {
+        return await new Promise((resolve, reject) => {
+          uni.showLoading({ mask: true });
+          wx.checkSession({
+            success() {
+              console.log('session_key 未过期');
+              resolve();
+              uni.hideLoading();
+            },
+            fail() {
+              console.log('session_key 已经失效，正在执行更新');
+              wx.login({
+                success({ code }) {
+                  uniCloud
+                    .importObject('uni-id-co', {
+                      customUI: true,
+                    })
+                    .loginByWeixin({ code })
+                    .then(e => {
+                      console.log(e);
+                      resolve();
+                    })
+                    .catch(e => {
+                      console.log(e);
+                      reject();
+                    })
+                    .finally(e => {
+                      console.log(e);
+                      uni.hideLoading();
+                    });
+                },
+                fail: err => {
+                  console.error(err);
+                  reject();
+                },
+              });
+            },
+          });
+        });
+      },
+      async bindMobileByMpWeixin(e) {
+        console.log(e);
+        if (e.detail.errMsg == 'getPhoneNumber:ok') {
+          console.log(e.detail);
+          //检查登录信息是否过期，否则通过重新登录刷新session_key
+          await this.beforeGetphonenumber();
+          uniIdCo
+            .bindMobileByMpWeixin(e.detail)
+            .then(e => {
+              console.log(e);
+              this.$emit('success');
             })
-          },
-        })
-      })
+            .finally(e => {
+              this.closeMe();
+            });
+        } else {
+          this.closeMe();
+        }
+      },
+      async open() {
+        this.$refs.popup.open();
+      },
+      closeMe(e) {
+        this.$refs.popup.close();
+      },
     },
-    async bindMobileByMpWeixin(e) {
-      console.log(e)
-      if (e.detail.errMsg == 'getPhoneNumber:ok') {
-        console.log(e.detail)
-        //检查登录信息是否过期，否则通过重新登录刷新session_key
-        await this.beforeGetphonenumber()
-        uniIdCo
-          .bindMobileByMpWeixin(e.detail)
-          .then(e => {
-            console.log(e)
-            this.$emit('success')
-          })
-          .finally(e => {
-            this.closeMe()
-          })
-      } else {
-        this.closeMe()
-      }
-    },
-    async open() {
-      this.$refs.popup.open()
-    },
-    closeMe(e) {
-      this.$refs.popup.close()
-    },
-  },
-}
+  };
 </script>
 
 <style lang="scss" scoped>
-@import '@/common/login-page.scss';
-view {
-  display: flex;
-}
+  @import "@/common/login-page.scss";
 
-.box {
-  background-color: #ffffff;
-  height: 200px;
-  width: 750rpx;
-  flex-direction: column;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-}
+  view {
+    display: flex;
+  }
 
-.headBox {
-  padding: 20rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: left;
-  font-size: 16px;
-  color: #333333;
-  margin-left: 15rpx;
-}
+  .box {
+    width: 750rpx;
+    height: 200px;
+    background-color: #fff;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    flex-direction: column;
+  }
 
-.tip {
-  color: #666666;
-  text-align: left;
-  justify-content: center;
-  margin: 10rpx 30rpx;
-  font-size: 18px;
-}
+  .headBox {
+    height: 80rpx;
+    padding: 20rpx;
+    margin-left: 15rpx;
+    font-size: 16px;
+    line-height: 80rpx;
+    color: #333;
+    text-align: left;
+  }
 
-.btnBox {
-  margin-top: 45rpx;
-  justify-content: center;
-  flex-direction: row;
-}
+  .tip {
+    margin: 10rpx 30rpx;
+    font-size: 18px;
+    color: #666;
+    text-align: left;
+    justify-content: center;
+  }
 
-.close,
-.agree {
-  text-align: center;
-  width: 200rpx;
-  height: 80upx;
-  line-height: 80upx;
-  border-radius: 5px;
-  margin: 0 20rpx;
-  font-size: 14px;
-}
+  .btnBox {
+    margin-top: 45rpx;
+    justify-content: center;
+    flex-direction: row;
+  }
 
-.close {
-  color: #999999;
-  border-color: #eeeeee;
-  border-style: solid;
-  border-width: 1px;
-  background-color: #ffffff;
-}
+  .close, .agree {
+    width: 200rpx;
+    height: 80upx;
+    margin: 0 20rpx;
+    font-size: 14px;
+    line-height: 80upx;
+    text-align: center;
+    border-radius: 5px;
+  }
 
-.close:active {
-  color: #989898;
-  background-color: #e2e2e2;
-}
+  .close {
+    color: #999;
+    background-color: #fff;
+    border-color: #eee;
+    border-style: solid;
+    border-width: 1px;
+  }
 
-.agree {
-  color: #ffffff;
-}
+  .close:active {
+    color: #989898;
+    background-color: #e2e2e2;
+  }
 
-/* #ifdef MP */
-.agree::after {
-  border: none;
-}
+  .agree {
+    color: #fff;
+  }
 
-/* #endif */
-.agree:active {
-  background-color: #f5f5f6;
-}
+  /* #ifdef MP */
+  .agree::after {
+    border: none;
+  }
+
+  /* #endif */
+  .agree:active {
+    background-color: #f5f5f6;
+  }
 </style>

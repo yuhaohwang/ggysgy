@@ -2,38 +2,24 @@
         初始化
  ==================== */
 body {
-  font-family: mp-quote, -apple-system-font, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI',
-    'Microsoft YaHei', Arial, sans-serif;
+  font-family:
+    mp-quote,
+    -apple-system-font,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei UI",
+    "Microsoft YaHei",
+    Arial,
+    sans-serif;
   font-size: 28rpx;
   line-height: 1.6;
   color: #333;
   background-color: #fff;
 }
 
-view,
-scroll-view,
-swiper,
-swiper-item,
-cover-view,
-cover-image,
-icon,
-text,
-rich-text,
-progress,
-button,
-checkbox,
-form,
-input,
-label,
-radio,
-slider,
-switch,
-textarea,
-navigator,
-audio,
-camera,
-image,
-video {
+view, scroll-view, swiper, swiper-item, cover-view, cover-image, icon, text, rich-text, progress, button, checkbox, form, input, label, radio, slider, switch, textarea, navigator, audio, camera, image, video {
   box-sizing: border-box;
 }
 
@@ -48,15 +34,11 @@ input {
   height: inherit;
 }
 
-uni-button,
-button {
+uni-button, button {
   font-weight: normal;
 }
 
-uni-button.no-border::before,
-uni-button.no-border::after,
-button.no-border::before,
-button.no-border::after {
+uni-button.no-border::before, uni-button.no-border::after, button.no-border::before, button.no-border::after {
   border: 0 none;
 }
 
@@ -72,10 +54,10 @@ button.btn {
   background-color: transparent;
 }
 
-view[class*='-area'] {
+view[class*="-area"] {
 }
 
-view[class*='-round-area'] {
+view[class*="-round-area"] {
   border-radius: 20rpx;
 }
 
@@ -114,12 +96,12 @@ view[class*='-round-area'] {
 
 .price::before {
   font-size: 24rpx;
-  content: '￥';
+  content: "￥";
 }
 
 .m-price::before {
   font-size: 24rpx;
-  content: '￥';
+  content: "￥";
 }
 
 .price::after {
@@ -129,12 +111,12 @@ view[class*='-round-area'] {
 
 .price-add::before {
   font-weight: 600;
-  content: '＋';
+  content: "＋";
 }
 
 .price-sub::before {
   font-weight: 600;
-  content: '－';
+  content: "－";
 }
 
 .badge {
@@ -489,7 +471,7 @@ $wrap: (
   border-radius: 50%;
 }
 
-view[class*='border-radius'] {
+view[class*="border-radius"] {
   overflow: hidden;
 }
 

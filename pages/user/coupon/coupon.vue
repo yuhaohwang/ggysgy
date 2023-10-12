@@ -73,7 +73,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
   export default {
     data() {
       return {
@@ -107,124 +107,123 @@
           rows: 10,
         },
         scrollLeft: 0,
-      }
+      };
     },
     watch: {
       tabCurrentIndex(nv, ov) {
-        this.loadData('tab_change', 1)
+        this.loadData('tab_change', 1);
       },
     },
     onLoad(options) {
-      this.loadData()
+      this.loadData();
     },
     // 下拉刷新
     onPullDownRefresh() {
-      this.loadData('refresh')
+      this.loadData('refresh');
     },
     // 上拉加载更多
     onReachBottom() {
-      this.loadData()
+      this.loadData();
     },
     methods: {
       // 加载数据
       loadData(source = 'add', loading) {
         // 获取当前 nav
-        let cur_nav = this.navList[this.tabCurrentIndex]
+        let cur_nav = this.navList[this.tabCurrentIndex];
 
         if (cur_nav.loadingType === 'loading') {
           //防止重复加载
-          return
+          return;
         }
 
-        this.reqdata.state = cur_nav.state
+        this.reqdata.state = cur_nav.state;
         if (loading == 1 || source == 'refresh') {
-          this.reqdata.page = 1
+          this.reqdata.page = 1;
         }
         if (source.type) {
-          source.type = source.type.toLowerCase()
+          source.type = source.type.toLowerCase();
         }
         if (source === 'add' || source.type == 'scrolltolower') {
           if (cur_nav.loadingType == 'nomore') {
-            return
+            return;
           }
-          cur_nav.loadingType = 'loading'
+          cur_nav.loadingType = 'loading';
         } else {
-          cur_nav.loadingType = 'more'
+          cur_nav.loadingType = 'more';
         }
 
         this.$func.ggysgy.call('member/coupon', this.reqdata).then(res => {
-          cur_nav.loaded = true
+          cur_nav.loaded = true;
 
           if (res.code === 200) {
             if (loading == 1 || source == 'refresh') {
-              cur_nav.datas = []
+              cur_nav.datas = [];
             }
 
             if (this.reqdata.page == 1) {
-              let _nav = {}
+              let _nav = {};
               for (let _state in res.datas.dynamic) {
-                _nav = this.navList.find(x => x.state == _state)
+                _nav = this.navList.find(x => x.state == _state);
                 if (_nav && _nav.state) {
-                  _nav.cnt = res.datas.dynamic[_state]
+                  _nav.cnt = res.datas.dynamic[_state];
                 }
               }
             }
 
             if (res.datas.length > 0) {
-              let __datas = []
+              let __datas = [];
               res.datas.forEach(row => {
-                row.end_time = row.end_time.substring(0, 10).replace(/-/g, '.')
-                __datas.push(row)
-              })
+                row.end_time = row.end_time.substring(0, 10).replace(/-/g, '.');
+                __datas.push(row);
+              });
 
-              cur_nav.datas = [...cur_nav.datas, ...__datas]
+              cur_nav.datas = [...cur_nav.datas, ...__datas];
 
               if (res.datas.length >= this.reqdata.rows) {
                 if (this.reqdata.page == 1) {
-                  cur_nav.hasmore = true
+                  cur_nav.hasmore = true;
                 }
-                this.reqdata.page++
-                cur_nav.loadingType = 'more'
+                this.reqdata.page++;
+                cur_nav.loadingType = 'more';
               } else {
-                cur_nav.loadingType = 'nomore'
+                cur_nav.loadingType = 'nomore';
               }
             } else {
-              cur_nav.loadingType = 'nomore'
+              cur_nav.loadingType = 'nomore';
             }
           }
 
           if (loading == 1) {
-            uni.hideLoading()
+            uni.hideLoading();
           } else if (source == 'refresh') {
-            uni.stopPullDownRefresh()
+            uni.stopPullDownRefresh();
           }
 
-          this.navData = cur_nav
-        })
+          this.navData = cur_nav;
+        });
       },
 
       // swiper 切换
       changeTab(e) {
-        this.tabCurrentIndex = e.target.current
+        this.tabCurrentIndex = e.target.current;
       },
       // 顶部tab点击
       tabClick(index) {
-        this.tabCurrentIndex = index
+        this.tabCurrentIndex = index;
       },
       // 去使用
       use(options) {
         if (options.state == '已领取')
           this.$api.toGoodList({
             coupon_id: options.coupon_id,
-          })
+          });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">
-  page,
-  .container {
+  page, .container {
     min-height: 100%;
     background: $page-color-base;
   }
@@ -255,7 +254,7 @@
           width: 44px;
           height: 0;
           border-bottom: 2px solid $base-color;
-          content: '';
+          content: "";
           transform: translate(-50%);
         }
       }
@@ -302,7 +301,7 @@
     .discount::after {
       margin-left: 6rpx;
       font-size: 24rpx;
-      content: '折';
+      content: "折";
     }
 
     .border-line {

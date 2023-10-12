@@ -43,7 +43,7 @@
 				type: "", //快捷登录方式
 				phone: "", //手机号码
 				focusPhone: false,
-				logo: this.$getOssFileByPath("/static/logo.png")
+				logo: this.$getOssFileByPath("/static/logo/logo.png")
 			}
 		},
 		computed: {

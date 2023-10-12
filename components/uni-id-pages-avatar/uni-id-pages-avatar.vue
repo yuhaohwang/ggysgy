@@ -163,9 +163,10 @@
   .chooseAvatar {
     /* #ifndef APP-NVUE */
     display: inline-block;
+    text-align: center;
+
     /* #endif */
     border: dotted 1px #ddd;
     border-radius: 10px;
-    text-align: center;
   }
 </style>

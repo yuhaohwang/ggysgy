@@ -51,7 +51,7 @@
 				"needCaptcha": false,
 				"focusUsername": false,
 				"focusPassword": false,
-				"logo": this.$getOssFileByPath("/static/logo.png")
+				"logo": this.$getOssFileByPath("/static/logo/logo.png")
 			}
 		},
 		onShow() {

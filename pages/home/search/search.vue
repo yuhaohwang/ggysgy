@@ -61,9 +61,9 @@
 </template>
 
 <script>
-  const _history = 'ggysgy-search-history'
-  const _hot = 'ggysgy-search-hot'
-  import { mapState } from 'vuex'
+  const _history = 'ggysgy-search-history';
+  const _hot = 'ggysgy-search-hot';
+  import { mapState } from 'vuex';
   export default {
     computed: {
       ...mapState(['islogin']),
@@ -77,14 +77,14 @@
         historyDatas: [],
         // 热门搜索
         hotDatas: [],
-      }
+      };
     },
     onShow() {
       // 初始化
-      this.keyword = ''
+      this.keyword = '';
 
       // 加载数据
-      this.loadData()
+      this.loadData();
     },
     methods: {
       loadData() {
@@ -94,16 +94,16 @@
             .tolist({ orderby: 'last_modify_time desc' })
             .then(res => {
               if (res.code === 200) {
-                this.historyDatas = res.datas
+                this.historyDatas = res.datas;
               }
-            })
+            });
         }
 
         this.$db[_hot].tolist({ orderby: 'search_cnt desc' }).then(res => {
           if (res.code === 200) {
-            this.hotDatas = res.datas
+            this.hotDatas = res.datas;
           }
-        })
+        });
       },
 
       // 搜索
@@ -112,23 +112,23 @@
           case 'history':
             this.$api.toGoodList({
               keyword: res.keyword,
-            })
-            break
+            });
+            break;
           case 'hot':
             this.$api.toGoodList({
               sid: res._id,
-            })
-            break
+            });
+            break;
           default:
             this.$api.toGoodList({
               keyword: this.keyword,
-            })
-            break
+            });
+            break;
         }
       },
       // 清空搜索历史
       clear() {
-        let _this = this
+        let _this = this;
 
         uni.showModal({
           title: '提示',
@@ -140,19 +140,19 @@
                 .remove()
                 .then(res => {
                   if (res.code === 200) {
-                    _this.historyDatas = []
-                    return
+                    _this.historyDatas = [];
+                    return;
                   }
-                  _this.$api.msg(res.msg)
-                })
+                  _this.$api.msg(res.msg);
+                });
             } else if (res.cancel) {
-              console.log('用户点击取消')
+              console.log('用户点击取消');
             }
           },
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss">

@@ -3,10 +3,10 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      agreement: `<h3 style="text-align: center;">全国艺术院校公益助学平台发布作品协议</h3>
+  export default {
+    data() {
+      return {
+        agreement: `<h3 style="text-align: center;">全国艺术院校公益助学平台发布作品协议</h3>
 <p><strong>甲方：</strong></p>
 <p><strong>乙方：广州美安力动漫设计有限公司</strong></p>
 <p>&ldquo;全国艺术学院学生公益助学联盟&rdquo;是以贫困学生和留守学生为援助对象的非营利性公益助学联盟。通过组织艺术院校学生作品开展慈善义卖，捐款捐物、提供奖学金、改善教学环境、帮教（支教）等形式进行公益助学。同时，它也是一个学生公益联盟，旨在向社会推介优秀的艺术人才，提高艺术类学生的就业率。</p>
@@ -47,15 +47,15 @@ export default {
 <p>甲方联系电话：_________________</p>
 <p>通知应以书面形式作出并通过邮局或者传真发送(电子邮件签署也等同),并同时辅以一其他方式通知。电子邮件、传真发出后1个工作日、邮递寄出后5日即视为已经送达对方。上述通知方式如有任何变动,应在变动发生之日起2个工作日内通知对方,否则自负由此引起的损失。</p>
 <p>14. 本合同自双方签字或盖章之日起生效,条款如需补充、更改,由双方协商确定。</p>`,
-    }
-  },
-  methods: {},
-}
+      };
+    },
+    methods: {},
+  };
 </script>
 
 <style>
-p {
-  margin: 10rpx 0;
-  white-space: pre-wrap;
-}
+  p {
+    margin: 10rpx 0;
+    white-space: pre-wrap;
+  }
 </style>

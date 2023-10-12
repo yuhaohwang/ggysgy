@@ -69,208 +69,208 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
 
-export default {
-  computed: {
-    ...mapState(['member']),
-  },
-  data() {
-    return {
-      env: {},
-
-      // 头部参数
-      searchAuto: !0,
-      searchTip: '请输入搜索关键字',
-
-      // 分类入口
-      categoryAll: {
-        type: '页面',
-        url: `/pages/category/category`,
-      },
-
-      // 轮播区
-      swiperDatas: [],
-      // 图片分类
-      graphicCategoryDatas: [],
-      cardCategoryDatas: [],
-      // 限时精选
-      goodsLimitDatas: [],
-      // 热门推荐
-      goodsHotDatas: [],
-
-      scrollTop: 0,
-      navHeight: 0,
-    }
-  },
-  // 监听页面加载
-  onLoad() {
-    this.$api.get_env(res => {
-      this.env = res
-      this.is_mp = this.env.is_mp
-      this.platform = this.env.platform
-      this.platform_icon = this.env.platform_icon
-      this.platform_name = this.env.platform_name
-    })
-  },
-  mounted() {
-    // #ifdef H5 || MP-360
-    this.navHeight = 50
-    // #endif
-  },
-  // 监听页面显示。页面每次出现在屏幕上都触发，包括从下级页面点返回露出当前页面
-  onShow() {
-    this.loadData()
-  },
-  onPageScroll(e) {
-    // this.scrollTop = e.scrollTop
-    this.$refs.usetop.change(e.scrollTop)
-  },
-  // 监听用户下拉刷新
-  onPullDownRefresh() {
-    this.loadData(() => {
-      uni.stopPullDownRefresh()
-    })
-  },
-  // 用户点击右上角分享
-  // https://uniapp.dcloud.io/api/plugins/share?id=showsharemenu
-  onShareAppMessage: function(ops) {
-    let _this = this,
-      mid = 0
-
-    if (_this.member && _this.member._id) {
-      mid = _this.member._id
-    }
-
-    return {
-      title: '艺心益盟',
-      path: `/pages/tabbar/home?mid=${mid}`,
-      // imageUrl: 'https://mall-os-api.use-cloud.com/files/upload/image/20200408/200408115587860242.jpg',
-      success: function(res) {
-        // 转发成功
-        console.log('转发成功', res)
-      },
-      fail: function(res) {
-        // 转发失败
-        console.log('转发失败', res)
-      },
-    }
-  },
-
-  methods: {
-    // 加载数据
-    async loadData(callback) {
-      await this.$func.ggysgy
-        .call('app/mp/home', {
-          rows: 8,
-        })
-        .then(res => {
-          if (res.code === 200) {
-            // 轮播图
-            this.swiperDatas = res.datas.carousel || []
-            // 图文分类导航
-            this.graphicCategoryDatas = res.datas.graphicCategory || []
-            // 卡片分类导航
-            this.cardCategoryDatas = res.datas.cardCategory || []
-            // 限时精选
-            this.goodsLimitDatas = res.datas.limited || []
-            // 热门推荐
-            this.goodsHotDatas = res.datas.hot || []
-
-            if (typeof callback === 'function') {
-              // 数据加载完成回调函数
-              callback()
-            }
-
-            // #ifdef H5 || MP-360
-            // if (this.goodsLimitDatas.length > 0) {
-            // 	this.$api.dom('.uni-scroll-view-content').children[0].style.width = (uni
-            // 		.upx2px(260) * this.goodsLimitDatas.length) + 'px';
-            // 	new this.$iscroll('.uni-scroll-view-content', {
-            // 		scrollX: true,
-            // 		click: true
-            // 	});
-            // }
-            // #endif
-          }
-        })
+  export default {
+    computed: {
+      ...mapState(['member']),
     },
-    // 搜索回调函数
-    search() {
-      console.log('home search')
+    data() {
+      return {
+        env: {},
+
+        // 头部参数
+        searchAuto: !0,
+        searchTip: '请输入搜索关键字',
+
+        // 分类入口
+        categoryAll: {
+          type: '页面',
+          url: `/pages/category/category`,
+        },
+
+        // 轮播区
+        swiperDatas: [],
+        // 图片分类
+        graphicCategoryDatas: [],
+        cardCategoryDatas: [],
+        // 限时精选
+        goodsLimitDatas: [],
+        // 热门推荐
+        goodsHotDatas: [],
+
+        scrollTop: 0,
+        navHeight: 0,
+      };
     },
-    // 跳转页面
-    topage(item) {
-      console.log('分类点击', item.url)
-      if (item && item.type == '网页') {
-        uni.navigateTo({
-          url: `/pages/content/web?url=${item.url}`,
-        })
-      } else if (item && item.type == '页面') {
-        uni.navigateTo({
-          url: `${item.url}`,
-        })
-      } else if (item && item.type == '标签') {
-        uni.switchTab({
-          url: `${item.url}`,
-        })
-      } else {
-        if (item.id)
-          this.$api.toGood({
-            id: item._id,
-          })
+    // 监听页面加载
+    onLoad() {
+      this.$api.get_env(res => {
+        this.env = res;
+        this.is_mp = this.env.is_mp;
+        this.platform = this.env.platform;
+        this.platform_icon = this.env.platform_icon;
+        this.platform_name = this.env.platform_name;
+      });
+    },
+    mounted() {
+      // #ifdef H5 || MP-360
+      this.navHeight = 50;
+      // #endif
+    },
+    // 监听页面显示。页面每次出现在屏幕上都触发，包括从下级页面点返回露出当前页面
+    onShow() {
+      this.loadData();
+    },
+    onPageScroll(e) {
+      // this.scrollTop = e.scrollTop
+      this.$refs.usetop.change(e.scrollTop);
+    },
+    // 监听用户下拉刷新
+    onPullDownRefresh() {
+      this.loadData(() => {
+        uni.stopPullDownRefresh();
+      });
+    },
+    // 用户点击右上角分享
+    // https://uniapp.dcloud.io/api/plugins/share?id=showsharemenu
+    onShareAppMessage: function (ops) {
+      let _this = this,
+        mid = 0;
+
+      if (_this.member && _this.member._id) {
+        mid = _this.member._id;
       }
+
+      return {
+        title: '艺心益盟',
+        path: `/pages/tabbar/home?mid=${mid}`,
+        // imageUrl: 'https://mall-os-api.use-cloud.com/files/upload/image/20200408/200408115587860242.jpg',
+        success: function (res) {
+          // 转发成功
+          console.log('转发成功', res);
+        },
+        fail: function (res) {
+          // 转发失败
+          console.log('转发失败', res);
+        },
+      };
     },
-    // 限时精选 -> 商品详情
-    toGood(item) {
-      // 跳转商品详情
-      this.$api.toGood({
-        id: item._id,
-      })
+
+    methods: {
+      // 加载数据
+      async loadData(callback) {
+        await this.$func.ggysgy
+          .call('app/mp/home', {
+            rows: 8,
+          })
+          .then(res => {
+            if (res.code === 200) {
+              // 轮播图
+              this.swiperDatas = res.datas.carousel || [];
+              // 图文分类导航
+              this.graphicCategoryDatas = res.datas.graphicCategory || [];
+              // 卡片分类导航
+              this.cardCategoryDatas = res.datas.cardCategory || [];
+              // 限时精选
+              this.goodsLimitDatas = res.datas.limited || [];
+              // 热门推荐
+              this.goodsHotDatas = res.datas.hot || [];
+
+              if (typeof callback === 'function') {
+                // 数据加载完成回调函数
+                callback();
+              }
+
+              // #ifdef H5 || MP-360
+              // if (this.goodsLimitDatas.length > 0) {
+              // 	this.$api.dom('.uni-scroll-view-content').children[0].style.width = (uni
+              // 		.upx2px(260) * this.goodsLimitDatas.length) + 'px';
+              // 	new this.$iscroll('.uni-scroll-view-content', {
+              // 		scrollX: true,
+              // 		click: true
+              // 	});
+              // }
+              // #endif
+            }
+          });
+      },
+      // 搜索回调函数
+      search() {
+        console.log('home search');
+      },
+      // 跳转页面
+      topage(item) {
+        console.log('分类点击', item.url);
+        if (item && item.type == '网页') {
+          uni.navigateTo({
+            url: `/pages/content/web?url=${item.url}`,
+          });
+        } else if (item && item.type == '页面') {
+          uni.navigateTo({
+            url: `${item.url}`,
+          });
+        } else if (item && item.type == '标签') {
+          uni.switchTab({
+            url: `${item.url}`,
+          });
+        } else {
+          if (item.id)
+            this.$api.toGood({
+              id: item._id,
+            });
+        }
+      },
+      // 限时精选 -> 商品详情
+      toGood(item) {
+        // 跳转商品详情
+        this.$api.toGood({
+          id: item._id,
+        });
+      },
+      // 限时精选
+      limit() {
+        // 跳转商品列表 - 限时精选类目
+        this.$api.toGoodList({
+          limited: 1,
+        });
+      },
     },
-    // 限时精选
-    limit() {
-      // 跳转商品列表 - 限时精选类目
-      this.$api.toGoodList({
-        limited: 1,
-      })
-    },
-  },
-}
+  };
 </script>
 
 <style lang="scss">
-/* 轮播图区 */
-.swiper-area {
-  // padding: ;
-  background-color: #feaa30;
+  /* 轮播图区 */
+  .swiper-area {
+    // padding: ;
+    background-color: #feaa30;
 
-  .swiper {
-    height: 240rpx;
-  }
-}
-
-/* 分类区 */
-.category-item {
-  font-size: $font-sm + 2upx;
-  color: $font-color-dark;
-
-  image {
-    width: 100%;
-  }
-}
-
-/* 限时精选区 */
-.limit-area {
-  min-height: 240rpx;
-
-  .item {
-    width: 240rpx;
-
-    image {
-      width: 240rpx;
+    .swiper {
       height: 240rpx;
     }
   }
-}
+
+  /* 分类区 */
+  .category-item {
+    font-size: $font-sm + 2upx;
+    color: $font-color-dark;
+
+    image {
+      width: 100%;
+    }
+  }
+
+  /* 限时精选区 */
+  .limit-area {
+    min-height: 240rpx;
+
+    .item {
+      width: 240rpx;
+
+      image {
+        width: 240rpx;
+        height: 240rpx;
+      }
+    }
+  }
 </style>

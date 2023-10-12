@@ -5,8 +5,8 @@
 /* #ifndef APP-NVUE */
 @media screen and (min-width: 690px) {
   .uni-content {
-    padding: 0;
     max-width: 400px;
+    padding: 0;
     margin-left: calc(50% - 200px);
   }
 }
@@ -19,6 +19,7 @@
 .title {
   /* #ifndef APP-NVUE */
   display: flex;
+
   /* #endif */
   padding: 18px 0;
   font-weight: 800;
@@ -28,19 +29,21 @@
 .tip {
   /* #ifndef APP-NVUE */
   display: flex;
-  /* #endif */
-  color: #BDBDC0;
-  font-size: 11px;
   margin: 6px 0;
+  font-size: 11px;
+
+  /* #endif */
+  color: #bdbdc0;
 }
 
 .input-box {
-  padding: 4px;
-  background-color: #F8F8F8;
-  border-radius: 0;
-  font-size: 14px;
   /* #ifndef APP-NVUE */
   display: flex;
+  padding: 4px;
+  font-size: 14px;
+  background-color: #f8f8f8;
+  border-radius: 0;
+
   /* #endif */
   flex: 1;
 }
@@ -55,13 +58,14 @@
 }
 
 .uni-btn {
-	text-align: center;
-	height: 40px;
-	line-height: 40px;
-	margin: 15px 0 0 0;
-	color: #FFF !important;
-	border-radius: 5px;
+  height: 40px;
+  margin: 15px 0 0;
+  line-height: 40px;
+  color: #fff !important;
+  text-align: center;
+  border-radius: 5px;
 }
+
 /*
 .uni-btn::after{
   display: none;
@@ -69,4 +73,4 @@
 .uni-btn[disabled]{
 	background-color: $uni-color-primary !important;
 	opacity: 0.3;
-}*/
+} */

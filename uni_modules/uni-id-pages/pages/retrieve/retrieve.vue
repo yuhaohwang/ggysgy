@@ -116,7 +116,7 @@
 						]
 					}
 				},
-				logo: this.$getOssFileByPath("/static/logo.png")
+				logo: this.$getOssFileByPath("/static/logo/logo.png")
 			}
 		},
 		computed: {
