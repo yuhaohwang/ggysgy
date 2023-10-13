@@ -391,7 +391,7 @@
         });
       },
 
-      // 跳转商品详情
+      // 跳转作品详情
       toGood(item) {
         this.$api.toGood({
           id: item._id,
@@ -458,7 +458,8 @@
     }
   }
 
-  .stats-area .item, .order-area .item {
+  .stats-area .item,
+  .order-area .item {
     position: relative;
     font-size: $font-sm;
     color: $font-color-base;

@@ -1,6 +1,6 @@
 {
   "bsonType": "object",
-  "description": "商品评论表",
+  "description": "作品评论表",
   "permission": {
     "count": true,
     "create": false,
@@ -34,11 +34,11 @@
     },
     "goods_id": {
       "bsonType": "string",
-      "description": "商品ID"
+      "description": "作品ID"
     },
     "goods_sku": {
       "bsonType": "string",
-      "description": "商品SKU",
+      "description": "作品SKU",
       "trim": "both"
     },
     "goods_type": {

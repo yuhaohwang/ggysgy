@@ -221,16 +221,16 @@
             });
         }
       },
-      // 限时精选 -> 商品详情
+      // 限时精选 -> 作品详情
       toGood(item) {
-        // 跳转商品详情
+        // 跳转作品详情
         this.$api.toGood({
           id: item._id,
         });
       },
       // 限时精选
       limit() {
-        // 跳转商品列表 - 限时精选类目
+        // 跳转作品列表 - 限时精选类目
         this.$api.toGoodList({
           limited: 1,
         });

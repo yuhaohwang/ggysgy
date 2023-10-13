@@ -48,7 +48,7 @@
     },
     "goods": {
       "bsonType": "string",
-      "description": "商品ID",
+      "description": "作品ID",
       "foreignKey": "ggysgy-goods._id"
     },
     "is_delete": {

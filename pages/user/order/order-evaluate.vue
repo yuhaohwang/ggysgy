@@ -1,6 +1,6 @@
 <template>
   <view class="">
-    <!-- 商品区 -->
+    <!-- 作品区 -->
     <view class="padding margin-lr margin-tb-sm bg-main border-radius">
       <view class="goods-area" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
@@ -69,7 +69,7 @@
   export default {
     data() {
       return {
-        // 商品数据
+        // 作品数据
         order_detail: [],
         // 订单数据
         order_data: {},
@@ -178,7 +178,7 @@
     background: $page-color-base;
   }
 
-  /* 商品区 */
+  /* 作品区 */
   .goods-area {
     &:last-child {
       margin-bottom: 0;

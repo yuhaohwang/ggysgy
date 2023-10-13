@@ -1,6 +1,6 @@
 {
   "bsonType": "object",
-  "description": "商品表",
+  "description": "作品表",
   "permission": {
     "count": true,
     "create": false,
@@ -123,7 +123,7 @@
     },
     "name": {
       "bsonType": "string",
-      "description": "商品名称",
+      "description": "作品名称",
       "trim": "both"
     },
     "name_pw": {

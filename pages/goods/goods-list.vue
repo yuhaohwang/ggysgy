@@ -27,7 +27,7 @@
         </view>
       </view>
 
-      <!-- 商品列表区 -->
+      <!-- 作品列表区 -->
       <view class="goods-list">
         <view class="list dflex-b dflex dflex-wrap-w w-full">
           <view
@@ -68,7 +68,7 @@
         filterIndex: 0,
         // 1价格从低到高 2价格从高到低
         priceOrder: 0,
-        // 商品数据
+        // 作品数据
         goodsDatas: [],
         // 加载更多状态
         loadmoreType: 'more',
@@ -128,7 +128,7 @@
       this.loadData();
     },
     methods: {
-      // 加载商品，下拉刷新|上拉加载
+      // 加载作品，下拉刷新|上拉加载
       async loadData(type = 'add', loading) {
         if (this.loadmoreType === 'loading') {
           // 防止重复加载
@@ -240,7 +240,7 @@
         }
         this.$api.toSearch();
       },
-      // 商品详情
+      // 作品详情
       toGood(options) {
         this.$api.toGood({
           id: options._id,
@@ -274,7 +274,7 @@
           width: 120rpx;
           height: 0;
           border-bottom: 4rpx solid $base-color;
-          content: "";
+          content: '';
           transform: translateX(-50%);
         }
       }

@@ -288,7 +288,7 @@ module.exports = class GoodsController extends Controller {
     response.msg = `加入成功`;
     return response;
   }
-  // 购买商品详情
+  // 购买作品详情
   async detail2order() {
     let start = new Date().getTime();
     let response = {
@@ -316,11 +316,11 @@ module.exports = class GoodsController extends Controller {
     let skuRes = {};
 
     if (goods_id) {
-      // 从商品详情页下单
+      // 从作品详情页下单
       goodsRes = await this.db.collection('ggysgy-goods').doc(goods_id).get();
       console.log('goodsRes', goodsRes);
       if (!(goodsRes && goodsRes.data.length == 1)) {
-        response.msg = '当前下单商品不存在';
+        response.msg = '当前下单作品不存在';
         return response;
       }
       goodsData = goodsRes.data[0];
@@ -343,7 +343,7 @@ module.exports = class GoodsController extends Controller {
 
       let goods_sku = {};
       if (goods_sku_id) {
-        // 商品存在 sku
+        // 作品存在 sku
         skuRes = await this.db.collection('ggysgy-goods-sku').doc(goods_sku_id).get();
         if (skuRes && skuRes.data.length === 1) {
           goods_sku = skuRes.data[0];
@@ -377,7 +377,7 @@ module.exports = class GoodsController extends Controller {
         })
         .get();
       if (!(goodsRes && goodsRes.data.length > 0)) {
-        response.msg = '当前购物车商品不存在';
+        response.msg = '当前购物车作品不存在';
         return response;
       }
       let goodsDatas = goodsRes.data;
@@ -394,7 +394,7 @@ module.exports = class GoodsController extends Controller {
 
       goodsCarts.forEach(x => {
         goodsData = goodsDatas.find(g => g._id == x.goods);
-        // 购物车商品数量
+        // 购物车作品数量
         goodsData.goods_num = x.goods_num;
         goods.push({
           goods: goodsData,

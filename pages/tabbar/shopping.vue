@@ -6,7 +6,7 @@
       <image
         :src="$getOssFileByPath('/static/logo/logo.png')"
         class="border-radius-lg headimg"
-        style="width: 66rpx; height: 66rpx;"
+        style="width: 66rpx; height: 66rpx"
         mode=""
         @click="user"
       ></image>
@@ -17,7 +17,7 @@
     <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="tabCurrent" @tab-change="tabChange"></top-tab>
 
     <view class="flex1 w-full">
-      <swiper style="height: 100%;" :duration="0" :current="current" @animationfinish="animationfinish">
+      <swiper style="height: 100%" :duration="0" :current="current" @animationfinish="animationfinish">
         <swiper-item v-for="(sdata, index) in sdatas" :key="index">
           <scroll-view
             class="wh-full"
@@ -27,7 +27,7 @@
             @scrolltolower="onreachBottom"
             :enable-flex="true"
           >
-            <use-empty v-if="sdata.empty" e-style="round" tip="无商品数据"></use-empty>
+            <use-empty v-if="sdata.empty" e-style="round" tip="无作品数据"></use-empty>
 
             <view v-show="!sdata.empty" class="x-c-s x-2 padding-xs border-radius">
               <view class="y-s-c waterfall_left">
@@ -36,7 +36,7 @@
                     <view class="bg-main border-radius">
                       <image
                         :src="l_item.img"
-                        style="width: 100%; max-height: 350rpx;"
+                        style="width: 100%; max-height: 350rpx"
                         mode="widthFix"
                         :lazy-load="true"
                         @load="considerPush"
@@ -49,7 +49,7 @@
                           <image
                             :src="getUserAvatar(l_item.create_uid[0])"
                             class="border-radius-c headimg"
-                            style="width: 50rpx; height: 50rpx;"
+                            style="width: 50rpx; height: 50rpx"
                           ></image>
                           <view class="ft-dark margin-left-xs fs-xxs">
                             {{ getUserName(l_item.create_uid[0]) }}
@@ -67,7 +67,7 @@
                     <view class="bg-main border-radius">
                       <image
                         :src="r_item.img"
-                        style="width: 100%; max-height: 350rpx;"
+                        style="width: 100%; max-height: 350rpx"
                         mode="widthFix"
                         :lazy-load="true"
                         @load="considerPush"
@@ -84,7 +84,7 @@
                                 : $getOssFileByPath('/static/logo/logo.png')
                             "
                             class="border-radius-c headimg"
-                            style="width: 50rpx; height: 50rpx;"
+                            style="width: 50rpx; height: 50rpx"
                           ></image>
                           <view class="ft-dark margin-left-xs fs-xxs">
                             {{ getUserName(r_item.create_uid[0]) }}
@@ -186,17 +186,17 @@
                   item.empty = false;
                   // 是否首次获取分类数据
                   item.firstGet = true;
-                  // 商品列表
+                  // 作品列表
                   item.goodsDatas = [];
-                  // 左侧商品列表
+                  // 左侧作品列表
                   item.goodsLeftList = [];
-                  // 右侧商品列表
+                  // 右侧作品列表
                   item.goodsRightList = [];
                   // 组件数据备份
                   item.newList = [];
                   // 加载更多状态
                   item.loadmoreType = 'more';
-                  // 商品请求数据
+                  // 作品请求数据
                   item.reqdata = {
                     rows: 8,
                     page: 0,
@@ -215,7 +215,7 @@
           });
       },
 
-      // 加载商品，下拉刷新|上拉加载
+      // 加载作品，下拉刷新|上拉加载
       async loadGoodsDatas(type = 'add') {
         const cidx = this.current;
 
@@ -232,7 +232,7 @@
           this.sdatas[cidx].reqdata.page = 0;
         }
 
-        // 根据当前 cid 加载商品数据列表
+        // 根据当前 cid 加载作品数据列表
         this.sdatas[cidx].reqdata.cid = this.cid;
 
         const db = uniCloud.database();
@@ -389,14 +389,14 @@
           url: `/pages/shopping/detail?id=${options}`,
         });
       },
-      // 跳转商品详情
+      // 跳转作品详情
       toGood(item) {
         console.log(item);
         this.$api.toGood({
           id: item._id,
         });
       },
-      // 跳转商品列表
+      // 跳转作品列表
       toGoodList(item) {
         this.$api.toGoodList({
           cid: item._id,

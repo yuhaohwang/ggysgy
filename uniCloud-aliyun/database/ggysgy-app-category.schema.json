@@ -19,7 +19,7 @@
     },
     "cid": {
       "bsonType": "string",
-      "description": "商品分类ID"
+      "description": "作品分类ID"
     },
     "create_time": {
       "bsonType": "timestamp",

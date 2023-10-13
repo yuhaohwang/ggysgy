@@ -28,27 +28,27 @@
 
     <view
       class="pos-f dflex-c border-radius-c"
-      style="top: 30rpx; right: 30rpx; width: 80rpx; height: 80rpx; background: #333; opacity: 0.6;"
+      style="top: 30rpx; right: 30rpx; width: 80rpx; height: 80rpx; background: #333; opacity: 0.6"
       @click="toShare"
     >
       <view class="iconfont iconfenxiang ft-white fs-xl"></view>
     </view>
 
-    <!-- 02. 商品数据区 -->
+    <!-- 02. 作品数据区 -->
     <view class="goods-area bg-main padding">
       <view class="dflex-b margin-tb-sm">
         <view class="dflex">
           <image
             :src="$getOssFileByPath('/static/logo/logo.png')"
             class="headimg border-radius-c"
-            style="width: 70rpx; height: 70rpx;"
+            style="width: 70rpx; height: 70rpx"
           ></image>
           <view class="margin-left-xs fs-xxs">Usecloud</view>
         </view>
         <view class="bg-dark border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
           <text class="iconfont iconaixin-01 ft-base" v-if="follow"></text>
           <text class="iconfont iconaixin" v-else></text>
-          <text class="padding-tb-16" style="margin-left: 6rpx;">关注</text>
+          <text class="padding-tb-16" style="margin-left: 6rpx">关注</text>
         </view>
       </view>
 
@@ -72,7 +72,7 @@
         </view>
       </view>
       <view class="btn-container border-radius-big">
-        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx;" @click="toBuy(goods)">购买同款</view>
+        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx" @click="toBuy(goods)">购买同款</view>
       </view>
     </view>
     <!-- 置顶 -->
@@ -154,7 +154,7 @@
 
   /* #endif */
 
-  /* 02. 商品数据区 */
+  /* 02. 作品数据区 */
   .goods-area {
     height: 100vh;
     margin-top: 66vh;

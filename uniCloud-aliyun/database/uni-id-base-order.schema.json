@@ -7,11 +7,11 @@
     },
     "title": {
       "bsonType": "string",
-      "description": "商品标题"
+      "description": "作品标题"
     },
     "type": {
       "bsonType": "string",
-      "description": "订单类型，如商品订单，会员订单，充值订单等"
+      "description": "订单类型，如作品订单，会员订单，充值订单等"
     },
     "pay_type": {
       "bsonType": "string",
@@ -77,7 +77,7 @@
     },
     "info": {
       "bsonType": "string",
-      "description": "自定义的订单拓展信息，如商品信息、会员卡种类信息等"
+      "description": "自定义的订单拓展信息，如作品信息、会员卡种类信息等"
     }
   },
   "version": "0.0.1"

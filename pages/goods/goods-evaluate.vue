@@ -9,7 +9,7 @@
         :key="index"
         @click="change(item)"
       >
-        <text style="font-size: 26rpx;">{{ item.name }}({{ item.cnt }})</text>
+        <text style="font-size: 26rpx">{{ item.name }}({{ item.cnt }})</text>
       </view>
     </view>
     <view class="gap"></view>
@@ -55,7 +55,7 @@
         stateDatas: [],
         // 评价数据
         evaluateDatas: [],
-        // 商品ID
+        // 作品ID
         goods_id: 0,
         // 评价类型
         state: '全部',

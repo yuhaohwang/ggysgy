@@ -48,12 +48,12 @@
     },
     "goods": {
       "bsonType": "string",
-      "description": "商品ID",
+      "description": "作品ID",
       "foreignKey": "ggysgy-goods._id"
     },
     "goods_sku": {
       "bsonType": "string",
-      "description": "商品SKU",
+      "description": "作品SKU",
       "trim": "both"
     },
     "is_delete": {

@@ -1,6 +1,6 @@
 {
   "bsonType": "object",
-  "description": "商品详情表",
+  "description": "作品详情表",
   "permission": {
     "count": true,
     "create": false,
@@ -53,22 +53,22 @@
     },
     "desc_mobile": {
       "bsonType": "string",
-      "description": "商品描述 移动端",
+      "description": "作品描述 移动端",
       "trim": "both"
     },
     "desc_pc": {
       "bsonType": "string",
-      "description": "商品描述 PC",
+      "description": "作品描述 PC",
       "trim": "both"
     },
     "description": {
       "bsonType": "string",
-      "description": "商品描述",
+      "description": "作品描述",
       "trim": "both"
     },
     "goods_id": {
       "bsonType": "string",
-      "description": "商品ID"
+      "description": "作品ID"
     },
     "is_delete": {
       "bsonType": "int",

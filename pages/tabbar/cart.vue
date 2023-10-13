@@ -20,7 +20,7 @@
         <block v-for="(item, index) in cartDatas" :key="item._id">
           <view class="cart-item bg-main margin-bottom-sm padding-lg pos-r dflex-s border-radius">
             <view class="image-wrapper pos-r" @click="toGood(item)">
-              <!-- 商品图片 -->
+              <!-- 作品图片 -->
               <image class="border-radius-xs wh-full" mode="aspectFill" :lazy-load="true" :src="item.goods.img"></image>
               <!-- 选中|未选中按钮 -->
               <view
@@ -43,7 +43,7 @@
               </view>
             </view>
             <view class="item-right padding-left pos-r flex1">
-              <!-- 商品名称 -->
+              <!-- 作品名称 -->
               <view class="clamp-2 title" @click="toGood(item)">{{ item.goods.name }} {{ item.goods.name_pw }}</view>
               <view class="ft-dark fs-xs padding-top-xs">{{ item.goods_sku.spec || '&nbsp;&nbsp;' }}</view>
               <view class="padding-tb-sm">
@@ -176,7 +176,7 @@
       toLogin() {
         this.$api.toLogin();
       },
-      // 跳转商品页
+      // 跳转作品页
       toGood(item) {
         this.$api.toGood({
           id: item.goods_id,
@@ -292,7 +292,7 @@
           }
         });
         if (cart_ids.length <= 0) {
-          this.$api.msg('请选择结算商品');
+          this.$api.msg('请选择结算作品');
           return;
         }
         uni.navigateTo({

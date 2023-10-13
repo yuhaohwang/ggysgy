@@ -541,7 +541,7 @@
         },
         "cid": {
           "bsonType": "string",
-          "description": "商品分类ID"
+          "description": "作品分类ID"
         },
         "name": {
           "bsonType": "string",
@@ -2706,7 +2706,7 @@
     ],
     "schema": {
       "bsonType": "object",
-      "description": "商品表",
+      "description": "作品表",
       "permission": {
         "read": true,
         "create": false,
@@ -2721,7 +2721,7 @@
         },
         "name": {
           "bsonType": "string",
-          "description": "商品名称",
+          "description": "作品名称",
           "trim": "both"
         },
         "name_pw": {
@@ -3310,7 +3310,7 @@
     ],
     "schema": {
       "bsonType": "object",
-      "description": "商品详情表",
+      "description": "作品详情表",
       "permission": {
         "read": true,
         "create": false,
@@ -3325,21 +3325,21 @@
         },
         "goods_id": {
           "bsonType": "string",
-          "description": "商品ID"
+          "description": "作品ID"
         },
         "description": {
           "bsonType": "string",
-          "description": "商品描述",
+          "description": "作品描述",
           "trim": "both"
         },
         "desc_pc": {
           "bsonType": "string",
-          "description": "商品描述 PC",
+          "description": "作品描述 PC",
           "trim": "both"
         },
         "desc_mobile": {
           "bsonType": "string",
-          "description": "商品描述 移动端",
+          "description": "作品描述 移动端",
           "trim": "both"
         },
         "cancel_reason": {
@@ -3438,17 +3438,17 @@
         },
         "goods": {
           "bsonType": "string",
-          "description": "商品ID",
+          "description": "作品ID",
           "foreignKey": "ggysgy-goods._id"
         },
         "goods_sku": {
           "bsonType": "string",
-          "description": "商品SKU",
+          "description": "作品SKU",
           "foreignKey": "ggysgy-goods-sku._id"
         },
         "goods_num": {
           "bsonType": "int",
-          "description": "商品数量"
+          "description": "作品数量"
         },
         "goods_cart_price": {
           "bsonType": "double",
@@ -3889,7 +3889,7 @@
     ],
     "schema": {
       "bsonType": "object",
-      "description": "商品分类表",
+      "description": "作品分类表",
       "permission": {
         "read": true,
         "create": false,
@@ -4267,7 +4267,7 @@
     ],
     "schema": {
       "bsonType": "object",
-      "description": "商品评论表",
+      "description": "作品评论表",
       "permission": {
         "read": true,
         "create": false,
@@ -4282,11 +4282,11 @@
         },
         "goods_id": {
           "bsonType": "string",
-          "description": "商品ID"
+          "description": "作品ID"
         },
         "goods_sku": {
           "bsonType": "string",
-          "description": "商品SKU",
+          "description": "作品SKU",
           "trim": "both"
         },
         "goods_type": {
@@ -4452,7 +4452,7 @@
         },
         "goods": {
           "bsonType": "string",
-          "description": "商品ID",
+          "description": "作品ID",
           "foreignKey": "ggysgy-goods._id"
         },
         "visit_cnt": {
@@ -5375,7 +5375,7 @@
     ],
     "schema": {
       "bsonType": "object",
-      "description": "商品SKU表",
+      "description": "作品SKU表",
       "permission": {
         "read": true,
         "create": false,
@@ -5390,11 +5390,11 @@
         },
         "goods_id": {
           "bsonType": "string",
-          "description": "商品ID"
+          "description": "作品ID"
         },
         "goods_sku": {
           "bsonType": "string",
-          "description": "商品SKU",
+          "description": "作品SKU",
           "trim": "both"
         },
         "price": {
@@ -5583,7 +5583,7 @@
         },
         "version": 1,
         "is_delete": 0,
-        "type": "商品",
+        "type": "作品",
         "name": "家电",
         "img": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/32caea4f-580d-49de-89f6-9154dfe8906b.png",
         "is_search": "是",
@@ -5601,7 +5601,7 @@
         },
         "version": 1,
         "is_delete": 0,
-        "type": "商品",
+        "type": "作品",
         "name": "箱包",
         "img": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/797f7b3d-325b-4ece-ba9d-0ae5afdacfa4.jpg",
         "is_search": "是",
@@ -5619,7 +5619,7 @@
         },
         "version": 1,
         "is_delete": 0,
-        "type": "商品",
+        "type": "作品",
         "name": "饰品",
         "img": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/d5a41d92-bed5-459b-aae6-6c86cc7617be.jpg",
         "is_search": "是",
@@ -5637,7 +5637,7 @@
         },
         "version": 1,
         "is_delete": 0,
-        "type": "商品",
+        "type": "作品",
         "name": "服装",
         "img": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/4635947c-52d4-4a12-9c98-5a1f484c9c98.jpg",
         "is_search": "是",
@@ -5655,7 +5655,7 @@
         },
         "version": 1,
         "is_delete": 0,
-        "type": "商品",
+        "type": "作品",
         "name": "手机",
         "img": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/2f9770a0-61fe-46cf-8d51-dfddc2440280.jpg",
         "is_search": "是",
@@ -5673,7 +5673,7 @@
         },
         "version": 1,
         "is_delete": 0,
-        "type": "商品",
+        "type": "作品",
         "name": "鞋",
         "img": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/fdc5b242-9605-42cf-9d36-bc45bfab305b.jpg",
         "is_search": "是",
@@ -5691,7 +5691,7 @@
         },
         "version": 1,
         "is_delete": 0,
-        "type": "商品",
+        "type": "作品",
         "name": "数码",
         "img": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/a99df722-e028-4577-b7ac-c1d829eef539.jpg",
         "is_search": "是",
@@ -5706,7 +5706,7 @@
     ],
     "schema": {
       "bsonType": "object",
-      "description": "商品标签表",
+      "description": "作品标签表",
       "permission": {
         "read": true,
         "create": false,
@@ -5735,7 +5735,7 @@
         },
         "type": {
           "bsonType": "string",
-          "description": "标签类型 商品|主题",
+          "description": "标签类型 作品|主题",
           "trim": "both"
         },
         "remark": {
@@ -6265,12 +6265,12 @@
         },
         "goods": {
           "bsonType": "string",
-          "description": "商品ID",
+          "description": "作品ID",
           "foreignKey": "ggysgy-goods._id"
         },
         "goods_sku": {
           "bsonType": "string",
-          "description": "商品SKU",
+          "description": "作品SKU",
           "trim": "both"
         },
         "remark": {
@@ -6363,11 +6363,11 @@
         },
         "goods_id": {
           "bsonType": "int",
-          "description": "商品ID"
+          "description": "作品ID"
         },
         "goods_sku": {
           "bsonType": "string",
-          "description": "商品SKU",
+          "description": "作品SKU",
           "trim": "both"
         },
         "member_id": {
@@ -6770,11 +6770,11 @@
         },
         "order_goods_cnt": {
           "bsonType": "int",
-          "description": "商品数量"
+          "description": "作品数量"
         },
         "order_sku_cnt": {
           "bsonType": "int",
-          "description": "商品SKU数量"
+          "description": "作品SKU数量"
         },
         "order_discount": {
           "bsonType": "int",
@@ -6942,43 +6942,43 @@
         },
         "goods_id": {
           "bsonType": "int",
-          "description": "商品ID"
+          "description": "作品ID"
         },
         "goods_name": {
           "bsonType": "string",
-          "description": "商品名称",
+          "description": "作品名称",
           "trim": "both"
         },
         "goods_name_pw": {
           "bsonType": "string",
-          "description": "商品推广词",
+          "description": "作品推广词",
           "trim": "both"
         },
         "goods_img": {
           "bsonType": "string",
-          "description": "商品图片",
+          "description": "作品图片",
           "trim": "both"
         },
         "goods_num": {
           "bsonType": "int",
-          "description": "商品数量"
+          "description": "作品数量"
         },
         "goods_price": {
           "bsonType": "int",
-          "description": "商品价格单位分"
+          "description": "作品价格单位分"
         },
         "goods_market_price": {
           "bsonType": "int",
-          "description": "商品市场价单位分"
+          "description": "作品市场价单位分"
         },
         "goods_type": {
           "bsonType": "string",
-          "description": "商品类型",
+          "description": "作品类型",
           "trim": "both"
         },
         "goods_sku": {
           "bsonType": "string",
-          "description": "商品SKU",
+          "description": "作品SKU",
           "trim": "both"
         },
         "goods_sku_name": {
@@ -6993,7 +6993,7 @@
         },
         "goods_sku_id": {
           "bsonType": "string",
-          "description": "商品sku_id"
+          "description": "作品sku_id"
         },
         "version": {
           "bsonType": "int",

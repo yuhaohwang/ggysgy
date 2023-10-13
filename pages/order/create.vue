@@ -28,7 +28,7 @@
     <view class="gap"></view>
 
     <view class="goods-area bg-main padding">
-      <!-- 商品列表 -->
+      <!-- 作品列表 -->
       <view class="goods-item" :class="{ 'margin-top': index > 0 }" v-for="(item, index) in goodsDatas" :key="index">
         <view class="pos-r">
           <image mode="aspectFill" :src="item.goods.img"></image>
@@ -104,7 +104,7 @@
       <view class="dflex-b padding-lr padding-tb-sm">
         <view class="flex1">总金额</view>
         <view class="">
-          <text style="font-size: 24rpx;">￥</text>
+          <text style="font-size: 24rpx">￥</text>
           {{ goods_money }}
         </view>
       </view>
@@ -140,7 +140,7 @@
       return {
         // 收货地址
         addrData: {},
-        // 商品数据
+        // 作品数据
         goodsDatas: [],
         // 产品金额
         goods_money: 0,
@@ -160,11 +160,11 @@
 
         // 购物车 ids
         cart_ids: [],
-        // 商品 id
+        // 作品 id
         goods_id: 0,
-        // 商品数量
+        // 作品数量
         goods_num: 1,
-        // 商品 sku id
+        // 作品 sku id
         goods_sku_id: 0,
         // 使用优惠券ID
         order_coupon_id: 0,
@@ -183,16 +183,16 @@
         this.platform_name = res.platform_name;
       });
 
-      // 商品 ids
+      // 作品 ids
       this.goods_id = options.goods_id || '';
-      // 商品 sku
+      // 作品 sku
       this.goods_sku_id = options.sku_id || '';
 
       // 购物车 ids
       if (options.cart_ids) {
         this.cart_ids = options.cart_ids.split(',');
       }
-      // 加载商品数据
+      // 加载作品数据
       this.loadData();
 
       uni.$on('__event_choice_address', data => {
@@ -249,7 +249,7 @@
           this.goods_money += (x.goods.price / 100) * x.goods.goods_num;
         });
 
-        // 商品金额 + 服务金额 - 优惠金额
+        // 作品金额 + 服务金额 - 优惠金额
         if (this.coupon_type == '满减') {
           this.total_coupon_money = this.coupon_money;
           this.total_money = (this.goods_money + service_money - this.coupon_money).toFixed(2);
@@ -400,7 +400,7 @@
           width: 100%;
           height: 0;
           border-bottom: 1px dashed #f3f3f3;
-          content: "";
+          content: '';
           transform: scaleY(50%);
         }
       }

@@ -1,16 +1,16 @@
 <template>
   <view class="margin-sm">
-    <!-- 商品区 -->
+    <!-- 作品区 -->
     <view class="padding bg-main margin-bottom-sm border-radius dflex-b">
       <view class="dflex">
         <view class="iconfont iconshangpin-01 ft-base margin-right-xs"></view>
-        <view class="fwb">商品</view>
+        <view class="fwb">作品</view>
       </view>
 
       <view class="dflex">
         <image
           class="margin-right-xs"
-          style="width: 48rpx; height: 48rpx;"
+          style="width: 48rpx; height: 48rpx"
           mode="widthFix"
           src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/11bd19fa-6a70-49fd-9e71-72950828f6a8.jpg"
         ></image>
@@ -45,7 +45,7 @@
   export default {
     data() {
       return {
-        // 商品数据
+        // 作品数据
         goodsDatas: [],
         postData: {
           imgs: [],
@@ -102,7 +102,7 @@
     background: $page-color-base;
   }
 
-  /* 商品区 */
+  /* 作品区 */
   .goods-area {
     &:last-child {
       margin-bottom: 0;

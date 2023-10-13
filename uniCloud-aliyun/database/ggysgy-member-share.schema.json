@@ -34,11 +34,11 @@
     },
     "goods_id": {
       "bsonType": "int",
-      "description": "商品ID"
+      "description": "作品ID"
     },
     "goods_sku": {
       "bsonType": "string",
-      "description": "商品SKU",
+      "description": "作品SKU",
       "trim": "both"
     },
     "integral": {

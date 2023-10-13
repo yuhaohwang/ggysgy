@@ -201,7 +201,7 @@
     },
     "order_goods_cnt": {
       "bsonType": "int",
-      "description": "商品数量"
+      "description": "作品数量"
     },
     "order_id": {
       "bsonType": "string",
@@ -291,7 +291,7 @@
     },
     "order_sku_cnt": {
       "bsonType": "int",
-      "description": "商品SKU数量"
+      "description": "作品SKU数量"
     },
     "order_tax": {
       "bsonType": "int",

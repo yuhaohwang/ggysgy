@@ -15,7 +15,7 @@
     </view>
 
     <!-- 订单轮播区 -->
-    <view class="order-area w-full" style="margin-top: 7vh;">
+    <view class="order-area w-full" style="margin-top: 7vh">
       <!-- 空白页 -->
       <use-empty
         v-if="navData.orderList.length === 0 && navData.loaded"
@@ -34,7 +34,7 @@
         <!-- 订单项 -->
         <view class="order-item padding bg-main border-radius">
           <view @click="todetail(item.order)">
-            <!-- 订单商品明细 -->
+            <!-- 订单作品明细 -->
             <view
               class="goods-area"
               :class="{ 'margin-top': goodsIndex > 0 }"
@@ -167,7 +167,7 @@
             <!-- 订单项 -->
             <view class="order-item padding bg-main border-radius">
               <view @click="todetail(item.order)">
-                <!-- 订单商品明细 -->
+                <!-- 订单作品明细 -->
                 <view
                   class="goods-area"
                   :class="{ 'margin-top': goodsIndex > 0 }"
@@ -588,7 +588,8 @@
 </script>
 
 <style lang="scss">
-  page, .container {
+  page,
+  .container {
     min-height: 100%;
     background: $page-color-base;
   }
@@ -616,7 +617,7 @@
         width: 44px;
         height: 0;
         border-bottom: 2px solid $base-color;
-        content: "";
+        content: '';
         transform: translate(-50%);
       }
     }
@@ -633,7 +634,7 @@
 
   /* 订单项 */
   .order-item {
-    /* 订单商品明细区 */
+    /* 订单作品明细区 */
     .goods-area {
       display: flex;
 

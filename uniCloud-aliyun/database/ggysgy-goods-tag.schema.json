@@ -1,6 +1,6 @@
 {
   "bsonType": "object",
-  "description": "商品标签表",
+  "description": "作品标签表",
   "permission": {
     "count": true,
     "create": false,
@@ -96,7 +96,7 @@
     },
     "type": {
       "bsonType": "string",
-      "description": "标签类型 商品|主题",
+      "description": "标签类型 作品|主题",
       "trim": "both"
     },
     "version": {

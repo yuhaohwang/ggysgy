@@ -16,7 +16,7 @@
         </scroll-view>
       </view>
 
-      <!-- 右侧 1二级分类 2商品列表 -->
+      <!-- 右侧 1二级分类 2作品列表 -->
       <scroll-view
         class="h-full right"
         scroll-with-animation
@@ -37,16 +37,16 @@
           </view>
         </view>
 
-        <!-- 右侧分类对应商品列表 -->
+        <!-- 右侧分类对应作品列表 -->
         <view v-if="mode == 2" class="">
           <!-- 空白页 -->
-          <use-empty v-if="empty" e-style="round" tip="无商品数据"></use-empty>
+          <use-empty v-if="empty" e-style="round" tip="无作品数据"></use-empty>
 
           <view v-else class="x-s-s-w x-2 padding-lr-xs">
             <view class="y-s-c padding-xs" v-for="(item, index) in goodsDatas" :key="index" @click="toGood(item)">
               <view class="w-full border-radius-sm bg-main">
-                <view class="" style="height: 300rpx;">
-                  <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%;"></image>
+                <view class="" style="height: 300rpx">
+                  <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%"></image>
                 </view>
                 <view class="x-b-c padding-lr-xs fs-xs">
                   <view class="clamp">{{ item.name }}</view>
@@ -69,7 +69,7 @@
       </scroll-view>
     </view>
 
-    <!-- 切换模式 1二级分类 2商品列表 -->
+    <!-- 切换模式 1二级分类 2作品列表 -->
     <view class="fixed-top" :style="{ marginBottom: navHeight + 'px' }" @click="changeMode">
       <text class="iconfont iconpailie" v-if="mode == 1"></text>
       <text class="iconfont iconpailie02" v-if="mode == 2"></text>
@@ -83,7 +83,7 @@
   export default {
     data() {
       return {
-        // 1分类列表 2商品列表
+        // 1分类列表 2作品列表
         mode: 2,
         // 兼容支付宝 height 显示 bug
         scrollHeight: '100%',
@@ -101,12 +101,12 @@
         // 二级数据
         sdatas: [],
 
-        // 商品列表
+        // 作品列表
         goodsDatas: [],
         empty: false,
         hasmore: 0,
         loadmoreType: 'nomore',
-        // 商品请求数据
+        // 作品请求数据
         reqdata: {
           rows: 20,
           page: 1,
@@ -140,7 +140,7 @@
 
       this.loadData(() => {
         if (this.mode == 2) {
-          // 加载商品数据
+          // 加载作品数据
           this.loadGoodsDatas();
         }
       });
@@ -185,12 +185,12 @@
             }
           });
       },
-      // 加载商品数据
+      // 加载作品数据
       loadGoodsDatas() {
         if (this.mode != 2) {
           return;
         }
-        // 根据当前 cid 加载商品数据列表
+        // 根据当前 cid 加载作品数据列表
         this.reqdata.cid = this.cid;
         this.$db[_goods]
           .where(`'${this.reqdata.cid}' in cids`)
@@ -216,7 +216,7 @@
         this.cid = item._id;
         this.loadGoodsDatas();
       },
-      // 切换模式 1分类模式 2商品模式
+      // 切换模式 1分类模式 2作品模式
       changeMode() {
         this.mode = this.mode == 1 ? 2 : 1;
         uni.setStorage({
@@ -226,13 +226,13 @@
 
         this.loadGoodsDatas();
       },
-      // 跳转商品详情
+      // 跳转作品详情
       toGood(item) {
         this.$api.toGood({
           id: item._id,
         });
       },
-      // 跳转商品列表
+      // 跳转作品列表
       toGoodList(item) {
         this.$api.toGoodList({
           cid: item._id,
@@ -276,7 +276,7 @@
             width: 8rpx;
             height: 36rpx;
             background-color: $uni-color-primary;
-            content: "";
+            content: '';
             opacity: 0.8;
             transform: translateY(-50%);
           }

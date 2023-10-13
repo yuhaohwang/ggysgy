@@ -10,15 +10,15 @@ module.exports = class OrderController extends Controller {
   async create() {
     // 判断是否登录
     // 判断收货人是否存在
-    // 判断下单来源 (1.从商品详情下单 2.从购物车下单)
-    // 	判断商品是否存在
-    // 	判断商品状态是否为 销售中
-    // 	判断商品库存是否满足下单数
-    // 	判断购物车商品是否存在
-    // 	判断购物车商品状态是否为 销售中
-    // 	判断购物车商品库存是否满足下单数
+    // 判断下单来源 (1.从作品详情下单 2.从购物车下单)
+    // 	判断作品是否存在
+    // 	判断作品状态是否为 销售中
+    // 	判断作品库存是否满足下单数
+    // 	判断购物车作品是否存在
+    // 	判断购物车作品状态是否为 销售中
+    // 	判断购物车作品库存是否满足下单数
     // 写入订单数据
-    // 根据订单设置,如果为下单成功后扣减库存,则扣减对应商品扣除
+    // 根据订单设置,如果为下单成功后扣减库存,则扣减对应作品扣除
     // 写入订单详情数据
     // 写入订单支付数据
     // 写入订单日志
@@ -76,10 +76,10 @@ module.exports = class OrderController extends Controller {
     // 购物车 ID 集合
     let goodsCartIds = [];
     if (goods_id) {
-      // 从商品详情页下单
+      // 从作品详情页下单
       let goodsRes = await this.db.collection('ggysgy-goods').doc(goods_id).get();
       if (!(goodsRes && goodsRes.data.length == 1)) {
-        response.msg = '当前下单商品不存在';
+        response.msg = '当前下单作品不存在';
         return response;
       }
       let goodsData = goodsRes.data[0];
@@ -87,11 +87,11 @@ module.exports = class OrderController extends Controller {
       if (goodsState != '销售中') {
         switch (goodsState) {
           case '待审核':
-            response.msg = `当前商品未开售`;
+            response.msg = `当前作品未开售`;
             break;
           case '已下架':
           default:
-            response.msg = `当前商品${goodsState}`;
+            response.msg = `当前作品${goodsState}`;
             break;
         }
         return response;
@@ -101,11 +101,11 @@ module.exports = class OrderController extends Controller {
       goodsData.goods_num = goods_num || 1;
 
       if (goods_sku_id) {
-        // 商品存在 sku
+        // 作品存在 sku
         let skuRes = await this.db.collection('ggysgy-goods-sku').doc(goods_sku_id).get();
         if (skuRes && skuRes.data.length == 1) {
           goods_sku = skuRes.data[0];
-          // 存在 sku 修改商品价格、库存
+          // 存在 sku 修改作品价格、库存
           goodsData.stock_num = goods_sku.stock_num;
           goodsData.price = goods_sku.price;
           goodsData.market_price = goods_sku.market_price;
@@ -121,7 +121,7 @@ module.exports = class OrderController extends Controller {
 
       // 判断库存是否满足下单数
       if (goodsData.stock_num < goods_num) {
-        response.msg = `当前商品库存数不足`;
+        response.msg = `当前作品库存数不足`;
         return response;
       }
     } else if (cart_ids && cart_ids.length > 0) {
@@ -150,7 +150,7 @@ module.exports = class OrderController extends Controller {
         })
         .get();
       if (!(goodsRes && goodsRes.data.length > 0)) {
-        response.msg = '当前购物车商品不存在';
+        response.msg = '当前购物车作品不存在';
         return response;
       }
       let goodsData = {};
@@ -168,7 +168,7 @@ module.exports = class OrderController extends Controller {
 
       goodsCarts.forEach(x => {
         goodsData = goodsDatas.find(g => g._id == x.goods);
-        // 购物车商品数量
+        // 购物车作品数量
         goodsData.goods_num = x.goods_num;
 
         goods_sku = goodsSkus.find(g => g.goods_sku == x.goods_sku && g.goods_id == x.goods);
@@ -183,13 +183,13 @@ module.exports = class OrderController extends Controller {
           goodsData.sku_price = goods_sku.price;
           goodsData.sku_market_price = goods_sku.market_price;
         }
-        // 下单商品
+        // 下单作品
         goods.push(goodsData);
       });
     }
 
     if (goods.length <= 0) {
-      response.msg = `下单商品不存在`;
+      response.msg = `下单作品不存在`;
       return response;
     }
 
@@ -823,7 +823,7 @@ module.exports = class OrderController extends Controller {
 
     // 1. 查询当前订单是否存在，是否已支付待核实状态
     // 2. 查询当前订单支付状态是否为已付款
-    // 3. 判断下单商品的状态与库存
+    // 3. 判断下单作品的状态与库存
     const { uid, order, orderDetails, pay } = await this.payValidate(order_id);
 
     // 4. 根据支付方式获取对应 code 的 openid
@@ -1002,7 +1002,7 @@ module.exports = class OrderController extends Controller {
   async payValidate(order_id) {
     // 1. 查询当前订单是否存在，是否已支付待核实状态
     // 2. 查询当前订单支付状态是否为已付款
-    // 3. 判断下单商品的状态与库存
+    // 3. 判断下单作品的状态与库存
 
     if (!order_id) {
       this.throw('订单编号不存在');
@@ -1102,25 +1102,25 @@ module.exports = class OrderController extends Controller {
       })
       .get();
     if (!(goodsRes && goodsRes.data.length > 0)) {
-      this.throw('下单商品不存在');
+      this.throw('下单作品不存在');
     }
     const goodsDatas = goodsRes.data;
 
-    // 3. 判断下单商品的状态与库存
+    // 3. 判断下单作品的状态与库存
     orderDetails.forEach(x => {
       let goods = goodsDatas.find(g => g._id == x.goods_id);
       if (!goods) {
-        this.throw('下单商品已下架');
+        this.throw('下单作品已下架');
       }
       if (goods.state != '销售中') {
-        this.throw(`下单商品[${goods.state}]`);
+        this.throw(`下单作品[${goods.state}]`);
       }
 
       if (goods.stock_num <= 0) {
-        this.throw(`商品库存不足`);
+        this.throw(`作品库存不足`);
       }
       if (goods.stock_num < x.goods_num) {
-        this.throw(`商品剩余库存 ${goods.stock_num}`);
+        this.throw(`作品剩余库存 ${goods.stock_num}`);
       }
 
       // todo 判断SKU库存是否充足

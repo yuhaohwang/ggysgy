@@ -95,7 +95,7 @@
       </view>
     </view>
 
-    <!-- 订单商品明细 -->
+    <!-- 订单作品明细 -->
     <view class="padding margin-lr margin-tb-sm bg-main border-radius">
       <view class="goods-area" :class="{ 'margin-top': index > 0 }" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
@@ -178,7 +178,7 @@
         <text class="price">{{ order_data.order_actural_paid / 100 }}</text>
       </view>
     </view>
-    <view style="height: 100rpx;"></view>
+    <view style="height: 100rpx"></view>
 
     <!-- 底部操作区 -->
     <view class="oper-area dflex-b padding-right padding-left-sm">
@@ -234,7 +234,7 @@
     },
     data() {
       return {
-        // 商品数据
+        // 作品数据
         order_detail: [],
         // 订单数据
         order_data: {},
@@ -453,7 +453,7 @@
   .address-area {
   }
 
-  /* 商品区 */
+  /* 作品区 */
   .goods-area {
     &:last-child {
       margin-bottom: 0;

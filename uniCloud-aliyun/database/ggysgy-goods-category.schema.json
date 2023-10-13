@@ -1,6 +1,6 @@
 {
   "bsonType": "object",
-  "description": "商品分类表",
+  "description": "作品分类表",
   "permission": {
     "count": true,
     "create": false,
