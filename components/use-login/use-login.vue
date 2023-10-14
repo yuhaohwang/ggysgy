@@ -6,7 +6,7 @@
       <view class="title fs-lg">
         <text>{{ title }}</text>
       </view>
-      <view class="dflex dflex-flow-c margin-top">
+      <view class="dflex dflex-flow-c mt">
         <image class="image-sm" mode="aspectFill" src="../../static/user/default.png"></image>
         <text class="">微信授权</text>
       </view>

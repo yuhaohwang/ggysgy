@@ -1,10 +1,10 @@
 <template>
-  <view class="bg-dark" :class="[empty ? '' : 'padding-tb']">
+  <view class="bg-dark" :class="[empty ? '' : 'ptb']">
     <!-- 空白页 -->
     <use-empty v-if="empty" e-style="round" tip="无足迹数据" height="100vh"></use-empty>
 
-    <view v-else class="padding-lr" v-for="(item, index) in datas" :key="index" @click="toGood(item)">
-      <view class="product border-radius-sm padding mb-sm bg-main" style="padding-bottom: 15rpx">
+    <view v-else class="plr" v-for="(item, index) in datas" :key="index" @click="toGood(item)">
+      <view class="product border-radius-sm p mb-sm bg-main" style="padding-bottom: 15rpx">
         <view class="left"><image :src="item.img[0]" mode="aspectFill"></image></view>
         <view class="ml-sm pos-r w-full">
           <text class="clamp-2">{{ item.name[0] }} {{ item.name_pw[0] }}</text>

@@ -11,7 +11,7 @@
       @goto="toLogin"
     ></use-empty>
 
-    <scroll-view scroll-y class="h-full padding-lr bg-main" v-else>
+    <scroll-view scroll-y class="h-full plr bg-main" v-else>
       <u-toast ref="uToast"></u-toast>
       <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
       <u--form labelPosition="top" labelWidth="auto" :model="publishData" :rules="rules" ref="form1">
@@ -27,13 +27,13 @@
         </u-form-item>
         <u-form-item required label="作品分类" prop="fdata" borderBottom>
           <u-radio-group class="x-s-c-w x-3" v-model="publishData.fdata" @change="fdataChange">
-            <u-radio class="padding-xs" v-for="(item, index) in fdatas" :key="index" :label="item.name" :name="item._id"></u-radio>
+            <u-radio class="p-xs" v-for="(item, index) in fdatas" :key="index" :label="item.name" :name="item._id"></u-radio>
           </u-radio-group>
         </u-form-item>
         <u-form-item required label="子分类" prop="sdata" borderBottom>
           <u-radio-group class="x-s-c-w x-4" @change="sdataChange">
             <block v-for="(item, index) in sdatas" :key="index">
-              <u-radio class="padding-xs" v-if="item.pid == publishData.fdata" :label="item.name" :name="item._id"></u-radio>
+              <u-radio class="p-xs" v-if="item.pid == publishData.fdata" :label="item.name" :name="item._id"></u-radio>
             </block>
           </u-radio-group>
         </u-form-item>
@@ -64,10 +64,10 @@
         <u-checkbox></u-checkbox>
         <view class="">
           <text>我已阅读</text>
-          <text style="color: #3c9cff;" @click="toUrl('/pages/service/agreement', 0)">《全国艺术院校公益助学平台发布作品协议》</text>
+          <text style="color: #3c9cff" @click="toUrl('/pages/service/agreement', 0)">《全国艺术院校公益助学平台发布作品协议》</text>
         </view>
       </u-checkbox-group>
-      <view class="padding"><u-button type="primary" text="提交" @click="submitData" :disabled="!agreementChecked"></u-button></view>
+      <view class="p"><u-button type="primary" text="提交" @click="submitData" :disabled="!agreementChecked"></u-button></view>
     </scroll-view>
   </view>
 </template>

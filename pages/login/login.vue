@@ -1,7 +1,7 @@
 <template>
   <view class="container bg-main pos-r">
-    <view class="padding-xl dflex-c dflex-flow-c">
-      <view class="portrait-box margin-bottom">
+    <view class="p-xl dflex-c dflex-flow-c">
+      <view class="portrait-box mb">
         <image
           class="headimg border-radius-c"
           :src="(member && member.member_headimg) || $getOssFileByPath('/static/logo/logo.png')"
@@ -9,10 +9,10 @@
       </view>
 
       <view class="w-full dflex pb-sm">
-        <view class="iconfont iconshouji margin-right"></view>
+        <view class="iconfont iconshouji mr"></view>
         <view class="flex1 dflex">
           <input
-            class="border-line padding-sm flex1"
+            class="border-line p-sm flex1"
             type="number"
             data-key="mobile"
             maxlength="11"
@@ -25,10 +25,10 @@
       </view>
 
       <view class="w-full dflex">
-        <view class="iconfont iconmima margin-right"></view>
+        <view class="iconfont iconmima mr"></view>
         <!-- #ifdef MP -->
         <input
-          class="border-line padding-sm flex1"
+          class="border-line p-sm flex1"
           type="text"
           password
           data-key="password"
@@ -42,7 +42,7 @@
 
         <!-- #ifndef MP -->
         <input
-          class="border-line padding-sm flex1"
+          class="border-line p-sm flex1"
           type="password"
           password
           data-key="password"

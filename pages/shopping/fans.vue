@@ -1,6 +1,6 @@
 <template>
-  <view class="padding-sm">
-    <view class="padding bg-main border-radius mb-sm" v-for="(item, idx) in [1, 1, 1, 1, 1, 1]" :key="idx">
+  <view class="p-sm">
+    <view class="p bg-main border-radius mb-sm" v-for="(item, idx) in [1, 1, 1, 1, 1, 1]" :key="idx">
       <view class="dflex-b">
         <view class="dflex">
           <image

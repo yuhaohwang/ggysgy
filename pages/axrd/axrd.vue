@@ -2,7 +2,7 @@
   <view class="">
     <u-list @scrolltolower="scrolltolower">
       <u-list-item v-for="(item, index) in indexList" :key="index" enableFlex :scrollable="false">
-        <view class="x-s-s padding-xs">
+        <view class="x-s-s p-xs">
           <view class="plr-xs item-c index">
             <u--text mode="text" :text="index + 1" align="center" bold color="#957B54"></u--text>
           </view>

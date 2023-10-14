@@ -1,8 +1,8 @@
 <template>
-  <view class="use-empty-container tac" :class="eStyle == 'round' ? 'padding-sm' : ''" :style="{ height: height }">
+  <view class="use-empty-container tac" :class="eStyle == 'round' ? 'p-sm' : ''" :style="{ height: height }">
     <view class="use-empty h-full dflex-c dflex-flow-c" :class="eStyle == 'round' ? 'round border-radius bg-main' : ''">
       <image v-if="imgurl" :src="imgurl"></image>
-      <view v-if="tip" class="title padding-sm">{{ tip }}</view>
+      <view v-if="tip" class="title p-sm">{{ tip }}</view>
       <button class="no-border use-btn" @click="to">{{ btnTip }}</button>
     </view>
   </view>

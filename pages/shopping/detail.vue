@@ -35,7 +35,7 @@
     </view>
 
     <!-- 02. 作品数据区 -->
-    <view class="goods-area bg-main padding">
+    <view class="goods-area bg-main p">
       <view class="dflex-b mtb-sm">
         <view class="dflex">
           <image
@@ -45,10 +45,10 @@
           ></image>
           <view class="ml-xs fs-xxs">Usecloud</view>
         </view>
-        <view class="bg-dark border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
+        <view class="bg-dark border-radius-lg plr fs-xs dflex-c" @click="toFollow">
           <text class="iconfont iconaixin-01 ft-base" v-if="follow"></text>
           <text class="iconfont iconaixin" v-else></text>
-          <text class="ptb-16" style="margin-left: 6rpx">关注</text>
+          <text class="ptb-16" style="ml">关注</text>
         </view>
       </view>
 

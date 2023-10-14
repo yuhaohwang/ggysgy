@@ -25,22 +25,18 @@
         height="93vh"
       ></use-empty>
       <!-- 订单列表区 -->
-      <view class="padding-lr mb-sm" :class="index === 0 ? 'pt-sm' : ''" v-for="(item, index) in navData.orderList" :key="index">
+      <view class="plr mb-sm" :class="index === 0 ? 'pt-sm' : ''" v-for="(item, index) in navData.orderList" :key="index">
         <!-- 订单项 -->
-        <view class="order-item padding bg-main border-radius">
+        <view class="order-item p bg-main border-radius">
           <view @click="todetail(item.order)">
             <!-- 订单作品明细 -->
-            <view
-              class="goods-area"
-              :class="{ 'margin-top': goodsIndex > 0 }"
-              v-for="(goodsItem, goodsIndex) in item.order_detail"
-              :key="goodsIndex"
-            >
+            <view class="goods-area" :class="{ 'mt" : goodsIndex>
+              0 }" v-for="(goodsItem, goodsIndex) in item.order_detail" :key="goodsIndex" >
               <image :src="goodsItem.goods_img" mode="aspectFill"></image>
               <view class="right flex1">
                 <text class="clamp-2">{{ goodsItem.goods_name }} {{ goodsItem.goods_name_pw }}</text>
                 <view class="ft-dark fs-xs pt-xs">
-                  <text class="margin-right">× {{ goodsItem.goods_num }}</text>
+                  <text class="mr">× {{ goodsItem.goods_num }}</text>
                   {{ goodsItem.goods_sku_name || '&nbsp;&nbsp;' }}
                 </view>
                 <view class="mt-sm">
@@ -153,22 +149,18 @@
             height="93vh"
           ></use-empty>
           <!-- 订单列表区 -->
-          <view class="padding-lr mb-sm" :class="index === 0 ? 'pt-sm' : ''" v-for="(item, index) in tabItem.orderList" :key="index">
+          <view class="plr mb-sm" :class="index === 0 ? 'pt-sm' : ''" v-for="(item, index) in tabItem.orderList" :key="index">
             <!-- 订单项 -->
-            <view class="order-item padding bg-main border-radius">
+            <view class="order-item p bg-main border-radius">
               <view @click="todetail(item.order)">
                 <!-- 订单作品明细 -->
-                <view
-                  class="goods-area"
-                  :class="{ 'margin-top': goodsIndex > 0 }"
-                  v-for="(goodsItem, goodsIndex) in item.order_detail"
-                  :key="goodsIndex"
-                >
+                <view class="goods-area" :class="{ 'mt" : goodsIndex>
+                  0 }" v-for="(goodsItem, goodsIndex) in item.order_detail" :key="goodsIndex" >
                   <image :src="goodsItem.goods_img" mode="aspectFill"></image>
                   <view class="right flex1">
                     <text class="clamp-2">{{ goodsItem.goods_name }} {{ goodsItem.goods_name_pw }}</text>
                     <view class="ft-dark fs-xs pt-xs">
-                      <text class="margin-right">× {{ goodsItem.goods_num }}</text>
+                      <text class="mr">× {{ goodsItem.goods_num }}</text>
                       {{ goodsItem.goods_sku_name || '&nbsp;&nbsp;' }}
                     </view>
                     <view class="mt-sm">

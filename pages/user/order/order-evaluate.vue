@@ -1,7 +1,7 @@
 <template>
   <view class="">
     <!-- 作品区 -->
-    <view class="padding mlr mtb-sm bg-main border-radius">
+    <view class="p mlr mtb-sm bg-main border-radius">
       <view class="goods-area" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
           <view class="img">
@@ -10,7 +10,7 @@
           <view class="ml-sm">
             <text class="clamp-2">{{ item.goods_name }} {{ item.goods_name_pw }}</text>
             <view class="ft-dark fs-xs pt-xs">
-              <text class="margin-right">× {{ item.goods_num }}</text>
+              <text class="mr">× {{ item.goods_num }}</text>
               {{ item.goods_sku_name || '&nbsp;&nbsp;' }}
             </view>
             <view class="mt-sm">
@@ -23,10 +23,10 @@
 
     <!-- 评分 -->
     <view class="evaluate-kps">
-      <view class="padding mlr mtb-sm bg-main border-radius dflex-b">
+      <view class="p mlr mtb-sm bg-main border-radius dflex-b">
         <view>
           <text>总体评分</text>
-          <text class="margin-left ft-base fs-xs">{{ postData.review_type }}</text>
+          <text class="ml">{{ postData.review_type }}</text>
         </view>
         <use-rate @change="rateChange" value="5"></use-rate>
       </view>
@@ -34,7 +34,7 @@
 
     <!-- 评价区 -->
     <view class="evaluate-area">
-      <view class="padding mlr mtb-sm bg-main border-radius">
+      <view class="p mlr mtb-sm bg-main border-radius">
         <!-- 评价内容 -->
         <textarea class="ft-black w-full fs-sm" v-model="postData.review_content" placeholder="请输入评价内容"></textarea>
 
@@ -45,7 +45,7 @@
 
     <!-- 是否匿名评价 -->
     <view>
-      <view class="padding mlr mtb-sm bg-main border-radius dflex-b">
+      <view class="p mlr mtb-sm bg-main border-radius dflex-b">
         <text>提交评价的图片{{ anonymity ? '不可见' : '可见' }}</text>
         <view>
           <text class="ft-dark">匿名</text>
@@ -55,7 +55,7 @@
     </view>
 
     <!-- 提交操作 -->
-    <view class="padding w-full margin-top">
+    <view class="p w-full mt">
       <view class="dflex-b border-radius-big">
         <view class="tac ptb-sm flex1 bg-base" @click="submit">提交评价</view>
       </view>

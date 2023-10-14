@@ -1,7 +1,7 @@
 <template>
   <view class="m-sm">
     <!-- 作品区 -->
-    <view class="padding bg-main mb-sm border-radius dflex-b">
+    <view class="p bg-main mb-sm border-radius dflex-b">
       <view class="dflex">
         <view class="iconfont iconshangpin-01 ft-base mr-xs"></view>
         <view class="fwb">作品</view>
@@ -19,11 +19,11 @@
     </view>
 
     <!-- 评分 -->
-    <view class="padding bg-main mb-sm border-radius dflex-b">
+    <view class="p bg-main mb-sm border-radius dflex-b">
       <input type="text" maxlength="20" class="wh-full" v-model="postData.title" placeholder="标题(不超过20个字)" />
     </view>
 
-    <view class="padding bg-main mb-sm border-radius">
+    <view class="p bg-main mb-sm border-radius">
       <textarea class="ft-black w-full fs-sm" v-model="postData.content" placeholder="请输入正文"></textarea>
 
       <!-- 上传图片 -->
@@ -31,7 +31,7 @@
     </view>
 
     <!-- 提交操作 -->
-    <view class="padding w-full margin-top">
+    <view class="p w-full mt">
       <view class="dflex-b border-radius-big">
         <view class="tac ptb-sm fwb flex1 bg-base" @click="submit">发布</view>
       </view>

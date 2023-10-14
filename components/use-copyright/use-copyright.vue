@@ -2,7 +2,7 @@
   <view>
     <!-- #ifndef MP-TOUTIAO -->
     <!-- 版权 -->
-    <view class="x-c-c padding use-copyright" @click="to">
+    <view class="x-c-c p use-copyright" @click="to">
       <view class="iconfont iconxiangqing animated rotate mr-sm ft-base"></view>
       <view class="ft-dark">艺心益盟</view>
       <text class="mlr-xs">·</text>

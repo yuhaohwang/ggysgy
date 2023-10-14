@@ -1,7 +1,7 @@
 <template>
   <view :class="type == 'round' ? 'plr-sm' : ''">
     <!-- 列表标题 -->
-    <view class="use-list-title dflex-b padding-lr w-full bg-main" :class="type == 'round' ? 'border-radius' : ''" @click="goto">
+    <view class="use-list-title dflex-b plr w-full bg-main" :class="type == 'round' ? 'border-radius' : ''" @click="goto">
       <view class="dflex">
         <view v-if="iconfont && iconfont != ' '" class="iconfont _left mr-sm" :class="iconfont" :style="{ color: color }"></view>
         <text :style="{ fontSize: size + 'rpx', fontWeight: fwt }">{{ title }}</text>

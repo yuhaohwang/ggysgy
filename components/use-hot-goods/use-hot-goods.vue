@@ -13,11 +13,11 @@
       @goto="hot"
     ></use-list-title>
 
-    <view class="x-s-c-w x-2 padding-xs">
-      <view v-for="(item, index) in hotDatas" :key="index" class="padding-xs" @click="to_detail(item)">
+    <view class="x-s-c-w x-2 p-xs">
+      <view v-for="(item, index) in hotDatas" :key="index" class="p-xs" @click="to_detail(item)">
         <view class="bg-main border-radius-sm pb-sm">
           <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
-          <text class="title clamp padding-sm">{{ item.name }}</text>
+          <text class="title clamp p-sm">{{ item.name }}</text>
           <view class="pl-sm">
             <text class="price">{{ item.price ? item.price / 100 : '面议' }}</text>
             <text class="m-price">{{ item.market_price / 100 }}</text>

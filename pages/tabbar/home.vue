@@ -11,7 +11,7 @@
       <!-- 轮播组件 -->
       <swiper class="swiper w-full" autoplay indicator-dots indicator-color="#f7f7f7" indicator-active-color="#FEAA30">
         <block v-for="(item, index) in swiperDatas" :key="index">
-          <swiper-item class="swiper-item padding-sm wh-full box-sizing-b">
+          <swiper-item class="swiper-item p-sm wh-full box-sizing-b">
             <view class="wh-full" @click.stop="topage(item)">
               <image class="border-radius wh-full" mode="scaleToFill" :lazy-load="true" :src="item.img" />
             </view>
@@ -21,9 +21,9 @@
     </view>
 
     <!-- 03. 图文分类 -->
-    <view class="x-a-c x-5 padding-xs bg-main" v-if="graphicCategoryDatas && graphicCategoryDatas.length > 0">
+    <view class="x-a-c x-5 p-xs bg-main" v-if="graphicCategoryDatas && graphicCategoryDatas.length > 0">
       <block v-for="(item, index) in graphicCategoryDatas" :key="index">
-        <view class="y-c-c padding-xs category-item" @click="topage(item)">
+        <view class="y-c-c p-xs category-item" @click="topage(item)">
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
           <view>{{ item.name }}</view>
         </view>
@@ -31,9 +31,9 @@
     </view>
 
     <!-- 03. 卡片分类 -->
-    <view class="x-s-c-w x-3 padding-xs bg-main" v-if="cardCategoryDatas && cardCategoryDatas.length > 0">
+    <view class="x-s-c-w x-3 p-xs bg-main" v-if="cardCategoryDatas && cardCategoryDatas.length > 0">
       <block v-for="(item, index) in cardCategoryDatas" :key="index">
-        <view class="y-c-c padding-xs category-item" @click="topage(item)">
+        <view class="y-c-c p-xs category-item" @click="topage(item)">
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
         </view>
       </block>
@@ -43,9 +43,9 @@
     <view class="mt-sm">
       <use-list-title title="限时出售" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit"></use-list-title>
     </view>
-    <view class="padding-sm limit-area bg-main">
+    <view class="p-sm limit-area bg-main">
       <scroll-view scroll-x>
-        <view class="dflex padding-bottom">
+        <view class="dflex pb">
           <view class="item mr-sm" v-for="(item, index) in goodsLimitDatas" :key="index" @click="toGood(item)">
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
             <text class="title clamp pb-xs">{{ item.name }}</text>

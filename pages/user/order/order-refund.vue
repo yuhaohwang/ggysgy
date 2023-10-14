@@ -1,7 +1,7 @@
 <template>
   <view>
     <!-- 作品区 -->
-    <view class="padding mlr mtb-sm bg-main border-radius">
+    <view class="p mlr mtb-sm bg-main border-radius">
       <view class="goods-area" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
           <view class="img">
@@ -10,7 +10,7 @@
           <view class="ml-sm">
             <text class="clamp-2">{{ item.goods_name }} {{ item.goods_name_pw }}</text>
             <view class="ft-dark fs-xs pt-xs">
-              <text class="margin-right">× {{ item.goods_num }}</text>
+              <text class="mr">× {{ item.goods_num }}</text>
               {{ item.goods_sku_name || '&nbsp;&nbsp;' }}
             </view>
             <view class="mt-sm">
@@ -36,7 +36,7 @@
       <use-list-title title="退款原因" type="round" color="#333" :tip="reason" iconfont=" " @goto="openActionSheet(2)"></use-list-title>
     </view>
 
-    <view class="refund-area padding mlr mtb-sm bg-main border-radius">
+    <view class="refund-area p mlr mtb-sm bg-main border-radius">
       <view class="dflex-b">
         <text class="item mr-sm">退款金额：</text>
         <text class="price">{{ refund_money / 100 }}</text>
@@ -44,16 +44,16 @@
     </view>
 
     <!-- 上传凭证 -->
-    <view class="padding mlr mtb-sm bg-main border-radius">
+    <view class="p mlr mtb-sm bg-main border-radius">
       <!-- 退款说明 -->
-      <textarea v-model="desc" class="ft-black w-full m0 padding-0 fs-sm" placeholder="请填写退款说明（选填）"></textarea>
+      <textarea v-model="desc" class="ft-black w-full m0 p-0 fs-sm" placeholder="请填写退款说明（选填）"></textarea>
 
       <!-- 上传图片 -->
       <use-upload class="pos-r" @upload="refundImgs"></use-upload>
     </view>
 
     <!-- 提交操作 -->
-    <view class="padding w-full margin-top">
+    <view class="p w-full mt">
       <view class="dflex-b border-radius-big">
         <view class="tac ptb-sm flex1 bg-base" @click="submit">提交申请</view>
       </view>

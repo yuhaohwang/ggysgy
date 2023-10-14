@@ -16,9 +16,9 @@
     <!-- 00. 列表 -->
     <view v-else>
       <!-- 01. 购物车列表 -->
-      <view class="cart-list padding-sm">
+      <view class="cart-list p-sm">
         <block v-for="(item, index) in cartDatas" :key="item._id">
-          <view class="cart-item bg-main mb-sm padding-lg pos-r dflex-s border-radius">
+          <view class="cart-item bg-main mb-sm p-lg pos-r dflex-s border-radius">
             <view class="image-wrapper pos-r" @click="toGood(item)">
               <!-- 作品图片 -->
               <image class="border-radius-xs wh-full" mode="aspectFill" :lazy-load="true" :src="item.goods.img"></image>
@@ -42,7 +42,7 @@
                 <text class="ml-xs fs-xs" v-if="item.stock_num > 0">剩余 {{ item.goods.stock_num }}</text>
               </view>
             </view>
-            <view class="item-right padding-left pos-r flex1">
+            <view class="item-right pl">
               <!-- 作品名称 -->
               <view class="clamp-2 title" @click="toGood(item)">{{ item.goods.name }} {{ item.goods.name_pw }}</view>
               <view class="ft-dark fs-xs pt-xs">{{ item.goods_sku.spec || '&nbsp;&nbsp;' }}</view>
@@ -74,10 +74,10 @@
       </view>
 
       <!-- 02. 底部操作栏 -->
-      <view class="action-section dflex w-full bg-main pos-f padding-right">
+      <view class="action-section dflex w-full bg-main pos-f pr">
         <view class="checkbox pos-r h-full dflex-c">
           <view
-            class="padding-lr iconfont"
+            class="plr iconfont"
             :class="{
               active: allChecked,
               iconxuanzhongzhuangtai: allChecked,

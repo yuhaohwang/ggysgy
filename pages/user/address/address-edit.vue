@@ -1,16 +1,16 @@
 <template>
   <view class="content bg-dark ft-main">
     <view class="gap"></view>
-    <view class="row dflex border-line padding-lr">
+    <view class="row dflex border-line plr">
       <text class="tit">收货人</text>
       <input class="input" type="text" v-model="addrData.consignee" placeholder="请输入收货人姓名" placeholder-class="placeholder" />
     </view>
-    <view class="row dflex border-line padding-lr">
+    <view class="row dflex border-line plr">
       <text class="tit">手机号</text>
       <input class="input" type="number" v-model="addrData.mobile" placeholder="请输入手机号码" placeholder-class="placeholder" />
     </view>
 
-    <view class="row dflex border-line padding-left">
+    <view class="row dflex border-line pl">
       <text class="tit">所在地区</text>
       <view class="dflex-b flex1">
         <view class="flex1 input-t" @click="openAddress">{{ addressName }}</view>
@@ -26,17 +26,17 @@
         <!-- #endif -->
       </view>
     </view>
-    <view class="row dflex border-line padding-lr">
+    <view class="row dflex border-line plr">
       <text class="tit">详细地址</text>
       <input class="input" type="text" v-model="addrData.addr_detail" placeholder="请输入详细地址" placeholder-class="placeholder" />
     </view>
     <view class="gap"></view>
-    <view class="row dflex-b padding-lr">
+    <view class="row dflex-b plr">
       <text class="tit">设为默认</text>
       <switch :checked="addrDefault" color="#feaa30" @change="switchChange" />
     </view>
 
-    <view class="padding w-full margin-top">
+    <view class="p w-full mt">
       <view class="dflex-b border-radius-big"><view class="tac ptb-sm flex1 bg-base" @click="submit">提交</view></view>
     </view>
   </view>

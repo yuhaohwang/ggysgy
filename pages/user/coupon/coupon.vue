@@ -29,7 +29,7 @@
             btn-tip="去领券"
             height="93vh"
           ></use-empty>
-          <view class="padding-lr" @click="use(item)" v-for="(item, index) in tabItem.datas" :key="index">
+          <view class="plr" @click="use(item)" v-for="(item, index) in tabItem.datas" :key="index">
             <view
               class="coupon-box border-radius mt-sm bg-main"
               :class="[
@@ -49,13 +49,13 @@
                   <view class="fs-sm" v-if="item.order_amount > 0">满{{ item.order_amount }}元使用</view>
                   <view class="fs-sm" v-else>全场通用</view>
                 </view>
-                <view class="right padding left_t flex1">
+                <view class="right p left_t flex1">
                   <view class="dflex-b pb-xs">
                     <view class="fwb fs">{{ item.name }}</view>
                   </view>
                   <view v-if="tabItem.state == '已使用'" class="ft-dark iconfont iconyishiyong"></view>
                   <view v-if="tabItem.state == '已过期'" class="ft-dark iconfont iconyiguoqi"></view>
-                  <view class="dflex-b ft-dark fs-xs padding-bottom border-line">
+                  <view class="dflex-b ft-dark fs-xs pb">
                     <view class="">有效期至 {{ item.end_time }}</view>
                   </view>
                   <view class="fs-xs ft-dark pt-xs">{{ item.remark || '详细信息' }}</view>

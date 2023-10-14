@@ -1,10 +1,10 @@
 <template>
-  <view class="bg-dark" :class="[empty ? '' : 'padding-tb']">
+  <view class="bg-dark" :class="[empty ? '' : 'ptb']">
     <!-- 空白页 -->
     <use-empty v-if="empty" e-style="round" tip="无物流数据"></use-empty>
 
-    <view v-if="expressData && expressData.data" class="padding-lr">
-      <view class="border-radius padding mb-sm bg-main">
+    <view v-if="expressData && expressData.data" class="plr">
+      <view class="border-radius p mb-sm bg-main">
         <view class="fs-lg fwb">{{ expressData.company }}</view>
         <view>
           运单号：{{ expressData.nu }}
@@ -12,8 +12,8 @@
         </view>
       </view>
     </view>
-    <view v-if="expressData && expressData.data" class="padding-lr">
-      <view class="product border-radius padding mb-sm bg-main" style="padding-bottom: 15rpx">
+    <view v-if="expressData && expressData.data" class="plr">
+      <view class="product border-radius p mb-sm bg-main" style="padding-bottom: 15rpx">
         <view
           :class="{ active: index == 0, fwb: index == 0 }"
           class="dflex item pos-r"
@@ -21,7 +21,7 @@
           :key="index"
         >
           <view :class="{ active: index == 0 }" class="circle"></view>
-          <view :class="{ 'ft-dark': index > 0 }" class="ml-lg pos-r w-full margin-bottom">
+          <view :class="{ 'ft-dark': index > 0 }" class="ml-lg pos-r w-full mb">
             <view>{{ item.context }}</view>
             <view class="mt-xs fs-xs">{{ item.time }}</view>
           </view>

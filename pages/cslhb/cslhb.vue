@@ -7,7 +7,7 @@
  -->
     <u-list @scrolltolower="scrolltolower">
       <u-list-item v-for="(item, index) in indexList" :key="index" enableFlex :scrollable="false">
-        <view class="x-s-c padding-xs">
+        <view class="x-s-c p-xs">
           <view class="plr-xs item-c index">
             <u--text mode="text" :text="index + 1" align="center" bold color="#957B54"></u--text>
           </view>
@@ -16,7 +16,7 @@
             <u--text mode="name" text="吴晓军" format="encrypt"></u--text>
             <u--text mode="text" text="中山大学" :size="12" color="#BDC4CE"></u--text>
           </view>
-          <view class="flex1 item-c padding-xs"><u--text mode="text" text="累计捐献10000￥" align="right" bold></u--text></view>
+          <view class="flex1 item-c p-xs"><u--text mode="text" text="累计捐献10000￥" align="right" bold></u--text></view>
         </view>
         <u-line></u-line>
       </u-list-item>

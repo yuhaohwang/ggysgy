@@ -29,10 +29,10 @@
           >
             <use-empty v-if="sdata.empty" e-style="round" tip="无作品数据"></use-empty>
 
-            <view v-show="!sdata.empty" class="x-c-s x-2 padding-xs border-radius">
+            <view v-show="!sdata.empty" class="x-c-s x-2 p-xs border-radius">
               <view class="y-s-c waterfall_left">
                 <block v-for="(l_item, l_index) in sdata.goodsLeftList" :key="l_index">
-                  <view v-if="l_item" class="padding-xs w-full" @click="toGood(l_item)">
+                  <view v-if="l_item" class="p-xs w-full" @click="toGood(l_item)">
                     <view class="bg-main border-radius">
                       <image
                         :src="l_item.img"
@@ -63,7 +63,7 @@
 
               <view class="y-s-c waterfall_right">
                 <block v-for="(r_item, r_index) in sdata.goodsRightList" :key="r_index">
-                  <view v-if="r_item" class="padding-xs w-full" @click="toGood(r_item)">
+                  <view v-if="r_item" class="p-xs w-full" @click="toGood(r_item)">
                     <view class="bg-main border-radius">
                       <image
                         :src="r_item.img"

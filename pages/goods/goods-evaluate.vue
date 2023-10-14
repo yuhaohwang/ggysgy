@@ -1,7 +1,7 @@
 <template>
   <view class="">
     <view class="gap"></view>
-    <view class="state-area dflex padding bg-main">
+    <view class="state-area dflex p bg-main">
       <view
         class="item mr-sm"
         :class="{ active: state == item.name }"
@@ -16,13 +16,13 @@
 
     <!-- 评价区 -->
     <view class="evaluate-area">
-      <view class="padding-lr padding-top bg-main">
+      <view class="plr pt">
         <view class="eva-box dflex-s pb-lg" v-for="(item, index) in evaluateDatas" :key="index">
           <image class="portrait border-radius-c" :src="item.member_headimg"></image>
           <view class="right-area flex1 pl-sm">
             <view class="dflex-b ft-dark">
               <view class="dflex">
-                <text class="name margin-right">{{ item.member_name }}</text>
+                <text class="name mr">{{ item.member_name }}</text>
                 <use-rate :value="item.review_cnt" disabled></use-rate>
               </view>
               <text class="time fs-xs">{{ $api.format(item.create_time, 'yyyy-MM-dd') }}</text>

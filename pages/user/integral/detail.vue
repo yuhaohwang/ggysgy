@@ -1,6 +1,6 @@
 <template>
-  <view class="padding">
-    <view class="padding item border-radius dflex-b margin-bottom" v-for="(item, idx) in datas" :key="idx">
+  <view class="p">
+    <view class="p item border-radius dflex-b mb" v-for="(item, idx) in datas" :key="idx">
       <view class="fs fwb">{{ item.time }}</view>
       <view class="tar">
         <view class="fwb">

@@ -4,15 +4,15 @@
       <view class="ft-white mt-sm fwb" style="font-size: 70rpx">{{ data.member_integral || 750 }}</view>
       <view class="btn-line ft-black fs-xs border-radius-big" @click="toDetail">积分明细</view>
     </view>
-    <view class="sign-content margin pos-a">
-      <view class="bg-main border-radius padding">
+    <view class="sign-content m pos-a">
+      <view class="bg-main border-radius p">
         <view class="title">
           <view class="fwb fs">
             <text class="d">已累计签到</text>
             <text class="ft-base ml-sm fwb">{{ data.sign_cnt || 6 }}天</text>
           </view>
         </view>
-        <view class="dflex-b margin-top">
+        <view class="dflex-b mt">
           <view class="dflex-c dflex-flow-c" v-for="(item, index) in weeks" :key="index">
             <view :class="{ active: item.sign }" class="iconfont iconxuanzhong"></view>
             <view>{{ item.name }}</view>
@@ -21,12 +21,12 @@
       </view>
 
       <view class="mt-xl">
-        <view class="tac margin fs-xs">
+        <view class="tac m fs-xs">
           <text>连续签到{{ data.sign_in_full || 7 }}天</text>
           <text class="ml-xs">可额外获得{{ data.sign_in_full_integral || '10' }}积分</text>
         </view>
 
-        <view class="w-full margin-top">
+        <view class="w-full mt">
           <view class="dflex-b border-radius-big">
             <view class="tac ptb-sm flex1 bg-base" v-if="!signed" @click="toSign">立即签到</view>
             <view class="tac ptb-sm flex1 bg-disabled" v-else>今日已签到</view>
@@ -35,7 +35,7 @@
       </view>
     </view>
 
-    <view class="pos-f pos-bottom padding tac w-full bg-warn fs-xs">有200积分即将在2021.12.30过期</view>
+    <view class="pos-f pos-bottom p tac w-full bg-warn fs-xs">有200积分即将在2021.12.30过期</view>
   </view>
 </template>
 

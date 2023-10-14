@@ -9,8 +9,8 @@
     <!-- 02. 报道 -->
     <view class="report-img" v-for="(item, index) in reportDatas" :key="index" @click="topage(item)">
       <view class="container"><image class="image" :src="item.img" mode="aspectFill"></image></view>
-      <view class="padding-xs title">{{ item.title }}</view>
-      <view class="padding-xs tip">查看完整报道</view>
+      <view class="p-xs title">{{ item.title }}</view>
+      <view class="p-xs tip">查看完整报道</view>
     </view>
 
     <!-- 上拉加载更多 -->

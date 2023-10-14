@@ -1,8 +1,8 @@
 <template>
   <view class="order-detail">
     <!-- 订单状态 -->
-    <view class="state-area padding-lr mtb-sm">
-      <view class="padding border-radius bg-base">
+    <view class="state-area plr mtb-sm">
+      <view class="p border-radius bg-base">
         <view v-if="order_data.state == '待付款'">
           <view class="dflex-c fs-lg">
             <text class="iconfont icondaifukuan- fs-lg fwb"></text>
@@ -78,9 +78,9 @@
     </view>
 
     <!-- 收货人 -->
-    <view class="address-area padding-lr mtb-sm" v-if="order_data.order_consignee">
-      <view class="dflex padding border-radius bg-main">
-        <view class="iconfont icondizhi- margin-right ft-main"></view>
+    <view class="address-area plr mtb-sm" v-if="order_data.order_consignee">
+      <view class="dflex p border-radius bg-main">
+        <view class="iconfont icondizhi- mr"></view>
         <view class="flex1">
           <view class="w-full dflex-wrap-w">
             <view class="mb-xs desc">
@@ -88,7 +88,7 @@
             </view>
             <view>
               <text>{{ order_data.order_consignee }}</text>
-              <text class="margin-left">{{ order_data.order_consignee_tel }}</text>
+              <text class="ml">{{ order_data.order_consignee_tel }}</text>
             </view>
           </view>
         </view>
@@ -96,14 +96,15 @@
     </view>
 
     <!-- 订单作品明细 -->
-    <view class="padding mlr mtb-sm bg-main border-radius">
-      <view class="goods-area" :class="{ 'margin-top': index > 0 }" v-for="(item, index) in order_detail" :key="index">
+    <view class="p mlr mtb-sm bg-main border-radius">
+      <view class="goods-area" :class="{ 'mt" : index>
+        0 }" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
           <view class="img"><image :src="item.goods_img"></image></view>
           <view class="ml-sm">
             <text class="clamp-2">{{ item.goods_name }} {{ item.goods_name_pw }}</text>
             <view class="ft-dark fs-xs pt-xs">
-              <text class="margin-right">× {{ item.goods_num }}</text>
+              <text class="mr">× {{ item.goods_num }}</text>
               {{ item.goods_sku_name || '&nbsp;&nbsp;' }}
             </view>
             <view class="mt-sm">
@@ -115,7 +116,7 @@
     </view>
 
     <!-- 订单数据 -->
-    <view class="order-area padding mlr mtb-sm bg-main border-radius">
+    <view class="order-area p mlr mtb-sm bg-main border-radius">
       <view class="item">
         <text>订单备注：</text>
         <text class="">{{ order_data.order_id }}</text>
@@ -140,7 +141,7 @@
     </view>
 
     <!-- 退款数据 -->
-    <view class="order-area padding mlr mtb-sm bg-main border-radius" v-if="order_data.order_refund_state">
+    <view class="order-area p mlr mtb-sm bg-main border-radius" v-if="order_data.order_refund_state">
       <view class="item">
         <text>退款原因：</text>
         <text class="">{{ order_data.order_refund_reason }}</text>
@@ -160,7 +161,7 @@
     </view>
 
     <!-- 统计数据 -->
-    <view class="total-area padding mlr mtb-sm bg-main border-radius">
+    <view class="total-area p mlr mtb-sm bg-main border-radius">
       <view class="ft-dark">
         <view class="item dflex-b">
           <text>{{ goods_price_tip }}</text>
@@ -182,7 +183,7 @@
     </view>
 
     <!-- 发货区域 -->
-    <view class="padding mlr mtb-sm bg-main border-radius">
+    <view class="p mlr mtb-sm bg-main border-radius">
       <view class="shipping-area" v-if="true">
         <view class="item"><text>物流公司：</text></view>
         <view class="item"><text>快递单号：</text></view>
@@ -195,7 +196,7 @@
     <view style="height: 100rpx"></view>
 
     <!-- 底部操作区 -->
-    <view class="oper-area dflex-b padding-right pl-sm">
+    <view class="oper-area dflex-b pr">
       <view class="dflex">
         <view class="btn-area dflex dflex-flow-c" @click="toHome">
           <text class="iconfont iconshouye-1"></text>

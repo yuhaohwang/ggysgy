@@ -6,7 +6,7 @@
 
     <!-- #ifdef MP-WEIXIN -->
     <view class="use-item">
-      <button class="wh-full padding-lr no-border tal" open-type="feedback" @click="tofeedback">意见反馈</button>
+      <button class="wh-full plr no-border tal" open-type="feedback" @click="tofeedback">意见反馈</button>
     </view>
     <!-- #endif -->
 

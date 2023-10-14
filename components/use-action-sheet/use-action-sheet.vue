@@ -10,12 +10,12 @@
     :z-index="zIndex"
     @close="popupClose"
   >
-    <view v-if="tips.text" class="fs-sm padding-tb tac border-bottom" :style="[tipsStyle]">
+    <view v-if="tips.text" class="fs-sm ptb tac border-bottom" :style="[tipsStyle]">
       {{ tips.text }}
     </view>
     <block v-for="(item, index) in datas" :key="index">
       <view
-        class="dflex-c padding-tb line-height-1"
+        class="dflex-c ptb line-height-1"
         :class="[index < datas.length - 1 ? 'border-bottom' : '']"
         :style="[itemStyle(index)]"
         hover-class="use-hover-class"
@@ -29,7 +29,7 @@
     <view v-if="cancelBtn" class="gap"></view>
     <view
       v-if="cancelBtn"
-      class="dflex-c padding-tb line-height-1"
+      class="dflex-c ptb line-height-1"
       hover-class="use-hover-class"
       :hover-stay-time="150"
       @touchmove.stop.prevent

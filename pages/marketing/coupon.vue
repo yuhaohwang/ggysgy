@@ -1,9 +1,9 @@
 <template>
-  <view class="bg-dark padding-bottom">
+  <view class="bg-dark pb">
     <!-- 空白页 -->
     <use-empty v-if="empty" e-style="round" tip="无优惠券"></use-empty>
 
-    <view v-else class="padding-lr" v-for="(item, index) in couponDatas" :key="index" @click="toGood(item)">
+    <view v-else class="plr" v-for="(item, index) in couponDatas" :key="index" @click="toGood(item)">
       <view class="coupon-area border-radius mt-sm bg-main">
         <view class="dflex-b">
           <view class="left pos-a h-full dflex-c dflex-flow-c">
@@ -16,17 +16,17 @@
             <view class="fs-sm" v-if="item.order_amount > 0">满{{ item.order_amount }}元使用</view>
             <view class="fs-sm" v-else>全场通用</view>
           </view>
-          <view class="right padding left_t flex1">
+          <view class="right p left_t flex1">
             <view class="dflex-b pb-xs">
               <view class="fwb fs">{{ item.name }}</view>
             </view>
-            <view class="dflex-b ft-dark fs-xs padding-bottom">
+            <view class="dflex-b ft-dark fs-xs pb">
               <view class="">有效期至 {{ item.end_time || '2022.05.20' }}</view>
             </view>
             <view class="w-full dflex-b">
               <view class="fs-xs ft-dark pt-xs">{{ item.remark || '详细信息' }}</view>
               <view @tap.stop="receive(item._id)" class="dflex-b border-radius-big">
-                <view class="tac ptb-xs padding-lr flex1 bg-base fs-xs">领取</view>
+                <view class="tac ptb-xs plr flex1 bg-base fs-xs">领取</view>
               </view>
             </view>
           </view>

@@ -86,7 +86,7 @@
           />
         </label>
       </view>
-      <view class="qrcode tac padding-tb"><use-qrcode :onval="true" :val="qrcode" qrsize="200" @result="qrcode_rs"></use-qrcode></view>
+      <view class="qrcode tac ptb"><use-qrcode :onval="true" :val="qrcode" qrsize="200" @result="qrcode_rs"></use-qrcode></view>
 
       <view v-if="time_remaining" class="dflex-c">
         <use-count-down
@@ -103,7 +103,7 @@
       <!-- #endif -->
     </view>
 
-    <view class="padding w-full mt-big pos-a" style="bottom: 30rpx">
+    <view class="p w-full mt-big pos-a" style="bottom: 30rpx">
       <view class="dflex-b border-radius-big">
         <!-- #ifndef H5 || MP-360 -->
         <view class="tac ptb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="confirm">{{ pay_tip }}</view>

@@ -11,9 +11,9 @@
       <view class="container">
         <video class="video" :src="item.url" :danmu-list="item.danmuList" enable-danmu danmu-btn controls></video>
       </view>
-      <view class="x-s-c padding-xs">
+      <view class="x-s-c p-xs">
         <view class="u-border border-radius-lg"><u--image :src="item.avatar" width="50rpx" height="50rpx" :fade="false"></u--image></view>
-        <view class="padding-xs">{{ item.title }}</view>
+        <view class="p-xs">{{ item.title }}</view>
       </view>
     </view>
 

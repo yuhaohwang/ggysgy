@@ -1,18 +1,13 @@
 <template>
-  <view class="padding-lr pb-big margin-bottom ft-main bg-dark">
-    <view
-      class="bg-main padding-top padding-lr border-radius mt-sm"
-      v-for="(item, index) in addressDatas"
-      :key="index"
-      @click="selectAddr(item)"
-    >
+  <view class="plr pb-big mb">
+    <view class="bg-main pt" v-for="(item, index) in addressDatas" :key="index" @click="selectAddr(item)">
       <view class="w-full dflex-wrap-w border-line">
         <view class="fwb mb-xs desc">
           <text>{{ item.address }} {{ item.addr_detail }}</text>
         </view>
         <view class="mb-sm">
           <text>{{ item.consignee }}</text>
-          <text class="margin-left">{{ item.mobile }}</text>
+          <text class="ml">{{ item.mobile }}</text>
         </view>
       </view>
       <view class="dflex-b">

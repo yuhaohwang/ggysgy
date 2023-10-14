@@ -1,7 +1,7 @@
 <template>
   <view class="fixed">
     <view class="y-s-c" style="width: 100vw; height: 100vh">
-      <view class="flex1 y-s-c padding gradient-bg" style="overflow: hidden; border-radius: 40px 40px 0px 0px">
+      <view class="flex1 y-s-c p gradient-bg" style="overflow: hidden; border-radius: 40px 40px 0px 0px">
         <view class="fixed x-c-c" style="left: 50rpx">
           <image
             :src="$getOssFileByPath('/static/logo/logo.png')"
@@ -16,7 +16,7 @@
 
         <view class="x-c-c fs-lg font-board fwb">月光下的湖面</view>
         <view class="x-c-c fs">陈宇轩</view>
-        <scroll-view class="flex1 y-c-c margin-top" scroll-y :scroll-top="top" style="min-height: 0rpx" @scroll="setTotopStatus">
+        <scroll-view class="flex1 y-c-c mt" scroll-y :scroll-top="top" style="min-height: 0rpx" @scroll="setTotopStatus">
           <view class="w-full">
             <swiper class="w-full" style="height: 600rpx" indicator-dots circular="true" duration="400">
               <swiper-item v-for="(item, index) in swiperDatas" :key="index">
@@ -45,37 +45,37 @@
           </view>
         </scroll-view>
         <view>
-          <view class="x-c-c fs margin-top">打赏名单</view>
+          <view class="x-c-c fs mt">打赏名单</view>
           <view class="x-c-c">
-            <view class="padding-xs">
+            <view class="p-xs">
               <image
                 :src="$getOssFileByPath('/static/logo/logo.png')"
                 class="border-radius-c headimg"
                 style="width: 50rpx; height: 50rpx"
               ></image>
             </view>
-            <view class="padding-xs">
+            <view class="p-xs">
               <image
                 :src="$getOssFileByPath('/static/logo/logo.png')"
                 class="border-radius-c headimg"
                 style="width: 50rpx; height: 50rpx"
               ></image>
             </view>
-            <view class="padding-xs">
+            <view class="p-xs">
               <image
                 :src="$getOssFileByPath('/static/logo/logo.png')"
                 class="border-radius-c headimg"
                 style="width: 50rpx; height: 50rpx"
               ></image>
             </view>
-            <view class="padding-xs">
+            <view class="p-xs">
               <image
                 :src="$getOssFileByPath('/static/logo/logo.png')"
                 class="border-radius-c headimg"
                 style="width: 50rpx; height: 50rpx"
               ></image>
             </view>
-            <view class="padding-xs">
+            <view class="p-xs">
               <image
                 :src="$getOssFileByPath('/static/tabbar/user.png')"
                 class="border-radius-c headimg"
@@ -112,9 +112,9 @@
 
     <!-- 分享 -->
     <use-popup mode="bottom" bgclass=" " v-model="shareShow">
-      <view class="share-area margin border-radius bg-main">
-        <view class="tac w-full padding-sm">分享</view>
-        <view class="padding-lr mb-xl dflex-b pos-r">
+      <view class="share-area m border-radius bg-main">
+        <view class="tac w-full p-sm">分享</view>
+        <view class="plr mb-xl dflex-b pos-r">
           <!-- #ifdef MP-WEIXIN -->
           <button class="dflex-c dflex-flow-c no-border btn" style="color: #07c160" open-type="share">
             <view class="iconfont iconweixin plr-sm border-radius-c fs-xxxl"></view>
@@ -131,7 +131,7 @@
     </use-popup>
 
     <!-- 海报二维码 -->
-    <view class="qrcode tac padding-tb pos-f pos-tl-c">
+    <view class="qrcode tac ptb pos-f pos-tl-c">
       <use-qrcode
         :onval="true"
         :val="posterQRcode"
@@ -155,14 +155,14 @@
     </block>
 
     <use-popup mode="bottom" bgclass=" " v-model="posterShow">
-      <view class="padding border-radius margin">
-        <view v-if="!posterUrl" class="tac bg-main padding border-radius pos-a pos-l-c" style="bottom: 45vh">海报生成中，请稍等</view>
+      <view class="p border-radius m">
+        <view v-if="!posterUrl" class="tac bg-main p border-radius pos-a pos-l-c" style="bottom: 45vh">海报生成中，请稍等</view>
 
         <view class="w-full" style="height: 70vh">
           <image :src="posterUrl" class="wh-full" mode="aspectFit"></image>
         </view>
 
-        <view class="padding w-full margin-top">
+        <view class="p w-full mt">
           <view class="dflex-b border-radius-big">
             <!-- #ifdef MP -->
             <view class="tac ptb-sm flex1 bg-base" @click="posterSave">保存到相册</view>

@@ -1,8 +1,8 @@
 <template>
   <view class="">
-    <view class="header-area plr-sm" :class="is_mp && !is_alipay ? 'pt-big' : 'padding-top'">
+    <view class="header-area plr-sm" :class="is_mp && !is_alipay ? 'pt-big' : 'pt"">
       <view class="dflex-b">
-        <view class="member-area pt-sm margin-bottom dflex pos-r" @click="to('/pages/user/setting/personal')">
+        <view class="member-area pt-sm mb" @click="to('/pages/user/setting/personal')">
           <view>
             <image
               class="headimg border-radius-c"
@@ -14,15 +14,15 @@
               <text class="fs-lg">{{ member.nickname ? member.nickname : '艺心益盟' }}</text>
             </view>
           </view>
-          <view v-if="islogin && is_mp" class="padding" @click.stop="updateMember">
+          <view v-if="islogin && is_mp" class="p" @click.stop="updateMember">
             <view :class="{ rotate: isreq }" class="animated iconfont">&#xe6ff;</view>
           </view>
         </view>
       </view>
 
       <!-- 03. 分类区1 -->
-      <view class="x-c-c x-5 padding-xs bg-main border-radius" v-if="categoryDatas && categoryDatas.length > 0">
-        <view class="y-c-c padding-xs category-item" v-for="(item, index) in categoryDatas" :key="index" @click="to(item.url)">
+      <view class="x-c-c x-5 p-xs bg-main border-radius" v-if="categoryDatas && categoryDatas.length > 0">
+        <view class="y-c-c p-xs category-item" v-for="(item, index) in categoryDatas" :key="index" @click="to(item.url)">
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
           <view>{{ item.name }}</view>
         </view>
@@ -41,7 +41,7 @@
           @goto="toOrder('/pages/user/order/order', '全部')"
         ></use-list-title>
 
-        <view class="order-area pb-sm padding-lr dflex-c">
+        <view class="order-area pb-sm plr dflex-c">
           <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '待付款')">
             <view class="iconfont">
               &#xe6da;
@@ -100,7 +100,7 @@
           :tip="stats.browsing"
           @goto="to('/pages/user/browsing/browsing')"
         ></use-list-title>
-        <scroll-view scroll-x class="browsing-area padding-lr">
+        <scroll-view scroll-x class="browsing-area plr">
           <view class="dflex">
             <view v-for="(item, index) in historyDatas" :key="index">
               <image class="border-radius-sm mr-sm" @click="toGood(item)" :src="item.img" mode="aspectFill"></image>
@@ -132,10 +132,10 @@
         ></use-list-title>
       </view>
 
-      <view v-if="islogin" class="border-radius mt-sm padding-sm dflex-c bg-main log-out-btn" @click="openActionSheet">
+      <view v-if="islogin" class="border-radius mt-sm p-sm dflex-c bg-main log-out-btn" @click="openActionSheet">
         <text class="cell-tit">退出登录</text>
       </view>
-      <view v-else class="border-radius mt-sm padding-sm dflex-c bg-main log-out-btn" @click="$api.toLogin">
+      <view v-else class="border-radius mt-sm p-sm dflex-c bg-main log-out-btn" @click="$api.toLogin">
         <text class="cell-tit">去登录</text>
       </view>
 

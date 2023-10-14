@@ -32,7 +32,7 @@
         <view class="list dflex-b dflex dflex-wrap-w w-full">
           <view class="item bg-main border-radius-sm pb-sm" v-for="(item, index) in goodsDatas" :key="index" @click="toGood(item)">
             <view class="image-wrapper"><image mode="aspectFill" :lazy-load="true" :src="item.img"></image></view>
-            <text class="title clamp padding-sm">{{ item.name }}</text>
+            <text class="title clamp p-sm">{{ item.name }}</text>
             <view class="pl-sm dflex-b">
               <text class="price">{{ item.price ? item.price / 100 : '面议' }}</text>
               <text class="ft-dark mr-sm fs-xs">已售 {{ item.sale_cnt }}</text>

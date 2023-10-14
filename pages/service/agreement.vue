@@ -1,5 +1,5 @@
 <template>
-  <view class="padding"><rich-text :nodes="agreement" space="emsp"></rich-text></view>
+  <view class="p"><rich-text :nodes="agreement" space="emsp"></rich-text></view>
 </template>
 
 <script>

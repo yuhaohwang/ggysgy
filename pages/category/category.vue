@@ -43,7 +43,7 @@
           <use-empty v-if="empty" e-style="round" tip="无作品数据"></use-empty>
 
           <view v-else class="x-s-s-w x-2 plr-xs">
-            <view class="y-s-c padding-xs" v-for="(item, index) in goodsDatas" :key="index" @click="toGood(item)">
+            <view class="y-s-c p-xs" v-for="(item, index) in goodsDatas" :key="index" @click="toGood(item)">
               <view class="w-full border-radius-sm bg-main">
                 <view class="" style="height: 300rpx">
                   <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%"></image>

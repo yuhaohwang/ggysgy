@@ -2,7 +2,7 @@
   <view>
     <view class="use-header dflex w-full bg-main" :class="fixed ? 'fixed' : ''">
       <!-- 头部组件 -->
-      <view class="use-search dflex-b border-radius-lg padding-lr w-full" @click="search">
+      <view class="use-search dflex-b border-radius-lg plr w-full" @click="search">
         <text>{{ searchTip }}</text>
         <view class="iconfont iconsousuo-01"></view>
       </view>

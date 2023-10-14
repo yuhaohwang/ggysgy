@@ -7,13 +7,13 @@
           <scroll-view class="wh-full" scroll-y @scrolltolower="onreachBottom" :enable-flex="true">
             <!-- <use-empty v-if="sdata.empty" e-style="round" tip="无作品数据"></use-empty> -->
             <!--            <block v-for="(item, index) in [1, 2, 3, 4]" :key="index"> -->
-            <view class="padding-xs">
+            <view class="p-xs">
               <view @click="toGood({ _id: '1651133440341913010' })"><user-goods></user-goods></view>
               <view class="x-b-c">
-                <view class="padding-xs"><u--text mode="text" text="更多" :size="12" color="#8D9299"></u--text></view>
+                <view class="p-xs"><u--text mode="text" text="更多" :size="12" color="#8D9299"></u--text></view>
                 <view class="x-c-c" style="white-space: nowrap">
-                  <view class="padding-xs"><u-button size="mini" :hairline="true" shape="circle">下架</u-button></view>
-                  <view class="padding-xs"><u-button size="mini" :hairline="true" shape="circle">编辑</u-button></view>
+                  <view class="p-xs"><u-button size="mini" :hairline="true" shape="circle">下架</u-button></view>
+                  <view class="p-xs"><u-button size="mini" :hairline="true" shape="circle">编辑</u-button></view>
                 </view>
               </view>
             </view>

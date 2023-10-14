@@ -9,16 +9,16 @@
       iconfont="icondizhi-"
       @goto="toaddr"
     ></use-list-title>
-    <view v-else class="padding dflex-b bg-main" @click="toaddr">
+    <view v-else class="p dflex-b bg-main" @click="toaddr">
       <view class="dflex">
-        <view class="iconfont icondizhi- margin-right ft-main"></view>
+        <view class="iconfont icondizhi- mr"></view>
         <view class="w-full dflex-wrap-w">
           <view class="mb-xs">
             <text>{{ addrData.address }} {{ addrData.addr_detail }}</text>
           </view>
           <view>
             <text>{{ addrData.consignee }}</text>
-            <text class="margin-left">{{ addrData.mobile }}</text>
+            <text class="ml">{{ addrData.mobile }}</text>
           </view>
         </view>
       </view>
@@ -27,9 +27,10 @@
     </view>
     <view class="gap"></view>
 
-    <view class="goods-area bg-main padding">
+    <view class="goods-area bg-main p">
       <!-- 作品列表 -->
-      <view class="goods-item" :class="{ 'margin-top': index > 0 }" v-for="(item, index) in goodsDatas" :key="index">
+      <view class="goods-item" :class="{ 'mt" : index>
+        0 }" v-for="(item, index) in goodsDatas" :key="index">
         <view class="pos-r">
           <image mode="aspectFill" :src="item.goods.img"></image>
           <view
@@ -43,10 +44,10 @@
         <view class="flex1 pl-sm">
           <text class="title clamp-2">{{ item.goods.name || '' }} {{ item.goods.name_pw || '' }}</text>
           <view class="ft-dark fs-xs pt-xs">
-            <text v-if="cart_ids && cart_ids.length > 0" class="margin-right">× {{ item.cart.goods_num }}</text>
+            <text v-if="cart_ids && cart_ids.length > 0" class="mr">× {{ item.cart.goods_num }}</text>
             {{ (item.goods_sku && item.goods_sku.spec) || '&nbsp;&nbsp;' }}
           </view>
-          <view class="pos-r dflex-b padding-top">
+          <view class="pos-r dflex-b pt">
             <view class="price flex1">{{ item.goods.price / 100 || '面议' }}</view>
 
             <!-- + - 数量 -->
@@ -72,9 +73,9 @@
     <!-- 优惠券弹出层 -->
     <use-popup mode="bottom" v-model="couponShow" @open="couponOpen">
       <!-- 优惠券区 -->
-      <view class="coupon-area padding bg-dark">
+      <view class="coupon-area p bg-dark">
         <view class="coupon-item bg-main pos-r fs-xs" v-for="(item, index) in couponDatas" :key="index">
-          <view class="content pos-r padding dflex-b">
+          <view class="content pos-r p dflex-b">
             <view class="">
               <view class="mb-xs fs">{{ item.name }}</view>
               <view class="ft-dark">有效期至 {{ item.end_time.split(' ')[0] }}</view>
@@ -89,8 +90,8 @@
             <view class="circle r"></view>
           </view>
           <view class="dflex-b">
-            <text class="ft-dark padding-lr">{{ item.type }}</text>
-            <text class="ft-base ptb-sm padding-lr" @click="couponUse(item)">立即使用</text>
+            <text class="ft-dark plr">{{ item.type }}</text>
+            <text class="ft-base ptb-sm plr" @click="couponUse(item)">立即使用</text>
           </view>
         </view>
         <view v-if="!couponDatas || couponDatas.length <= 0" class="coupon-none"><text class="coupon-none-tip">开发中!!!!!</text></view>
@@ -101,7 +102,7 @@
 
     <!-- 金额明细 -->
     <view class="bg-main">
-      <view class="dflex-b padding-lr ptb-sm">
+      <view class="dflex-b plr ptb-sm">
         <view class="flex1">总金额</view>
         <view class="">
           <text style="font-size: 24rpx">￥</text>
@@ -109,20 +110,20 @@
         </view>
       </view>
 
-      <view v-if="total_coupon_money > 0" class="dflex-b padding-lr ptb-sm">
+      <view v-if="total_coupon_money > 0" class="dflex-b plr ptb-sm">
         <view class="flex1">优惠金额</view>
         <view class="ft-base">-￥{{ total_coupon_money }}</view>
       </view>
 
-      <view class="dflex-b padding-lr ptb-sm">
+      <view class="dflex-b plr ptb-sm">
         <view class="mr-xl">备注</view>
-        <input class="flex1 padding-sm" type="text" v-model="order_desc" placeholder="请填写买家备注" placeholder-class="placeholder" />
+        <input class="flex1 p-sm" type="text" v-model="order_desc" placeholder="请填写买家备注" placeholder-class="placeholder" />
       </view>
     </view>
     <view class="gap"></view>
 
     <!-- 底部  -->
-    <view class="oper-area pos-f pos-bottom w-full dflex-b bg-main safe-area-inset-bottom padding-left">
+    <view class="oper-area pos-f pos-bottom w-full dflex-b bg-main safe-area-inset-bottom pl">
       <view>
         <text class="fs-sm">实付款</text>
         <text class="price ml-sm fs-xl">{{ total_money }}</text>

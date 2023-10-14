@@ -1,6 +1,6 @@
 <template>
   <view class="h-full pos-r">
-    <view class="padding-lr ptb-lg bg-base">
+    <view class="plr ptb-lg bg-base">
       <view class="dflex-a">
         <view class="dflex" @click="popUp = true">
           <image
@@ -37,8 +37,8 @@
     <view class="bg-base w-full" style="height: 80rpx"></view>
     <view class="w-full bg-dark data-area plr-sm">
       <view class="dflex-c w-full ptb-lg fs">
-        <view class="padding-lr" :class="{ active: pitch_id === 0 }" @click="pitch(0)">笔记</view>
-        <view class="padding-lr" :class="{ active: pitch_id === 1 }" @click="pitch(1)">收藏</view>
+        <view class="plr" :class="{ active: pitch_id === 0 }" @click="pitch(0)">笔记</view>
+        <view class="plr" :class="{ active: pitch_id === 1 }" @click="pitch(1)">收藏</view>
       </view>
       <view class="goodsContent border-radius">
         <view class="goodsLeftList">
