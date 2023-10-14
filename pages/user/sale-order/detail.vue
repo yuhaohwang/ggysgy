@@ -97,8 +97,7 @@
 
     <!-- 订单作品明细 -->
     <view class="p mlr mtb-sm bg-main border-radius">
-      <view class="goods-area" :class="{ 'mt" : index>
-        0 }" v-for="(item, index) in order_detail" :key="index">
+      <view class="goods-area" :class="{ mt: index > 0 }" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
           <view class="img"><image :src="item.goods_img"></image></view>
           <view class="ml-sm">
@@ -193,7 +192,7 @@
       </view>
     </view>
 
-    <view style="height: 100rpx"></view>
+    <view style="height: 100rpx;"></view>
 
     <!-- 底部操作区 -->
     <view class="oper-area dflex-b pr">

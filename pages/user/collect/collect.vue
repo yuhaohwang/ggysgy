@@ -4,7 +4,7 @@
     <use-empty v-if="empty" e-style="round" tip="无收藏数据" height="100vh"></use-empty>
 
     <view v-else class="plr" v-for="(item, index) in datas" :key="index">
-      <view class="product border-radius-sm p mb-sm bg-main" style="padding-bottom: 15rpx">
+      <view class="product border-radius-sm p mb-sm bg-main" style="padding-bottom: 15rpx;">
         <view class="left" @click="toGood(item)"><image :src="item.img[0]" mode="aspectFill"></image></view>
         <view class="ml-sm pos-r w-full">
           <text class="clamp-2" @click="toGood(item)">{{ item.name[0] }} {{ item.name_pw }}</text>

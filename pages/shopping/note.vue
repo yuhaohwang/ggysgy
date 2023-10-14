@@ -10,7 +10,7 @@
       <view class="dflex">
         <image
           class="mr-xs"
-          style="width: 48rpx; height: 48rpx"
+          style="width: 48rpx; height: 48rpx;"
           mode="widthFix"
           src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/11bd19fa-6a70-49fd-9e71-72950828f6a8.jpg"
         ></image>

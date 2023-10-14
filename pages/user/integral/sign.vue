@@ -1,7 +1,7 @@
 <template>
   <view class="sign-area">
     <view class="sign-top pos-r bg-base dflex dflex-flow-c">
-      <view class="ft-white mt-sm fwb" style="font-size: 70rpx">{{ data.member_integral || 750 }}</view>
+      <view class="ft-white mt-sm fwb" style="font-size: 70rpx;">{{ data.member_integral || 750 }}</view>
       <view class="btn-line ft-black fs-xs border-radius-big" @click="toDetail">积分明细</view>
     </view>
     <view class="sign-content m pos-a">

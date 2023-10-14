@@ -269,7 +269,7 @@
           width: 120rpx;
           height: 0;
           border-bottom: 4rpx solid $base-color;
-          content: '';
+          content: "";
           transform: translateX(-50%);
         }
       }

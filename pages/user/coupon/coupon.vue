@@ -223,8 +223,7 @@
 </script>
 
 <style lang="scss">
-  page,
-  .container {
+  page, .container {
     min-height: 100%;
     background: $page-color-base;
   }
@@ -255,7 +254,7 @@
           width: 44px;
           height: 0;
           border-bottom: 2px solid $base-color;
-          content: '';
+          content: "";
           transform: translate(-50%);
         }
       }
@@ -302,7 +301,7 @@
     .discount::after {
       margin-left: 6rpx;
       font-size: 24rpx;
-      content: '折';
+      content: "折";
     }
 
     .border-line {

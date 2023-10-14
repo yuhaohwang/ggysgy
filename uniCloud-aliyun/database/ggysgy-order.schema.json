@@ -44,7 +44,8 @@
       "forceDefaultValue": {
         "$env": "uid"
       },
-      "trim": "both"
+      "trim": "both",
+      "foreignKey": "uni-id-users._id"
     },
     "create_uname": {
       "bsonType": "string",

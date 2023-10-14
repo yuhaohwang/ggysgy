@@ -15,7 +15,7 @@
     </view>
 
     <!-- 订单轮播区 -->
-    <view class="order-area w-full" style="margin-top: 7vh">
+    <view class="order-area w-full" style="margin-top: 7vh;">
       <!-- 空白页 -->
       <use-empty
         v-if="navData.orderList.length === 0 && navData.loaded"
@@ -30,8 +30,7 @@
         <view class="order-item p bg-main border-radius">
           <view @click="todetail(item.order)">
             <!-- 订单作品明细 -->
-            <view class="goods-area" :class="{ 'mt" : goodsIndex>
-              0 }" v-for="(goodsItem, goodsIndex) in item.order_detail" :key="goodsIndex" >
+            <view class="goods-area" :class="{ mt: goodsIndex > 0 }" v-for="(goodsItem, goodsIndex) in item.order_detail" :key="goodsIndex">
               <image :src="goodsItem.goods_img" mode="aspectFill"></image>
               <view class="right flex1">
                 <text class="clamp-2">{{ goodsItem.goods_name }} {{ goodsItem.goods_name_pw }}</text>
@@ -154,8 +153,12 @@
             <view class="order-item p bg-main border-radius">
               <view @click="todetail(item.order)">
                 <!-- 订单作品明细 -->
-                <view class="goods-area" :class="{ 'mt" : goodsIndex>
-                  0 }" v-for="(goodsItem, goodsIndex) in item.order_detail" :key="goodsIndex" >
+                <view
+                  class="goods-area"
+                  :class="{ mt: goodsIndex > 0 }"
+                  v-for="(goodsItem, goodsIndex) in item.order_detail"
+                  :key="goodsIndex"
+                >
                   <image :src="goodsItem.goods_img" mode="aspectFill"></image>
                   <view class="right flex1">
                     <text class="clamp-2">{{ goodsItem.goods_name }} {{ goodsItem.goods_name_pw }}</text>
@@ -570,8 +573,7 @@
 </script>
 
 <style lang="scss">
-  page,
-  .container {
+  page, .container {
     min-height: 100%;
     background: $page-color-base;
   }
@@ -599,7 +601,7 @@
         width: 44px;
         height: 0;
         border-bottom: 2px solid $base-color;
-        content: '';
+        content: "";
         transform: translate(-50%);
       }
     }

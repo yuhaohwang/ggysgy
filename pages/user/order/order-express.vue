@@ -13,7 +13,7 @@
       </view>
     </view>
     <view v-if="expressData && expressData.data" class="plr">
-      <view class="product border-radius p mb-sm bg-main" style="padding-bottom: 15rpx">
+      <view class="product border-radius p mb-sm bg-main" style="padding-bottom: 15rpx;">
         <view
           :class="{ active: index == 0, fwb: index == 0 }"
           class="dflex item pos-r"
@@ -114,7 +114,7 @@
     border-left-color: rgb(211 211 211);
     border-left-style: solid;
     border-left-width: 1px;
-    content: ' ';
+    content: " ";
   }
 
   .item.active::before {
@@ -141,7 +141,7 @@
     height: 20rpx;
     background: rgba(255, 106, 108, 0.5) !important;
     border-radius: 50%;
-    content: ' ';
+    content: " ";
     -webkit-transform: scale(1.6);
     transform: scale(1.6);
   }

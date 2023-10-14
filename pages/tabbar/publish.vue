@@ -64,7 +64,7 @@
         <u-checkbox></u-checkbox>
         <view class="">
           <text>我已阅读</text>
-          <text style="color: #3c9cff" @click="toUrl('/pages/service/agreement', 0)">《全国艺术院校公益助学平台发布作品协议》</text>
+          <text style="color: #3c9cff;" @click="toUrl('/pages/service/agreement', 0)">《全国艺术院校公益助学平台发布作品协议》</text>
         </view>
       </u-checkbox-group>
       <view class="p"><u-button type="primary" text="提交" @click="submitData" :disabled="!agreementChecked"></u-button></view>

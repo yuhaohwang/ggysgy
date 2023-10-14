@@ -3,7 +3,7 @@
     <template v-if="needAgreements">
       <checkbox-group @change="setAgree">
         <label class="checkbox-box">
-          <checkbox :checked="isAgree" style=" margin-right: -6px;transform: scale(0.5);" />
+          <checkbox :checked="isAgree" style="margin-right: -6px; transform: scale(0.5);" />
           <text class="text">同意</text>
         </label>
       </checkbox-group>

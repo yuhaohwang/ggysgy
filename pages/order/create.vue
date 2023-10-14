@@ -29,8 +29,7 @@
 
     <view class="goods-area bg-main p">
       <!-- 作品列表 -->
-      <view class="goods-item" :class="{ 'mt" : index>
-        0 }" v-for="(item, index) in goodsDatas" :key="index">
+      <view class="goods-item" :class="{ mt: index > 0 }" v-for="(item, index) in goodsDatas" :key="index">
         <view class="pos-r">
           <image mode="aspectFill" :src="item.goods.img"></image>
           <view
@@ -105,7 +104,7 @@
       <view class="dflex-b plr ptb-sm">
         <view class="flex1">总金额</view>
         <view class="">
-          <text style="font-size: 24rpx">￥</text>
+          <text style="font-size: 24rpx;">￥</text>
           {{ goods_money }}
         </view>
       </view>
@@ -401,7 +400,7 @@
           width: 100%;
           height: 0;
           border-bottom: 1px dashed #f3f3f3;
-          content: '';
+          content: "";
           transform: scaleY(50%);
         }
       }

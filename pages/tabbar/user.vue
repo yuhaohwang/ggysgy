@@ -1,37 +1,28 @@
 <template>
-  <view class="">
-    <view class="header-area plr-sm" :class="is_mp && !is_alipay ? 'pt-big' : 'pt"">
-      <view class="dflex-b">
-        <view class="member-area pt-sm mb" @click="to('/pages/user/setting/personal')">
-          <view>
-            <image
-              class="headimg border-radius-c"
-              :src="member.avatar_file ? member.avatar_file.url : $getOssFileByPath('/static/logo/logo.png')"
-            ></image>
-          </view>
-          <view class="ml-sm">
-            <view class="info-box">
-              <text class="fs-lg">{{ member.nickname ? member.nickname : '艺心益盟' }}</text>
-            </view>
-          </view>
-          <view v-if="islogin && is_mp" class="p" @click.stop="updateMember">
-            <view :class="{ rotate: isreq }" class="animated iconfont">&#xe6ff;</view>
-          </view>
-        </view>
+  <view>
+    <view class="member-area p" @click="to('/pages/user/setting/personal')">
+      <view class="x-s-c">
+        <image
+          class="x-c-c headimg border-radius-c"
+          :src="member.avatar_file ? member.avatar_file.url : $getOssFileByPath('/static/logo/logo.png')"
+        ></image>
+        <text class="ml fs-lg">{{ member.nickname ? member.nickname : '匿名用户' }}</text>
       </view>
+    </view>
 
-      <!-- 03. 分类区1 -->
+    <!-- 分类区 -->
+    <view class="plr">
       <view class="x-c-c x-5 p-xs bg-main border-radius" v-if="categoryDatas && categoryDatas.length > 0">
         <view class="y-c-c p-xs category-item" v-for="(item, index) in categoryDatas" :key="index" @click="to(item.url)">
           <image :lazy-load="true" :src="item.img" mode="widthFix"></image>
-          <view>{{ item.name }}</view>
+          <text>{{ item.name }}</text>
         </view>
       </view>
     </view>
 
     <!-- 我的订单 -->
-    <view class="container-area plr-sm pb-sm">
-      <view class="border-radius mt-sm bg-main">
+    <view class="plr mt-sm">
+      <view class="border-radius bg-main">
         <use-list-title
           title="我的订单"
           iconfont="icondingdan"
@@ -45,53 +36,54 @@
           <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '待付款')">
             <view class="iconfont">
               &#xe6da;
-              <view class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['待付款'] > 0">
+              <text class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['待付款'] > 0">
                 {{ stats.order_state['待付款'] }}
-              </view>
+              </text>
             </view>
             <text>待付款</text>
           </view>
           <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '待发货')">
             <view class="iconfont">
               &#xe6d9;
-              <view class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['待发货'] > 0">
+              <text class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['待发货'] > 0">
                 {{ stats.order_state['待发货'] }}
-              </view>
+              </text>
             </view>
             <text>待发货</text>
           </view>
           <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '待收货')">
             <view class="iconfont">
               &#xe6d7;
-              <view class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['待收货'] > 0">
+              <text class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['待收货'] > 0">
                 {{ stats.order_state['待收货'] }}
-              </view>
+              </text>
             </view>
             <text>待收货</text>
           </view>
           <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '待评价')">
             <view class="iconfont">
               &#xe6db;
-              <view class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['待评价'] > 0">
+              <text class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['待评价'] > 0">
                 {{ stats.order_state['待评价'] }}
-              </view>
+              </text>
             </view>
             <text>待评价</text>
           </view>
           <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '售后中')">
             <view class="iconfont">
               &#xe715;
-              <view class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['售后中'] > 0">
+              <text class="badge badge-small" v-if="stats && stats.order_state && stats.order_state['售后中'] > 0">
                 {{ stats.order_state['售后中'] }}
-              </view>
+              </text>
             </view>
             <text>售后/退款</text>
           </view>
         </view>
       </view>
+    </view>
 
-      <view class="border-radius mt-sm bg-main">
-        <!-- 我的足迹 -->
+    <view class="plr mt-sm">
+      <view class="border-radius bg-main">
         <use-list-title
           title="我的足迹"
           iconfont="iconzuji"
@@ -100,6 +92,7 @@
           :tip="stats.browsing"
           @goto="to('/pages/user/browsing/browsing')"
         ></use-list-title>
+
         <scroll-view scroll-x class="browsing-area plr">
           <view class="dflex">
             <view v-for="(item, index) in historyDatas" :key="index">
@@ -131,26 +124,25 @@
           @goto="to('/pages/user/setting/setting')"
         ></use-list-title>
       </view>
+    </view>
 
-      <view v-if="islogin" class="border-radius mt-sm p-sm dflex-c bg-main log-out-btn" @click="openActionSheet">
-        <text class="cell-tit">退出登录</text>
+    <view class="plr mt-sm">
+      <view class="x-c-c p-sm border-radius bg-main log-out-btn" @click="() => (islogin ? openActionSheet() : $api.toLogin())">
+        <text>{{ islogin ? '退出登录' : '去登录' }}</text>
       </view>
-      <view v-else class="border-radius mt-sm p-sm dflex-c bg-main log-out-btn" @click="$api.toLogin">
-        <text class="cell-tit">去登录</text>
-      </view>
-
-      <!-- 操作菜单 -->
-      <use-action-sheet
-        v-model="actionSheetShow"
-        :list="actionSheetList"
-        :tips="actionSheetTips"
-        @click="actionSheetClick"
-        @close="actionSheetClose"
-      ></use-action-sheet>
     </view>
 
     <!-- 以艺自强版权 -->
     <use-copyright></use-copyright>
+
+    <!-- 操作菜单 -->
+    <use-action-sheet
+      v-model="actionSheetShow"
+      :list="actionSheetList"
+      :tips="actionSheetTips"
+      @click="actionSheetClick"
+      @close="actionSheetClose"
+    ></use-action-sheet>
   </view>
 </template>
 <script>
@@ -412,30 +404,11 @@
   /* 分类区1 */
   .category-item {
     margin: auto;
-
-    // padding: 6rpx;
     font-size: $font-sm + 2upx;
     color: $font-color-dark;
 
     image {
       width: 60%;
-    }
-  }
-
-  .vip-card-area {
-    color: #f7d680;
-    background: linear-gradient(to left, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
-  }
-
-  .stats-area {
-    .item {
-      padding: 30rpx 0;
-    }
-
-    .num {
-      margin-bottom: 6rpx;
-      font-size: $font-lg;
-      color: $font-color-dark;
     }
   }
 
@@ -453,7 +426,6 @@
     }
   }
 
-  .stats-area .item,
   .order-area .item {
     position: relative;
     font-size: $font-sm;

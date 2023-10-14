@@ -1,72 +1,77 @@
 <template>
-  <view class="box-sizing-b">
-    <!-- 01. 头部组件 -->
-    <view class="x-c-c bg-main plr-sm">
-      <view class="search flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
-    </view>
-
-    <!-- 分类 -->
-    <view class="category x-c-s h-full">
-      <!-- 左侧一级分类 -->
-      <view class="h-full left">
-        <scroll-view scroll-y class="h-full">
-          <view v-for="item in fdatas" :key="item._id" class="item dflex-c" :class="{ active: item._id === cid }" @click="fSelect(item)">
-            {{ item.name }}
-          </view>
-        </scroll-view>
+  <view class="box-sizing-b wh-full">
+    <view class="y-s-c wh-full">
+      <!-- 01. 头部组件 -->
+      <view class="x-c-c w-full bg-main plr-sm">
+        <view class="search flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
       </view>
 
-      <!-- 右侧 1二级分类 2作品列表 -->
-      <scroll-view
-        class="h-full right"
-        scroll-with-animation
-        scroll-y
-        :scroll-top="top"
-        :style="{ height: scrollHeight }"
-        @scroll="onScroll"
-      >
-        <!-- 右侧二级分类 -->
-        <view v-if="mode == 1" class="">
-          <view class="dflex-s dflex-wrap-w bg-main">
-            <block v-for="item in sdatas" :key="item._id">
-              <view class="item pb-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="toGoodList(item)">
-                <image :lazy-load="true" :src="item.img || $getOssFileByPath('/static/logo/logo.png')"></image>
-                <text class="tac clamp mt-sm">{{ item.name }}</text>
-              </view>
-            </block>
-          </view>
+      <!-- 分类 -->
+      <view class="category x-c-s flex1 w-full">
+        <!-- 左侧一级分类 -->
+        <view class="h-full left">
+          <scroll-view scroll-y class="h-full">
+            <view v-for="item in fdatas" :key="item._id" class="item dflex-c" :class="{ active: item._id === cid }" @click="fSelect(item)">
+              {{ item.name }}
+            </view>
+          </scroll-view>
         </view>
 
-        <!-- 右侧分类对应作品列表 -->
-        <view v-if="mode == 2" class="">
-          <!-- 空白页 -->
-          <use-empty v-if="empty" e-style="round" tip="无作品数据"></use-empty>
+        <!-- 右侧 1二级分类 2作品列表 -->
+        <scroll-view
+          class="h-full right"
+          scroll-with-animation
+          scroll-y
+          :scroll-top="top"
+          :style="{ height: scrollHeight }"
+          @scroll="onScroll"
+        >
+          <!-- 右侧二级分类 -->
+          <view v-if="mode == 1" class="h-full bg-main">
+            <!-- 空白页 -->
+            <use-empty v-if="!hasSubCategory" tip="无分类数据"></use-empty>
 
-          <view v-else class="x-s-s-w x-2 plr-xs">
-            <view class="y-s-c p-xs" v-for="(item, index) in goodsDatas" :key="index" @click="toGood(item)">
-              <view class="w-full border-radius-sm bg-main">
-                <view class="" style="height: 300rpx">
-                  <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%"></image>
+            <view v-else class="x-s-s h-full bg-main">
+              <block v-for="item in sdatas" :key="item._id">
+                <view class="item pb-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="toGoodList(item)">
+                  <image :lazy-load="true" :src="item.img || $getOssFileByPath('/static/logo/logo.png')"></image>
+                  <text class="tac clamp mt-sm">{{ item.name }}</text>
                 </view>
-                <view class="x-b-c plr-xs fs-xs">
-                  <view class="clamp">{{ item.name }}</view>
-                  <view class="">￥{{ item.price ? item.price / 100 : '面议' }}</view>
-                </view>
-                <!--               <view class="x-b-c plr-xs fs-xs">
-                  <view class=""><image src="" mode=""></image></view>
-                  <view class="clamp">陈宇轩</view>
-                  <view class="clamp">广州美术学院</view>
-                </view> -->
-              </view>
+              </block>
             </view>
           </view>
 
-          <!-- 上拉加载更多 -->
-          <use-loadmore v-if="!empty && hasmore" :type="loadmoreType"></use-loadmore>
-          <!-- 置顶 -->
-          <use-totop ref="usetop" bottom="150" :style="{ marginBottom: navHeight + 'px' }" @to="totop"></use-totop>
-        </view>
-      </scroll-view>
+          <!-- 右侧分类对应作品列表 -->
+          <view v-if="mode == 2" class="h-full bg-main">
+            <!-- 空白页 -->
+            <use-empty v-if="empty" tip="无作品数据"></use-empty>
+
+            <view v-else class="x-s-s-w x-2 plr-xs">
+              <view class="y-s-c p-xs" v-for="(item, index) in goodsDatas" :key="index" @click="toGood(item)">
+                <view class="w-full border-radius-sm bg-main">
+                  <view class="" style="height: 300rpx;">
+                    <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%;"></image>
+                  </view>
+                  <view class="x-b-c plr-xs fs-xs">
+                    <view class="clamp">{{ item.name }}</view>
+                    <view class="">￥{{ item.price ? item.price / 100 : '面议' }}</view>
+                  </view>
+                  <!--               <view class="x-b-c plr-xs fs-xs">
+			              <view class=""><image src="" mode=""></image></view>
+			              <view class="clamp">陈宇轩</view>
+			              <view class="clamp">广州美术学院</view>
+			            </view> -->
+                </view>
+              </view>
+            </view>
+
+            <!-- 上拉加载更多 -->
+            <use-loadmore v-if="!empty && hasmore" :type="loadmoreType"></use-loadmore>
+            <!-- 置顶 -->
+            <use-totop ref="usetop" bottom="150" :style="{ marginBottom: navHeight + 'px' }" @to="totop"></use-totop>
+          </view>
+        </scroll-view>
+      </view>
     </view>
 
     <!-- 切换模式 1二级分类 2作品列表 -->
@@ -124,6 +129,11 @@
         if (this.empty !== empty) {
           this.empty = empty;
         }
+      },
+    },
+    computed: {
+      hasSubCategory() {
+        return this.sdatas.some(item => item.pid == this.cid);
       },
     },
     onPageScroll(e) {
@@ -276,7 +286,7 @@
             width: 8rpx;
             height: 36rpx;
             background-color: $uni-color-primary;
-            content: '';
+            content: "";
             opacity: 0.8;
             transform: translateY(-50%);
           }

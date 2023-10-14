@@ -17,8 +17,8 @@
     "stylelint-scss": "^4.2.0"
   },
   "scripts": {
+    "lint:prettier": "prettier --write \"**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:eslint": "eslint --fix --ext \"**/*.{vue,less,css,scss}\"",
-    "lint:prettier": "prettier --write --loglevel warn \"**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "gc": "git add -A && git-cz && git pull && git push"
   },

@@ -32,7 +32,7 @@ DbContext.prototype = {
 
 DbContext.prototype.where = function (params) {
   if (typeof params === 'object') {
-    Object.assign(this.where_obj, params);
+    this.where_obj = params;
   }
   if (typeof params === 'string') {
     this.where_arr.push(params);

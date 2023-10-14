@@ -148,7 +148,7 @@
     .discount::after {
       margin-left: 6rpx;
       font-size: 24rpx;
-      content: '折';
+      content: "折";
     }
 
     .border-line {

@@ -1,6 +1,6 @@
 <template>
   <view>
-    <view class="x-s-c" style="height: 300rpx">
+    <view class="x-s-c" style="height: 300rpx;">
       <view class=""><u--image :src="img" width="200rpx" height="300rpx" mode="scaleToFill" radius="5" :fade="false"></u--image></view>
 
       <view class="flex1 plr-xs h-full y-b-s">

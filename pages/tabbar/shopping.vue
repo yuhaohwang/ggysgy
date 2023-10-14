@@ -6,7 +6,7 @@
       <image
         :src="$getOssFileByPath('/static/logo/logo.png')"
         class="border-radius-lg headimg"
-        style="width: 66rpx; height: 66rpx"
+        style="width: 66rpx; height: 66rpx;"
         mode=""
         @click="user"
       ></image>
@@ -17,7 +17,7 @@
     <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="tabCurrent" @tab-change="tabChange"></top-tab>
 
     <view class="flex1 w-full">
-      <swiper style="height: 100%" :duration="0" :current="current" @animationfinish="animationfinish">
+      <swiper style="height: 100%;" :duration="0" :current="current" @animationfinish="animationfinish">
         <swiper-item v-for="(sdata, index) in sdatas" :key="index">
           <scroll-view
             class="wh-full"
@@ -36,7 +36,7 @@
                     <view class="bg-main border-radius">
                       <image
                         :src="l_item.img"
-                        style="width: 100%; max-height: 350rpx"
+                        style="width: 100%; max-height: 350rpx;"
                         mode="widthFix"
                         :lazy-load="true"
                         @load="considerPush"
@@ -49,7 +49,7 @@
                           <image
                             :src="getUserAvatar(l_item.create_uid[0])"
                             class="border-radius-c headimg"
-                            style="width: 50rpx; height: 50rpx"
+                            style="width: 50rpx; height: 50rpx;"
                           ></image>
                           <view class="ft-dark ml-xs fs-xxs">
                             {{ getUserName(l_item.create_uid[0]) }}
@@ -67,7 +67,7 @@
                     <view class="bg-main border-radius">
                       <image
                         :src="r_item.img"
-                        style="width: 100%; max-height: 350rpx"
+                        style="width: 100%; max-height: 350rpx;"
                         mode="widthFix"
                         :lazy-load="true"
                         @load="considerPush"
@@ -84,7 +84,7 @@
                                 : $getOssFileByPath('/static/logo/logo.png')
                             "
                             class="border-radius-c headimg"
-                            style="width: 50rpx; height: 50rpx"
+                            style="width: 50rpx; height: 50rpx;"
                           ></image>
                           <view class="ft-dark ml-xs fs-xxs">
                             {{ getUserName(r_item.create_uid[0]) }}
@@ -239,7 +239,7 @@
         const goodList = db
           .collection('ggysgy-goods')
           .where(this.cid == 0 ? `state == '销售中'` : `'${this.cid}' in cids && state == '销售中'`)
-          .field('img, create_time, name, create_uid')
+          // .field('img, create_time, name, create_uid')
           .orderBy('create_time desc')
           .skip(this.sdatas[cidx].reqdata.rows * this.sdatas[cidx].reqdata.page)
           .limit(this.sdatas[cidx].reqdata.rows)

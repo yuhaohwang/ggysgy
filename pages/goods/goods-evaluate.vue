@@ -9,7 +9,7 @@
         :key="index"
         @click="change(item)"
       >
-        <text style="font-size: 26rpx">{{ item.name }}({{ item.cnt }})</text>
+        <text style="font-size: 26rpx;">{{ item.name }}({{ item.cnt }})</text>
       </view>
     </view>
     <view class="gap"></view>

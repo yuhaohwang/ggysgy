@@ -236,9 +236,8 @@ $wrap: (
         flex-wrap: $value3;
         justify-content: $value1;
         align-items: $value2;
-        align-content: $value2;
+        align-content: $value2; /* 等比分列，2-6列 */
 
-        /* 等比分列，2-6列 */
         @for $i from 2 through 12 {
           &.x-#{$i} {
             & > view {
@@ -623,6 +622,70 @@ view[class*="border-radius"] {
 
 .headimg {
   box-shadow: 0 0 7px 3px #f0f0f0;
+}
+
+/* 内外边距 */
+$spacingTypes: (
+  m: margin,
+  p: padding,
+);
+$directions: l, r, t, b, lr, tb, default;
+$lengths: (
+  0: 0rpx,
+  xxs: 5rpx,
+  xs: 10rpx,
+  sm: 20rpx,
+  default: 30rpx,
+  lg: 40rpx,
+  xl: 50rpx,
+  xll: 100rpx,
+);
+
+@each $propertyKey, $propertyValue in $spacingTypes {
+  @each $lengthKey, $lengthValue in $lengths {
+    @each $directionKey in $directions {
+      $finalName: "." + $propertyKey;
+
+      @if $directionKey != "default" {
+        $finalName: $finalName + $directionKey;
+      }
+
+      @if $lengthKey != "default" {
+        $finalName: $finalName + "-" + $lengthKey;
+      }
+      #{$finalName} {
+        @if $directionKey == "l" {
+          #{$propertyValue}-left: #{$lengthValue};
+        }
+
+        @if $directionKey == "r" {
+          #{$propertyValue}-right: #{$lengthValue};
+        }
+
+        @if $directionKey == "t" {
+          #{$propertyValue}-top: #{$lengthValue};
+        }
+
+        @if $directionKey == "b" {
+          #{$propertyValue}-bottom: #{$lengthValue};
+        }
+
+        @if $directionKey == "tb" {
+          #{$propertyValue}-top: #{$lengthValue};
+          #{$propertyValue}-bottom: #{$lengthValue};
+        }
+
+        @if $directionKey == "lr" {
+          #{$propertyValue}-left: #{$lengthValue};
+          #{$propertyValue}-right: #{$lengthValue};
+        }
+
+        @if $directionKey == "default" {
+          #{$propertyValue}: #{$lengthValue};
+        }
+      }
+    }
+  }
 }
 
 /* 外边距 */
@@ -1031,7 +1094,6 @@ view[class*="border-radius"] {
 }
 
 /* #ifdef H5 || MP-360 */
-
 ::-webkit-scrollbar {
   display: none;
   width: 0;
