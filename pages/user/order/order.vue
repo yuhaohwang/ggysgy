@@ -25,12 +25,7 @@
         height="93vh"
       ></use-empty>
       <!-- 订单列表区 -->
-      <view
-        class="padding-lr margin-bottom-sm"
-        :class="index === 0 ? 'padding-top-sm' : ''"
-        v-for="(item, index) in navData.orderList"
-        :key="index"
-      >
+      <view class="padding-lr mb-sm" :class="index === 0 ? 'pt-sm' : ''" v-for="(item, index) in navData.orderList" :key="index">
         <!-- 订单项 -->
         <view class="order-item padding bg-main border-radius">
           <view @click="todetail(item.order)">
@@ -44,11 +39,11 @@
               <image :src="goodsItem.goods_img" mode="aspectFill"></image>
               <view class="right flex1">
                 <text class="clamp-2">{{ goodsItem.goods_name }} {{ goodsItem.goods_name_pw }}</text>
-                <view class="ft-dark fs-xs padding-top-xs">
+                <view class="ft-dark fs-xs pt-xs">
                   <text class="margin-right">× {{ goodsItem.goods_num }}</text>
                   {{ goodsItem.goods_sku_name || '&nbsp;&nbsp;' }}
                 </view>
-                <view class="margin-top-sm">
+                <view class="mt-sm">
                   <text class="price ft-main fs-sm">{{ goodsItem.goods_price / 100 }}</text>
                 </view>
               </view>
@@ -56,13 +51,13 @@
 
             <!-- 实付款 -->
             <view class="dflex-e">
-              <text class="fs-xs margin-right-xs">实付款</text>
+              <text class="fs-xs mr-xs">实付款</text>
               <text class="price ft-main">{{ item.order.order_actural_paid / 100 }}</text>
             </view>
           </view>
 
           <!-- 订单操作区 -->
-          <view class="dflex-b margin-top-sm">
+          <view class="dflex-b mt-sm">
             <view>
               <!-- 当前状态 -->
               <text class="ft-dark" v-if="item.order.order_refund_state == '处理中'">退款处理中</text>
@@ -158,12 +153,7 @@
             height="93vh"
           ></use-empty>
           <!-- 订单列表区 -->
-          <view
-            class="padding-lr margin-bottom-sm"
-            :class="index === 0 ? 'padding-top-sm' : ''"
-            v-for="(item, index) in tabItem.orderList"
-            :key="index"
-          >
+          <view class="padding-lr mb-sm" :class="index === 0 ? 'pt-sm' : ''" v-for="(item, index) in tabItem.orderList" :key="index">
             <!-- 订单项 -->
             <view class="order-item padding bg-main border-radius">
               <view @click="todetail(item.order)">
@@ -177,11 +167,11 @@
                   <image :src="goodsItem.goods_img" mode="aspectFill"></image>
                   <view class="right flex1">
                     <text class="clamp-2">{{ goodsItem.goods_name }} {{ goodsItem.goods_name_pw }}</text>
-                    <view class="ft-dark fs-xs padding-top-xs">
+                    <view class="ft-dark fs-xs pt-xs">
                       <text class="margin-right">× {{ goodsItem.goods_num }}</text>
                       {{ goodsItem.goods_sku_name || '&nbsp;&nbsp;' }}
                     </view>
-                    <view class="margin-top-sm">
+                    <view class="mt-sm">
                       <text class="price ft-main fs-sm">{{ goodsItem.goods_price / 100 }}</text>
                     </view>
                   </view>
@@ -189,13 +179,13 @@
 
                 <!-- 实付款 -->
                 <view class="dflex-e">
-                  <text class="fs-xs margin-right-xs">实付款</text>
+                  <text class="fs-xs mr-xs">实付款</text>
                   <text class="price ft-main">{{ item.order.order_actural_paid / 100 }}</text>
                 </view>
               </view>
 
               <!-- 订单操作区 -->
-              <view class="dflex-b margin-top-sm">
+              <view class="dflex-b mt-sm">
                 <view>
                   <!-- 当前状态 -->
                   <text class="ft-dark" v-if="item.order.order_refund_state == '处理中'">退款处理中</text>

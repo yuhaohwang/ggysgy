@@ -1,13 +1,13 @@
 <template>
-  <view :class="type == 'round' ? 'padding-lr-sm' : ''">
+  <view :class="type == 'round' ? 'plr-sm' : ''">
     <!-- 列表标题 -->
     <view class="use-list-title dflex-b padding-lr w-full bg-main" :class="type == 'round' ? 'border-radius' : ''" @click="goto">
       <view class="dflex">
-        <view v-if="iconfont && iconfont != ' '" class="iconfont _left margin-right-sm" :class="iconfont" :style="{ color: color }"></view>
+        <view v-if="iconfont && iconfont != ' '" class="iconfont _left mr-sm" :class="iconfont" :style="{ color: color }"></view>
         <text :style="{ fontSize: size + 'rpx', fontWeight: fwt }">{{ title }}</text>
       </view>
       <view class="dflex">
-        <text v-if="tip" class="tip margin-right-xs">{{ tip }}</text>
+        <text v-if="tip" class="tip mr-xs">{{ tip }}</text>
         <view class="iconfont fs-sm" :class="rightIcon" :style="{ color: rightColor }"></view>
       </view>
     </view>

@@ -1,7 +1,7 @@
 <template>
   <view class="box-sizing-b">
     <!-- 01. 头部组件 -->
-    <view class="x-c-c bg-main padding-lr-sm">
+    <view class="x-c-c bg-main plr-sm">
       <view class="search flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
     </view>
 
@@ -29,9 +29,9 @@
         <view v-if="mode == 1" class="">
           <view class="dflex-s dflex-wrap-w bg-main">
             <block v-for="item in sdatas" :key="item._id">
-              <view class="item padding-bottom-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="toGoodList(item)">
+              <view class="item pb-sm dflex dflex-flow-c" v-if="item.pid == cid" @click="toGoodList(item)">
                 <image :lazy-load="true" :src="item.img || $getOssFileByPath('/static/logo/logo.png')"></image>
-                <text class="tac clamp margin-top-sm">{{ item.name }}</text>
+                <text class="tac clamp mt-sm">{{ item.name }}</text>
               </view>
             </block>
           </view>
@@ -42,17 +42,17 @@
           <!-- 空白页 -->
           <use-empty v-if="empty" e-style="round" tip="无作品数据"></use-empty>
 
-          <view v-else class="x-s-s-w x-2 padding-lr-xs">
+          <view v-else class="x-s-s-w x-2 plr-xs">
             <view class="y-s-c padding-xs" v-for="(item, index) in goodsDatas" :key="index" @click="toGood(item)">
               <view class="w-full border-radius-sm bg-main">
                 <view class="" style="height: 300rpx">
                   <image :src="item.img" :lazy-load="true" mode="aspectFill" style="width: 100%; height: 100%"></image>
                 </view>
-                <view class="x-b-c padding-lr-xs fs-xs">
+                <view class="x-b-c plr-xs fs-xs">
                   <view class="clamp">{{ item.name }}</view>
                   <view class="">￥{{ item.price ? item.price / 100 : '面议' }}</view>
                 </view>
-                <!--               <view class="x-b-c padding-lr-xs fs-xs">
+                <!--               <view class="x-b-c plr-xs fs-xs">
                   <view class=""><image src="" mode=""></image></view>
                   <view class="clamp">陈宇轩</view>
                   <view class="clamp">广州美术学院</view>

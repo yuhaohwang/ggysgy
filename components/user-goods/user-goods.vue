@@ -1,15 +1,15 @@
 <template>
   <view>
-    <view class="x-s-c" style="height: 300rpx;">
+    <view class="x-s-c" style="height: 300rpx">
       <view class=""><u--image :src="img" width="200rpx" height="300rpx" mode="scaleToFill" radius="5" :fade="false"></u--image></view>
 
-      <view class="flex1 padding-lr-xs h-full y-b-s">
+      <view class="flex1 plr-xs h-full y-b-s">
         <view class="w-full">
           <u--text mode="text" :text="title" bold></u--text>
           <u--text mode="text" :text="sdata" :size="12" color="#3C434D"></u--text>
         </view>
 
-        <view class="w-full flex1 margin-tb-xs">
+        <view class="w-full flex1 mtb-xs">
           <u--text mode="text" text="介绍:" :size="12" color="#3C434D"></u--text>
           <u--text mode="text" :text="description" :size="12" color="#3C434D"></u--text>
           <u--text mode="text" :text="remark" :size="12" color="#3C434D"></u--text>

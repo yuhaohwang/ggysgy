@@ -12,7 +12,7 @@
 
     <use-list-title title="艺心益盟" iconfont=" " :tip="version"></use-list-title>
     <use-list-title title="注销账号" iconfont=" "></use-list-title>
-    <view class="use-item margin-tb-sm log-out-btn tac" @click="tologout"><text>退出登录</text></view>
+    <view class="use-item mtb-sm log-out-btn tac" @click="tologout"><text>退出登录</text></view>
   </view>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <view class="sign-area">
     <view class="sign-top pos-r bg-base dflex dflex-flow-c">
-      <view class="ft-white margin-top-sm fwb" style="font-size: 70rpx;">{{ data.member_integral || 750 }}</view>
+      <view class="ft-white mt-sm fwb" style="font-size: 70rpx">{{ data.member_integral || 750 }}</view>
       <view class="btn-line ft-black fs-xs border-radius-big" @click="toDetail">积分明细</view>
     </view>
     <view class="sign-content margin pos-a">
@@ -9,7 +9,7 @@
         <view class="title">
           <view class="fwb fs">
             <text class="d">已累计签到</text>
-            <text class="ft-base margin-left-sm fwb">{{ data.sign_cnt || 6 }}天</text>
+            <text class="ft-base ml-sm fwb">{{ data.sign_cnt || 6 }}天</text>
           </view>
         </view>
         <view class="dflex-b margin-top">
@@ -20,16 +20,16 @@
         </view>
       </view>
 
-      <view class="margin-top-xl">
+      <view class="mt-xl">
         <view class="tac margin fs-xs">
           <text>连续签到{{ data.sign_in_full || 7 }}天</text>
-          <text class="margin-left-xs">可额外获得{{ data.sign_in_full_integral || '10' }}积分</text>
+          <text class="ml-xs">可额外获得{{ data.sign_in_full_integral || '10' }}积分</text>
         </view>
 
         <view class="w-full margin-top">
           <view class="dflex-b border-radius-big">
-            <view class="tac padding-tb-sm flex1 bg-base" v-if="!signed" @click="toSign">立即签到</view>
-            <view class="tac padding-tb-sm flex1 bg-disabled" v-else>今日已签到</view>
+            <view class="tac ptb-sm flex1 bg-base" v-if="!signed" @click="toSign">立即签到</view>
+            <view class="tac ptb-sm flex1 bg-disabled" v-else>今日已签到</view>
           </view>
         </view>
       </view>

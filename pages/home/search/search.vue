@@ -8,7 +8,7 @@
         </view>
         <input
           type="text"
-          class="pos-a padding-left padding-tb-xs border-radius-lg box-sizing-b"
+          class="pos-a padding-left ptb-xs border-radius-lg box-sizing-b"
           maxlength="20"
           placeholder="请输入关键字"
           @confirm="search"
@@ -16,12 +16,12 @@
         />
       </view>
 
-      <view class="bg-base border-radius-big padding-tb-xs padding-lr margin-left" @click="search">搜索</view>
+      <view class="bg-base border-radius-big ptb-xs padding-lr margin-left" @click="search">搜索</view>
     </view>
     <view class="gap"></view>
 
     <!-- 搜索历史区 -->
-    <view class="padding-lr w-full padding-top-lg" v-if="historyDatas && historyDatas.length > 0">
+    <view class="padding-lr w-full pt-lg" v-if="historyDatas && historyDatas.length > 0">
       <view class="dflex-b">
         <view class="dflex">
           <text>搜索历史</text>
@@ -30,7 +30,7 @@
       </view>
       <view class="dflex dflex-wrap-w">
         <view
-          class="item margin-right-sm margin-bottom-sm dflex bg-dark border-radius-lg padding-tb-xs padding-lr"
+          class="item mr-sm mb-sm dflex bg-dark border-radius-lg ptb-xs padding-lr"
           v-for="(item, index) in historyDatas"
           :key="index"
           @click="search('history', item)"
@@ -40,15 +40,15 @@
       </view>
     </view>
     <!-- 热门搜索区 -->
-    <view class="padding-lr w-full padding-top-lg" v-if="hotDatas && hotDatas.length > 0">
-      <view class="padding-bottom-sm dflex-b">
+    <view class="padding-lr w-full pt-lg" v-if="hotDatas && hotDatas.length > 0">
+      <view class="pb-sm dflex-b">
         <view class="dflex">
           <text>热门搜索</text>
         </view>
       </view>
       <view class="dflex dflex-wrap-w">
         <view
-          class="item margin-right-sm margin-bottom-sm dflex bg-dark border-radius-lg padding-tb-xs padding-lr"
+          class="item mr-sm mb-sm dflex bg-dark border-radius-lg ptb-xs padding-lr"
           v-for="(item, index) in hotDatas"
           :key="index"
           @click="search('hot', item)"

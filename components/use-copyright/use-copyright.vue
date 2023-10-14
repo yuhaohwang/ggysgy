@@ -3,9 +3,9 @@
     <!-- #ifndef MP-TOUTIAO -->
     <!-- 版权 -->
     <view class="x-c-c padding use-copyright" @click="to">
-      <view class="iconfont iconxiangqing animated rotate margin-right-sm ft-base"></view>
+      <view class="iconfont iconxiangqing animated rotate mr-sm ft-base"></view>
       <view class="ft-dark">艺心益盟</view>
-      <text class="margin-lr-xs">·</text>
+      <text class="mlr-xs">·</text>
       <text>公益</text>
     </view>
     <!-- #endif -->

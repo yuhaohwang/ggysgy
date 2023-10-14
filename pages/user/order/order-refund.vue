@@ -1,19 +1,19 @@
 <template>
   <view>
     <!-- 作品区 -->
-    <view class="padding margin-lr margin-tb-sm bg-main border-radius">
+    <view class="padding mlr mtb-sm bg-main border-radius">
       <view class="goods-area" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
           <view class="img">
             <image :src="item.goods_img"></image>
           </view>
-          <view class="margin-left-sm">
+          <view class="ml-sm">
             <text class="clamp-2">{{ item.goods_name }} {{ item.goods_name_pw }}</text>
-            <view class="ft-dark fs-xs padding-top-xs">
+            <view class="ft-dark fs-xs pt-xs">
               <text class="margin-right">× {{ item.goods_num }}</text>
               {{ item.goods_sku_name || '&nbsp;&nbsp;' }}
             </view>
-            <view class="margin-top-sm">
+            <view class="mt-sm">
               <text class="price">{{ item.goods_price / 100 }}</text>
             </view>
           </view>
@@ -22,7 +22,7 @@
     </view>
 
     <!-- 退款区 -->
-    <view class="padding-lr-xs padding-bottom-sm">
+    <view class="plr-xs pb-sm">
       <use-list-title
         title="货物状态"
         type="round"
@@ -32,21 +32,21 @@
         @goto="openActionSheet(1)"
       ></use-list-title>
     </view>
-    <view class="padding-lr-xs">
+    <view class="plr-xs">
       <use-list-title title="退款原因" type="round" color="#333" :tip="reason" iconfont=" " @goto="openActionSheet(2)"></use-list-title>
     </view>
 
-    <view class="refund-area padding margin-lr margin-tb-sm bg-main border-radius">
+    <view class="refund-area padding mlr mtb-sm bg-main border-radius">
       <view class="dflex-b">
-        <text class="item margin-right-sm">退款金额：</text>
+        <text class="item mr-sm">退款金额：</text>
         <text class="price">{{ refund_money / 100 }}</text>
       </view>
     </view>
 
     <!-- 上传凭证 -->
-    <view class="padding margin-lr margin-tb-sm bg-main border-radius">
+    <view class="padding mlr mtb-sm bg-main border-radius">
       <!-- 退款说明 -->
-      <textarea v-model="desc" class="ft-black w-full margin-0 padding-0 fs-sm" placeholder="请填写退款说明（选填）"></textarea>
+      <textarea v-model="desc" class="ft-black w-full m0 padding-0 fs-sm" placeholder="请填写退款说明（选填）"></textarea>
 
       <!-- 上传图片 -->
       <use-upload class="pos-r" @upload="refundImgs"></use-upload>
@@ -55,7 +55,7 @@
     <!-- 提交操作 -->
     <view class="padding w-full margin-top">
       <view class="dflex-b border-radius-big">
-        <view class="tac padding-tb-sm flex1 bg-base" @click="submit">提交申请</view>
+        <view class="tac ptb-sm flex1 bg-base" @click="submit">提交申请</view>
       </view>
     </view>
 

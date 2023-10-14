@@ -1,15 +1,15 @@
 <template>
-  <view class="margin-sm">
+  <view class="m-sm">
     <!-- 作品区 -->
-    <view class="padding bg-main margin-bottom-sm border-radius dflex-b">
+    <view class="padding bg-main mb-sm border-radius dflex-b">
       <view class="dflex">
-        <view class="iconfont iconshangpin-01 ft-base margin-right-xs"></view>
+        <view class="iconfont iconshangpin-01 ft-base mr-xs"></view>
         <view class="fwb">作品</view>
       </view>
 
       <view class="dflex">
         <image
-          class="margin-right-xs"
+          class="mr-xs"
           style="width: 48rpx; height: 48rpx"
           mode="widthFix"
           src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-7e00db99-ad65-4b9f-a74b-61bccb92b124/11bd19fa-6a70-49fd-9e71-72950828f6a8.jpg"
@@ -19,11 +19,11 @@
     </view>
 
     <!-- 评分 -->
-    <view class="padding bg-main margin-bottom-sm border-radius dflex-b">
+    <view class="padding bg-main mb-sm border-radius dflex-b">
       <input type="text" maxlength="20" class="wh-full" v-model="postData.title" placeholder="标题(不超过20个字)" />
     </view>
 
-    <view class="padding bg-main margin-bottom-sm border-radius">
+    <view class="padding bg-main mb-sm border-radius">
       <textarea class="ft-black w-full fs-sm" v-model="postData.content" placeholder="请输入正文"></textarea>
 
       <!-- 上传图片 -->
@@ -33,7 +33,7 @@
     <!-- 提交操作 -->
     <view class="padding w-full margin-top">
       <view class="dflex-b border-radius-big">
-        <view class="tac padding-tb-sm fwb flex1 bg-base" @click="submit">发布</view>
+        <view class="tac ptb-sm fwb flex1 bg-base" @click="submit">发布</view>
       </view>
     </view>
 

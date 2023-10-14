@@ -1,12 +1,6 @@
 <template>
   <view class="use-rate dflex">
-    <view
-      class="pos-r margin-left-sm"
-      v-for="(star, index) in stars"
-      :key="index"
-      :style="{ marginLeft: margin + 'px' }"
-      @click="onClick(index)"
-    >
+    <view class="pos-r ml-sm" v-for="(star, index) in stars" :key="index" :style="{ marginLeft: margin + 'px' }" @click="onClick(index)">
       <view class="iconfont iconshoucang-01 ft-dark"></view>
       <view class="pos-a active" :style="{ width: star.activeWitch }">
         <view class="iconfont iconshoucang- ft-base"></view>

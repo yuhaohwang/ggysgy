@@ -36,27 +36,27 @@
 
     <!-- 02. 作品数据区 -->
     <view class="goods-area bg-main padding">
-      <view class="dflex-b margin-tb-sm">
+      <view class="dflex-b mtb-sm">
         <view class="dflex">
           <image
             :src="$getOssFileByPath('/static/logo/logo.png')"
             class="headimg border-radius-c"
             style="width: 70rpx; height: 70rpx"
           ></image>
-          <view class="margin-left-xs fs-xxs">Usecloud</view>
+          <view class="ml-xs fs-xxs">Usecloud</view>
         </view>
         <view class="bg-dark border-radius-lg padding-lr fs-xs dflex-c" @click="toFollow">
           <text class="iconfont iconaixin-01 ft-base" v-if="follow"></text>
           <text class="iconfont iconaixin" v-else></text>
-          <text class="padding-tb-16" style="margin-left: 6rpx">关注</text>
+          <text class="ptb-16" style="margin-left: 6rpx">关注</text>
         </view>
       </view>
 
-      <text class="title fwb clamp-2 fs margin-bottom-xs">油画</text>
+      <text class="title fwb clamp-2 fs mb-xs">油画</text>
       <view class=""></view>
     </view>
     <!-- 07. 操作区 -->
-    <view class="oper-area pos-f dflex-b w-full padding-lr-lg">
+    <view class="oper-area pos-f dflex-b w-full plr-lg">
       <view class="dflex">
         <view class="btn-area dflex-c" :class="{ active: favorite }">
           <text class="iconfont iconaixin"></text>
@@ -72,7 +72,7 @@
         </view>
       </view>
       <view class="btn-container border-radius-big">
-        <view class="tac padding-tb-sm flex1 bg-base" style="padding: 16rpx 50rpx" @click="toBuy(goods)">购买同款</view>
+        <view class="tac ptb-sm flex1 bg-base" style="padding: 16rpx 50rpx" @click="toBuy(goods)">购买同款</view>
       </view>
     </view>
     <!-- 置顶 -->

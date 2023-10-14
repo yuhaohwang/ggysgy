@@ -8,7 +8,7 @@
         ></image>
       </view>
 
-      <view class="w-full dflex padding-bottom-sm">
+      <view class="w-full dflex pb-sm">
         <view class="iconfont iconshouji margin-right"></view>
         <view class="flex1 dflex">
           <input
@@ -20,11 +20,11 @@
             @input="inputChange"
             placeholder="请输入手机号"
           />
-          <view v-if="0 == 1" class="padding-tb-sm ft-dark">获取</view>
+          <view v-if="0 == 1" class="ptb-sm ft-dark">获取</view>
         </view>
       </view>
 
-      <view class="w-full dflex padding-bottom-sm">
+      <view class="w-full dflex pb-sm">
         <view class="iconfont iconmima margin-right"></view>
         <!-- #ifdef MP -->
         <input
@@ -52,7 +52,7 @@
         <!-- #endif -->
       </view>
 
-      <view class="w-full dflex padding-bottom-sm">
+      <view class="w-full dflex pb-sm">
         <view class="iconfont iconyanzheng margin-right"></view>
         <view class="border-line flex1 dflex">
           <input
@@ -65,19 +65,19 @@
             @confirm="register"
             placeholder="请输入验证码"
           />
-          <view v-if="!is_send" class="padding-tb-sm ft-base" @click="sendCode">发送验证码</view>
-          <view v-else class="padding-tb-sm ft-base">{{ code_time }}s 重新获取</view>
+          <view v-if="!is_send" class="ptb-sm ft-base" @click="sendCode">发送验证码</view>
+          <view v-else class="ptb-sm ft-base">{{ code_time }}s 重新获取</view>
         </view>
       </view>
-      <view class="w-full margin-top-xl">
+      <view class="w-full mt-xl">
         <view class="dflex-b border-radius-lg">
-          <view class="tac padding-tb-sm flex1 bg-base fs" @click="register">注册</view>
+          <view class="tac ptb-sm flex1 bg-base fs" @click="register">注册</view>
         </view>
       </view>
     </view>
 
     <!-- 以艺自强版权 -->
-    <use-copyright class="pos-f w-full" style="bottom: -30rpx;"></use-copyright>
+    <use-copyright class="pos-f w-full" style="bottom: -30rpx"></use-copyright>
   </view>
 </template>
 

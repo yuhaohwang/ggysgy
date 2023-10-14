@@ -1,34 +1,34 @@
 <template>
-  <view class="padding-lr padding-bottom-big margin-bottom ft-main bg-dark">
+  <view class="padding-lr pb-big margin-bottom ft-main bg-dark">
     <view
-      class="bg-main padding-top padding-lr border-radius margin-top-sm"
+      class="bg-main padding-top padding-lr border-radius mt-sm"
       v-for="(item, index) in addressDatas"
       :key="index"
       @click="selectAddr(item)"
     >
       <view class="w-full dflex-wrap-w border-line">
-        <view class="fwb margin-bottom-xs desc">
+        <view class="fwb mb-xs desc">
           <text>{{ item.address }} {{ item.addr_detail }}</text>
         </view>
-        <view class="margin-bottom-sm">
+        <view class="mb-sm">
           <text>{{ item.consignee }}</text>
           <text class="margin-left">{{ item.mobile }}</text>
         </view>
       </view>
       <view class="dflex-b">
         <view v-if="item.is_default == '是'" class="dflex active">
-          <text class="iconfont iconxuanzhongzhuangtai padding-tb-sm padding-right-sm"></text>
+          <text class="iconfont iconxuanzhongzhuangtai ptb-sm pr-sm"></text>
           <text>默认地址</text>
         </view>
         <view v-else class="dflex ft-dark" @tap.stop="setDefault(item)">
-          <text class="iconfont iconweixuanzhongzhuangtai padding-tb-sm padding-right-sm"></text>
+          <text class="iconfont iconweixuanzhongzhuangtai ptb-sm pr-sm"></text>
           <text>设为默认</text>
         </view>
         <view v-if="source == 0 || source == 1" class="dflex">
-          <view class="padding-tb-sm padding-right-sm" @tap.stop="addAddr('edit', item)">
+          <view class="ptb-sm pr-sm" @tap.stop="addAddr('edit', item)">
             <text class="iconfont iconbianji-01 ft-dark"></text>
           </view>
-          <view class="padding-tb-sm padding-left-sm" @tap.stop="removeAddr(item)">
+          <view class="ptb-sm pl-sm" @tap.stop="removeAddr(item)">
             <text class="iconfont iconlajitong-01 ft-dark"></text>
           </view>
         </view>
@@ -36,8 +36,8 @@
     </view>
 
     <view class="btn-container dflex-b pos-f border-radius-big">
-      <view v-if="is_mp" class="tac padding-tb-sm flex1 bg-main" @click="importAddr">{{ platform_name }}导入</view>
-      <view class="tac padding-tb-sm flex1 bg-base" @click="addAddr('add')">添加地址</view>
+      <view v-if="is_mp" class="tac ptb-sm flex1 bg-main" @click="importAddr">{{ platform_name }}导入</view>
+      <view class="tac ptb-sm flex1 bg-base" @click="addAddr('add')">添加地址</view>
     </view>
   </view>
 </template>

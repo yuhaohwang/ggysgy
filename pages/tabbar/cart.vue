@@ -1,5 +1,5 @@
 <template>
-  <view class="container bg-dark" :class="{ 'margin-bottom-big': !empty }">
+  <view class="container bg-dark" :class="{ 'mb-big': !empty }">
     <!-- 00. 未授权登录 -->
     <use-empty
       v-if="!islogin"
@@ -18,7 +18,7 @@
       <!-- 01. 购物车列表 -->
       <view class="cart-list padding-sm">
         <block v-for="(item, index) in cartDatas" :key="item._id">
-          <view class="cart-item bg-main margin-bottom-sm padding-lg pos-r dflex-s border-radius">
+          <view class="cart-item bg-main mb-sm padding-lg pos-r dflex-s border-radius">
             <view class="image-wrapper pos-r" @click="toGood(item)">
               <!-- 作品图片 -->
               <image class="border-radius-xs wh-full" mode="aspectFill" :lazy-load="true" :src="item.goods.img"></image>
@@ -39,14 +39,14 @@
                 class="disabled dflex-c dflex-flow-c pos-a pos-tl-c border-radius-c"
               >
                 <text>库存不足</text>
-                <text class="margin-left-xs fs-xs" v-if="item.stock_num > 0">剩余 {{ item.goods.stock_num }}</text>
+                <text class="ml-xs fs-xs" v-if="item.stock_num > 0">剩余 {{ item.goods.stock_num }}</text>
               </view>
             </view>
             <view class="item-right padding-left pos-r flex1">
               <!-- 作品名称 -->
               <view class="clamp-2 title" @click="toGood(item)">{{ item.goods.name }} {{ item.goods.name_pw }}</view>
-              <view class="ft-dark fs-xs padding-top-xs">{{ item.goods_sku.spec || '&nbsp;&nbsp;' }}</view>
-              <view class="padding-tb-sm">
+              <view class="ft-dark fs-xs pt-xs">{{ item.goods_sku.spec || '&nbsp;&nbsp;' }}</view>
+              <view class="ptb-sm">
                 <text class="price">{{ item.goods.price / 100 }}</text>
                 <text class="m-price" v-if="item.goods.market_price > 0">{{ item.goods.market_price / 100 }}</text>
               </view>
@@ -87,7 +87,7 @@
           ></view>
           <view class="clear-btn pos-a tac ft-white" :class="{ show: allChecked }" @click="clearCart">清空</view>
         </view>
-        <view class="total-box flex1 tar padding-right-lg">
+        <view class="total-box flex1 tar pr-lg">
           <text class="price">{{ total || 0 }}</text>
         </view>
         <button type="primary" class="payment no-border border-radius-lg fs" @click="createOrder">去结算</button>

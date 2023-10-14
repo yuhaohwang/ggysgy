@@ -10,7 +10,7 @@
         <image class="image-sm" mode="aspectFill" src="../../static/user/default.png"></image>
         <text class="">微信授权</text>
       </view>
-      <view class="btn-contaer margin-top-lg">
+      <view class="btn-contaer mt-lg">
         <button class="no-border" @click="cancel">取消</button>
         <button
           class="no-border"

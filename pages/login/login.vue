@@ -8,7 +8,7 @@
         ></image>
       </view>
 
-      <view class="w-full dflex padding-bottom-sm">
+      <view class="w-full dflex pb-sm">
         <view class="iconfont iconshouji margin-right"></view>
         <view class="flex1 dflex">
           <input
@@ -20,7 +20,7 @@
             @input="inputChange"
             placeholder="请输入手机号"
           />
-          <view v-if="0 == 1" class="padding-tb-sm ft-dark" @click="send_code">获取</view>
+          <view v-if="0 == 1" class="ptb-sm ft-dark" @click="send_code">获取</view>
         </view>
       </view>
 
@@ -54,18 +54,18 @@
         />
         <!-- #endif -->
       </view>
-      <view class="dflex-b w-full margin-bottom-sm">
-        <view class="padding-tb-sm ft-dark" @click="toforget">忘记密码</view>
-        <view class="padding-tb-sm ft-base" @click="toregister">立即注册</view>
+      <view class="dflex-b w-full mb-sm">
+        <view class="ptb-sm ft-dark" @click="toforget">忘记密码</view>
+        <view class="ptb-sm ft-base" @click="toregister">立即注册</view>
       </view>
-      <view class="w-full margin-top-xl">
-        <view class="dflex-b border-radius-lg"><view class="tac padding-tb-sm flex1 bg-base fs" @click="toLogin">登录</view></view>
+      <view class="w-full mt-xl">
+        <view class="dflex-b border-radius-lg"><view class="tac ptb-sm flex1 bg-base fs" @click="toLogin">登录</view></view>
       </view>
     </view>
-    <view v-if="ismp" class="dflex-c margin-top-big">
+    <view v-if="ismp" class="dflex-c mt-big">
       <!-- #ifdef MP-WEIXIN -->
       <button class="dflex-c dflex-flow-c no-border btn" lang="zh_CN" @click="mpWeixintoLogin">
-        <view class="iconfont padding-lr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
+        <view class="iconfont plr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
         <view class="dflex-c fs-sm ft-dark">{{ platform_name }} · 授权登录</view>
       </button>
       <!-- #endif -->
@@ -77,7 +77,7 @@
         withCredentials="true"
         @getuserinfo="mpGetUserInfo"
       >
-        <view class="iconfont padding-lr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
+        <view class="iconfont plr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
         <view class="dflex-c fs-sm ft-dark">{{ platform_name }} · 授权登录</view>
       </button>
       <!-- #endif -->
@@ -90,21 +90,21 @@
         @click="onGetAuthorize"
         @error="onAuthError"
       >
-        <view class="iconfont padding-lr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
+        <view class="iconfont plr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
         <view class="dflex-c fs-sm ft-dark">{{ platform_name }} · 授权</view>
       </view>
       <!-- #endif -->
 
       <!-- #ifdef MP-TOUTIAO -->
       <view class="dflex-c dflex-flow-c no-border btn" open-type="getUserInfo" lang="zh_CN" withCredentials="true" @click="getUserInfo">
-        <view class="iconfont padding-lr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
+        <view class="iconfont plr-sm border-radius-c fs-xxxl" :class="platform_icon"></view>
         <view class="dflex-c ft-dark">{{ platform_name }} · 授权</view>
       </view>
       <!-- #endif -->
     </view>
 
     <!-- 以艺自强版权 -->
-    <use-copyright class="pos-f w-full" style="bottom: -30rpx;"></use-copyright>
+    <use-copyright class="pos-f w-full" style="bottom: -30rpx"></use-copyright>
 
     <!-- 弹出框 -->
     <view v-if="isshow" class="l-mask"></view>

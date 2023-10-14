@@ -2,12 +2,12 @@
   <view class="app w-full">
     <view class="price-box dflex-c dflex-flow-c">
       <view>支付金额</view>
-      <view class="price fs-xxxl margin-top-sm">{{ money }}</view>
+      <view class="price fs-xxxl mt-sm">{{ money }}</view>
     </view>
 
     <view class="pay-type-list">
       <!-- #ifdef MP-WEIXIN -->
-      <view class="type-item dflex-b pos-r padding-tb-sm" @click="changePayType('微信支付')">
+      <view class="type-item dflex-b pos-r ptb-sm" @click="changePayType('微信支付')">
         <text class="iconfont iconweixin"></text>
         <view class="item flex1">
           <text class="tit">微信支付</text>
@@ -18,7 +18,7 @@
       <!-- #endif -->
 
       <!-- #ifdef MP-ALIPAY -->
-      <view class="type-item dflex-b pos-r padding-tb-sm" @click="changePayType('支付宝')">
+      <view class="type-item dflex-b pos-r ptb-sm" @click="changePayType('支付宝')">
         <text class="iconfont iconalipay"></text>
         <view class="item flex1">
           <text class="tit">支付宝支付</text>
@@ -29,7 +29,7 @@
       <!-- #endif -->
 
       <!-- #ifdef MP-BAIDU -->
-      <view class="type-item dflex-b pos-r padding-tb-sm" @click="changePayType('百度钱包')">
+      <view class="type-item dflex-b pos-r ptb-sm" @click="changePayType('百度钱包')">
         <text class="iconfont iconbaidu"></text>
         <view class="item flex1">
           <text class="tit">百度钱包</text>
@@ -40,7 +40,7 @@
       <!-- #endif -->
 
       <!-- #ifdef MP-QQ -->
-      <view class="type-item dflex-b pos-r padding-tb-sm" @click="changePayType('QQ钱包')">
+      <view class="type-item dflex-b pos-r ptb-sm" @click="changePayType('QQ钱包')">
         <text class="iconfont iconqq"></text>
         <view class="item flex1">
           <text class="tit">QQ钱包</text>
@@ -51,7 +51,7 @@
       <!-- #endif -->
 
       <!-- #ifdef MP-TOUTIAO -->
-      <view class="type-item dflex-b pos-r padding-tb-sm" @click="changePayType('头条支付', '微信支付', 'MWEB')">
+      <view class="type-item dflex-b pos-r ptb-sm" @click="changePayType('头条支付', '微信支付', 'MWEB')">
         <text class="iconfont icontoutiao"></text>
         <view class="item flex1">
           <text class="tit">收银台</text>
@@ -70,7 +70,7 @@
       <!-- #endif -->
 
       <!-- #ifdef H5 || MP-360 -->
-      <view class="type-item dflex-b pos-r padding-tb-sm" @click="changePayType('微信支付', '微信支付', 'NATIVE')">
+      <view class="type-item dflex-b pos-r ptb-sm" @click="changePayType('微信支付', '微信支付', 'NATIVE')">
         <text class="iconfont iconweixin"></text>
         <view class="item flex1">
           <text class="tit">微信支付</text>
@@ -103,14 +103,14 @@
       <!-- #endif -->
     </view>
 
-    <view class="padding w-full margin-top-big pos-a" style="bottom: 30rpx;">
+    <view class="padding w-full mt-big pos-a" style="bottom: 30rpx">
       <view class="dflex-b border-radius-big">
         <!-- #ifndef H5 || MP-360 -->
-        <view class="tac padding-tb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="confirm">{{ pay_tip }}</view>
+        <view class="tac ptb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="confirm">{{ pay_tip }}</view>
         <!-- #endif -->
 
         <!-- #ifdef H5 || MP-360 -->
-        <view class="tac padding-tb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="check">{{ pay_tip }}</view>
+        <view class="tac ptb-sm flex1 bg-base" :class="is_submit === 1 ? 'bg-disabled' : ''" @click="check">{{ pay_tip }}</view>
         <!-- #endif -->
       </view>
     </view>

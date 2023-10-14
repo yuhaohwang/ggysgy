@@ -4,19 +4,19 @@
     <use-empty v-if="empty" e-style="round" tip="无足迹数据" height="100vh"></use-empty>
 
     <view v-else class="padding-lr" v-for="(item, index) in datas" :key="index" @click="toGood(item)">
-      <view class="product border-radius-sm padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
+      <view class="product border-radius-sm padding mb-sm bg-main" style="padding-bottom: 15rpx">
         <view class="left"><image :src="item.img[0]" mode="aspectFill"></image></view>
-        <view class="margin-left-sm pos-r w-full">
+        <view class="ml-sm pos-r w-full">
           <text class="clamp-2">{{ item.name[0] }} {{ item.name_pw[0] }}</text>
           <view class="pos-a dflex-b price-box w-full">
             <text class="price">{{ item.price[0] ? item.price[0] / 100 : '面议' }}</text>
             <view class="dflex-c ft-dark">
               <view class="dflex-c fs-xs">
-                <text class="margin-xs">浏览</text>
+                <text class="m-xs">浏览</text>
                 <text>{{ item.visit_cnt }}</text>
               </view>
-              <view @tap.stop="deleteBrowsing(item._id)" class="dflex-c margin-left-sm">
-                <text class="iconfont iconlajitong-01 margin-left-xs"></text>
+              <view @tap.stop="deleteBrowsing(item._id)" class="dflex-c ml-sm">
+                <text class="iconfont iconlajitong-01 ml-xs"></text>
               </view>
             </view>
           </view>

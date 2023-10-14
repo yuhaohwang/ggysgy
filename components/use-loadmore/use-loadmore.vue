@@ -1,6 +1,6 @@
 <template>
-  <view class="use-loadmore padding-tb-sm dflex-c">
-    <view v-if="type !== 'nomore'" class="iconfont iconxiangqing animated rotate margin-right-sm ft-base"></view>
+  <view class="use-loadmore ptb-sm dflex-c">
+    <view v-if="type !== 'nomore'" class="iconfont iconxiangqing animated rotate mr-sm ft-base"></view>
     <text class="ft-dark">{{ tip || defaults[type] }}</text>
   </view>
 </template>

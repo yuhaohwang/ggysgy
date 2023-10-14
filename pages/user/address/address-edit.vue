@@ -19,10 +19,10 @@
 					<view class="input-t">{{ addressName }}</view>
 				</use-pickeraddr> -->
         <!-- #ifdef MP-WEIXIN || MP-BAIDU -->
-        <view class="iconfont icondizhi- input-t padding-lr-sm padding-tb-16" @click="choiceMapAddr"></view>
+        <view class="iconfont icondizhi- input-t plr-sm ptb-16" @click="choiceMapAddr"></view>
         <!-- #endif -->
         <!-- #ifdef MP-ALIPAY -->
-        <view class="iconfont icondizhi- input-t padding-lr-sm padding-tb-16" @click="choiceAlipayMapAddr"></view>
+        <view class="iconfont icondizhi- input-t plr-sm ptb-16" @click="choiceAlipayMapAddr"></view>
         <!-- #endif -->
       </view>
     </view>
@@ -37,7 +37,7 @@
     </view>
 
     <view class="padding w-full margin-top">
-      <view class="dflex-b border-radius-big"><view class="tac padding-tb-sm flex1 bg-base" @click="submit">提交</view></view>
+      <view class="dflex-b border-radius-big"><view class="tac ptb-sm flex1 bg-base" @click="submit">提交</view></view>
     </view>
   </view>
 </template>

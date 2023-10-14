@@ -4,7 +4,7 @@
       <view class="border-radius-c"><uni-id-pages-avatar width="130rpx" height="130rpx"></uni-id-pages-avatar></view>
       <!-- <image class="border-radius-c" :src="member.avatar_file ? member.avatar_file.url : ':src="$getOssFileByPath('/static/logo/logo.png')"/images/user/default.png'"></image> -->
 
-      <view class="margin-left-sm">
+      <view class="ml-sm">
         <view>
           <text class="username">{{ member.nickname ? member.nickname : '艺心益盟' }}</text>
         </view>

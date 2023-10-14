@@ -4,18 +4,18 @@
     <use-empty v-if="empty" e-style="round" tip="无收藏数据" height="100vh"></use-empty>
 
     <view v-else class="padding-lr" v-for="(item, index) in datas" :key="index">
-      <view class="product border-radius-sm padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
+      <view class="product border-radius-sm padding mb-sm bg-main" style="padding-bottom: 15rpx">
         <view class="left" @click="toGood(item)"><image :src="item.img[0]" mode="aspectFill"></image></view>
-        <view class="margin-left-sm pos-r w-full">
+        <view class="ml-sm pos-r w-full">
           <text class="clamp-2" @click="toGood(item)">{{ item.name[0] }} {{ item.name_pw }}</text>
           <view class="pos-a dflex-b price-box w-full">
-            <text class="price padding-tb-sm" @click="toGood(item)">{{ item.price[0] ? item.price[0] / 100 : '面议' }}</text>
+            <text class="price ptb-sm" @click="toGood(item)">{{ item.price[0] ? item.price[0] / 100 : '面议' }}</text>
             <view class="dflex-c ft-dark">
               <button class="btn no-border padding-0 fs-sm ft-dark" open-type="share" :id="item.goods_id[0]">
-                <view class="dflex-c fs-xs padding-tb-sm"><text class="iconfont iconfenxiang margin-left-xs"></text></view>
+                <view class="dflex-c fs-xs ptb-sm"><text class="iconfont iconfenxiang ml-xs"></text></view>
               </button>
-              <view @tap.stop="deleteCollect(item._id)" class="dflex-c margin-left-sm padding-tb-sm">
-                <text class="iconfont iconlajitong-01 margin-left-xs"></text>
+              <view @tap.stop="deleteCollect(item._id)" class="dflex-c ml-sm ptb-sm">
+                <text class="iconfont iconlajitong-01 ml-xs"></text>
               </view>
             </view>
           </view>

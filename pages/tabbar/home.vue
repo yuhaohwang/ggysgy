@@ -1,9 +1,9 @@
 <template>
   <view class="box-sizing-b bg-dark">
     <!-- 01. 头部组件 -->
-    <view class="x-c-c bg-main padding-lr-sm">
+    <view class="x-c-c bg-main plr-sm">
       <view class="search flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
-      <view class="margin-left-xs" @click="topage(categoryAll)">分类</view>
+      <view class="ml-xs" @click="topage(categoryAll)">分类</view>
     </view>
 
     <!-- 02. 轮播区 -->
@@ -40,15 +40,15 @@
     </view>
 
     <!-- 04. 限时精选 -->
-    <view class="margin-top-sm">
+    <view class="mt-sm">
       <use-list-title title="限时出售" size="32" fwt="600" color="#333" iconfont="icondaishouhuo-" @goto="limit"></use-list-title>
     </view>
     <view class="padding-sm limit-area bg-main">
       <scroll-view scroll-x>
         <view class="dflex padding-bottom">
-          <view class="item margin-right-sm" v-for="(item, index) in goodsLimitDatas" :key="index" @click="toGood(item)">
+          <view class="item mr-sm" v-for="(item, index) in goodsLimitDatas" :key="index" @click="toGood(item)">
             <image class="border-radius-xs" mode="aspectFill" :lazy-load="true" :src="item.img"></image>
-            <text class="title clamp padding-bottom-xs">{{ item.name }}</text>
+            <text class="title clamp pb-xs">{{ item.name }}</text>
             <text class="price">{{ item.price ? item.price / 100 : '面议' }}</text>
             <text class="m-price">{{ item.market_price / 100 }}</text>
           </view>
@@ -57,7 +57,7 @@
     </view>
 
     <!-- 05. 热门推荐 -->
-    <view class="margin-top-sm"><use-hot-goods :datas="goodsHotDatas" autoload="none" title="热门作品"></use-hot-goods></view>
+    <view class="mt-sm"><use-hot-goods :datas="goodsHotDatas" autoload="none" title="热门作品"></use-hot-goods></view>
 
     <!-- 置顶 -->
     <use-totop ref="usetop" :style="{ marginBottom: navHeight + 'px' }"></use-totop>

@@ -8,7 +8,7 @@
           :class="{
             active: tabCurrentIndex === index,
           }"
-          class="nav-item dflex-c pos-r fs padding-lr-lg h-full"
+          class="nav-item dflex-c pos-r fs plr-lg h-full"
           @click="tabClick(index)"
         >
           {{ item.state }}
@@ -31,7 +31,7 @@
           ></use-empty>
           <view class="padding-lr" @click="use(item)" v-for="(item, index) in tabItem.datas" :key="index">
             <view
-              class="coupon-box border-radius margin-top-sm bg-main"
+              class="coupon-box border-radius mt-sm bg-main"
               :class="[
                 {
                   disabled: tabItem.state != '已领取',
@@ -50,7 +50,7 @@
                   <view class="fs-sm" v-else>全场通用</view>
                 </view>
                 <view class="right padding left_t flex1">
-                  <view class="dflex-b padding-bottom-xs">
+                  <view class="dflex-b pb-xs">
                     <view class="fwb fs">{{ item.name }}</view>
                   </view>
                   <view v-if="tabItem.state == '已使用'" class="ft-dark iconfont iconyishiyong"></view>
@@ -58,7 +58,7 @@
                   <view class="dflex-b ft-dark fs-xs padding-bottom border-line">
                     <view class="">有效期至 {{ item.end_time }}</view>
                   </view>
-                  <view class="fs-xs ft-dark padding-top-xs">{{ item.remark || '详细信息' }}</view>
+                  <view class="fs-xs ft-dark pt-xs">{{ item.remark || '详细信息' }}</view>
                 </view>
               </view>
             </view>
@@ -223,7 +223,8 @@
 </script>
 
 <style lang="scss">
-  page, .container {
+  page,
+  .container {
     min-height: 100%;
     background: $page-color-base;
   }
@@ -254,7 +255,7 @@
           width: 44px;
           height: 0;
           border-bottom: 2px solid $base-color;
-          content: "";
+          content: '';
           transform: translate(-50%);
         }
       }
@@ -301,7 +302,7 @@
     .discount::after {
       margin-left: 6rpx;
       font-size: 24rpx;
-      content: "折";
+      content: '折';
     }
 
     .border-line {

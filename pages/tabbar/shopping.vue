@@ -2,7 +2,7 @@
   <view class="y-s-c h-full">
     <u-toast ref="uToast"></u-toast>
 
-    <view class="x-b-c w-full bg-main padding-lr-sm">
+    <view class="x-b-c w-full bg-main plr-sm">
       <image
         :src="$getOssFileByPath('/static/logo/logo.png')"
         class="border-radius-lg headimg"
@@ -10,8 +10,8 @@
         mode=""
         @click="user"
       ></image>
-      <view class="margin-left-xs flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
-      <view class="margin-left-xs" @click="topage(categoryAll)">分类</view>
+      <view class="ml-xs flex1"><use-header :search-tip="searchTip" :search-auto="searchAuto" @search="search"></use-header></view>
+      <view class="ml-xs" @click="topage(categoryAll)">分类</view>
     </view>
 
     <top-tab class="w-full" :tabList="sdatas" :scrollable="true" ref="uTabs" :current="tabCurrent" @tab-change="tabChange"></top-tab>
@@ -42,16 +42,16 @@
                         @load="considerPush"
                       ></image>
 
-                      <view class="padding-lr-sm margin-top-sm clamp-2">{{ l_item.name }}</view>
+                      <view class="plr-sm mt-sm clamp-2">{{ l_item.name }}</view>
 
-                      <view class="x-b-c padding-lr-sm margin-tb-sm">
+                      <view class="x-b-c plr-sm mtb-sm">
                         <view class="x-c-c">
                           <image
                             :src="getUserAvatar(l_item.create_uid[0])"
                             class="border-radius-c headimg"
                             style="width: 50rpx; height: 50rpx"
                           ></image>
-                          <view class="ft-dark margin-left-xs fs-xxs">
+                          <view class="ft-dark ml-xs fs-xxs">
                             {{ getUserName(l_item.create_uid[0]) }}
                           </view>
                         </view>
@@ -73,9 +73,9 @@
                         @load="considerPush"
                       ></image>
 
-                      <view class="padding-lr-sm margin-top-sm clamp-2">{{ r_item.name }}</view>
+                      <view class="plr-sm mt-sm clamp-2">{{ r_item.name }}</view>
 
-                      <view class="x-b-c padding-lr-sm margin-tb-sm">
+                      <view class="x-b-c plr-sm mtb-sm">
                         <view class="x-c-c">
                           <image
                             :src="
@@ -86,7 +86,7 @@
                             class="border-radius-c headimg"
                             style="width: 50rpx; height: 50rpx"
                           ></image>
-                          <view class="ft-dark margin-left-xs fs-xxs">
+                          <view class="ft-dark ml-xs fs-xxs">
                             {{ getUserName(r_item.create_uid[0]) }}
                           </view>
                         </view>

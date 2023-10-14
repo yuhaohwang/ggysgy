@@ -1,12 +1,12 @@
 <template>
   <view class="order-detail">
     <!-- 订单状态 -->
-    <view class="state-area padding-lr margin-tb-sm">
+    <view class="state-area padding-lr mtb-sm">
       <view class="padding border-radius bg-base">
         <view v-if="order_data.state == '待付款'">
           <view class="dflex-c fs-lg">
             <text class="iconfont icondaifukuan- fs-lg fwb"></text>
-            <text class="fwb margin-left-sm">订单待支付</text>
+            <text class="fwb ml-sm">订单待支付</text>
           </view>
           <view class="dflex-c">
             剩余时间：
@@ -23,7 +23,7 @@
         <view v-if="order_data.state == '待发货'">
           <view class="dflex-c fs-lg">
             <text class="iconfont icondaifahuo- fs-lg fwb"></text>
-            <text class="fwb margin-left-sm">订单备货中</text>
+            <text class="fwb ml-sm">订单备货中</text>
           </view>
           <view class="dflex-c">预计1天后发货</view>
         </view>
@@ -31,7 +31,7 @@
         <view v-if="order_data.state == '待收货'">
           <view class="dflex-c fs-lg">
             <text class="iconfont icondaishouhuo- fs-lg fwb"></text>
-            <text class="fwb margin-left-sm">订单已发货</text>
+            <text class="fwb ml-sm">订单已发货</text>
           </view>
           <view class="dflex-c">还剩5天10时自动确认</view>
         </view>
@@ -39,7 +39,7 @@
         <view v-if="order_data.state == '待评价'">
           <view class="dflex-c fs-lg">
             <text class="iconfont iconyiwancheng- fs-lg fwb"></text>
-            <text class="fwb margin-left-sm">订单已收货</text>
+            <text class="fwb ml-sm">订单已收货</text>
           </view>
           <view class="dflex-c">感谢您的支持，评价送积分</view>
         </view>
@@ -47,7 +47,7 @@
         <view v-if="order_data.state == '已完成'">
           <view class="dflex-c fs-lg">
             <text class="iconfont iconyiwancheng- fs-lg fwb"></text>
-            <text class="fwb margin-left-sm">订单已完成</text>
+            <text class="fwb ml-sm">订单已完成</text>
           </view>
           <view class="dflex-c">感谢您的支持，期待下次购买</view>
         </view>
@@ -55,7 +55,7 @@
         <view v-if="order_data.state == '已取消'">
           <view class="dflex-c fs-lg">
             <text class="iconfont icondaifukuan- fs-lg fwb"></text>
-            <text class="fwb margin-left-sm">订单已关闭</text>
+            <text class="fwb ml-sm">订单已关闭</text>
           </view>
           <view class="dflex-c">感谢您的支持</view>
         </view>
@@ -63,14 +63,14 @@
         <view v-if="order_data.state == '售后中'">
           <view class="dflex-c fs-lg">
             <text class="iconfont icondaifukuan- fs-lg fwb"></text>
-            <text class="fwb margin-left-sm">已申请售后</text>
+            <text class="fwb ml-sm">已申请售后</text>
           </view>
           <view class="dflex-c">请耐心等待工作人员处理</view>
         </view>
         <view v-if="order_data.state == '售后结束'">
           <view class="dflex-c fs-lg">
             <text class="iconfont iconyiwancheng- fs-lg fwb"></text>
-            <text class="fwb margin-left-sm">{{ order_data.order_refund_state }}</text>
+            <text class="fwb ml-sm">{{ order_data.order_refund_state }}</text>
           </view>
           <view class="dflex-c">感谢您的支持</view>
         </view>
@@ -78,12 +78,12 @@
     </view>
 
     <!-- 收货人 -->
-    <view class="address-area padding-lr margin-tb-sm" v-if="order_data.order_consignee">
+    <view class="address-area padding-lr mtb-sm" v-if="order_data.order_consignee">
       <view class="dflex padding border-radius bg-main">
         <view class="iconfont icondizhi- margin-right ft-main"></view>
         <view class="flex1">
           <view class="w-full dflex-wrap-w">
-            <view class="margin-bottom-xs desc">
+            <view class="mb-xs desc">
               <text>{{ order_data.order_consignee_addr }} {{ order_data.order_consignee_addr_detail }}</text>
             </view>
             <view>
@@ -96,19 +96,19 @@
     </view>
 
     <!-- 订单作品明细 -->
-    <view class="padding margin-lr margin-tb-sm bg-main border-radius">
+    <view class="padding mlr mtb-sm bg-main border-radius">
       <view class="goods-area" :class="{ 'margin-top': index > 0 }" v-for="(item, index) in order_detail" :key="index">
         <view class="dflex">
           <view class="img">
             <image :src="item.goods_img"></image>
           </view>
-          <view class="margin-left-sm">
+          <view class="ml-sm">
             <text class="clamp-2">{{ item.goods_name }} {{ item.goods_name_pw }}</text>
-            <view class="ft-dark fs-xs padding-top-xs">
+            <view class="ft-dark fs-xs pt-xs">
               <text class="margin-right">× {{ item.goods_num }}</text>
               {{ item.goods_sku_name || '&nbsp;&nbsp;' }}
             </view>
-            <view class="margin-top-sm">
+            <view class="mt-sm">
               <text class="price">{{ item.goods_price / 100 }}</text>
             </view>
           </view>
@@ -117,7 +117,7 @@
     </view>
 
     <!-- 订单数据 -->
-    <view class="order-area padding margin-lr margin-tb-sm bg-main border-radius">
+    <view class="order-area padding mlr mtb-sm bg-main border-radius">
       <view class="item">
         <text>订单编号：</text>
         <text class="">{{ order_data.order_id }}</text>
@@ -138,7 +138,7 @@
     </view>
 
     <!-- 退款数据 -->
-    <view class="order-area padding margin-lr margin-tb-sm bg-main border-radius" v-if="order_data.order_refund_state">
+    <view class="order-area padding mlr mtb-sm bg-main border-radius" v-if="order_data.order_refund_state">
       <view class="item">
         <text>退款原因：</text>
         <text class="">{{ order_data.order_refund_reason }}</text>
@@ -158,7 +158,7 @@
     </view>
 
     <!-- 统计数据 -->
-    <view class="total-area padding margin-lr margin-tb-sm bg-main border-radius">
+    <view class="total-area padding mlr mtb-sm bg-main border-radius">
       <view class="ft-dark">
         <view class="item dflex-b">
           <text>{{ goods_price_tip }}</text>
@@ -181,7 +181,7 @@
     <view style="height: 100rpx"></view>
 
     <!-- 底部操作区 -->
-    <view class="oper-area dflex-b padding-right padding-left-sm">
+    <view class="oper-area dflex-b padding-right pl-sm">
       <view class="dflex">
         <view class="btn-area dflex dflex-flow-c" @click="toHome">
           <text class="iconfont iconshouye-1"></text>

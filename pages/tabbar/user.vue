@@ -1,15 +1,15 @@
 <template>
   <view class="">
-    <view class="header-area padding-lr-sm" :class="is_mp && !is_alipay ? 'padding-top-big' : 'padding-top'">
+    <view class="header-area plr-sm" :class="is_mp && !is_alipay ? 'pt-big' : 'padding-top'">
       <view class="dflex-b">
-        <view class="member-area padding-top-sm margin-bottom dflex pos-r" @click="to('/pages/user/setting/personal')">
+        <view class="member-area pt-sm margin-bottom dflex pos-r" @click="to('/pages/user/setting/personal')">
           <view>
             <image
               class="headimg border-radius-c"
               :src="member.avatar_file ? member.avatar_file.url : $getOssFileByPath('/static/logo/logo.png')"
             ></image>
           </view>
-          <view class="margin-left-sm">
+          <view class="ml-sm">
             <view class="info-box">
               <text class="fs-lg">{{ member.nickname ? member.nickname : '艺心益盟' }}</text>
             </view>
@@ -30,8 +30,8 @@
     </view>
 
     <!-- 我的订单 -->
-    <view class="container-area padding-lr-sm padding-bottom-sm">
-      <view class="border-radius margin-top-sm bg-main">
+    <view class="container-area plr-sm pb-sm">
+      <view class="border-radius mt-sm bg-main">
         <use-list-title
           title="我的订单"
           iconfont="icondingdan"
@@ -41,7 +41,7 @@
           @goto="toOrder('/pages/user/order/order', '全部')"
         ></use-list-title>
 
-        <view class="order-area padding-bottom-sm padding-lr dflex-c">
+        <view class="order-area pb-sm padding-lr dflex-c">
           <view class="item dflex dflex-flow-c" @click="toOrder('/pages/user/order/order', '待付款')">
             <view class="iconfont">
               &#xe6da;
@@ -90,7 +90,7 @@
         </view>
       </view>
 
-      <view class="border-radius margin-top-sm bg-main">
+      <view class="border-radius mt-sm bg-main">
         <!-- 我的足迹 -->
         <use-list-title
           title="我的足迹"
@@ -103,7 +103,7 @@
         <scroll-view scroll-x class="browsing-area padding-lr">
           <view class="dflex">
             <view v-for="(item, index) in historyDatas" :key="index">
-              <image class="border-radius-sm margin-right-sm" @click="toGood(item)" :src="item.img" mode="aspectFill"></image>
+              <image class="border-radius-sm mr-sm" @click="toGood(item)" :src="item.img" mode="aspectFill"></image>
             </view>
           </view>
         </scroll-view>
@@ -132,10 +132,10 @@
         ></use-list-title>
       </view>
 
-      <view v-if="islogin" class="border-radius margin-top-sm padding-sm dflex-c bg-main log-out-btn" @click="openActionSheet">
+      <view v-if="islogin" class="border-radius mt-sm padding-sm dflex-c bg-main log-out-btn" @click="openActionSheet">
         <text class="cell-tit">退出登录</text>
       </view>
-      <view v-else class="border-radius margin-top-sm padding-sm dflex-c bg-main log-out-btn" @click="to('/pages/login/login')">
+      <view v-else class="border-radius mt-sm padding-sm dflex-c bg-main log-out-btn" @click="$api.toLogin">
         <text class="cell-tit">去登录</text>
       </view>
 
@@ -238,11 +238,6 @@
       console.log(this.static);
     },
     onShow() {
-      let _this = this;
-      if (!this.islogin) {
-        this.$api.msg('账号未登录');
-        return;
-      }
       this.loadData();
     },
     onPullDownRefresh() {

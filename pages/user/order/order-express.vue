@@ -4,7 +4,7 @@
     <use-empty v-if="empty" e-style="round" tip="无物流数据"></use-empty>
 
     <view v-if="expressData && expressData.data" class="padding-lr">
-      <view class="border-radius padding margin-bottom-sm bg-main">
+      <view class="border-radius padding mb-sm bg-main">
         <view class="fs-lg fwb">{{ expressData.company }}</view>
         <view>
           运单号：{{ expressData.nu }}
@@ -13,7 +13,7 @@
       </view>
     </view>
     <view v-if="expressData && expressData.data" class="padding-lr">
-      <view class="product border-radius padding margin-bottom-sm bg-main" style="padding-bottom: 15rpx;">
+      <view class="product border-radius padding mb-sm bg-main" style="padding-bottom: 15rpx">
         <view
           :class="{ active: index == 0, fwb: index == 0 }"
           class="dflex item pos-r"
@@ -21,9 +21,9 @@
           :key="index"
         >
           <view :class="{ active: index == 0 }" class="circle"></view>
-          <view :class="{ 'ft-dark': index > 0 }" class="margin-left-lg pos-r w-full margin-bottom">
+          <view :class="{ 'ft-dark': index > 0 }" class="ml-lg pos-r w-full margin-bottom">
             <view>{{ item.context }}</view>
-            <view class="margin-top-xs fs-xs">{{ item.time }}</view>
+            <view class="mt-xs fs-xs">{{ item.time }}</view>
           </view>
         </view>
       </view>
@@ -114,7 +114,7 @@
     border-left-color: rgb(211 211 211);
     border-left-style: solid;
     border-left-width: 1px;
-    content: " ";
+    content: ' ';
   }
 
   .item.active::before {
@@ -141,7 +141,7 @@
     height: 20rpx;
     background: rgba(255, 106, 108, 0.5) !important;
     border-radius: 50%;
-    content: " ";
+    content: ' ';
     -webkit-transform: scale(1.6);
     transform: scale(1.6);
   }

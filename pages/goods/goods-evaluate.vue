@@ -3,7 +3,7 @@
     <view class="gap"></view>
     <view class="state-area dflex padding bg-main">
       <view
-        class="item margin-right-sm"
+        class="item mr-sm"
         :class="{ active: state == item.name }"
         v-for="(item, index) in stateDatas"
         :key="index"
@@ -17,9 +17,9 @@
     <!-- 评价区 -->
     <view class="evaluate-area">
       <view class="padding-lr padding-top bg-main">
-        <view class="eva-box dflex-s padding-bottom-lg" v-for="(item, index) in evaluateDatas" :key="index">
+        <view class="eva-box dflex-s pb-lg" v-for="(item, index) in evaluateDatas" :key="index">
           <image class="portrait border-radius-c" :src="item.member_headimg"></image>
-          <view class="right-area flex1 padding-left-sm">
+          <view class="right-area flex1 pl-sm">
             <view class="dflex-b ft-dark">
               <view class="dflex">
                 <text class="name margin-right">{{ item.member_name }}</text>
@@ -27,7 +27,7 @@
               </view>
               <text class="time fs-xs">{{ $api.format(item.create_time, 'yyyy-MM-dd') }}</text>
             </view>
-            <view class="fs-sm ft-main padding-top-xs padding-bottom-sm">{{ item.review_content }}</view>
+            <view class="fs-sm ft-main pt-xs pb-sm">{{ item.review_content }}</view>
             <view class="dflex dflex-wrap-w">
               <image
                 v-for="(img, i) in item.review_imgs"

@@ -3,11 +3,11 @@
     <u-list @scrolltolower="scrolltolower">
       <u-list-item v-for="(item, index) in indexList" :key="index" enableFlex :scrollable="false">
         <view class="x-s-s padding-xs">
-          <view class="padding-lr-xs item-c index">
+          <view class="plr-xs item-c index">
             <u--text mode="text" :text="index + 1" align="center" bold color="#957B54"></u--text>
           </view>
           <u-avatar shape="circle" size="50" :src="item.url" customStyle=""></u-avatar>
-          <view class="y-s-s padding-lr-sm">
+          <view class="y-s-s plr-sm">
             <u--text mode="name" text="吴晓军" format="encrypt"></u--text>
             <u--text mode="text" text="中山大学" :size="12" color="#BDC4CE"></u--text>
           </view>
